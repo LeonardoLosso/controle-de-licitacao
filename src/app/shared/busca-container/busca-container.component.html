@@ -1,0 +1,17 @@
+<app-container>
+    <div class="search">
+        <span class="spacer"></span>
+        <mat-form-field class="search-box" appearance="outline">
+            <mat-label>Pesquisar...</mat-label>
+
+            <input matInput type="text" [formControl]="control">
+            <mat-icon matPrefix>search</mat-icon>
+
+            <button *ngIf="control.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpaPesquisa()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <ng-content></ng-content>
+</app-container>

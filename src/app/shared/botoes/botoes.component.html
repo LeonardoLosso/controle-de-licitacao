@@ -1,0 +1,27 @@
+<ng-container *ngIf="!texto; else menuPrincipal">
+    <button
+        [routerLink]="path"
+        class="btn-side"
+        mat-fab matTooltip="Primary"
+        color="primary"
+        aria-label="botao"
+        aria-label="Botao de menu"
+    >
+        <mat-icon >{{icone}}</mat-icon>
+    </button>
+</ng-container>
+
+<ng-template #menuPrincipal>
+    <button
+        [routerLink]="path"
+        class="{{texto}}"
+        [ngClass]="variant"
+        [class.verde]="color === 'verde'"
+        mat-fab
+        extended
+        [color]="color"
+    >
+        <mat-icon class="icone">{{icone}}</mat-icon>
+        <span class="texto">{{texto}}</span>
+    </button>
+</ng-template>

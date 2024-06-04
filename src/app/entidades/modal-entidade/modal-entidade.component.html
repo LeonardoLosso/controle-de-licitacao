@@ -1,0 +1,134 @@
+<div class="dialog">
+    <h2>{{titulo}}</h2>
+    <div mat-dialog-content>
+        <h3>Dados do Cadastro</h3>
+        <div class="campo dados">
+            <!-- Código -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Código</mat-label>
+                <input matInput disabled [(ngModel)]="entidade.ID">
+            </mat-form-field>
+
+            <!-- Tipo de Cadastro -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Tipo do cadastro</mat-label>
+                <input
+                    type="text"
+                    placeholder="Selecione"
+                    aria-label="Tipo do cadastro"
+                    matInput
+                    [(ngModel)]="entidade.Tipo"
+                    [matAutocomplete]="auto"
+                >
+                <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of options" [value]="option.id">
+                        {{option.id}} - {{option.nome}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- CNPJ -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>CNPJ</mat-label>
+                <input matInput  [(ngModel)]="entidade.CNPJ" [ngModel]="entidade.CNPJ | mascarasInput:'cpf-cnpj'">
+            </mat-form-field>
+
+            <!-- IE -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Inscrição Estadual</mat-label>
+                <input matInput  [(ngModel)]="entidade.IE">
+            </mat-form-field>
+
+            <!-- Nome -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput  [(ngModel)]="entidade.Nome">
+            </mat-form-field>
+
+            <!-- Fantasia -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nome fantasia</mat-label>
+                <input matInput  [(ngModel)]="entidade.Fantasia">
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input matInput  [(ngModel)]="entidade.Email">
+            </mat-form-field>
+
+            <!-- Telefone -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Telefone</mat-label>
+                <input matInput  [(ngModel)]="entidade.Telefone" [ngModel]="entidade.Telefone | mascarasInput:'phone'">
+            </mat-form-field>
+        </div>
+
+        <h3>Endereço</h3>
+        <div class="campo endereco">
+            <!-- CEP -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>CEP</mat-label>
+                <input matInput  [(ngModel)]="entidade.Endereco.CEP">
+            </mat-form-field>
+
+            <!-- UF -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Estado</mat-label>
+                <input
+                    type="text"
+                    placeholder="Selecione"
+                    aria-label="Estado"
+                    matInput
+                    [(ngModel)]="entidade.Endereco.UF"
+                    [matAutocomplete]="estado"
+                >
+                <mat-autocomplete [displayWith]="displayFnEstados" #estado="matAutocomplete">
+                    <mat-option *ngFor="let estado of estados" [value]="estado.id">
+                        {{estado.id}} - {{estado.nome}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- Cidade -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Cidade</mat-label>
+                <input matInput  [(ngModel)]="entidade.Endereco.Cidade">
+            </mat-form-field>
+
+            <!-- Bairro -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Bairro</mat-label>
+                <input matInput  [(ngModel)]="entidade.Endereco.Bairro">
+            </mat-form-field>
+
+            <!-- Numero -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Número</mat-label>
+                <input matInput  [(ngModel)]="entidade.Endereco.Numero">
+            </mat-form-field>
+
+            <!-- Logradouro -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Logradouro</mat-label>
+                <input matInput  [(ngModel)]="entidade.Endereco.Logradouro">
+            </mat-form-field>
+
+            <!-- Complemento -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Complemento</mat-label>
+                <input matInput  [(ngModel)]="entidade.Endereco.Complemento">
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar()">
+            <mat-icon matPrefix>undo</mat-icon>
+            Cancelar
+        </button>
+        <button mat-flat-button color="primary" [mat-dialog-close]="entidade">
+            <mat-icon matPrefix>save</mat-icon>
+            Salvar
+        </button>
+    </div>
+</div>

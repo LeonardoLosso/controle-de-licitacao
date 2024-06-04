@@ -1,0 +1,27 @@
+<div class="dialog">
+    <h1 mat-dialog-title>{{data.titulo}}</h1>
+    <div mat-dialog-content class="mensagem">
+        {{data.mensagem}}
+        <strong>{{data.item}}</strong>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button 
+            class="Cancelar" 
+            mat-stroked-button
+            cdkFocusInitial
+            color="warn"
+            mat-dialog-close
+        >
+            <mat-icon matPrefix>undo</mat-icon>
+            Cancelar
+        </button>
+        <button 
+            mat-flat-button 
+            color="primary"
+            mat-dialog-close
+        >
+            <mat-icon matPrefix>check</mat-icon>
+            Confirmar
+        </button>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+{
+    "entidades": [
+        {
+            "ID": 1001,
+            "Status": 1,
+            "Nome": "Nasser Alimentos",
+            "Fantasia": "Nasser Alimentos",
+            "Tipo": 1,
+            "CNPJ": "10260293000108",
+            "IE": "7963920614",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        },
+        {
+            "ID": 1002,
+            "Status": 2,
+            "Nome": "Nasser Alimentos",
+            "Fantasia": "Nasser Alimentos",
+            "Tipo": 1,
+            "CNPJ": "10260293000108",
+            "IE": "7963920614",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        },
+        {
+            "ID": 1003,
+            "Status": 2,
+            "Nome": "Nasser Alimentos",
+            "Fantasia": "Nasser Alimentos",
+            "Tipo": 1,
+            "CNPJ": "10260293000108",
+            "IE": "7963920614",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        },
+        {
+            "ID": 2001,
+            "Status": 1,
+            "Nome": "Prefeitura de Maringá",
+            "Fantasia": "Prefeitura de Maringá",
+            "Tipo": 2,
+            "CNPJ": "10260293000108",
+            "IE": "7963920614",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        },
+        {
+            "ID": 3001,
+            "Status": 1,
+            "Nome": "Colégio 1",
+            "Fantasia": "Colégio 1",
+            "Tipo": 3,
+            "CNPJ": "10260293000108",
+            "IE": "7963920614",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        },
+        {
+            "ID": 3002,
+            "Status": 1,
+            "Nome": "3 Batalhão P.M.",
+            "Fantasia": "3 Batalhão P.M.",
+            "Tipo": 3,
+            "CNPJ": "10260293000108",
+            "IE": "7963920614",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+<section class="busca-entidades">
+    <form [formGroup]="form.formBusca">
+        <app-cabecalho-busca-novo 
+            (realizarBusca)="buscar()" 
+            (limparFiltros)="limpar()"
+            (editarCadastro)="editar()"
+            (novoCadastro)="criar()"
+            (cancelarOperacao)="voltar()"
+            (inativarCadastro)="inativar()"
+            [status]="selecionado.value?.Status"
+        >
+            <app-form-busca-entidades/>
+        </app-cabecalho-busca-novo>
+
+        <app-busca-container [control]="pesquisa">
+            <app-entidade-tabela 
+                (abrirDialog)="editar()" 
+                [listaEntidades]="listaEntidades"
+                [control]="selecionado"
+            />
+        </app-busca-container>
+    </form>
+</section>

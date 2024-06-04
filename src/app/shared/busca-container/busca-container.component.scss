@@ -1,0 +1,10 @@
+.search {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+
+    .search-box {
+        max-width: 600px;
+        width: 100%;
+    }
+}

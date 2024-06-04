@@ -1,0 +1,34 @@
+.barra-tarefas {
+    display: flex;
+    flex-wrap: nowrap;
+
+    .botoes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 300px;
+        gap: 30px;
+    }
+
+    .filtros {
+        background-color: #ececec;
+        width: 100%;
+        border-radius: 5px;
+        margin-left: 30px;
+        padding: 10px 30px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .botoes-filtro{
+            width: 140px;
+            & button{
+                width: 140px;
+                &:first-child{
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}

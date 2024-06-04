@@ -1,0 +1,16 @@
+.botoes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    align-items: center;
+    height: 75vh;
+
+    .wrapper {
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 600px;
+        gap: 60px;
+    }
+}
