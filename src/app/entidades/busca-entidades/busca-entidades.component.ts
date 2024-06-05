@@ -8,6 +8,7 @@ import { ModalEntidadeComponent } from '../modal-entidade/modal-entidade.compone
 import { FormularioBuscaService } from '../services/formulario-busca.service';
 import { EntidadesService } from '../services/entidades.service';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
+import { MensagemService } from 'src/app/core/services/mensagem.service';
 
 @Component({
     selector: 'app-busca-entidades',
@@ -23,7 +24,8 @@ export class BuscaEntidadesComponent implements OnInit {
         public form: FormularioBuscaService,
         private service: EntidadesService,
         private dialog: MatDialog,
-        private router: Router
+        private router: Router,
+        private errorMessage: MensagemService
     ) { }
 
 
@@ -52,14 +54,20 @@ export class BuscaEntidadesComponent implements OnInit {
 
     inativar() {
         const entidade = this.selecionado.value;
-        if (entidade) {
-            this.dialogConfirmacao(entidade);
+
+        if (!entidade) {
+            return this.errorMessage.openSnackBar('Nenhum item selecionado');
         }
+
+        this.inativarConfirmar(entidade);
     }
 
     editar() {
-        const id = this.selecionado.value.ID;
+        const entidade = this.selecionado.value;
 
+        if (!entidade) {
+            return this.errorMessage.openSnackBar('Nenhum item selecionado');
+        }
         //REALIZAR QUERY
 
         this.abrirDialog(this.selecionado.value);
@@ -71,7 +79,7 @@ export class BuscaEntidadesComponent implements OnInit {
         this.abrirDialog(entidade);
     }
 
-    private dialogConfirmacao(entidade: EntidadeSimplificada) {
+    private inativarConfirmar(entidade: EntidadeSimplificada) {
         const dialogRef = this.dialog.open(ModalConfirmacaoComponent, {
             disableClose: true,
             data: {
@@ -82,7 +90,10 @@ export class BuscaEntidadesComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            //ação cancelar
+            if (result === true) {
+                const id = entidade.ID;
+                // logica para inativação
+            }
         });
     }
 

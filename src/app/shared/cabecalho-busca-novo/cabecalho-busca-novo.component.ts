@@ -26,7 +26,6 @@ export class CabecalhoBuscaNovoComponent {
     }
 
     inativar() {
-        console.log(this.status)
         this.inativarCadastro.emit();
     }
 

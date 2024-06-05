@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NgForm } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro, EnumUF } from 'src/app/core/types/enum';
+import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
     selector: 'app-modal-entidade',
@@ -17,10 +19,12 @@ export class ModalEntidadeComponent {
 
     constructor(
         public dialogRef: MatDialogRef<ModalEntidadeComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: Entidade
+        @Inject(MAT_DIALOG_DATA) public data: Entidade,
+        private dialog: MatDialog,
+
     ) {
         this.entidade = { ...data };
-        
+
         if (data.ID !== 0) {
             this.titulo = "Editar Cadastro"
         }
@@ -38,7 +42,27 @@ export class ModalEntidadeComponent {
         return estado ? `${estado.id} - ${estado.nome}` : '';
     };
 
-    cancelar() {
-        this.dialogRef.close();
+    cancelar(form: NgForm) {
+        if (!form.dirty) {
+            return this.dialogRef.close();
+        }
+        this.confirmarCancelar();
+    }
+
+    private confirmarCancelar() {
+        const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+            disableClose: true,
+            data: {
+                titulo: 'Cancelar',
+                mensagem: 'Deseja cancelar?',
+                item: `\nAs alterações NÃO serão salvas`
+            }
+        });
+
+        confirmacao.afterClosed().subscribe(result => {
+            if (result === true) {
+                this.dialogRef.close();
+            }
+        });
     }
 }

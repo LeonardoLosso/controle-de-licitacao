@@ -12,6 +12,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+
 
 
 
@@ -29,7 +31,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatSortModule,
         MatProgressSpinnerModule,
         MatAutocompleteModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSnackBarModule
     ]
 })
 export class MaterialModule { }

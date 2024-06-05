@@ -13,15 +13,15 @@
             mat-dialog-close
         >
             <mat-icon matPrefix>undo</mat-icon>
-            Cancelar
+            Não
         </button>
         <button 
             mat-flat-button 
             color="primary"
-            mat-dialog-close
+            [mat-dialog-close]="true"
         >
             <mat-icon matPrefix>check</mat-icon>
-            Confirmar
+            Sim
         </button>
     </div>
 </div>

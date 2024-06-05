@@ -2,7 +2,7 @@
     <section class="barra-tarefas">
         <div class="botoes" *ngIf="comBotoes">
             <app-botoes 
-                [icone]="status === 1 || !status? 'delete' : 'check'" 
+                [icone]="status === 1 || !status? 'block' : 'check'" 
                 [texto]="status === 1 || !status? 'Inativar' : 'Reativar'" 
                 [color]="status === 1 || !status? 'warn' : 'verde'" 
                 variant="btn-cabecalho" 

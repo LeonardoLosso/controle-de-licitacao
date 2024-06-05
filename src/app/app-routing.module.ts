@@ -10,27 +10,33 @@ import { AtaComponent } from './licitacao/ata/ata.component';
 const routes: Routes = [
   {
     path: '',
-    component: MenuPrincipalComponent
+    component: MenuPrincipalComponent,
+    data: {menuName: 'Menu Principal'}
   },
   {
     path: 'entidades',
-    component: BuscaEntidadesComponent
+    component: BuscaEntidadesComponent,
+    data: {menuName: 'Buscar Entidades'}
   },
   {
     path: 'itens',
-    component: BuscaItensComponent
+    component: BuscaItensComponent,
+    data: {menuName: 'Buscar Itens'}
   },
   {
     path: 'usuarios',
-    component: BuscaUsuariosComponent
+    component: BuscaUsuariosComponent,
+    data: {menuName: 'Buscar Usuarios'}
   },
   {
     path: 'pesquisar',
-    component: PesquisaComponent
+    component: PesquisaComponent,
+    data: {menuName: 'Pesquisar Licitações'}
   },
   {
     path: 'licitacao',
-    component: AtaComponent
+    component: AtaComponent,
+    data: {menuName: 'Nova Licitação'}
   }
 ];
 

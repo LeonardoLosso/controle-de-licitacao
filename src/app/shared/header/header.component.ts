@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +8,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  public menuSelecionado: string = 'Menu TESTE';
+  menuName!: string;
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const route = this.getChild(this.activatedRoute);
+        route.data.subscribe(data => {
+          this.menuName = data['menuName'];
+        });
+      });
+  }
+
+  getChild(activatedRoute: ActivatedRoute): ActivatedRoute {
+    if (activatedRoute.firstChild) {
+      return this.getChild(activatedRoute.firstChild);
+    } else {
+      return activatedRoute;
+    }
+  }
 }
