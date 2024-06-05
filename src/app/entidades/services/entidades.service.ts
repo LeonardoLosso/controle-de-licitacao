@@ -1,18 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EntidadeSimplificada } from 'src/app/core/types/entidade';
-import { environment } from 'src/environments/environment';
+import { CrudBaseService } from 'src/app/core/services/crud-base.service';
+
+import { Entidade, EntidadeSimplificada } from 'src/app/core/types/entidade';
 
 @Injectable({
     providedIn: 'root'
 })
-export class EntidadesService {
+export class EntidadesService extends CrudBaseService<Entidade, EntidadeSimplificada> {
 
-    private URL: string = environment.apiUrl;
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { super() }
 
-    listar(): Observable<EntidadeSimplificada[]>{
+    public listar(): Observable<EntidadeSimplificada[]> {
+        return this.http.get<EntidadeSimplificada[]>(`${this.URL}/entidades`);
+    }
+
+    public obterPorID(id: number): Observable<EntidadeSimplificada[]> {
+        // IMPLEMENTAR
+        return this.http.get<EntidadeSimplificada[]>(`${this.URL}/entidades`);
+    }
+
+    public inativar(id: number): Observable<EntidadeSimplificada[]> {
+        // IMPLEMENTAR
+        return this.http.get<EntidadeSimplificada[]>(`${this.URL}/entidades`);
+    }
+
+    public criar(cadastro: Entidade): Observable<EntidadeSimplificada[]> {
+        // IMPLEMENTAR
+        return this.http.get<EntidadeSimplificada[]>(`${this.URL}/entidades`);
+    }
+
+    public editar(cadastro: Entidade): Observable<EntidadeSimplificada[]> {
+        // IMPLEMENTAR
         return this.http.get<EntidadeSimplificada[]>(`${this.URL}/entidades`);
     }
 }

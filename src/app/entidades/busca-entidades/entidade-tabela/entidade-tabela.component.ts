@@ -25,8 +25,6 @@ export class EntidadeTabelaComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    //------------------------------------------------------
-
     clickGrid(valor: EntidadeSimplificada) {
         this.selecionado = valor;
         this.control.setValue(valor);

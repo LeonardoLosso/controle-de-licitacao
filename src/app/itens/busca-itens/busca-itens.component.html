@@ -1,1 +1,23 @@
-<p>busca-itens works!</p>
+<section class="busca-itens">
+    <form [formGroup]="form.formBusca">
+        <app-cabecalho-busca-novo 
+            (realizarBusca)="editar()" 
+            (limparFiltros)="limpar()"
+            (editarCadastro)="editar()"
+            (novoCadastro)="criar()"
+            (cancelarOperacao)="voltar()"
+            (inativarCadastro)="inativar()"
+            [status]="selecionado.value?.Status"
+        >
+            <app-form-busca-itens/>
+        </app-cabecalho-busca-novo>
+
+        <app-busca-container [control]="pesquisa">
+            <app-item-tabela 
+                (abrirDialog)="editar()" 
+                [listaItens]="lista"
+                [control]="selecionado"
+            />
+        </app-busca-container>
+    </form>
+</section>

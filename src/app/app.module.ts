@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { MenuPrincipalModule } from './menu-principal/menu-principal.module';
 import { MaterialModule } from './core/material/material.module';
 import { EntidadesModule } from './entidades/entidades.module';
+import { ItensModule } from './itens/itens.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { EntidadesModule } from './entidades/entidades.module';
         SharedModule,
         MaterialModule,
         MenuPrincipalModule,
-        EntidadesModule
+        EntidadesModule,
+        ItensModule
     ],
     providers: [],
     bootstrap: [AppComponent]

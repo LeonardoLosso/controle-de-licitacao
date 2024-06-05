@@ -1,6 +1,6 @@
 export interface EntidadeSimplificada {
     ID: number,
-    Status: number
+    Status: number,
     Fantasia: string,
     Tipo: number,
     CNPJ: string,
@@ -10,7 +10,7 @@ export interface EntidadeSimplificada {
 
 export interface Entidade {
     ID: number,
-    Status: number
+    Status: number,
     Nome: string,
     Fantasia: string,
     Tipo: number,

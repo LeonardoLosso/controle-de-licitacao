@@ -1,0 +1,41 @@
+<form #form="ngForm" class="dialog">
+    <h2>{{titulo}}</h2>
+    <div mat-dialog-content>
+        <h3>Dados do Cadastro</h3>
+        <div class="campo dados">
+            <!-- Código -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Código</mat-label>
+                <input matInput name="id" disabled [(ngModel)]="item.ID" #id="ngModel">
+            </mat-form-field>
+
+            <!-- Nome -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput name="nome" #nome="ngModel" [(ngModel)]="item.Nome">
+            </mat-form-field>
+
+            <!-- Unidade primária -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Unidade primária</mat-label>
+                <input matInput name="ie" #ie="ngModel" [(ngModel)]="item.UnidadePrimaria">
+            </mat-form-field>
+
+            <!-- Unidade secundária -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Unidade secundária</mat-label>
+                <input matInput name="fantasia" #fantasia="ngModel" [(ngModel)]="item.UnidadeSecundaria">
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(form)">
+            <mat-icon matPrefix>undo</mat-icon>
+            Cancelar
+        </button>
+        <button mat-flat-button color="primary" [mat-dialog-close]="item">
+            <mat-icon matPrefix>save</mat-icon>
+            Salvar
+        </button>
+    </div>
+</form>

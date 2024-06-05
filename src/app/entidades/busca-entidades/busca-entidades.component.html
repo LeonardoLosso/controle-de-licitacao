@@ -1,7 +1,7 @@
 <section class="busca-entidades">
     <form [formGroup]="form.formBusca">
         <app-cabecalho-busca-novo 
-            (realizarBusca)="buscar()" 
+            (realizarBusca)="listar()" 
             (limparFiltros)="limpar()"
             (editarCadastro)="editar()"
             (novoCadastro)="criar()"
@@ -15,7 +15,7 @@
         <app-busca-container [control]="pesquisa">
             <app-entidade-tabela 
                 (abrirDialog)="editar()" 
-                [listaEntidades]="listaEntidades"
+                [listaEntidades]="lista"
                 [control]="selecionado"
             />
         </app-busca-container>
