@@ -120,5 +120,178 @@
                 "Complemento": ""
             }
         }
+    ],
+    "permissoes": [
+        {
+            "ID": 1,
+            "Tela": "Entidades",
+            "Recursos": [
+                {
+                    "Nome": "Visualizar",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Novo",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Editar",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Inativar",
+                    "Permissao": false
+                }
+            ]
+        },
+        {
+            "ID": 2,
+            "Tela": "Itens",
+            "Recursos": [
+                {
+                    "Nome": "Visualizar",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Novo",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Editar",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Inativar",
+                    "Permissao": false
+                }
+            ]
+        },
+        {
+            "ID": 3,
+            "Tela": "Usuarios",
+            "Recursos": [
+                {
+                    "Nome": "Visualizar",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Novo",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Editar",
+                    "Permissao": false
+                },
+                {
+                    "Nome": "Inativar",
+                    "Permissao": false
+                }
+            ]
+        }
+    ],
+    "usuarios": [
+        {
+            "ID": 1,
+            "Status": 1,
+            "Nome": "Selma Martins",
+            "CPF": "12345678900",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Permissoes": null,
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        },
+        {
+            "ID": 2,
+            "Status": 1,
+            "Nome": "Leonardo Losso",
+            "CPF": "07815117988",
+            "Telefone": "44991234567",
+            "Email": "email@email.com",
+            "Permissoes": [
+                {
+                    "ID": 1,
+                    "Tela": "Entidades",
+                    "Recursos": [
+                        {
+                            "Nome": "Visualizar",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Novo",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Editar",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Inativar",
+                            "Permissao": false
+                        }
+                    ]
+                },
+                {
+                    "ID": 2,
+                    "Tela": "Itens",
+                    "Recursos": [
+                        {
+                            "Nome": "Visualizar",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Novo",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Editar",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Inativar",
+                            "Permissao": false
+                        }
+                    ]
+                },
+                {
+                    "ID": 3,
+                    "Tela": "Usuarios",
+                    "Recursos": [
+                        {
+                            "Nome": "Visualizar",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Novo",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Editar",
+                            "Permissao": false
+                        },
+                        {
+                            "Nome": "Inativar",
+                            "Permissao": false
+                        }
+                    ]
+                }
+            ],
+            "Endereco": {
+                "CEP": "87050500",
+                "Cidade": "Maringá",
+                "UF": "PR",
+                "Bairro": "Jardim Aclimação",
+                "Logradouro": "Rua Londrina",
+                "Numero": "114",
+                "Complemento": ""
+            }
+        }
     ]
 }

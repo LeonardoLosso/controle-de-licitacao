@@ -1,0 +1,17 @@
+.divider:last-child {
+    display: none !important;
+}
+
+.telas {
+    .pannel {
+        background-color: #ececec;
+
+    }
+    .checkbox:checked{
+        background-color: green;
+    }
+    .nomeTela {
+        font-size: 1.2em;
+    }
+
+}

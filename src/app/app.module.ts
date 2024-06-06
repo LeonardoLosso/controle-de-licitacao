@@ -12,6 +12,7 @@ import { MenuPrincipalModule } from './menu-principal/menu-principal.module';
 import { MaterialModule } from './core/material/material.module';
 import { EntidadesModule } from './entidades/entidades.module';
 import { ItensModule } from './itens/itens.module';
+import { AutenticacaoModule } from './autenticacao/autenticacao.module';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { ItensModule } from './itens/itens.module';
         MaterialModule,
         MenuPrincipalModule,
         EntidadesModule,
-        ItensModule
+        ItensModule,
+        AutenticacaoModule
     ],
     providers: [],
     bootstrap: [AppComponent]

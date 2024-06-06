@@ -61,12 +61,12 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
   protected mensagemInativacao(): MensagemModal {
     const item = this.selecionado.value;
     return {
-        titulo: 'Inativar cadastro?',
-        mensagem: 'Deseja inativar a cadastro??',
-        item: `\nCód: ${item.ID} - ${item.Nome}`
+      titulo: 'Inativar cadastro?',
+      mensagem: 'Deseja inativar a cadastro??',
+      item: `\nCód: ${item.ID} - ${item.Nome}`
     }
-}
-  public listar(): void {
+  }
+  public buscar(): void {
     this.service.listar().subscribe({
       next: result => {
         this.lista = result;

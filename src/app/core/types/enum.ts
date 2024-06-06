@@ -1,5 +1,5 @@
-import { TipoStatus } from "./auxiliares";
-import { TipoCadastro, UF } from "./entidade";
+import { TipoStatus, UF } from "./auxiliares";
+import { TipoCadastro } from "./entidade";
 
 export const EnumTipoCadastro: TipoCadastro[] = [
     { id: 1, nome: 'Empresa' },

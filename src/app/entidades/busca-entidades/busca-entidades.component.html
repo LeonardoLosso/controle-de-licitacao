@@ -1,7 +1,7 @@
 <section class="busca-entidades">
     <form [formGroup]="form.formBusca">
         <app-cabecalho-busca-novo 
-            (realizarBusca)="listar()" 
+            (realizarBusca)="buscar()" 
             (limparFiltros)="limpar()"
             (editarCadastro)="editar()"
             (novoCadastro)="criar()"

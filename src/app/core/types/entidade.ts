@@ -1,3 +1,5 @@
+import { Endereco } from "./auxiliares"
+
 export interface EntidadeSimplificada {
     ID: number,
     Status: number,
@@ -21,21 +23,8 @@ export interface Entidade {
     Endereco: Endereco
 }
 
-export interface Endereco {
-    CEP: string,
-    Cidade: string,
-    UF: string,
-    Bairro: string,
-    Logradouro: string,
-    Numero: string,
-    Complemento: string
-}
-
 export interface TipoCadastro {
     id: number,
     nome: string
 }
-export interface UF {
-    id: string,
-    nome: string
-}
+

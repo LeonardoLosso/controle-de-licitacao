@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EntidadeSimplificada } from 'src/app/core/types/entidade';
 
@@ -8,7 +8,7 @@ import { EntidadeSimplificada } from 'src/app/core/types/entidade';
     templateUrl: './entidade-tabela.component.html',
     styleUrls: ['./entidade-tabela.component.scss']
 })
-export class EntidadeTabelaComponent implements OnInit {
+export class EntidadeTabelaComponent {
     @Output() abrirDialog = new EventEmitter();
     @Input() listaEntidades!: EntidadeSimplificada[];
     @Input() control!: FormControl;
@@ -21,9 +21,6 @@ export class EntidadeTabelaComponent implements OnInit {
     public displayedColumns: string[] = ['codigo', 'status', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
 
     constructor() { }
-
-    ngOnInit(): void {
-    }
 
     clickGrid(valor: EntidadeSimplificada) {
         this.selecionado = valor;
