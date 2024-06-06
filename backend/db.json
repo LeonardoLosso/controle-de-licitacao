@@ -293,5 +293,124 @@
                 "Complemento": ""
             }
         }
+    ],
+    "itens": [
+        {
+            "ID": 1,
+            "Status": 1,
+            "EhCesta": true,
+            "Nome": "Cesta Fruta",
+            "UnidadePrimaria": "KG",
+            "UnidadeSecundaria": "CAXO",
+            "ListaItens": [
+                {
+                    "ID": 2,
+                    "Status": 1,
+                    "EhCesta": false,
+                    "Nome": "Abacate",
+                    "UnidadePrimaria": "KG",
+                    "UnidadeSecundaria": "UND",
+                    "ListaItens": null,
+                    "ListaNomes": []
+                },
+                {
+                    "ID": 3,
+                    "Status": 1,
+                    "EhCesta": false,
+                    "Nome": "Abacaxi",
+                    "UnidadePrimaria": "KG",
+                    "UnidadeSecundaria": "UND",
+                    "ListaItens": null,
+                    "ListaNomes": [
+                        "Abacaxi Pérola",
+                        "Abacaxi Havai"
+                    ]
+                },
+                {
+                    "ID": 4,
+                    "Status": 1,
+                    "EhCesta": false,
+                    "Nome": "Tomate",
+                    "UnidadePrimaria": "KG",
+                    "UnidadeSecundaria": "UND",
+                    "ListaItens": null,
+                    "ListaNomes": []
+                },
+                {
+                    "ID": 5,
+                    "Status": 1,
+                    "EhCesta": false,
+                    "Nome": "Limão",
+                    "UnidadePrimaria": "KG",
+                    "UnidadeSecundaria": "UND",
+                    "ListaItens": null,
+                    "ListaNomes": []
+                },
+                {
+                    "ID": 6,
+                    "Status": 1,
+                    "EhCesta": false,
+                    "Nome": "Banana",
+                    "UnidadePrimaria": "KG",
+                    "UnidadeSecundaria": "CAXO",
+                    "ListaItens": null,
+                    "ListaNomes": []
+                }
+            ],
+            "ListaNomes": []
+        },
+        {
+            "ID": 2,
+            "Status": 1,
+            "EhCesta": false,
+            "Nome": "Abacate",
+            "UnidadePrimaria": "KG",
+            "UnidadeSecundaria": "UND",
+            "ListaItens": null,
+            "ListaNomes": []
+        },
+        {
+            "ID": 3,
+            "Status": 1,
+            "EhCesta": false,
+            "Nome": "Abacaxi",
+            "UnidadePrimaria": "KG",
+            "UnidadeSecundaria": "UND",
+            "ListaItens": null,
+            "ListaNomes": [
+                "Abacaxi Pérola",
+                "Abacaxi Havai"
+            ]
+        },
+        {
+            "ID": 4,
+            "Status": 1,
+            "EhCesta": false,
+            "Nome": "Tomate",
+            "UnidadePrimaria": "KG",
+            "UnidadeSecundaria": "UND",
+            "ListaItens": null,
+            "ListaNomes": []
+        },
+        {
+            "ID": 5,
+            "Status": 1,
+            "EhCesta": false,
+            "Nome": "Limão",
+            "UnidadePrimaria": "KG",
+            "UnidadeSecundaria": "UND",
+            "ListaItens": null,
+            "ListaNomes": []
+        },
+        {
+            "ID": 6,
+            "Status": 1,
+            "EhCesta": false,
+            "Nome": "Banana",
+            "UnidadePrimaria": "KG",
+            "UnidadeSecundaria": "CAXO",
+            "ListaItens": null,
+            "ListaNomes": []
+        }
     ]
 }

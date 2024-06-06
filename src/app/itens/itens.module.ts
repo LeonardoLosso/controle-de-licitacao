@@ -9,6 +9,8 @@ import { MaterialModule } from '../core/material/material.module';
 import { ItemTabelaComponent } from './busca-itens/item-tabela/item-tabela.component';
 import { ModalItemComponent } from './modal-item/modal-item.component';
 import { FormBuscaItensComponent } from './busca-itens/form-busca-itens/form-busca-itens.component';
+import { ContainerCestaComponent } from './modal-item/container-cesta/container-cesta.component';
+import { LookupItensComponent } from './lookup-itens/lookup-itens.component';
 
 
 
@@ -17,7 +19,9 @@ import { FormBuscaItensComponent } from './busca-itens/form-busca-itens/form-bus
     BuscaItensComponent,
     ItemTabelaComponent,
     ModalItemComponent,
-    FormBuscaItensComponent
+    FormBuscaItensComponent,
+    ContainerCestaComponent,
+    LookupItensComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,8 @@ import { FormBuscaItensComponent } from './busca-itens/form-busca-itens/form-bus
     BuscaItensComponent,
     ItemTabelaComponent,
     ModalItemComponent,
-    FormBuscaItensComponent
+    FormBuscaItensComponent,
+    LookupItensComponent
   ]
 })
 export class ItensModule { }

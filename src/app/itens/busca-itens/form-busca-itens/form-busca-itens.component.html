@@ -12,6 +12,19 @@
         </mat-form-field>
     </ng-container>
 
+    <ng-container>
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="Tipo" matInput
+                [formControl]="formService.obterControle('ehCesta')" [matAutocomplete]="tipo">
+            <mat-autocomplete #tipo="matAutocomplete">
+                <mat-option *ngFor="let item of tipoItem" [value]="item">
+                    {{item}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </ng-container>
+
     <mat-form-field class="field" appearance="outline">
         <mat-label>Unidade primária</mat-label>
         <input matInput [formControl]="formService.obterControle('unidadePri')">

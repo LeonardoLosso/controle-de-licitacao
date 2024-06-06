@@ -20,12 +20,20 @@
                     <td mat-cell *matCellDef="let row">{{row.ID | separadorMilhar}}</td>
                 </ng-container>
 
-                <!-- Código Column -->
+                <!-- Status Column -->
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef disableClear>
                         Status
                     </th>
                     <td mat-cell *matCellDef="let row">{{row.Status | formataEnum:'status'}}</td>
+                </ng-container>
+
+                <!-- EhCesta Column -->
+                <ng-container matColumnDef="cesta">
+                    <th mat-header-cell *matHeaderCellDef disableClear>
+                        Tipo
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.EhCesta ? 'Cesta' : 'Item'}}</td>
                 </ng-container>
 
                 <!-- Nome Column -->
@@ -52,7 +60,7 @@
             </table>
         </div>
 
-        <mat-paginator class="paginator" hidePageSize [length]="listaItens.length" [pageSize]="30"
+        <mat-paginator *ngIf="paginator" class="paginator" hidePageSize [length]="listaItens.length" [pageSize]="30"
             aria-label="Select page of GitHub search results"></mat-paginator>
     </div>
 </section>

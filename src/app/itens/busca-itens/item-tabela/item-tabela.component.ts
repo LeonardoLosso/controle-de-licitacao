@@ -11,13 +11,14 @@ export class ItemTabelaComponent {
   @Output() abrirDialog = new EventEmitter();
   @Input() listaItens!: ItemSimplificado[];
   @Input() control!: FormControl;
+  @Input() displayedColumns: string[] = ['codigo', 'status', 'cesta', 'nome', 'unidadePri', 'unidadeSec'];
+  @Input() paginator: boolean = true;
 
   private selecionado!: ItemSimplificado;
 
   public isLoadingResults = false;
   public isRateLimitReached = false
 
-  public displayedColumns: string[] = ['codigo', 'status', 'nome', 'unidadePri', 'unidadeSec'];
 
   constructor() { }
 

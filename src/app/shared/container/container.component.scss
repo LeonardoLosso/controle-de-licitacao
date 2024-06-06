@@ -1,4 +1,10 @@
 :host {
+
     display: block;
     margin: 26px 26px 0 106px;
+
+    &.sem-container {
+        display: block;
+        margin: 26px 26px 0 26px !important;
+    }
 }

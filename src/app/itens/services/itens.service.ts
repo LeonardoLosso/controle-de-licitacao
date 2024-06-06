@@ -12,7 +12,7 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
   constructor(private http: HttpClient) { super() }
 
   public listar(): Observable<ItemSimplificado[]> {
-    return this.http.get<ItemSimplificado[]>(`${this.URL}/entidades`);
+    return this.http.get<ItemSimplificado[]>(`${this.URL}/itens`);
   }
 
   public obterPorID(id: number): Observable<ItemSimplificado[]> {

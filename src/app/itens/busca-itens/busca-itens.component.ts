@@ -49,9 +49,12 @@ export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplifica
     return {
       ID: 0,
       Status: 1,
+      EhCesta: false,
       Nome: '',
       UnidadePrimaria: '',
       UnidadeSecundaria: '',
+      ListaItens: null,
+      ListaNomes: []
     }
   }
 }

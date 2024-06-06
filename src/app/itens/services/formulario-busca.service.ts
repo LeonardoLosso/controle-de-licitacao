@@ -12,6 +12,7 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
     super();
     this.formBusca.addControl('unidadePri', new FormControl(null));
     this.formBusca.addControl('unidadeSec', new FormControl(null));
+    this.formBusca.addControl('ehCesta', new FormControl(null));
   }
   public override obterDadosBusca() { }
 
@@ -19,6 +20,7 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
     super.limparFiltros();
     this.obterControle('unidadePri').setValue(null);
     this.obterControle('unidadeSec').setValue(null);
+    this.obterControle('ehCesta').setValue(null);
   }
 
 }

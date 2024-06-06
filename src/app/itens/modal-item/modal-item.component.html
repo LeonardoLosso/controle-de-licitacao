@@ -27,6 +27,33 @@
                 <input matInput name="fantasia" #fantasia="ngModel" [(ngModel)]="item.UnidadeSecundaria">
             </mat-form-field>
         </div>
+
+        <h3>Nomes Auxiliares</h3>
+        <div class="campo nomes">
+            <mat-form-field class="chip-list" appearance="outline">
+                <mat-chip-grid #chipGrid aria-label="Enter Items">
+                    <mat-chip-row *ngFor="let nomeAuxiliar of item.ListaNomes" (removed)="remove(nomeAuxiliar)"
+                        [editable]="true" (edited)="edit(nomeAuxiliar, $event)"
+                        [aria-description]="'press enter to edit ' + nomeAuxiliar">
+                        {{nomeAuxiliar}}
+                        <button matChipRemove [attr.aria-label]="'remove ' + nomeAuxiliar">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                    <input placeholder="Novo nome..." [matChipInputFor]="chipGrid"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)" />
+                </mat-chip-grid>
+            </mat-form-field>
+        </div>
+
+        <mat-checkbox class="checkbox" [checked]="item.EhCesta" color="primary"
+            (change)="togglePermissao(item)">Cesta</mat-checkbox>
+
+        <section *ngIf="item.EhCesta">
+            <h3>Itens da cesta</h3>
+            <app-container-cesta [listaItens]="item.ListaItens"/>
+        </section>
     </div>
     <div mat-dialog-actions class="btn-group">
         <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(form)">

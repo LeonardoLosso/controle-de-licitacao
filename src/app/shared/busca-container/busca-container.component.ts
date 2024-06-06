@@ -8,9 +8,14 @@ import { FormControl } from '@angular/forms';
 })
 export class BuscaContainerComponent {
   @Input() control!: FormControl
+  @Input() page = true
 
 
   limpaPesquisa() {
     this.control.setValue('');
+  }
+
+  classeContainer(): string {
+    return this.page ? 'container-page' : 'sem-container';
   }
 }
