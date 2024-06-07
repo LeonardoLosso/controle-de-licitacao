@@ -412,5 +412,43 @@
             "ListaItens": null,
             "ListaNomes": []
         }
+    ],
+    "documentos": [
+        {
+            "ID": "046/24",
+            "Status": 1,
+            "Orgao": "Prefeitura Maringá",
+            "Unidade": 1,
+            "DataLicitacao": "07/06/2024",
+            "Vigencia": "07/06/2025",
+            "TotalLicitado": 2348481.30
+        },
+        {
+            "ID": "047/24",
+            "Status": 1,
+            "Orgao": "Prefeitura Maringá",
+            "Unidade": 1,
+            "DataLicitacao": "07/06/2024",
+            "Vigencia": "07/06/2025",
+            "TotalLicitado": 2348481.30
+        },
+        {
+            "ID": "048/24",
+            "Status": 1,
+            "Orgao": "Prefeitura Maringá",
+            "Unidade": 1,
+            "DataLicitacao": "07/06/2024",
+            "Vigencia": "07/06/2025",
+            "TotalLicitado": 2348481.30
+        },
+        {
+            "ID": "049/24",
+            "Status": 1,
+            "Orgao": "Prefeitura Maringá",
+            "Unidade": 1,
+            "DataLicitacao": "07/06/2024",
+            "Vigencia": "07/06/2025",
+            "TotalLicitado": 2348481.30
+        }
     ]
 }

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { BuscaEntidadesComponent } from './entidades/busca-entidades/busca-entidades.component';
 import { BuscaItensComponent } from './itens/busca-itens/busca-itens.component';
 import { BuscaUsuariosComponent } from './autenticacao/usuarios/busca-usuarios/busca-usuarios.component';
-import { PesquisaComponent } from './pesquisa/pesquisa/pesquisa.component';
 import { AtaComponent } from './licitacao/ata/ata.component';
+import { PesquisaComponent } from './licitacao/pesquisa/pesquisa.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
     data: {menuName: 'Buscar Usuarios'}
   },
   {
-    path: 'pesquisar',
+    path: 'licitacao/pesquisar',
     component: PesquisaComponent,
     data: {menuName: 'Pesquisar Licitações'}
   },

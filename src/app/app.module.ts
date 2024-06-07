@@ -13,6 +13,7 @@ import { MaterialModule } from './core/material/material.module';
 import { EntidadesModule } from './entidades/entidades.module';
 import { ItensModule } from './itens/itens.module';
 import { AutenticacaoModule } from './autenticacao/autenticacao.module';
+import { LicitacaoModule } from './licitacao/licitacao.module';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { AutenticacaoModule } from './autenticacao/autenticacao.module';
         MenuPrincipalModule,
         EntidadesModule,
         ItensModule,
-        AutenticacaoModule
+        AutenticacaoModule,
+        LicitacaoModule
     ],
     providers: [],
     bootstrap: [AppComponent]
