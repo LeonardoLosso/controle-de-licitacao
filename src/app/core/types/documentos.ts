@@ -15,6 +15,6 @@ export interface AtaLicitacaoSimplificada {
     Orgao: string
     Unidade: number,
     DataLicitacao: Date,
-    Vigencia: Date,
+    DataAta: Date,
     TotalLicitado: number
 }

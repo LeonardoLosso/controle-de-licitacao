@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
@@ -13,7 +13,16 @@ export class DocumentosService {
   constructor(private http: HttpClient) { }
 
   public listar(): Observable<AtaLicitacaoSimplificada[]> {
-    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`);
+    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`).pipe(
+      map(items => items.map(item => ({
+        ...item,
+        DataLicitacao: this.convertToDate(item.DataLicitacao),
+        DataAta: this.convertToDate(item.DataAta)
+      })))
+    );
+  }
+  private convertToDate(value: any): Date {
+    return value instanceof Date ? value : new Date(value);
   }
 
   public inativar(id: number): Observable<AtaLicitacaoSimplificada[]> {

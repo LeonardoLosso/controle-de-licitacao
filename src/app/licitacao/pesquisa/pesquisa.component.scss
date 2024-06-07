@@ -1,0 +1,15 @@
+:host ::ng-deep .btn-cabecalho {
+    height: 90px;
+}
+
+:host ::ng-deep .botoes-filtro {
+    align-content: space-between;
+
+    button {
+        height: 56px;
+
+        &:first-child {
+            margin-bottom: 44px !important;
+        }
+    }
+}

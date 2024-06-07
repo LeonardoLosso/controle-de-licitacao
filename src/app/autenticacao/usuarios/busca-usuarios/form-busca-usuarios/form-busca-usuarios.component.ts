@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormularioBuscaService } from 'src/app/autenticacao/services/formulario-busca.service';
-import { TipoStatus } from 'src/app/core/types/auxiliares';
+import { EnumNumberID } from 'src/app/core/types/auxiliares';
 import { EnumTipoStatus } from 'src/app/core/types/enum';
 
 @Component({
@@ -13,7 +13,7 @@ export class FormBuscaUsuariosComponent {
 
   constructor(public formService: FormularioBuscaService) { }
 
-  displayFnStatus(val: TipoStatus): string {
+  displayFnStatus(val: EnumNumberID): string {
     return val && val.nome ? `${val.nome}` : '';
   }
 }

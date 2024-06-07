@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { EnumStringID } from 'src/app/core/types/auxiliares';
 
 import { EnumUF } from 'src/app/core/types/enum';
 import { Usuario } from 'src/app/core/types/usuarios';
@@ -31,9 +32,8 @@ export class ModalUsuariosComponent {
   }
 
 
-  displayFnEstados = (id: string): string => {
-    const estado = this.estados.find(estado => estado.id === id);
-    return estado ? `${estado.id} - ${estado.nome}` : '';
+  displayFnEstados(val: EnumStringID): string {
+    return val && val.nome ? `${val.id} - ${val.nome}` : '';
   }
 
   cancelar(form: NgForm) {

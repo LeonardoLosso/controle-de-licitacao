@@ -53,11 +53,7 @@ export class PesquisaComponent {
   };
 
   public buscar(): void {
-    this.service.listar().subscribe({
-      next: result => {
-        this.lista = result;
-      }
-    });
+    debugger
   }
 
   public limpar(): void {
@@ -71,7 +67,7 @@ export class PesquisaComponent {
       return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
     }
 
-    this.inativarConfirmar(cadastro);
+    this.inativarConfirmar();
   }
 
   private loadData() {
@@ -96,7 +92,7 @@ export class PesquisaComponent {
     }
   }
 
-  private inativarConfirmar(cadastro: AtaLicitacaoSimplificada) {
+  private inativarConfirmar() {
     const dialogRef = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: this.mensagemInativacao()

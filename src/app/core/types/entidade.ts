@@ -23,8 +23,4 @@ export interface Entidade {
     Endereco: Endereco
 }
 
-export interface TipoCadastro {
-    id: number,
-    nome: string
-}
 

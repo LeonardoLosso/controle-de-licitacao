@@ -1,17 +1,7 @@
-export interface MensagemModal{
+export interface MensagemModal {
     titulo: string,
     mensagem: string,
     item: string
-}
-
-export interface TipoStatus {
-    id: number,
-    nome: string
-}
-
-export interface UF {
-    id: string,
-    nome: string
 }
 
 export interface Endereco {
@@ -22,4 +12,17 @@ export interface Endereco {
     Logradouro: string,
     Numero: string,
     Complemento: string
+}
+
+
+//-----------[DROPDOWN MODEL]------------
+
+export interface EnumNumberID {
+    id: number,
+    nome: string
+}
+
+export interface EnumStringID {
+    id: string,
+    nome: string
 }

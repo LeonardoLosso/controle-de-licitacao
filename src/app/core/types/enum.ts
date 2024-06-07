@@ -1,13 +1,6 @@
-import { TipoStatus, UF } from "./auxiliares";
-import { TipoCadastro } from "./entidade";
+import { EnumNumberID, EnumStringID } from "./auxiliares";
 
-export const EnumTipoCadastro: TipoCadastro[] = [
-    { id: 1, nome: 'Empresa' },
-    { id: 2, nome: 'Órgão' },
-    { id: 3, nome: 'Unidade' }
-]
-
-export const EnumUF: UF[] = [
+export const EnumUF: EnumStringID[] = [
     { id: 'AC', nome: 'Acre' },
     { id: 'AL', nome: 'Alagoas' },
     { id: 'AM', nome: 'Amazonas' },
@@ -37,8 +30,23 @@ export const EnumUF: UF[] = [
     { id: 'TO', nome: 'Tocantins' }
 ]
 
-export const EnumTipoStatus: TipoStatus[] = [
-    { id: 0, nome: 'Ambos' },
+export const EnumTipoCadastro: EnumNumberID[] = [
+    { id: 1, nome: 'Empresa' },
+    { id: 2, nome: 'Prefeitura' },
+    { id: 3, nome: 'Policia' },
+    { id: 4, nome: 'Secretaria' },
+    { id: 5, nome: 'Assistência social' },
+    { id: 6, nome: 'Batalhão' },
+    { id: 7, nome: 'Hospital' },
+    { id: 8, nome: 'Escola' }
+]
+
+export const EnumTipoStatus: EnumNumberID[] = [
     { id: 1, nome: 'Ativo' },
     { id: 2, nome: 'Inativo' }
+]
+
+export const EnumTipoDocumento: EnumNumberID[] = [
+    { id: 1, nome: 'Prefeitura' },
+    { id: 2, nome: 'Policia' }
 ]

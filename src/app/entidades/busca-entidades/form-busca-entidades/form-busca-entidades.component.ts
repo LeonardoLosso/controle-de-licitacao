@@ -1,8 +1,7 @@
 import { EnumTipoCadastro, EnumTipoStatus } from 'src/app/core/types/enum';
 import { Component } from '@angular/core';
 import { FormularioBuscaService } from '../../services/formulario-busca.service';
-import { TipoCadastro } from 'src/app/core/types/entidade';
-import { TipoStatus } from 'src/app/core/types/auxiliares';
+import { EnumNumberID } from 'src/app/core/types/auxiliares';
 
 @Component({
     selector: 'app-form-busca-entidades',
@@ -17,11 +16,11 @@ export class FormBuscaEntidadesComponent {
     constructor(public formService: FormularioBuscaService) { }
 
 
-    displayFn(val: TipoCadastro): string {
-        return val && val.nome ? `${val.id} - ${val.nome}` : '';
+    displayFn(val: EnumNumberID): string {
+        return val && val.nome ? `${val.nome}` : '';
     }
 
-    displayFnStatus(val: TipoStatus): string {
+    displayFnStatus(val: EnumNumberID): string {
         return val && val.nome ? `${val.nome}` : '';
     }
 }

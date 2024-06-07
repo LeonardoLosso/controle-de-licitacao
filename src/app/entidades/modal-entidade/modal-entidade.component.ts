@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { EnumNumberID, EnumStringID } from 'src/app/core/types/auxiliares';
 
 import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro, EnumUF } from 'src/app/core/types/enum';
@@ -32,14 +33,12 @@ export class ModalEntidadeComponent {
     }
 
 
-    displayFn = (id: number): string => {
-        const option = this.options.find(option => option.id === id);
-        return option ? `${option.id} - ${option.nome}` : '';
+    displayFn(val: EnumNumberID): string {
+        return val && val.nome ? `${val.nome}` : '';
     };
 
-    displayFnEstados = (id: string): string => {
-        const estado = this.estados.find(estado => estado.id === id);
-        return estado ? `${estado.id} - ${estado.nome}` : '';
+    displayFnEstados(val: EnumStringID): string {
+        return val && val.nome ? `${val.id} - ${val.nome}` : '';
     };
 
     cancelar(form: NgForm) {

@@ -1,1 +1,76 @@
-<p>form-busca-ata works!</p>
+<section class="filters">
+    <!-- Unidade dropdown -->
+    <ng-container>
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Unidade</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="Unidade" matInput
+                [formControl]="formService.obterControle('unidade')" [matAutocomplete]="unidade">
+            <mat-autocomplete [displayWith]="displayUnidade" #unidade="matAutocomplete">
+                <mat-option *ngFor="let option of options" [value]="option">
+                    {{option.nome}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </ng-container>
+
+    <!-- Tipo do documento dropdown -->
+    <ng-container>
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Tipo documento</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="Tipo documento" matInput
+                [formControl]="formService.obterControle('tipo')" [matAutocomplete]="tipo">
+            <mat-autocomplete [displayWith]="displayTipo" #tipo="matAutocomplete">
+                <mat-option *ngFor="let item of tipoDoc" [value]="item">
+                    {{item.nome}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </ng-container>
+
+    <!-- status dropdown -->
+    <ng-container>
+        <mat-form-field class="field" appearance="outline">
+            <mat-label>Status</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="Status" matInput
+                [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
+            <mat-autocomplete [displayWith]="displayStatus" #stts="matAutocomplete">
+                <mat-option *ngFor="let item of status" [value]="item">
+                    {{item.nome}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </ng-container>
+
+    <!-- data inicial -->
+    <mat-form-field appearance="outline">
+        <mat-label>Data inicial</mat-label>
+        <input matInput [matDatepicker]="dataInicial" [formControl]="formService.obterControle('dataInicial')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataInicial"></mat-datepicker-toggle>
+        <mat-datepicker #dataInicial></mat-datepicker>
+    </mat-form-field>
+
+    <!-- data final -->
+    <mat-form-field appearance="outline">
+        <mat-label>Data final</mat-label>
+        <input matInput [matDatepicker]="dataFinal" [formControl]="formService.obterControle('dataFinal')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataFinal"></mat-datepicker-toggle>
+        <mat-datepicker #dataFinal></mat-datepicker>
+    </mat-form-field>
+
+    <!-- data inicial -->
+    <mat-form-field appearance="outline">
+        <mat-label>Data ata inicial</mat-label>
+        <input matInput [matDatepicker]="dataAtaInicial" [formControl]="formService.obterControle('dataAtaInicial')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataAtaInicial"></mat-datepicker-toggle>
+        <mat-datepicker #dataAtaInicial></mat-datepicker>
+    </mat-form-field>
+
+    <!-- data final -->
+    <mat-form-field appearance="outline">
+        <mat-label>Data final</mat-label>
+        <input matInput [matDatepicker]="dataAtaFinal" [formControl]="formService.obterControle('dataAtaFinal')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataAtaFinal"></mat-datepicker-toggle>
+        <mat-datepicker #dataAtaFinal></mat-datepicker>
+    </mat-form-field>
+    <!-- cidade ???? -->
+</section>
