@@ -1,0 +1,30 @@
+.barra-tarefas {
+    display: flex;
+
+    .botoes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        max-width: 420px;
+        gap:30px
+    }
+
+    .formulario {
+        background-color: #ececec;
+        width: 100%;
+        border-radius: 5px;
+        margin-left: 30px;
+        padding: 10px 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+:host::ng-deep button{
+    margin-right: 30px;
+    width: 180px !important;
+}

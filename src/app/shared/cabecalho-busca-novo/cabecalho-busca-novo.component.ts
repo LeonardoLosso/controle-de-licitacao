@@ -6,7 +6,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     styleUrls: ['./cabecalho-busca-novo.component.scss']
 })
 export class CabecalhoBuscaNovoComponent {
-    @Input() comBotoes: boolean = true
     @Input() status: number = 1;
     
     @Output() realizarBusca = new EventEmitter();

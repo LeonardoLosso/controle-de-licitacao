@@ -37,7 +37,7 @@ const routes: Routes = [
   {
     path: 'licitacao',
     component: AtaComponent,
-    data: {menuName: 'Nova Licitação'}
+    data: {menuName: 'Licitação'}
   }
 ];
 

@@ -1,6 +1,6 @@
 <app-container>
     <section class="barra-tarefas">
-        <div class="botoes" *ngIf="comBotoes">
+        <div class="botoes">
             <app-botoes 
                 [icone]="status === 1 || !status? 'block' : 'check'" 
                 [texto]="status === 1 || !status? 'Inativar' : 'Reativar'" 

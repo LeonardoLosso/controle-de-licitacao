@@ -9,6 +9,9 @@ import { PesquisaComponent } from './pesquisa/pesquisa.component';
 import { FormBuscaAtaComponent } from './pesquisa/form-busca-ata/form-busca-ata.component';
 import { LicitacaoTabelaComponent } from './pesquisa/licitacao-tabela/licitacao-tabela.component';
 import { SharedModule } from '../shared/shared.module';
+import { CabecalhoAtaComponent } from './ata/cabecalho-ata/cabecalho-ata.component';
+import { ItemAtaTabelaComponent } from './ata/item-ata-tabela/item-ata-tabela.component';
+import { FormularioAtaComponent } from './ata/formulario-ata/formulario-ata.component';
 
 
 
@@ -17,7 +20,10 @@ import { SharedModule } from '../shared/shared.module';
     AtaComponent,
     PesquisaComponent,
     FormBuscaAtaComponent,
-    LicitacaoTabelaComponent
+    LicitacaoTabelaComponent,
+    CabecalhoAtaComponent,
+    ItemAtaTabelaComponent,
+    FormularioAtaComponent,
   ],
   imports: [
     CommonModule,
