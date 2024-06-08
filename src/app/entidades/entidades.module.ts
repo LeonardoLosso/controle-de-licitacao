@@ -9,6 +9,7 @@ import { MaterialModule } from '../core/material/material.module';
 import { FormBuscaEntidadesComponent } from './busca-entidades/form-busca-entidades/form-busca-entidades.component';
 import { EntidadeTabelaComponent } from './busca-entidades/entidade-tabela/entidade-tabela.component';
 import { ModalEntidadeComponent } from './modal-entidade/modal-entidade.component';
+import { LookupEntidadesComponent } from './lookup-entidades/lookup-entidades.component';
 
 
 
@@ -17,7 +18,8 @@ import { ModalEntidadeComponent } from './modal-entidade/modal-entidade.componen
     BuscaEntidadesComponent,
     FormBuscaEntidadesComponent,
     EntidadeTabelaComponent,
-    ModalEntidadeComponent
+    ModalEntidadeComponent,
+    LookupEntidadesComponent
   ],
   imports: [
     CommonModule,

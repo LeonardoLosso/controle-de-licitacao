@@ -12,13 +12,13 @@ export class EntidadeTabelaComponent {
     @Output() abrirDialog = new EventEmitter();
     @Input() listaEntidades!: EntidadeSimplificada[];
     @Input() control!: FormControl;
+    @Input() paginator: boolean = true;
+    @Input() displayedColumns: string[] = ['codigo', 'status', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
 
     private selecionado!: EntidadeSimplificada;
 
     public isLoadingResults = false;
     public isRateLimitReached = false
-
-    public displayedColumns: string[] = ['codigo', 'status', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
 
     constructor() { }
 

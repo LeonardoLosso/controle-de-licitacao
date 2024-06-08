@@ -64,7 +64,7 @@
             </table>
         </div>
 
-        <mat-paginator class="paginator" hidePageSize [length]="listaEntidades.length" [pageSize]="30"
+        <mat-paginator *ngIf="paginator" class="paginator" hidePageSize [length]="listaEntidades.length" [pageSize]="30"
             aria-label="Select page of GitHub search results"></mat-paginator>
     </div>
 </section>

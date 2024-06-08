@@ -1,0 +1,17 @@
+.dialog {
+
+    .mat-mdc-outlined-button:not(:disabled) {
+        border-color: #f44336;
+    }
+
+    .mensagem {
+        white-space: pre-wrap;
+    }
+
+    .btn-group {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+    }
+}
