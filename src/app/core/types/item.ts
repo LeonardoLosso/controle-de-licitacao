@@ -27,3 +27,13 @@ export interface ItemDeAta {
     ValorTotal: number,
     Desconto: number
 }
+
+export interface ItemDeBaixa {
+    ID: number,
+    Nome: string,
+    Unidade: string,
+    Quantidade: number,
+    ValorUnitario: number,
+    ValorTotal: number,
+    Desconto: number
+}

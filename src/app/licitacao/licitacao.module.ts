@@ -13,6 +13,11 @@ import { CabecalhoAtaComponent } from './ata/cabecalho-ata/cabecalho-ata.compone
 import { ItemAtaTabelaComponent } from './ata/item-ata-tabela/item-ata-tabela.component';
 import { FormularioAtaComponent } from './ata/formulario-ata/formulario-ata.component';
 import { ModalItemAtaComponent } from './ata/modal-item-ata/modal-item-ata.component';
+import { BaixaComponent } from './baixa/baixa.component';
+import { CabecalhoBaixaComponent } from './baixa/cabecalho-baixa/cabecalho-baixa.component';
+import { FormularioBaixaComponent } from './baixa/formulario-baixa/formulario-baixa.component';
+import { BaixaTabelaComponent } from './baixa/tabelas/baixa-tabela/baixa-tabela.component';
+import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-tabela.component';
 
 
 
@@ -26,6 +31,11 @@ import { ModalItemAtaComponent } from './ata/modal-item-ata/modal-item-ata.compo
     ItemAtaTabelaComponent,
     FormularioAtaComponent,
     ModalItemAtaComponent,
+    BaixaComponent,
+    CabecalhoBaixaComponent,
+    FormularioBaixaComponent,
+    BaixaTabelaComponent,
+    EmpenhoTabelaComponent,
   ],
   imports: [
     CommonModule,

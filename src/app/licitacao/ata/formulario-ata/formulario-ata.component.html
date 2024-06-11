@@ -4,6 +4,9 @@
     <mat-form-field class="field" appearance="outline">
         <mat-label>Edital</mat-label>
         <input matInput [formControl]="formService.obterControle('edital')">
+        <mat-error *ngIf="formService.formulario.get('edital')?.errors?.['required']">
+            Numero do edital é <strong>obrigatório</strong>
+        </mat-error>
     </mat-form-field>
 
     <!-- Data licitação -->
@@ -33,11 +36,8 @@
     <!-- Lookup empresa -->
     <mat-form-field class="lookup" appearance="outline">
         <mat-label>Empresa</mat-label>
-        <input 
-            matInput 
-            [formControl]="formService.obterControle('empresa')"
-            [value]="displayFn(formService.obterControle('empresa'))"
-            (input)="limparValor('empresa')">
+        <input matInput [formControl]="formService.obterControle('empresa')"
+            [value]="displayFn(formService.obterControle('empresa'))" (input)="limparValor('empresa')">
         <button mat-icon-button matSuffix (click)="acao('empresa')" [attr.aria-label]="'Abre lookup'"
             [disabled]="desabilitado()">
             <mat-icon>{{possuiValor('empresa')}}</mat-icon>
@@ -47,11 +47,8 @@
     <!-- Lookup Órgão -->
     <mat-form-field class="lookup" appearance="outline">
         <mat-label>Órgão</mat-label>
-        <input 
-            matInput 
-            [formControl]="formService.obterControle('orgao')"
-            [value]="displayFn(formService.obterControle('orgao'))"
-            (input)="limparValor('orgao')">
+        <input matInput [formControl]="formService.obterControle('orgao')"
+            [value]="displayFn(formService.obterControle('orgao'))" (input)="limparValor('orgao')">
         <button mat-icon-button matSuffix (click)="acao('orgao')" [attr.aria-label]="'Abre lookup'"
             [disabled]="desabilitado()">
             <mat-icon>{{possuiValor('orgao')}}</mat-icon>

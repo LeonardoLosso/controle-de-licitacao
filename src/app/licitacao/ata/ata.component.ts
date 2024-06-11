@@ -3,7 +3,7 @@ import { FormularioAtaService } from '../services/formulario-ata.service';
 import { FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ItemDeAta } from 'src/app/core/types/item';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
@@ -26,7 +26,8 @@ export class AtaComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private errorMessage: MensagemService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -42,11 +43,25 @@ export class AtaComponent implements OnInit {
   }
 
   salvar() {
+    const control = this.form.obterControle('edital');
+    const id = control.value;
+
+    if (!control.valid) {
+      return this.errorMessage.openSnackBar('Numero do edital é obrigatório');
+    }
     this.form.salvar();
   }
 
   abrirBaixa() {
-
+    const control = this.form.obterControle('edital');
+    const id = control.value;
+    debugger
+    if (control.valid) {
+      this.salvar();
+      const queryParams = { ata: id };
+      return this.router.navigate(['/licitacao/baixa'], { queryParams });
+    }
+    return this.errorMessage.openSnackBar('Numero do edital é obrigatório');
   }
 
   inativar() {

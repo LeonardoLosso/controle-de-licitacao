@@ -1,0 +1,29 @@
+<section class="barra-tarefas">
+    <div class="botoes">
+        <div class="btn-group">
+            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" (click)="salvarDocumento()" />
+            <app-botoes icone="add" texto="Adicionar item" variant="btn-cabecalho" (click)="adicionar()" />            
+        </div>
+
+        <div class="btn-group">
+            <app-botoes 
+                variant="btn-cabecalho"
+                [icone]="verificaStatus()? 'block' : 'check'"
+                [texto]="verificaStatus()? 'Inativar baixa' : 'Reativar baixa'"
+                [color]="verificaStatus()? 'warn' : 'verde'" 
+                (click)="inativarDocumento()" />
+
+            <app-botoes icone="delete" texto="Remover empenho" variant="btn-cabecalho" (click)="excluir()" />
+        </div>
+
+        <div class="btn-group">
+            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
+            <app-botoes icone="upload" texto="Importar baixa" variant="btn-cabecalho" color="verde" (click)="abrirBaixa()" />
+
+        </div>
+    </div>
+
+    <div class="formulario">
+        <ng-content></ng-content>
+    </div>
+</section>

@@ -7,6 +7,7 @@ import { BuscaItensComponent } from './itens/busca-itens/busca-itens.component';
 import { BuscaUsuariosComponent } from './autenticacao/usuarios/busca-usuarios/busca-usuarios.component';
 import { AtaComponent } from './licitacao/ata/ata.component';
 import { PesquisaComponent } from './licitacao/pesquisa/pesquisa.component';
+import { BaixaComponent } from './licitacao/baixa/baixa.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
   {
     path: 'licitacao',
     component: AtaComponent,
+    data: {menuName: 'Licitação'}
+  },
+  {
+    path: 'licitacao/baixa',
+    component: BaixaComponent,
     data: {menuName: 'Licitação'}
   }
 ];
