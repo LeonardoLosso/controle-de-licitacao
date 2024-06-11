@@ -1,1 +1,47 @@
-<p>formulario-baixa works!</p>
+<form [formGroup]="formService.formulario" class="formulario">
+
+    <!-- Edital -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Edital</mat-label>
+        <input matInput [formControl]="formService.obterControle('edital')">
+    </mat-form-field>
+
+    <!-- Data licitação -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Data licitação</mat-label>
+        <input matInput [matDatepicker]="dataLicitacao" [formControl]="formService.obterControle('dataLicitacao')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
+        <mat-datepicker #dataLicitacao></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Data ata -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Data ata</mat-label>
+        <input matInput [matDatepicker]="dataAta" [formControl]="formService.obterControle('dataAta')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataAta"></mat-datepicker-toggle>
+        <mat-datepicker #dataAta></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Vigência -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Vigência</mat-label>
+        <input matInput [matDatepicker]="vigencia" [formControl]="formService.obterControle('vigencia')">
+        <mat-datepicker-toggle matIconSuffix [for]="vigencia"></mat-datepicker-toggle>
+        <mat-datepicker #vigencia></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Lookup empresa -->
+    <mat-form-field class="lookup" appearance="outline">
+        <mat-label>Empresa</mat-label>
+        <input matInput [formControl]="formService.obterControle('empresa')"
+            [value]="displayFn(formService.obterControle('empresa'))">
+    </mat-form-field>
+
+    <!-- Lookup Órgão -->
+    <mat-form-field class="lookup" appearance="outline">
+        <mat-label>Órgão</mat-label>
+        <input matInput [formControl]="formService.obterControle('orgao')"
+            [value]="displayFn(formService.obterControle('orgao'))">
+    </mat-form-field>
+
+</form>

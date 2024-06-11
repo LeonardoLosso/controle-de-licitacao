@@ -88,7 +88,7 @@ export class FormularioAtaService {
     const unidade = this.obterControle<EnumNumberID>('unidade');
     const itens = this.obterControle<ItemDeAta[]>('itens');
 
-    this.service.obterPorID(1).subscribe({
+    this.service.obterAtaPorID(1).subscribe({
       next: result => {
         edital.setValue(result.ID);
         status.setValue(result.Status);

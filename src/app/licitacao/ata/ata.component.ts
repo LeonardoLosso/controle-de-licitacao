@@ -55,7 +55,7 @@ export class AtaComponent implements OnInit {
   abrirBaixa() {
     const control = this.form.obterControle('edital');
     const id = control.value;
-    debugger
+    
     if (control.valid) {
       this.salvar();
       const queryParams = { ata: id };

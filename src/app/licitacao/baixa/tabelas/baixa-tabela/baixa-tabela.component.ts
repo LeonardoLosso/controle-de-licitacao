@@ -8,15 +8,27 @@ import { ItemDeBaixa } from 'src/app/core/types/item';
 })
 export class BaixaTabelaComponent {
   @Input() listaItens!: ItemDeBaixa[];
-  public displayedColumns: string[] = ['codigo', 'nome', 'unidade', 'quantidade', 'valorUnitario', 'valorTotal'];
+  public displayedColumns: string[] = [
+    'codigo', 'nome', 'unidade', 
+    'qtdeEmpenhada', 'qtdeLicitada', 'qtdeAEmpenhar', 
+    'valorEmpenhado', 'valorLicitado', 'saldo', 'valorUnitario'
+  ];
 
   constructor() { }
 
   ngOnInit(): void {
 
   }
-  
-  public getTotalCost() {
-    return this.listaItens.map(t => t.ValorTotal).reduce((acc, value) => acc + value, 0);
+
+  public getTotalEmpenhado() {
+    return this.listaItens.map(t => t.ValorEmpenhado).reduce((acc, value) => acc + value, 0);
   }
+
+  public getTotalLicitado() {
+    return this.listaItens.map(t => t.ValorLicitado).reduce((acc, value) => acc + value, 0);
+  }
+
+  public getTotalSaldo() {
+    return this.listaItens.map(t => t.Saldo).reduce((acc, value) => acc + value, 0);
+  }  
 }

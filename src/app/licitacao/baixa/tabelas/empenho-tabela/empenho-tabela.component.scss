@@ -1,0 +1,26 @@
+.tabela {
+    margin-top: 22px;
+}
+
+.container {
+    position: relative;
+
+    .table-container {
+        position: relative;
+        max-height: 58vh;
+        overflow: auto;
+
+        table {
+            width: 100%;
+
+            .mat-mdc-cell:not(:last-child) {
+                border-right: solid 1px #c9c9c9;
+            }
+
+            th {
+                background-color: lightgray;
+            }
+
+        }
+    }
+}

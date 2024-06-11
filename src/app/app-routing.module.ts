@@ -43,7 +43,7 @@ const routes: Routes = [
   {
     path: 'licitacao/baixa',
     component: BaixaComponent,
-    data: {menuName: 'Licitação'}
+    data: {menuName: 'Baixa'}
   }
 ];
 

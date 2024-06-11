@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { AtaLicitacao, AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
+import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -22,9 +22,20 @@ export class DocumentosService {
     );
   }
 
-  public obterPorID(id: number): Observable<AtaLicitacao> {
+  public obterAtaPorID(id: number): Observable<AtaLicitacao> {
     const url = `${this.URL}/ataDoc/${id}`;
     return this.http.get<AtaLicitacao>(url).pipe(
+      map((ata: any) => ({
+        ...ata,
+        DataLicitacao: new Date(ata.DataLicitacao),
+        DataAta: new Date(ata.DataAta)
+      }))
+    );
+  }
+
+  public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
+    const url = `${this.URL}/baixaDoc/${id}`;
+    return this.http.get<BaixaLicitacao>(url).pipe(
       map((ata: any) => ({
         ...ata,
         DataLicitacao: new Date(ata.DataLicitacao),

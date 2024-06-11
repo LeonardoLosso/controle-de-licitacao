@@ -1,1 +1,44 @@
-<p>empenho-tabela works!</p>
+<section class="tabela">
+    <div class="container mat-elevation-z8">
+
+        <div class="table-container">
+
+            <table mat-table [dataSource]="listaEmpenhos" class="table">
+
+                <!-- Código Column -->
+                <ng-container matColumnDef="codigo">
+                    <th mat-header-cell *matHeaderCellDef disableClear>Código</th>
+                    <td mat-cell *matCellDef="let row">{{row.ID}}</td>
+                </ng-container>
+
+                <!-- Data do empenho Column -->
+                <ng-container matColumnDef="data">
+                    <th mat-header-cell *matHeaderCellDef disableClear>Data do empenho</th>
+                    <td mat-cell *matCellDef="let row">{{row.DataEmpenho | date: 'dd/MM/yyyy' }}</td>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef disableClear>Status</th>
+                    <td mat-cell *matCellDef="let row">{{row.Status| formataEnum: 'status'}}</td>
+                </ng-container>
+
+                <!-- Saldo Column -->
+                <ng-container matColumnDef="saldo">
+                    <th mat-header-cell *matHeaderCellDef>Saldo (R$)</th>
+                    <td mat-cell *matCellDef="let row"><strong>{{row.Saldo | currency:'R$'}}</strong></td>
+                </ng-container>
+
+                <!-- Valor -->
+                <ng-container matColumnDef="valor">
+                    <th mat-header-cell *matHeaderCellDef>Valordo empenho</th>
+                    <td mat-cell *matCellDef="let row"><strong>{{row.Valor | currency:'R$'}}</strong></td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row (click)="clickGrid(row)" (dblclick)="doubleClick()" [ngClass]="selecionar(row)"
+                    *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</section>

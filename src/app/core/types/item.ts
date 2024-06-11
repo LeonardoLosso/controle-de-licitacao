@@ -32,8 +32,15 @@ export interface ItemDeBaixa {
     ID: number,
     Nome: string,
     Unidade: string,
-    Quantidade: number,
-    ValorUnitario: number,
-    ValorTotal: number,
-    Desconto: number
+
+    QtdeEmpenhada: number, //totalização das notas?
+
+    QtdeLicitada: number, //ja é preenchido com esses valores lá da ATA
+    QtdeAEmpenhar: number, //Quanto ainda falta para empenhar (empenhado - licitado)
+
+    ValorEmpenhado: number, //quantidade empenhada * valor unitário
+
+    ValorLicitado: number, //já preenchido vem da ATA
+    Saldo: number, //
+    ValorUnitario: number, // já vem preenchido vem preenchido da ATA
 }
