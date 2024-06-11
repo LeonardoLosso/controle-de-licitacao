@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./cabecalho-ata.component.scss']
 })
 export class CabecalhoAtaComponent {
-  @Input() status: number = 1;
+  @Input() status: number = 0;
   
   @Output() acao = new EventEmitter();
   
@@ -39,5 +39,9 @@ export class CabecalhoAtaComponent {
 
   excluir() {
     this.remover.emit();
+  }
+
+  verificaStatus(): boolean{
+    return this.status === 0 || this.status === 1 || !this.status;
   }
 }

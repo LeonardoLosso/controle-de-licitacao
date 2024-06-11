@@ -1,10 +1,18 @@
 <section class="busca-docmentos">
     <app-container>
         <form>
-            <app-cabecalho-ata>
+            <app-cabecalho-ata
+                (cancelar)="cancelar()"
+                (acao)="abrirBaixa()"
+                (salvar)="salvar()"
+                (inativar)="inativar()"
+                (novo)="novoItem()"
+                (remover)="excluirItem()"
+                [status]="status.value">
+                
                 <app-formulario-ata/>
             </app-cabecalho-ata>
-            <app-item-ata-tabela />
+            <app-item-ata-tabela [listaItens]="listaItens.value" [control]="selecionado" (editarItem)="editarItem()"/>
         </form>
     </app-container>
 </section>

@@ -17,3 +17,13 @@ export interface Item {
     ListaItens: ItemSimplificado[] | null
     ListaNomes: string[]
 }
+
+export interface ItemDeAta {
+    ID: number,
+    Nome: string,
+    Unidade: string,
+    Quantidade: number,
+    ValorUnitario: number,
+    ValorTotal: number,
+    Desconto: number
+}

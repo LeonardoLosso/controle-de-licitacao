@@ -1,4 +1,4 @@
-import { Component, Type } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { FormularioAtaService } from '../../services/formulario-ata.service';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
@@ -11,16 +11,19 @@ import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/loo
   templateUrl: './formulario-ata.component.html',
   styleUrls: ['./formulario-ata.component.scss']
 })
-export class FormularioAtaComponent {
+export class FormularioAtaComponent implements OnInit{
 
   options = EnumTipoCadastro;
-  lookupEntidade = false;
-  lookupOrgao = false;
+  statusControl!: FormControl<number>;
 
   constructor(
     public formService: FormularioAtaService,
     private dialog: MatDialog
   ) { }
+
+  ngOnInit(): void {
+    this.statusControl = this.formService.obterControle<number>('status');
+  }
 
   displayUnidade(val: EnumNumberID): string {
     return val && val.nome ? `${val.nome}` : '';
@@ -51,6 +54,10 @@ export class FormularioAtaComponent {
   possuiValor(control: string): string {
     const valor = this.formService.obterControle(control);
     return valor.value?.ID ? 'close' : 'search';
+  }
+  
+  desabilitado(): boolean{
+    return this.statusControl.value === 2;
   }
 
   private abrirLookup(component: Type<any>, valor: FormControl, filtro: string = 'orgao') {

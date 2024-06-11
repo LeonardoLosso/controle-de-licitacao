@@ -9,9 +9,9 @@
         <div class="btn-group">
             <app-botoes 
                 variant="btn-cabecalho"
-                [icone]="status === 1 || !status? 'block' : 'check'"
-                [texto]="status === 1 || !status? 'Inativar' : 'Reativar'"
-                [color]="status === 1 || !status? 'warn' : 'verde'" 
+                [icone]="verificaStatus()? 'block' : 'check'"
+                [texto]="verificaStatus()? 'Inativar Ata' : 'Reativar Ata'"
+                [color]="verificaStatus()? 'warn' : 'verde'" 
                 (click)="inativarDocumento()" />
 
             <app-botoes icone="delete" texto="Remover item" variant="btn-cabecalho" (click)="excluir()" />
@@ -19,7 +19,7 @@
 
         <div class="btn-group">
             <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
-            <app-botoes icone="description" texto="Baixa" variant="btn-cabecalho" (click)="abrirBaixa()" />
+            <app-botoes icone="description" texto="Baixa" variant="btn-cabecalho" color="verde" (click)="abrirBaixa()" />
 
         </div>
     </div>

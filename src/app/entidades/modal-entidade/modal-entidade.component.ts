@@ -21,7 +21,7 @@ export class ModalEntidadeComponent {
     constructor(
         public dialogRef: MatDialogRef<ModalEntidadeComponent>,
         @Inject(MAT_DIALOG_DATA) public data: Entidade,
-        private dialog: MatDialog,
+        private dialog: MatDialog
 
     ) {
         this.entidade = { ...data };

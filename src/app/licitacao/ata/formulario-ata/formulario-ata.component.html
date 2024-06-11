@@ -1,6 +1,4 @@
-<!-- Lookup empresa -->
-<!-- Lookup Órgão -->
-<section class="formulario">
+<form [formGroup]="formService.formulario" class="formulario">
 
     <!-- Edital -->
     <mat-form-field class="field" appearance="outline">
@@ -41,7 +39,7 @@
             [value]="displayFn(formService.obterControle('empresa'))"
             (input)="limparValor('empresa')">
         <button mat-icon-button matSuffix (click)="acao('empresa')" [attr.aria-label]="'Abre lookup'"
-            [attr.aria-pressed]="lookupEntidade">
+            [disabled]="desabilitado()">
             <mat-icon>{{possuiValor('empresa')}}</mat-icon>
         </button>
     </mat-form-field>
@@ -55,7 +53,7 @@
             [value]="displayFn(formService.obterControle('orgao'))"
             (input)="limparValor('orgao')">
         <button mat-icon-button matSuffix (click)="acao('orgao')" [attr.aria-label]="'Abre lookup'"
-            [attr.aria-pressed]="lookupEntidade">
+            [disabled]="desabilitado()">
             <mat-icon>{{possuiValor('orgao')}}</mat-icon>
         </button>
     </mat-form-field>
@@ -73,4 +71,4 @@
             </mat-autocomplete>
         </mat-form-field>
     </ng-container>
-</section>
+</form>

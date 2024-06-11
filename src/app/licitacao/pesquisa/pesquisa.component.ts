@@ -38,14 +38,14 @@ export class PesquisaComponent {
 
   };
   public editar(): void {
-    const cadastro = this.selecionado.value;
-    // const ID = this.selecionado.value;
-    // const cadastro = this.service.obterPorID(id).subscribe();
-    if (!cadastro) {
+    const id: string = this.selecionado.value.ID;
+
+    if (!id) {
       return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
     }
 
-    //router
+    const queryParams = { ata: id };
+    this.router.navigate(['/licitacao'], { queryParams });
   };
 
   public voltar(): void {
@@ -53,7 +53,6 @@ export class PesquisaComponent {
   };
 
   public buscar(): void {
-    debugger
   }
 
   public limpar(): void {

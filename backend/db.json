@@ -415,6 +415,7 @@
     ],
     "documentos": [
         {
+            "id": 1,
             "ID": "046/24",
             "Status": 1,
             "Orgao": "Prefeitura Maringá",
@@ -424,6 +425,7 @@
             "TotalLicitado": 2348481.30
         },
         {
+            "id": 2,
             "ID": "047/24",
             "Status": 1,
             "Orgao": "Prefeitura Maringá",
@@ -433,6 +435,7 @@
             "TotalLicitado": 2348481.30
         },
         {
+            "id": 2,
             "ID": "048/24",
             "Status": 1,
             "Orgao": "Prefeitura Maringá",
@@ -442,6 +445,7 @@
             "TotalLicitado": 2348481.30
         },
         {
+            "id": 3,
             "ID": "049/24",
             "Status": 1,
             "Orgao": "Prefeitura Maringá",
@@ -449,6 +453,106 @@
             "DataLicitacao": "06/07/2024",
             "DataAta": "06/07/2025",
             "TotalLicitado": 2348481.30
+        }
+    ],
+    "ataDoc": [
+        {
+            "id": 1,
+            "ID": "049/24",
+            "Status": 1,
+            "Orgao": {
+                "ID": 2001,
+                "Status": 1,
+                "Nome": "Prefeitura de Maringá",
+                "Fantasia": "Prefeitura de Maringá",
+                "Tipo": 2,
+                "CNPJ": "10260293000108",
+                "IE": "7963920614",
+                "Telefone": "44991234567",
+                "Email": "email@email.com",
+                "Endereco": {
+                    "CEP": "87050500",
+                    "Cidade": "Maringá",
+                    "UF": "PR",
+                    "Bairro": "Jardim Aclimação",
+                    "Logradouro": "Rua Londrina",
+                    "Numero": "114",
+                    "Complemento": ""
+                }
+            },
+            "Empresa": {
+                "ID": 1001,
+                "Status": 1,
+                "Nome": "Nasser Alimentos",
+                "Fantasia": "Nasser Alimentos",
+                "Tipo": 1,
+                "CNPJ": "10260293000108",
+                "IE": "7963920614",
+                "Telefone": "44991234567",
+                "Email": "email@email.com",
+                "Endereco": {
+                    "CEP": "87050500",
+                    "Cidade": "Maringá",
+                    "UF": "PR",
+                    "Bairro": "Jardim Aclimação",
+                    "Logradouro": "Rua Londrina",
+                    "Numero": "114",
+                    "Complemento": ""
+                }
+            },
+            "Unidade": 2,
+            "DataLicitacao": "06/07/2024",
+            "DataAta": "06/07/2025",
+            "Itens": [
+                {
+                    "ID": 1,
+                    "Nome": "Abacaxi",
+                    "Unidade": "KG",
+                    "Quantidade": 14356,
+                    "ValorUnitario": 2.75,
+                    "ValorTotal": 53308.75
+                },
+                {
+                    "ID": 2,
+                    "Nome": "Abacaxi",
+                    "Unidade": "KG",
+                    "Quantidade": 14356,
+                    "ValorUnitario": 2.75,
+                    "ValorTotal": 53308.75
+                },
+                {
+                    "ID": 3,
+                    "Nome": "Abacaxi",
+                    "Unidade": "KG",
+                    "Quantidade": 14356,
+                    "ValorUnitario": 2.75,
+                    "ValorTotal": 53308.75
+                },
+                {
+                    "ID": 4,
+                    "Nome": "Abacaxi",
+                    "Unidade": "KG",
+                    "Quantidade": 14356,
+                    "ValorUnitario": 2.75,
+                    "ValorTotal": 53308.75
+                },
+                {
+                    "ID": 5,
+                    "Nome": "Abacaxi",
+                    "Unidade": "KG",
+                    "Quantidade": 14356,
+                    "ValorUnitario": 2.75,
+                    "ValorTotal": 53308.75
+                },
+                {
+                    "ID": 6,
+                    "Nome": "Abacaxi",
+                    "Unidade": "KG",
+                    "Quantidade": 14356,
+                    "ValorUnitario": 2.75,
+                    "ValorTotal": 53308.75
+                }
+            ]
         }
     ]
 }

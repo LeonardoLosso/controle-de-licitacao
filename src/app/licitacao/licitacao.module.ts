@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CabecalhoAtaComponent } from './ata/cabecalho-ata/cabecalho-ata.component';
 import { ItemAtaTabelaComponent } from './ata/item-ata-tabela/item-ata-tabela.component';
 import { FormularioAtaComponent } from './ata/formulario-ata/formulario-ata.component';
+import { ModalItemAtaComponent } from './ata/modal-item-ata/modal-item-ata.component';
 
 
 
@@ -24,6 +25,7 @@ import { FormularioAtaComponent } from './ata/formulario-ata/formulario-ata.comp
     CabecalhoAtaComponent,
     ItemAtaTabelaComponent,
     FormularioAtaComponent,
+    ModalItemAtaComponent,
   ],
   imports: [
     CommonModule,

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
+import { AtaLicitacao, AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -21,12 +21,24 @@ export class DocumentosService {
       })))
     );
   }
-  private convertToDate(value: any): Date {
-    return value instanceof Date ? value : new Date(value);
+
+  public obterPorID(id: number): Observable<AtaLicitacao> {
+    const url = `${this.URL}/ataDoc/${id}`;
+    return this.http.get<AtaLicitacao>(url).pipe(
+      map((ata: any) => ({
+        ...ata,
+        DataLicitacao: new Date(ata.DataLicitacao),
+        DataAta: new Date(ata.DataAta)
+      }))
+    );
   }
 
   public inativar(id: number): Observable<AtaLicitacaoSimplificada[]> {
     // IMPLEMENTAR
     return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`);
+  }
+
+  private convertToDate(value: any): Date {
+    return value instanceof Date ? value : new Date(value);
   }
 }

@@ -1,0 +1,45 @@
+.tabela {
+    margin-top: 22px;
+}
+
+.container {
+    position: relative;
+
+    .table-container {
+        position: relative;
+        max-height: 63vh;
+        overflow: auto;
+
+        table {
+            width: 100%;
+
+            .mat-mdc-cell:not(:last-child) {
+                border-right: solid 1px #c9c9c9;
+            }
+
+            th {
+                background-color: lightgray;
+            }
+
+        }
+    }
+}
+
+
+/*CLIQUE*/
+.mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+}
+
+.mat-mdc-row:hover:not(.selecionado) {
+    background-color: #e9e8e8;
+}
+
+.selecionado {
+    background-color: #d8d8d8;
+}
+
+tr.mat-mdc-footer-row {
+    background-color: #e9e8e8;
+    font-weight: bold;
+}
