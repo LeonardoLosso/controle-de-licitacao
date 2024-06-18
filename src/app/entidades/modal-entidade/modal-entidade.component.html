@@ -12,7 +12,12 @@
             <!-- nome -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>nome</mat-label>
-                <input matInput name="nome" #nome="ngModel" [(ngModel)]="entidade.nome">
+                <input 
+                    maxlength="50"
+                    matInput 
+                    name="nome" 
+                    #nome="ngModel" 
+                    [(ngModel)]="entidade.nome">
             </mat-form-field>
 
             <!-- tipo de Cadastro -->
@@ -38,37 +43,58 @@
             <!-- cnpj -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>cnpj</mat-label>
-                <input matInput name="cnpj" maxlength="18" #cnpj="ngModel" [(ngModel)]="entidade.cnpj" [ngModel]="entidade.cnpj | mascarasInput:'cpf-cnpj'">
+                <input 
+                    matInput 
+                    name="cnpj" 
+                    maxlength="18" 
+                    #cnpj="ngModel" 
+                    [(ngModel)]="entidade.cnpj" 
+                    [ngModel]="entidade.cnpj | mascarasInput:'cpf-cnpj'">
             </mat-form-field>
 
             <!-- ie -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Inscrição Estadual</mat-label>
-                <input matInput name="ie" #ie="ngModel" [(ngModel)]="entidade.ie">
+                <input
+                    maxlength="9" 
+                    matInput 
+                    name="ie" 
+                    #ie="ngModel" 
+                    [(ngModel)]="entidade.ie">
             </mat-form-field>
 
             <!-- fantasia -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>nome fantasia</mat-label>
-                <input matInput name="fantasia" #fantasia="ngModel" [(ngModel)]="entidade.fantasia">
+                <input 
+                    maxlength="50"
+                    matInput 
+                    name="fantasia" 
+                    #fantasia="ngModel" 
+                    [(ngModel)]="entidade.fantasia">
             </mat-form-field>
 
             <!-- email -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>E-mail</mat-label>
-                <input matInput name="email" #email="ngModel" [(ngModel)]="entidade.email">
+                <input 
+                    maxlength="40"
+                    matInput 
+                    name="email" 
+                    #email="ngModel" 
+                    [(ngModel)]="entidade.email">
             </mat-form-field>
 
             <!-- telefone -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>telefone</mat-label>
                 <input 
-                matInput 
-                name="telefone" 
-                maxlength="16" 
-                #telefone="ngModel" 
-                [(ngModel)]="entidade.telefone" 
-                [ngModel]="entidade.telefone | mascarasInput:'phone'">
+                    matInput 
+                    name="telefone" 
+                    maxlength="16" 
+                    #telefone="ngModel" 
+                    [(ngModel)]="entidade.telefone" 
+                    [ngModel]="entidade.telefone | mascarasInput:'phone'">
             </mat-form-field>
         </div>
 
@@ -78,7 +104,7 @@
             <mat-form-field class="input" appearance="outline">
                 <mat-label>cep</mat-label>
                 <input 
-                    matInput ,
+                    matInput
                     name="cep" 
                     #cep="ngModel" 
                     maxlength="9" 
@@ -108,31 +134,56 @@
             <!-- cidade -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>cidade</mat-label>
-                <input matInput name="cidade" #cidade="ngModel" [(ngModel)]="entidade.endereco.cidade">
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="cidade" 
+                    #cidade="ngModel" 
+                    [(ngModel)]="entidade.endereco.cidade">
             </mat-form-field>
 
             <!-- bairro -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>bairro</mat-label>
-                <input matInput name="bairro" #bairro="ngModel" [(ngModel)]="entidade.endereco.bairro">
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="bairro" 
+                    #bairro="ngModel" 
+                    [(ngModel)]="entidade.endereco.bairro">
             </mat-form-field>
 
             <!-- numero -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Número</mat-label>
-                <input matInput name="numero" #numero="ngModel" [(ngModel)]="entidade.endereco.numero">
+                <input 
+                    maxlength="10"
+                    matInput 
+                    name="numero" 
+                    #numero="ngModel" 
+                    [(ngModel)]="entidade.endereco.numero">
             </mat-form-field>
 
             <!-- logradouro -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>logradouro</mat-label>
-                <input matInput name="logradouro" #logradouro="ngModel" [(ngModel)]="entidade.endereco.logradouro">
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="logradouro" 
+                    #logradouro="ngModel" 
+                    [(ngModel)]="entidade.endereco.logradouro">
             </mat-form-field>
 
             <!-- complemento -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>complemento</mat-label>
-                <input matInput name="complemento" #complemento="ngModel" [(ngModel)]="entidade.endereco.complemento">
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="complemento" 
+                    #complemento="ngModel" 
+                    [(ngModel)]="entidade.endereco.complemento">
             </mat-form-field>
         </div>
     </div>

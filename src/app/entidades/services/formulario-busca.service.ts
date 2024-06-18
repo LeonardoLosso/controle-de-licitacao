@@ -16,9 +16,9 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
 
     public override obterDadosBusca(): any[] {
         return [
-            { key: 'status', value: this.obterControle('status').value },
+            { key: 'status', value: this.obterControle('status').value?.id },
             { key: 'tipo', value: this.obterControle('tipo').value?.id },
-            { key: 'cidade', value: this.obterControle('cidade').value?.id }
+            { key: 'cidade', value: this.obterControle('cidade').value }
         ]
     }
 

@@ -9,9 +9,10 @@ export class MensagemService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-  openSnackBar(message: string) {
+  openSnackBar(message: string, panelClass: string = 'snack-bar-info') {
     this._snackBar.open(message, undefined, {
       duration: 3000,
+      panelClass: [panelClass]
     });
   }
 }

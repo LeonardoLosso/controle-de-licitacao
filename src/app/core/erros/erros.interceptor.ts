@@ -21,8 +21,7 @@ export class ErrosInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<HttpErrorResponse>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = 'Deu zika, meu parça';
-
+        let errorMessage = 'Erro desconhecido';
         if (error.error instanceof ErrorEvent) {
           errorMessage = `Erro do client: ${error.error.message}`;
         } else if (error.status === 404) {
@@ -31,11 +30,15 @@ export class ErrosInterceptor implements HttpInterceptor {
           errorMessage = `Erro interno do servidor`;
         } else if (error.status === 401) {
           errorMessage = `Não autorizado`;
+        } else if (error.status === 0){
+          errorMessage = 'Servidor off-line';
+        } else if (error.status === 501){
+          errorMessage = error.error?.Message;
         }
 
-        this.service.openSnackBar(errorMessage);
+        this.service.openSnackBar('⛔     ' + errorMessage, 'snack-bar-error');
 
-        return throwError(() => new Error('Deu zika, meu nobre'));
+        return throwError(() => new Error(errorMessage));
       })
     );
   }

@@ -8,6 +8,7 @@ import { MensagemModal } from '../types/auxiliares';
 import { FormularioBuscaBaseService } from '../services/formulario-busca-base.service';
 import { CrudBaseService } from '../services/crud-base.service';
 import { MatDialog } from '@angular/material/dialog';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Directive({
   selector: '[appBuscaBase]'
@@ -26,12 +27,20 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     protected dialog: MatDialog,
     protected router: Router,
     protected errorMessage: MensagemService
-  ) { }
+  ) {
 
-  ngOnInit(): void {
     this.selecionado = this.form.obterControle('selecionadoGrid');
     this.pesquisa = this.form.obterControle('pesquisa');
 
+    this.pesquisa.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()).subscribe((value) => {
+        this.limpar();
+        this.loadData(value);
+      })
+  }
+
+  ngOnInit(): void {
     this.initForm();
     this.loadData();
   }
@@ -93,8 +102,8 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     this.inativarConfirmar(cadastro);
   }
 
-  public loadData() {
-    const params = this.form.obterDadosBusca();
+  public loadData(search?: string) {
+    const params = search ? [{key: 'search', value: search}] : this.form.obterDadosBusca();
     this.service.listar(this.pagina, params).subscribe({
       next: result => {
         this.lista = result.lista;
