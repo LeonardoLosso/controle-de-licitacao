@@ -24,7 +24,7 @@ export class FormularioBuscaBaseService {
     return control as FormControl<T>;
   }
 
-  public obterDadosBusca() { }
+  public obterDadosBusca(): { key: string, value: any }[] { return [] }
 
   public limparFiltros() {
     this.obterControle('status').setValue(null);

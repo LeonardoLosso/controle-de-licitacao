@@ -13,11 +13,11 @@
         </mat-form-field>
     </ng-container>
 
-    <!-- Tipo do documento dropdown -->
+    <!-- tipo do documento dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>Tipo documento</mat-label>
-            <input type="text" placeholder="Selecione" aria-label="Tipo documento" matInput
+            <mat-label>tipo documento</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="tipo documento" matInput
                 [formControl]="formService.obterControle('tipo')" [matAutocomplete]="tipo">
             <mat-autocomplete [displayWith]="displayTipo" #tipo="matAutocomplete">
                 <mat-option *ngFor="let item of tipoDoc" [value]="item">
@@ -30,8 +30,8 @@
     <!-- status dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>Status</mat-label>
-            <input type="text" placeholder="Selecione" aria-label="Status" matInput
+            <mat-label>status</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="status" matInput
                 [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
             <mat-autocomplete [displayWith]="displayStatus" #stts="matAutocomplete">
                 <mat-option *ngFor="let item of status" [value]="item">

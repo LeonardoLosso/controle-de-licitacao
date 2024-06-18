@@ -17,6 +17,6 @@ export class FormularioBaixaComponent implements OnInit {
   ngOnInit(): void { }
 
   displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.ID} - ${control.value?.Nome}` : '';
+    return control.value ? `${control.value?.id} - ${control.value?.nome}` : '';
   }
 }

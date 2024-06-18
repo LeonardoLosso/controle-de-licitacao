@@ -17,6 +17,8 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
   public lista!: ObjetoSimplificado[];
   public selecionado!: FormControl;
   public pesquisa!: FormControl;
+  public totalItems!: number;
+  public pagina: number = 1;
 
   constructor(
     public form: FormularioBuscaBaseService,
@@ -44,14 +46,20 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     this.dialogCadastro(cadastro, true);
   };
   public editar(): void {
-    const cadastro = this.selecionado.value;
-    // const ID = this.selecionado.value;
-    // const cadastro = this.service.obterPorID(id).subscribe();
-    if (!cadastro) {
-      return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
-    }
+    const id = this.selecionado.value.id;
+    let cadastro;
 
-    this.dialogCadastro(cadastro, false);
+    this.service.obterPorID(id).subscribe({
+      next: result => {
+        cadastro = result
+        if (!cadastro) {
+          return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
+        }
+
+        this.dialogCadastro(cadastro, false);
+      }
+    });
+
   };
 
   public voltar(): void {
@@ -63,15 +71,12 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     return {
       titulo: 'Inativar cadastro?',
       mensagem: 'Deseja inativar a cadastro??',
-      item: `\nCód: ${item.ID} - ${item.Nome}`
+      item: `\nCód: ${item.id} - ${item.nome}`
     }
   }
   public buscar(): void {
-    this.service.listar().subscribe({
-      next: result => {
-        this.lista = result;
-      }
-    });
+
+    this.loadData();
   }
 
   public limpar(): void {
@@ -88,17 +93,22 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     this.inativarConfirmar(cadastro);
   }
 
-  private loadData() {
-    this.service.listar().subscribe({
+  public loadData() {
+    const params = this.form.obterDadosBusca();
+    this.service.listar(this.pagina, params).subscribe({
       next: result => {
-        this.lista = result;
+        this.lista = result.lista;
+        this.totalItems = result.totalItems;
       }
     });
   }
 
-  private inativarCadastro() {
-    const id = this.selecionado.value.ID;
-    this.service.inativar(id);
+  private inativarCadastro(cadastro: ObjetoSimplificado) {
+    this.service.inativar(cadastro).subscribe({
+      next: () => {
+        this.loadData();
+      }
+    });
   }
 
   private inativarConfirmar(cadastro: ObjetoSimplificado) {
@@ -109,10 +119,8 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.inativarCadastro();
-        // this.loadData() Se sucesso
+        this.inativarCadastro(cadastro);
       }
     });
   }
-
 }

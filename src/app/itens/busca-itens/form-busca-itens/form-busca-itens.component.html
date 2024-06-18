@@ -1,8 +1,8 @@
 <section class="filters">
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>Status</mat-label>
-            <input type="text" placeholder="Selecione" aria-label="Status" matInput
+            <mat-label>status</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="status" matInput
                 [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
             <mat-autocomplete [displayWith]="displayFnStatus" #stts="matAutocomplete">
                 <mat-option *ngFor="let item of status" [value]="item">
@@ -14,8 +14,8 @@
 
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>Tipo</mat-label>
-            <input type="text" placeholder="Selecione" aria-label="Tipo" matInput
+            <mat-label>tipo</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="tipo" matInput
                 [formControl]="formService.obterControle('ehCesta')" [matAutocomplete]="tipo">
             <mat-autocomplete #tipo="matAutocomplete">
                 <mat-option *ngFor="let item of tipoItem" [value]="item">

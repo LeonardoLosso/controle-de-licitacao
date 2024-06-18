@@ -38,19 +38,25 @@ export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplifica
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (novo) {
-        // logicado novo
-      } else {
-        // logica do editar
+      if (result) {
+        if (novo) {
+          this.service.criar(result).subscribe({
+            next: () => this.loadData()
+          });
+        } else {
+          this.service.editar(result).subscribe({
+            next: () => this.loadData()
+          });
+        }
       }
     });
   }
   protected cadastroVazio(): Item {
     return {
-      ID: 0,
-      Status: 1,
+      id: 0,
+      status: 1,
       EhCesta: false,
-      Nome: '',
+      nome: '',
       UnidadePrimaria: '',
       UnidadeSecundaria: '',
       ListaItens: null,

@@ -14,7 +14,7 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
     this.formBusca.addControl('unidadeSec', new FormControl(null));
     this.formBusca.addControl('ehCesta', new FormControl(null));
   }
-  public override obterDadosBusca() { }
+  public override obterDadosBusca(): {key: string, value: any}[] { return [] }
 
   public override limparFiltros() {
     super.limparFiltros();

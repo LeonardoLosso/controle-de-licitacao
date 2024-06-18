@@ -25,15 +25,15 @@ export class ModalItemAtaComponent {
     this.item = { ...data };
     const itemSimp: ItemSimplificado = {
       EhCesta: false,
-      ID: this.item.ID,
-      Nome: this.item.Nome,
-      Status: 1,
+      id: this.item.id,
+      nome: this.item.nome,
+      status: 1,
       UnidadePrimaria: this.item.Unidade,
       UnidadeSecundaria: ''
     }
 
     this.formulario = new FormGroup({
-      item: new FormControl(itemSimp.ID === 0? null : itemSimp),
+      item: new FormControl(itemSimp.id === 0? null : itemSimp),
       unidade: new FormControl(this.item.Unidade),
       quantidade: new FormControl(this.item.Quantidade),
       valorUnitario: new FormControl(this.item.ValorUnitario),
@@ -41,7 +41,7 @@ export class ModalItemAtaComponent {
     });
     this.addListeners();
 
-    if (data.ID !== 0) {
+    if (data.id !== 0) {
       this.titulo = "Editar Item"
     }
 
@@ -55,8 +55,8 @@ export class ModalItemAtaComponent {
   }
   confirmar() {
     const item: ItemDeAta = {
-      ID: this.item.ID,
-      Nome: this.item.Nome,
+      id: this.item.id,
+      nome: this.item.nome,
       Unidade: this.obterControle('unidade').value as string,
       Quantidade: this.obterControle('quantidade').value as number,
       ValorUnitario: this.obterControle('valorUnitario').value as number,
@@ -75,7 +75,7 @@ export class ModalItemAtaComponent {
   }
 
   displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.ID} - ${control.value?.Nome}` : '';
+    return control.value ? `${control.value?.id} - ${control.value?.nome}` : '';
   }
   limparValor() {
     const valor = this.obterControle('item');
@@ -83,7 +83,7 @@ export class ModalItemAtaComponent {
   }
   possuiValor(): string {
     const valor = this.obterControle('item');
-    return valor.value?.ID ? 'close' : 'search';
+    return valor.value?.id ? 'close' : 'search';
   }
 
   public lookupDeItem() {
@@ -99,8 +99,8 @@ export class ModalItemAtaComponent {
         item.setValue(result);
         unidade.setValue(result.UnidadePrimaria);
 
-        this.item.ID = result.ID;
-        this.item.Nome = result.Nome;
+        this.item.id = result.id;
+        this.item.nome = result.nome;
       }
     });
   }

@@ -38,33 +38,39 @@ export class BuscaEntidadesComponent extends BuscaBaseDirective<Entidade, Entida
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (novo) {
-                // logicado novo
-            } else {
-                // logica do editar
+            if (result) {
+                if (novo) {
+                    this.service.criar(result).subscribe({
+                        next: () => this.loadData()
+                    });
+                } else {
+                    this.service.editar(result).subscribe({
+                        next: () => this.loadData()
+                    });
+                }
             }
         });
     }
 
     protected cadastroVazio(): Entidade {
         return {
-            ID: 0,
-            Status: 1,
-            Nome: '',
-            Fantasia: '',
-            Tipo: 0,
-            CNPJ: '',
-            IE: '',
-            Telefone: '',
-            Email: '',
-            Endereco: {
-                CEP: '',
-                Cidade: '',
-                UF: '',
-                Bairro: '',
-                Logradouro: '',
-                Numero: '',
-                Complemento: ''
+            id: 0,
+            status: 1,
+            nome: '',
+            fantasia: '',
+            tipo: 0,
+            cnpj: '',
+            ie: '',
+            telefone: '',
+            email: '',
+            endereco: {
+                cep: '',
+                cidade: '',
+                uf: '',
+                bairro: '',
+                logradouro: '',
+                numero: '',
+                complemento: ''
             }
         }
     }

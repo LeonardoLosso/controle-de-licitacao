@@ -38,10 +38,16 @@ export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioS
     dialogRef.afterClosed().subscribe(result => {
 
       console.log(result);
-      if (novo) {
-        // logicado novo
-      } else {
-        // logica do editar
+      if (result) {
+        if (novo) {
+          this.service.criar(result).subscribe({
+            next: () => this.loadData()
+          });
+        } else {
+          this.service.editar(result).subscribe({
+            next: () => this.loadData()
+          });
+        }
       }
     });
   }

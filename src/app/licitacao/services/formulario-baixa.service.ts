@@ -59,8 +59,8 @@ export class FormularioBaixaService {
 
     this.service.obterBaixaPorID(1).subscribe({
       next: result => {
-        edital.setValue(result.ID);
-        status.setValue(result.Status);
+        edital.setValue(result.id);
+        status.setValue(result.status);
         dataLicitacao.setValue(result.DataLicitacao);
         dataAta.setValue(result.DataAta);
         empresa.setValue(result.Empresa);

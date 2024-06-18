@@ -1,32 +1,32 @@
 import { Endereco } from "./auxiliares"
 
 export interface UsuarioSimplificado {
-    ID: number,
-    Status: number,
-    Nome: string,
+    id: number,
+    status: number,
+    nome: string,
     Usuario: string,
-    CPF: string
+    cpf: string
 }
 
 export interface Usuario {
-    ID: number,
-    Status: number,
-    Nome: string,
+    id: number,
+    status: number,
+    nome: string,
     Usuario: string,
-    CPF: string,
-    Email: string
-    Telefone: string
+    cpf: string,
+    email: string
+    telefone: string
     Permissoes: Permissoes[] | null
-    Endereco: Endereco
+    endereco: Endereco
 }
 
 export interface Permissoes {
-    ID: number,
+    id: number,
     Tela: string,
     Recursos: Recursos[]
 }
 
 export interface Recursos {
-    Nome: string,
+    nome: string,
     Permissao: boolean
 }

@@ -1,26 +1,24 @@
 import { Endereco } from "./auxiliares"
 
 export interface EntidadeSimplificada {
-    ID: number,
-    Status: number,
-    Fantasia: string,
-    Tipo: number,
-    CNPJ: string,
-    Telefone: string,
-    Email: string
+    id: number,
+    status: number,
+    fantasia: string,
+    tipo: number,
+    cnpj: string,
+    telefone: string,
+    email: string
 }
 
 export interface Entidade {
-    ID: number,
-    Status: number,
-    Nome: string,
-    Fantasia: string,
-    Tipo: number,
-    CNPJ: string,
-    IE: string,
-    Telefone: string,
-    Email: string,
-    Endereco: Endereco
+    id: number,
+    status: number,
+    nome: string,
+    fantasia: string,
+    tipo: number,
+    cnpj: string,
+    ie: string,
+    telefone: string,
+    email: string,
+    endereco: Endereco
 }
-
-

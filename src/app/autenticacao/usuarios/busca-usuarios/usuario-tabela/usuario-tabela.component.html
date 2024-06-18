@@ -40,10 +40,10 @@
                     <td mat-cell *matCellDef="let row">{{row.Usuario}}</td>
                 </ng-container>
 
-                <!-- CPF Column -->
+                <!-- cpf Column -->
                 <ng-container matColumnDef="cpf">
-                    <th mat-header-cell *matHeaderCellDef>CPF</th>
-                    <td mat-cell *matCellDef="let row">{{row.CPF | mascarasInput:'cpf-cnpj'}}</td>
+                    <th mat-header-cell *matHeaderCellDef>cpf</th>
+                    <td mat-cell *matCellDef="let row">{{row.cpf | mascarasInput:'cpf-cnpj'}}</td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

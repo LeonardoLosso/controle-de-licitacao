@@ -5,7 +5,7 @@
         <mat-label>Edital</mat-label>
         <input matInput [formControl]="formService.obterControle('edital')">
         <mat-error *ngIf="formService.formulario.get('edital')?.errors?.['required']">
-            Numero do edital é <strong>obrigatório</strong>
+            numero do edital é <strong>obrigatório</strong>
         </mat-error>
     </mat-form-field>
 

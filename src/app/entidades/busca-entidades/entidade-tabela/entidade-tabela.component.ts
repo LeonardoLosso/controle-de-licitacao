@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { EntidadeSimplificada } from 'src/app/core/types/entidade';
 
 
@@ -10,9 +11,12 @@ import { EntidadeSimplificada } from 'src/app/core/types/entidade';
 })
 export class EntidadeTabelaComponent {
     @Output() abrirDialog = new EventEmitter();
+    @Output() pagina = new EventEmitter();
+
     @Input() listaEntidades!: EntidadeSimplificada[];
     @Input() control!: FormControl;
     @Input() paginator: boolean = true;
+    @Input() totalItems: number = 0;
     @Input() displayedColumns: string[] = ['codigo', 'status', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
 
     private selecionado!: EntidadeSimplificada;
@@ -37,5 +41,10 @@ export class EntidadeTabelaComponent {
 
     doubleClick() {
         this.abrirDialog.emit();
+    }
+
+
+    mudaPagina(paginador: PageEvent){
+        this.pagina.emit(paginador.pageIndex);
     }
 }

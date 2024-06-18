@@ -26,19 +26,21 @@ export class ModalEntidadeComponent {
     ) {
         this.entidade = { ...data };
 
-        if (data.ID !== 0) {
+        if (data.id !== 0) {
             this.titulo = "Editar Cadastro"
         }
 
     }
 
 
-    displayFn(val: EnumNumberID): string {
-        return val && val.nome ? `${val.nome}` : '';
+    displayFn(val: number): string {
+        const value =  EnumTipoCadastro.filter(f => f.id === val)[0];
+        return value && value.nome ? `${value.nome}` : '';
     };
 
-    displayFnEstados(val: EnumStringID): string {
-        return val && val.nome ? `${val.id} - ${val.nome}` : '';
+    displayFnEstados(val: string): string {
+        const value =  EnumUF.filter(f => f.id === val)[0]; 
+        return value && value.nome ? `${value.id} - ${value.nome}` : '';
     };
 
     cancelar(form: NgForm) {

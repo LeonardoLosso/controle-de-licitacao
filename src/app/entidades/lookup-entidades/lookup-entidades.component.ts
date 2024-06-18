@@ -38,7 +38,7 @@ export class LookupEntidadesComponent {
     //filtra por status x tipo data = filtro
     this.service.listar().subscribe({
       next: result => {
-        this.listaEntidades = result;
+        this.listaEntidades = result.lista;
       }
     });
   }

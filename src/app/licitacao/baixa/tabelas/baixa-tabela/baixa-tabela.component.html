@@ -10,16 +10,16 @@
                     <th mat-header-cell *matHeaderCellDef disableClear>
                         Código
                     </th>
-                    <td mat-cell *matCellDef="let row">{{row.ID | separadorMilhar}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.id | separadorMilhar}}</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
-                <!-- Nome Column -->
+                <!-- nome Column -->
                 <ng-container matColumnDef="nome">
                     <th mat-header-cell *matHeaderCellDef disableClear>
-                        Nome
+                        nome
                     </th>
-                    <td mat-cell *matCellDef="let row">{{row.Nome}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.nome}}</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 

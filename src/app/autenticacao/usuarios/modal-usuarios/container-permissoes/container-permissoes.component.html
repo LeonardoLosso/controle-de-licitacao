@@ -12,7 +12,7 @@
         <div class="recursos">
             <ng-container *ngFor="let recurso of permissao.Recursos">
                 <mat-checkbox class="checkbox" [checked]="recurso.Permissao" color="primary"
-                    (change)="togglePermissao(recurso)">{{recurso.Nome}}</mat-checkbox>
+                    (change)="togglePermissao(recurso)">{{recurso.nome}}</mat-checkbox>
                 <mat-divider class="divider" />
             </ng-container>
         </div>

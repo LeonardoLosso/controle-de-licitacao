@@ -6,49 +6,49 @@
             <!-- Código -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Código</mat-label>
-                <input matInput name="id" disabled [(ngModel)]="usuario.ID" #id="ngModel">
+                <input matInput name="id" disabled [(ngModel)]="usuario.id" #id="ngModel">
             </mat-form-field>
 
-            <!-- Nome -->
+            <!-- nome -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Nome</mat-label>
-                <input matInput name="nome" #nome="ngModel" [(ngModel)]="usuario.Nome">
+                <mat-label>nome</mat-label>
+                <input matInput name="nome" #nome="ngModel" [(ngModel)]="usuario.nome">
             </mat-form-field>
 
-            <!-- CNPJ -->
+            <!-- cnpj -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>CPF</mat-label>
-                <input matInput name="cpf" #cnpj="ngModel" [(ngModel)]="usuario.CPF"
-                    [ngModel]="usuario.CPF | mascarasInput:'cpf-cnpj'">
+                <mat-label>cpf</mat-label>
+                <input matInput name="cpf" #cnpj="ngModel" [(ngModel)]="usuario.cpf"
+                    [ngModel]="usuario.cpf | mascarasInput:'cpf-cnpj'">
             </mat-form-field>
 
-            <!-- Email -->
+            <!-- email -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>E-mail</mat-label>
-                <input matInput name="email" #email="ngModel" [(ngModel)]="usuario.Email">
+                <input matInput name="email" #email="ngModel" [(ngModel)]="usuario.email">
             </mat-form-field>
 
-            <!-- Telefone -->
+            <!-- telefone -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Telefone</mat-label>
-                <input matInput name="telefone" #telefone="ngModel" [(ngModel)]="usuario.Telefone"
-                    [ngModel]="usuario.Telefone | mascarasInput:'phone'">
+                <mat-label>telefone</mat-label>
+                <input matInput name="telefone" #telefone="ngModel" [(ngModel)]="usuario.telefone"
+                    [ngModel]="usuario.telefone | mascarasInput:'phone'">
             </mat-form-field>
         </div>
 
         <h3>Endereço</h3>
         <div class="campo endereco">
-            <!-- CEP -->
+            <!-- cep -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>CEP</mat-label>
-                <input matInput name="cep" #cep="ngModel" [(ngModel)]="usuario.Endereco.CEP">
+                <mat-label>cep</mat-label>
+                <input matInput name="cep" #cep="ngModel" [(ngModel)]="usuario.endereco.cep">
             </mat-form-field>
 
-            <!-- UF -->
+            <!-- uf -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Estado</mat-label>
                 <input type="text" placeholder="Selecione" aria-label="Estado" matInput
-                    [(ngModel)]="usuario.Endereco.UF" [matAutocomplete]="estado" name="uf" #uf="ngModel">
+                    [(ngModel)]="usuario.endereco.uf" [matAutocomplete]="estado" name="uf" #uf="ngModel">
                 <mat-autocomplete [displayWith]="displayFnEstados" #estado="matAutocomplete">
                     <mat-option *ngFor="let estado of estados" [value]="estado.id">
                         {{estado.id}} - {{estado.nome}}
@@ -56,34 +56,34 @@
                 </mat-autocomplete>
             </mat-form-field>
 
-            <!-- Cidade -->
+            <!-- cidade -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Cidade</mat-label>
-                <input matInput name="cidade" #cidade="ngModel" [(ngModel)]="usuario.Endereco.Cidade">
+                <mat-label>cidade</mat-label>
+                <input matInput name="cidade" #cidade="ngModel" [(ngModel)]="usuario.endereco.cidade">
             </mat-form-field>
 
-            <!-- Bairro -->
+            <!-- bairro -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Bairro</mat-label>
-                <input matInput name="bairro" #bairro="ngModel" [(ngModel)]="usuario.Endereco.Bairro">
+                <mat-label>bairro</mat-label>
+                <input matInput name="bairro" #bairro="ngModel" [(ngModel)]="usuario.endereco.bairro">
             </mat-form-field>
 
-            <!-- Numero -->
+            <!-- numero -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Número</mat-label>
-                <input matInput name="numero" #numero="ngModel" [(ngModel)]="usuario.Endereco.Numero">
+                <input matInput name="numero" #numero="ngModel" [(ngModel)]="usuario.endereco.numero">
             </mat-form-field>
 
-            <!-- Logradouro -->
+            <!-- logradouro -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Logradouro</mat-label>
-                <input matInput name="logradouro" #logradouro="ngModel" [(ngModel)]="usuario.Endereco.Logradouro">
+                <mat-label>logradouro</mat-label>
+                <input matInput name="logradouro" #logradouro="ngModel" [(ngModel)]="usuario.endereco.logradouro">
             </mat-form-field>
 
-            <!-- Complemento -->
+            <!-- complemento -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Complemento</mat-label>
-                <input matInput name="complemento" #complemento="ngModel" [(ngModel)]="usuario.Endereco.Complemento">
+                <mat-label>complemento</mat-label>
+                <input matInput name="complemento" #complemento="ngModel" [(ngModel)]="usuario.endereco.complemento">
             </mat-form-field>
         </div>
 

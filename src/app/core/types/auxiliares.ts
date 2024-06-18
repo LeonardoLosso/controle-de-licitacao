@@ -5,13 +5,13 @@ export interface MensagemModal {
 }
 
 export interface Endereco {
-    CEP: string,
-    Cidade: string,
-    UF: string,
-    Bairro: string,
-    Logradouro: string,
-    Numero: string,
-    Complemento: string
+    cep: string,
+    cidade: string,
+    uf: string,
+    bairro: string,
+    logradouro: string,
+    numero: string,
+    complemento: string
 }
 
 
@@ -25,4 +25,11 @@ export interface EnumNumberID {
 export interface EnumStringID {
     id: string,
     nome: string
+}
+
+export interface Listagem <T>{
+    page: 2,
+    totalPage: 1,
+    totalItems: 3,
+    lista: T[]
 }

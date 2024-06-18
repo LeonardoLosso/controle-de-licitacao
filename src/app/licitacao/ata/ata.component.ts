@@ -47,7 +47,7 @@ export class AtaComponent implements OnInit {
     const id = control.value;
 
     if (!control.valid) {
-      return this.errorMessage.openSnackBar('Numero do edital é obrigatório');
+      return this.errorMessage.openSnackBar('numero do edital é obrigatório');
     }
     this.form.salvar();
   }
@@ -61,7 +61,7 @@ export class AtaComponent implements OnInit {
       const queryParams = { ata: id };
       return this.router.navigate(['/licitacao/baixa'], { queryParams });
     }
-    return this.errorMessage.openSnackBar('Numero do edital é obrigatório');
+    return this.errorMessage.openSnackBar('numero do edital é obrigatório');
   }
 
   inativar() {
@@ -138,8 +138,8 @@ export class AtaComponent implements OnInit {
 
   private itemVazio(): ItemDeAta {
     return {
-      ID: 0,
-      Nome: '',
+      id: 0,
+      nome: '',
       Unidade: '',
       Quantidade: 0,
       ValorUnitario: 0,

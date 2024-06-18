@@ -18,7 +18,7 @@ export class FormularioPesquisaService extends FormularioBuscaBaseService {
     this.formBusca.addControl('dataAtaFinal', new FormControl(null));
   }
 
-  public override obterDadosBusca() { }
+  public override obterDadosBusca(): {key: string, value: any}[] { return [] }
 
   public override limparFiltros() {
     super.limparFiltros();

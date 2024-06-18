@@ -38,7 +38,7 @@ export class LookupItensComponent implements OnInit {
     //filtra por status x tipo
     this.service.listar().subscribe({
       next: result => {
-        this.listaItens = result;
+        this.listaItens = result.lista;
       }
     });
   }

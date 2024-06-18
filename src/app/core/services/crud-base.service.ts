@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { Listagem } from '../types/auxiliares';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,13 @@ export abstract class CrudBaseService<Objeto, ObjetoSimplificado> {
   protected URL: string = environment.apiUrl;
   constructor() { }
 
-  public abstract listar(): Observable<ObjetoSimplificado[]>;
+  public abstract listar(pagina?: number, params?: {key: string, value: any}[]): Observable<Listagem<ObjetoSimplificado>>;
 
-  public abstract obterPorID(id: number): Observable<ObjetoSimplificado[]>;
+  public abstract obterPorID(id: number): Observable<Objeto>;
 
-  public abstract inativar(id: number): Observable<ObjetoSimplificado[]>;
+  public abstract inativar(cadastro: ObjetoSimplificado): Observable<Objeto>;
   
-  public abstract editar(cadastro: Objeto): Observable<ObjetoSimplificado[]>;
+  public abstract editar(cadastro: Objeto): Observable<Objeto>;
 
-  public abstract criar(cadastro: Objeto): Observable<ObjetoSimplificado[]>;
+  public abstract criar(cadastro: Objeto): Observable<Objeto>;
 }

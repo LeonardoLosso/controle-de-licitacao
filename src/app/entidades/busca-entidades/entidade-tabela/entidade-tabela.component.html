@@ -17,45 +17,45 @@
                     <th mat-header-cell *matHeaderCellDef disableClear>
                         Código
                     </th>
-                    <td mat-cell *matCellDef="let row">{{row.ID | separadorMilhar}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.id | separadorMilhar}}</td>
                 </ng-container>
                 
                 <!-- Código Column -->
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef disableClear>
-                        Status
+                        status
                     </th>
-                    <td mat-cell *matCellDef="let row">{{row.Status | formataEnum:'status'}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.status | formataEnum:'status'}}</td>
                 </ng-container>
 
-                <!-- Nome Column -->
+                <!-- nome Column -->
                 <ng-container matColumnDef="nome">
-                    <th mat-header-cell *matHeaderCellDef>Nome Fantasia</th>
-                    <td mat-cell *matCellDef="let row">{{row.Fantasia}}</td>
+                    <th mat-header-cell *matHeaderCellDef>nome fantasia</th>
+                    <td mat-cell *matCellDef="let row">{{row.fantasia}}</td>
                 </ng-container>
 
-                <!-- Tipo Column -->
+                <!-- tipo Column -->
                 <ng-container matColumnDef="tipo">
-                    <th mat-header-cell *matHeaderCellDef>Tipo do cadastro</th>
-                    <td mat-cell *matCellDef="let row">{{row.Tipo | formataEnum:'tipo'}}</td>
+                    <th mat-header-cell *matHeaderCellDef>tipo do cadastro</th>
+                    <td mat-cell *matCellDef="let row">{{row.tipo | formataEnum:'tipo'}}</td>
                 </ng-container>
 
-                <!-- Telefone Column -->
+                <!-- telefone Column -->
                 <ng-container matColumnDef="telefone">
-                    <th mat-header-cell *matHeaderCellDef>Telefone</th>
-                    <td mat-cell *matCellDef="let row">{{row.Telefone | mascarasInput:'phone'}}</td>
+                    <th mat-header-cell *matHeaderCellDef>telefone</th>
+                    <td mat-cell *matCellDef="let row">{{row.telefone | mascarasInput:'phone'}}</td>
                 </ng-container>
 
-                <!-- Email Column -->
+                <!-- email Column -->
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef>E-mail</th>
-                    <td mat-cell *matCellDef="let row">{{row.Email}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.email}}</td>
                 </ng-container>
 
-                <!-- CNPJ Column -->
+                <!-- cnpj Column -->
                 <ng-container matColumnDef="cnpj">
-                    <th mat-header-cell *matHeaderCellDef>CNPJ</th>
-                    <td mat-cell *matCellDef="let row">{{row.CNPJ | mascarasInput:'cpf-cnpj'}}</td>
+                    <th mat-header-cell *matHeaderCellDef>cnpj</th>
+                    <td mat-cell *matCellDef="let row">{{row.cnpj | mascarasInput:'cpf-cnpj'}}</td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -64,7 +64,7 @@
             </table>
         </div>
 
-        <mat-paginator *ngIf="paginator" class="paginator" hidePageSize [length]="listaEntidades.length" [pageSize]="30"
-            aria-label="Select page of GitHub search results"></mat-paginator>
+        <mat-paginator *ngIf="paginator" class="paginator" hidePageSize [length]="totalItems" [pageSize]="15" (page)="mudaPagina($event)"
+            aria-label="Select page"></mat-paginator>
     </div>
 </section>

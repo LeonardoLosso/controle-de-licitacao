@@ -38,7 +38,7 @@ export class PesquisaComponent {
 
   };
   public editar(): void {
-    const id: string = this.selecionado.value.ID;
+    const id: string = this.selecionado.value.id;
 
     if (!id) {
       return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
@@ -78,7 +78,7 @@ export class PesquisaComponent {
   }
 
   private inativarCadastro() {
-    const id = this.selecionado.value.ID;
+    const id = this.selecionado.value.id;
     this.service.inativar(id);
   }
 
@@ -87,7 +87,7 @@ export class PesquisaComponent {
     return {
       titulo: 'Inativar cadastro?',
       mensagem: 'Deseja inativar a cadastro??',
-      item: `\nCód: ${item.ID} - ${item.Nome}`
+      item: `\nCód: ${item.id} - ${item.nome}`
     }
   }
 

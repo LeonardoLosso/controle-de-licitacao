@@ -31,7 +31,7 @@ export class FormularioAtaComponent implements OnInit{
 
   acao(control: string) {
     const valor = this.formService.obterControle(control);
-    if (valor.value?.ID) {
+    if (valor.value?.id) {
       return valor.setValue(null);
     }
     switch (control) {
@@ -43,7 +43,7 @@ export class FormularioAtaComponent implements OnInit{
   }
 
   displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.ID} - ${control.value?.Nome}` : '';
+    return control.value ? `${control.value?.id} - ${control.value?.nome}` : '';
   }
 
   limparValor(control: string) {
@@ -53,7 +53,7 @@ export class FormularioAtaComponent implements OnInit{
 
   possuiValor(control: string): string {
     const valor = this.formService.obterControle(control);
-    return valor.value?.ID ? 'close' : 'search';
+    return valor.value?.id ? 'close' : 'search';
   }
   
   desabilitado(): boolean{

@@ -17,29 +17,29 @@
                     <th mat-header-cell *matHeaderCellDef disableClear>
                         Código
                     </th>
-                    <td mat-cell *matCellDef="let row">{{row.ID | separadorMilhar}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.id | separadorMilhar}}</td>
                 </ng-container>
 
-                <!-- Status Column -->
+                <!-- status Column -->
                 <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef disableClear>
-                        Status
+                        status
                     </th>
-                    <td mat-cell *matCellDef="let row">{{row.Status | formataEnum:'status'}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.status | formataEnum:'status'}}</td>
                 </ng-container>
 
                 <!-- EhCesta Column -->
                 <ng-container matColumnDef="cesta">
                     <th mat-header-cell *matHeaderCellDef disableClear>
-                        Tipo
+                        tipo
                     </th>
                     <td mat-cell *matCellDef="let row">{{row.EhCesta ? 'Cesta' : 'Item'}}</td>
                 </ng-container>
 
-                <!-- Nome Column -->
+                <!-- nome Column -->
                 <ng-container matColumnDef="nome">
-                    <th mat-header-cell *matHeaderCellDef>Nome</th>
-                    <td mat-cell *matCellDef="let row">{{row.Nome}}</td>
+                    <th mat-header-cell *matHeaderCellDef>nome</th>
+                    <td mat-cell *matCellDef="let row">{{row.nome}}</td>
                 </ng-container>
 
                 <!-- Unidade Primaria Column -->

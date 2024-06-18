@@ -8,7 +8,7 @@
                 <!-- Código Column -->
                 <ng-container matColumnDef="codigo">
                     <th mat-header-cell *matHeaderCellDef disableClear>Código</th>
-                    <td mat-cell *matCellDef="let row">{{row.ID}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.id}}</td>
                 </ng-container>
 
                 <!-- Data do empenho Column -->
@@ -17,10 +17,10 @@
                     <td mat-cell *matCellDef="let row">{{row.DataEmpenho | date: 'dd/MM/yyyy' }}</td>
                 </ng-container>
 
-                <!-- Status Column -->
+                <!-- status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef disableClear>Status</th>
-                    <td mat-cell *matCellDef="let row">{{row.Status| formataEnum: 'status'}}</td>
+                    <th mat-header-cell *matHeaderCellDef disableClear>status</th>
+                    <td mat-cell *matCellDef="let row">{{row.status| formataEnum: 'status'}}</td>
                 </ng-container>
 
                 <!-- Saldo Column -->

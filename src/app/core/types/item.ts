@@ -1,17 +1,17 @@
 export interface ItemSimplificado {
-    ID: number,
-    Status: number,
+    id: number,
+    status: number,
     EhCesta: boolean,
-    Nome: string,
+    nome: string,
     UnidadePrimaria: string,
     UnidadeSecundaria: string
 }
 
 export interface Item {
-    ID: number,
-    Status: number,
+    id: number,
+    status: number,
     EhCesta: boolean,
-    Nome: string,
+    nome: string,
     UnidadePrimaria: string,
     UnidadeSecundaria: string,
     ListaItens: ItemSimplificado[] | null
@@ -19,8 +19,8 @@ export interface Item {
 }
 
 export interface ItemDeAta {
-    ID: number,
-    Nome: string,
+    id: number,
+    nome: string,
     Unidade: string,
     Quantidade: number,
     ValorUnitario: number,
@@ -29,8 +29,8 @@ export interface ItemDeAta {
 }
 
 export interface ItemDeBaixa {
-    ID: number,
-    Nome: string,
+    id: number,
+    nome: string,
     Unidade: string,
 
     QtdeEmpenhada: number, //totalização das notas?

@@ -30,7 +30,7 @@ export class ModalItemComponent {
   ) {
     this.item = { ...data };
 
-    if (data.ID !== 0) {
+    if (data.id !== 0) {
       this.titulo = "Editar Item"
     }
 

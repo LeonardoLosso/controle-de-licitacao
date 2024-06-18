@@ -25,7 +25,7 @@ export class ModalUsuariosComponent {
   ) {
     this.usuario = { ...data };
 
-    if (data.ID !== 0) {
+    if (data.id !== 0) {
       this.titulo = "Editar Cadastro"
     }
 

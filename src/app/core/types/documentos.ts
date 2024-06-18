@@ -2,9 +2,9 @@ import { Entidade } from "./entidade"
 import { ItemDeAta, ItemDeBaixa } from "./item"
 
 export interface AtaLicitacao {
-    ID: string,
-    Status: number,
-    Tipo: number,
+    id: string,
+    status: number,
+    tipo: number,
     Orgao: Entidade,
     Empresa: Entidade,
     Unidade: number,
@@ -15,8 +15,8 @@ export interface AtaLicitacao {
     Itens: ItemDeAta[]
 }
 export interface AtaLicitacaoSimplificada {
-    ID: string,
-    Status: number,
+    id: string,
+    status: number,
     Orgao: string,
     Empresa: string,
     Unidade: number,
@@ -26,8 +26,8 @@ export interface AtaLicitacaoSimplificada {
 }
 //------------------------------------------------
 export interface BaixaLicitacao {
-    ID: string,
-    Status: number,
+    id: string,
+    status: number,
     DataLicitacao: Date,
     DataAta: Date,
     Vigencia: Date,
@@ -38,9 +38,9 @@ export interface BaixaLicitacao {
 }
 
 export interface Empenho {
-    ID: string,
+    id: string,
     IdAta: string,
-    Status: number,
+    status: number,
     DataEmpenho: Date,
     Saldo: number,
     Valor: number,
@@ -49,9 +49,9 @@ export interface Empenho {
 }
 
 export interface EmpenhoSimplificado {
-    ID: string,
+    id: string,
     IdAta: string,
-    Status: number,
+    status: number,
     DataEmpenho: Date,
     Saldo: number,
     Valor: number

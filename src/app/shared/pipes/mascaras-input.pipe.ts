@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MascarasInputPipe implements PipeTransform {
 
-    transform(value: string, type: 'phone' | 'cpf-cnpj'): string {
+    transform(value: string, type: string): string {
         if (!value) return '';
 
         switch (type) {
@@ -13,6 +13,8 @@ export class MascarasInputPipe implements PipeTransform {
                 return this.formatPhone(value);
             case 'cpf-cnpj':
                 return this.formatCpfCnpj(value);
+            case 'cep':
+                return this.formatCep(value);
             default:
                 return value;
         }
@@ -34,6 +36,14 @@ export class MascarasInputPipe implements PipeTransform {
             return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
         } else if (cleaned.length === 14) {
             return cleaned.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+        }
+        return value;
+    }
+
+    private formatCep(value: string): string {
+        const cleaned = this.cleanNumber(value);
+        if (cleaned.length === 8) {
+            return cleaned.replace(/(\d{5})(\d{3})/, '$1-$2');
         }
         return value;
     }
