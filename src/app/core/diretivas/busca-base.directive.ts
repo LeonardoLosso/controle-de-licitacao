@@ -20,6 +20,8 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
   public pesquisa!: FormControl;
   public totalItems!: number;
   public pagina: number = 1;
+  public isLoadingResults = true;
+  public isRateLimitReached = false;
 
   constructor(
     public form: FormularioBuscaBaseService,
@@ -87,7 +89,11 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
 
     this.loadData();
   }
-
+  public mudarPagina(value: number) {
+    this.pagina = value + 1;
+    this.pesquisa.setValue('');
+    this.loadData();
+  }
   public limpar(): void {
     this.form.limparFiltros();
   }
@@ -103,11 +109,19 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
   }
 
   public loadData(search?: string) {
-    const params = search ? [{key: 'search', value: search}] : this.form.obterDadosBusca();
+    const params = search ? [{ key: 'search', value: search }] : this.form.obterDadosBusca();
+
+    this.isLoadingResults = true;
+
     this.service.listar(this.pagina, params).subscribe({
       next: result => {
+        this.isLoadingResults = false;
         this.lista = result.lista;
         this.totalItems = result.totalItems;
+      },
+      error: () => {
+        this.isRateLimitReached = true;
+        this.isLoadingResults = false;
       }
     });
   }

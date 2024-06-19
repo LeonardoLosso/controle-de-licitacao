@@ -18,11 +18,11 @@ export class EntidadeTabelaComponent {
     @Input() paginator: boolean = true;
     @Input() totalItems: number = 0;
     @Input() displayedColumns: string[] = ['codigo', 'status', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
+    @Input() isLoadingResults = false;
+    @Input() isRateLimitReached = false;
 
     private selecionado!: EntidadeSimplificada;
-
-    public isLoadingResults = false;
-    public isRateLimitReached = false
+    
 
     constructor() { }
 
