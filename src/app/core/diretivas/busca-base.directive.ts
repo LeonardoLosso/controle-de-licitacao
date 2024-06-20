@@ -28,7 +28,7 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     protected service: CrudBaseService<Objeto, ObjetoSimplificado>,
     protected dialog: MatDialog,
     protected router: Router,
-    protected errorMessage: MensagemService
+    protected messageService: MensagemService
   ) {
 
     this.selecionado = this.form.obterControle('selecionadoGrid');
@@ -57,15 +57,14 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     this.dialogCadastro(cadastro, true);
   };
   public editar(): void {
-    const id = this.selecionado.value.id;
+    const id = this.selecionado.value?.id;
     let cadastro;
-
+    if (!id) {
+      return this.messageService.openSnackBar('Nenhum cadastro selecionado');
+    }
     this.service.obterPorID(id).subscribe({
       next: result => {
         cadastro = result
-        if (!cadastro) {
-          return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
-        }
 
         this.dialogCadastro(cadastro, false);
       }
@@ -102,7 +101,7 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     const cadastro = this.selecionado.value;
 
     if (!cadastro) {
-      return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
+      return this.messageService.openSnackBar('Nenhum cadastro selecionado');
     }
 
     this.inativarConfirmar(cadastro);

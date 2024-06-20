@@ -9,7 +9,18 @@ export class MensagemService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-  openSnackBar(message: string, panelClass: string = 'snack-bar-info') {
+  openSnackBar(message: string, pClass: 'alert' | 'error' | 'success' | 'info' = 'alert') {
+    const panelClass = 'snack-bar-' + pClass;
+
+    if (panelClass === 'snack-bar-error')
+      message = '⛔     ' + message;
+
+    if (panelClass === 'snack-bar-success')
+      message = '✅     ' + message;
+
+    if (panelClass === 'snack-bar-alert')
+      message = '📢     ' + message;
+
     this._snackBar.open(message, undefined, {
       duration: 3000,
       panelClass: [panelClass]

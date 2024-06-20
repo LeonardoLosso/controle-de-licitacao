@@ -41,11 +41,17 @@ export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplifica
       if (result) {
         if (novo) {
           this.service.criar(result).subscribe({
-            next: () => this.loadData()
+            next: () => {
+              this.loadData();
+              this.messageService.openSnackBar('Item criado com sucesso!', 'success')
+            }
           });
         } else {
           this.service.editar(result).subscribe({
-            next: () => this.loadData()
+            next: () => {
+              this.loadData();
+              this.messageService.openSnackBar('Item editado com sucesso!', 'success')
+            }
           });
         }
       }
@@ -55,12 +61,12 @@ export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplifica
     return {
       id: 0,
       status: 1,
-      EhCesta: false,
+      ehCesta: false,
       nome: '',
-      UnidadePrimaria: '',
-      UnidadeSecundaria: '',
-      ListaItens: null,
-      ListaNomes: []
+      unidadePrimaria: '',
+      unidadeSecundaria: '',
+      listaItens: [],
+      listaNomes: []
     }
   }
 }

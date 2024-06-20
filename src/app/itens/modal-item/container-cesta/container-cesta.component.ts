@@ -14,41 +14,52 @@ import { LookupItensComponent } from '../../lookup-itens/lookup-itens.component'
 })
 export class ContainerCestaComponent implements OnInit {
 
-  @Input() listaItens!: ItemSimplificado[] | null;
+  @Input() listaControl!: FormControl<ItemSimplificado[] | null>;
+  public listaItens!: ItemSimplificado[];
   public colunasGrid: string[] = ['codigo', 'nome', 'unidadePri', 'unidadeSec'];
   public selecionado!: FormControl;
 
   constructor(
     public form: FormularioBuscaService,
-    private errorMessage: MensagemService,
+    private messageService: MensagemService,
     protected dialog: MatDialog
-  ) { }
+  ) {
+
+
+  }
 
   ngOnInit(): void {
     this.selecionado = this.form.obterControle('selecionadoGrid');
+
+    if (this.listaControl?.value)
+      this.listaItens = this.listaControl.value;
   }
 
   addItem() {
+    const lista = this.listaItens ?? [];
     const dialogRef = this.dialog.open(LookupItensComponent, {
-      disableClose: true
+      disableClose: true,
+      data: lista
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const novoItem: ItemSimplificado = result;
-        this.listaItens = this.listaItens ? this.listaItens : [];
-        
+        this.listaItens = this.listaItens ?? [];
+
         this.listaItens.push(novoItem);
         this.listaItens = [...this.listaItens];
+        this.listaControl.setValue(this.listaItens);
+        this.listaControl.markAsDirty();
       }
     });
   }
 
   removerItem() {
-    const item = this.selecionado.value;
+    const item: ItemSimplificado = this.selecionado.value;
 
     if (!item) {
-      return this.errorMessage.openSnackBar('Nenhum item selecionado');
+      return this.messageService.openSnackBar('Nenhum item selecionado');
     }
 
     this.remover(item);
@@ -60,7 +71,9 @@ export class ContainerCestaComponent implements OnInit {
 
   private remover(item: ItemSimplificado) {
     if (this.listaItens) {
-      this.listaItens = this.listaItens.filter(i => i !== item);
+      this.listaItens = [...this.listaItens.filter(i => i.id !== item.id)];
+      this.listaControl.setValue(this.listaItens);
+      this.listaControl.markAsDirty();
     }
   }
 

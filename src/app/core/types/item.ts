@@ -1,21 +1,21 @@
 export interface ItemSimplificado {
     id: number,
     status: number,
-    EhCesta: boolean,
+    ehCesta: boolean,
     nome: string,
-    UnidadePrimaria: string,
-    UnidadeSecundaria: string
+    unidadePrimaria: string,
+    unidadeSecundaria: string
 }
 
 export interface Item {
     id: number,
     status: number,
-    EhCesta: boolean,
+    ehCesta: boolean,
     nome: string,
-    UnidadePrimaria: string,
-    UnidadeSecundaria: string,
-    ListaItens: ItemSimplificado[] | null
-    ListaNomes: string[]
+    unidadePrimaria: string,
+    unidadeSecundaria: string,
+    listaItens: ItemSimplificado[]
+    listaNomes: string[]
 }
 
 export interface ItemDeAta {

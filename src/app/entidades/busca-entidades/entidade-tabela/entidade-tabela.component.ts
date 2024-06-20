@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+
 import { EntidadeSimplificada } from 'src/app/core/types/entidade';
 
 
@@ -42,7 +43,6 @@ export class EntidadeTabelaComponent {
     doubleClick() {
         this.abrirDialog.emit();
     }
-
 
     mudaPagina(paginador: PageEvent){
         this.pagina.emit(paginador.pageIndex);

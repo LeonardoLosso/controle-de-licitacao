@@ -10,7 +10,7 @@ import { EnumNumberID } from 'src/app/core/types/auxiliares';
 })
 export class FormBuscaItensComponent {
   status = EnumTipoStatus;
-  tipoItem: string[] = ['Ambos', 'Cesta', 'Item'];
+  tipoItem: string[] = ['Cesta', 'Item'];
   constructor(public formService: FormularioBuscaService) { }
 
   displayFnStatus(val: EnumNumberID): string {

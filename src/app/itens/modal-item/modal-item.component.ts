@@ -1,9 +1,9 @@
 import { Component, Inject, inject } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
-import { Item } from 'src/app/core/types/item';
+import { Item, ItemSimplificado } from 'src/app/core/types/item';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
@@ -18,7 +18,7 @@ export class ModalItemComponent {
 
   public item!: Item;
   public titulo = "Novo Item";
-
+  public listaControl = new FormControl<ItemSimplificado[]>([]);
   addOnBlur = true;
   announcer = inject(LiveAnnouncer);
 
@@ -33,35 +33,41 @@ export class ModalItemComponent {
     if (data.id !== 0) {
       this.titulo = "Editar Item"
     }
+    
+    this.listaControl.setValue(this.item.listaItens);
 
+    this.listaControl.valueChanges.subscribe(value => {
+      if(value)
+        this.item.listaItens = value;
+    });
   }
   
   cancelar(form: NgForm) {
-    if (!form.dirty) {
+    if (!form.dirty && !this.listaControl.dirty) {
       return this.dialogRef.close();
     }
     this.confirmarCancelar();
   }
 
-  togglePermissao(item: Item) {
-    item.EhCesta = !item.EhCesta;
+  toggleCesta(item: Item) {
+    item.ehCesta = !item.ehCesta;
   }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     if (value) {
-      this.item.ListaNomes.push(value);
+      this.item.listaNomes.push(value);
     }
 
     event.chipInput!.clear();
   }
 
   remove(nome: string): void {
-    const index = this.item.ListaNomes.indexOf(nome);
+    const index = this.item.listaNomes.indexOf(nome);
 
     if (index >= 0) {
-      this.item.ListaNomes.splice(index, 1);
+      this.item.listaNomes.splice(index, 1);
 
       this.announcer.announce(`Removed ${nome}`);
     }
@@ -75,9 +81,9 @@ export class ModalItemComponent {
       return;
     }
 
-    const index = this.item.ListaNomes.indexOf(nome);
+    const index = this.item.listaNomes.indexOf(nome);
     if (index >= 0) {
-      this.item.ListaNomes[index] = value;
+      this.item.listaNomes[index] = value;
     }
   }
 

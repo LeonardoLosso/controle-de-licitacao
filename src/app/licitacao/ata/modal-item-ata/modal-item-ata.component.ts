@@ -24,12 +24,12 @@ export class ModalItemAtaComponent {
   ) {
     this.item = { ...data };
     const itemSimp: ItemSimplificado = {
-      EhCesta: false,
+      ehCesta: false,
       id: this.item.id,
       nome: this.item.nome,
       status: 1,
-      UnidadePrimaria: this.item.Unidade,
-      UnidadeSecundaria: ''
+      unidadePrimaria: this.item.Unidade,
+      unidadeSecundaria: ''
     }
 
     this.formulario = new FormGroup({
@@ -97,7 +97,7 @@ export class ModalItemAtaComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         item.setValue(result);
-        unidade.setValue(result.UnidadePrimaria);
+        unidade.setValue(result.unidadePrimaria);
 
         this.item.id = result.id;
         this.item.nome = result.nome;

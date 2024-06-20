@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EnumNumberID, EnumStringID } from 'src/app/core/types/auxiliares';
 
 import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro, EnumUF } from 'src/app/core/types/enum';

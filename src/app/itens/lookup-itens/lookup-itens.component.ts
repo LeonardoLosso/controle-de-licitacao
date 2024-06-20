@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 
-import { FormularioBuscaService } from '../services/formulario-busca.service';
 import { ItemSimplificado } from 'src/app/core/types/item';
 import { ItensService } from '../services/itens.service';
+import { MensagemService } from 'src/app/core/services/mensagem.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-lookup-itens',
@@ -13,30 +14,51 @@ import { ItensService } from '../services/itens.service';
 })
 export class LookupItensComponent implements OnInit {
 
-  public selecionado!: FormControl;
-  public pesquisa!: FormControl;
+  public selecionado = new FormControl(null);
+  public pesquisa = new FormControl('');
   public listaItens!: ItemSimplificado[];
   public colunasGrid: string[] = ['codigo', 'nome', 'unidadePri', 'unidadeSec'];
 
   constructor(
-    public form: FormularioBuscaService,
     private service: ItensService,
-    public dialogRef: MatDialogRef<LookupItensComponent>
-  ) { }
+    public dialogRef: MatDialogRef<LookupItensComponent>,
+    private messageService: MensagemService,
+    @Inject(MAT_DIALOG_DATA) public data: ItemSimplificado[],
+  ) { 
+    this.pesquisa.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()).subscribe((value) => {
+        this.listar();
+      })
+  }
 
   ngOnInit(): void {
-    this.selecionado = this.form.obterControle('selecionadoGrid');
-    this.pesquisa = this.form.obterControle('pesquisa');
     this.listar();
   }
 
   public confirmar() {
-    this.dialogRef.close(this.selecionado.value as ItemSimplificado);
+    if(this.selecionado.value){
+      const item = this.selecionado.value as ItemSimplificado;
+
+      if(this.data.find(f => f.id === item.id))
+        return this.messageService.openSnackBar('Esse item já foi adicionado à cesta');
+
+      this.messageService.openSnackBar('Item adicionado', 'success');
+      return this.dialogRef.close(item);
+    }
+
+    this.messageService.openSnackBar('Nenhum item selecionado');
   }
 
   private listar() {
-    //filtra por status x tipo
-    this.service.listar().subscribe({
+    const params = [
+      {key: 'status', value: 1},
+      {key: 'tipo', value: 'Item'}
+    ]
+
+    params.push({key: 'search', value: this.pesquisa.value?? ''})
+
+    this.service.listar(undefined, params).subscribe({
       next: result => {
         this.listaItens = result.lista;
       }

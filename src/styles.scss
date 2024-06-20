@@ -28,5 +28,17 @@ body {
 }
 
 .snack-bar-success .mat-mdc-snack-bar-label {
-    color: rgb(43, 187, 43) !important;
+    color: #2bbb2b !important;
+}
+
+.snack-bar-error .mat-mdc-snack-bar-label {
+    color: #fc7070 !important;
+}
+
+.snack-bar-alert .mat-mdc-snack-bar-label {
+    color: #e6f700 !important;
+}
+
+.bigger{
+    height: 600px;
 }

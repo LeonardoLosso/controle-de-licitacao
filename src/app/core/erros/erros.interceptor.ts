@@ -34,9 +34,11 @@ export class ErrosInterceptor implements HttpInterceptor {
           errorMessage = 'Servidor off-line';
         } else if (error.status === 501){
           errorMessage = error.error?.Message;
+        } else if (error.status === 400){
+          errorMessage = 'Requisição fora do padrão';
         }
 
-        this.service.openSnackBar('⛔     ' + errorMessage, 'snack-bar-error');
+        this.service.openSnackBar(errorMessage, 'error');
 
         return throwError(() => new Error(errorMessage));
       })

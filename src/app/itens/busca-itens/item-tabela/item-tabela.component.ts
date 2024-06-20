@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
+
 import { ItemSimplificado } from 'src/app/core/types/item';
 
 @Component({
@@ -9,21 +11,20 @@ import { ItemSimplificado } from 'src/app/core/types/item';
 })
 export class ItemTabelaComponent {
   @Output() abrirDialog = new EventEmitter();
+  @Output() pagina = new EventEmitter();
+
   @Input() listaItens!: ItemSimplificado[];
   @Input() control!: FormControl;
-  @Input() displayedColumns: string[] = ['codigo', 'status', 'cesta', 'nome', 'unidadePri', 'unidadeSec'];
   @Input() paginator: boolean = true;
+  @Input() totalItems: number = 0;
+  @Input() displayedColumns: string[] = ['codigo', 'nome', 'status', 'cesta', 'unidadePri', 'unidadeSec'];
+  @Input() isLoadingResults = false;
+  @Input() isRateLimitReached = false;
 
   private selecionado!: ItemSimplificado;
 
-  public isLoadingResults = false;
-  public isRateLimitReached = false
-
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   clickGrid(valor: ItemSimplificado) {
     this.selecionado = valor;
@@ -41,4 +42,8 @@ export class ItemTabelaComponent {
   doubleClick() {
     this.abrirDialog.emit();
   }
+  
+  mudaPagina(paginador: PageEvent){
+    this.pagina.emit(paginador.pageIndex);
+}
 }

@@ -5,7 +5,7 @@
             <app-item-tabela 
                 (abrirDialog)="confirmar()"
                 [paginator]="false" 
-                [control]="form.obterControle('selecionadoGrid')"
+                [control]="selecionado"
                 [displayedColumns]="colunasGrid"
                 [listaItens]="listaItens"/>
         </app-busca-container>
