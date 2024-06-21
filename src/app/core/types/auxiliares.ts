@@ -14,6 +14,11 @@ export interface Endereco {
     complemento: string
 }
 
+export interface MudancasParaPatch {
+    [op: string]: any;
+    path: string;
+    value?: any;
+  }
 
 //-----------[DROPDOWN MODEL]------------
 

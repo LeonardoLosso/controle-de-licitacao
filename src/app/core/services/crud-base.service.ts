@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { Listagem } from '../types/auxiliares';
+import { Listagem, MudancasParaPatch } from '../types/auxiliares';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export abstract class CrudBaseService<Objeto, ObjetoSimplificado> {
 
   public abstract inativar(cadastro: ObjetoSimplificado): Observable<Objeto>;
   
-  public abstract editar(cadastro: Objeto): Observable<Objeto>;
+  public abstract editar(cadastro: MudancasParaPatch[], id?: number): Observable<Objeto>;
 
   public abstract criar(cadastro: Objeto): Observable<Objeto>;
 }

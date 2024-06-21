@@ -1,8 +1,9 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Entidade } from 'src/app/core/types/entidade';
+import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { EnumTipoCadastro, EnumUF } from 'src/app/core/types/enum';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 
@@ -12,6 +13,9 @@ import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/moda
     styleUrls: ['./modal-entidade.component.scss']
 })
 export class ModalEntidadeComponent {
+
+    @ViewChild('entidadeForm') entidadeForm!: NgForm;
+
     public entidade!: Entidade;
     public options = EnumTipoCadastro;
     public estados = EnumUF;
@@ -28,17 +32,30 @@ export class ModalEntidadeComponent {
         if (data.id !== 0) {
             this.titulo = "Editar Cadastro"
         }
-
     }
 
+    submeter() {
+        if (this.data.id !== 0) {
+            const mudancas: MudancasParaPatch[] = [];
+            for (const controlName in this.entidadeForm.controls) {
+                const control = this.entidadeForm.controls[controlName];
+                if (control.dirty && control.value !== control.pristine) {
+                    mudancas.push({ op: 'replace', path: `/${controlName}`, value: control.value });
+                }
+            }
 
+            return this.dialogRef.close(mudancas);
+        }
+
+        return this.dialogRef.close(this.entidade);
+    }
     displayFn(val: number): string {
-        const value =  EnumTipoCadastro.filter(f => f.id === val)[0];
+        const value = EnumTipoCadastro.filter(f => f.id === val)[0];
         return value && value.nome ? `${value.nome}` : '';
     };
 
     displayFnEstados(val: string): string {
-        const value =  EnumUF.filter(f => f.id === val)[0]; 
+        const value = EnumUF.filter(f => f.id === val)[0];
         return value && value.nome ? `${value.id} - ${value.nome}` : '';
     };
 

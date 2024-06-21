@@ -1,4 +1,4 @@
-<form #form="ngForm" class="dialog">
+<form #itemForm="ngForm" class="dialog">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Cadastro</h3>
@@ -51,7 +51,7 @@
         <h3>Nomes Auxiliares</h3>
         <div class="campo nomes">
             <mat-form-field class="chip-list" appearance="outline">
-                <mat-chip-grid #chipGrid aria-label="Enter Items">
+                <mat-chip-grid #chipGrid [(ngModel)]="item.listaNomes" name="listaNomes" aria-label="Enter Items">
                     <mat-chip-row *ngFor="let nomeAuxiliar of item.listaNomes" (removed)="remove(nomeAuxiliar)"
                         [editable]="true" (edited)="edit(nomeAuxiliar, $event)"
                         [aria-description]="'press enter to edit ' + nomeAuxiliar">
@@ -76,11 +76,11 @@
         </section>
     </div>
     <div mat-dialog-actions class="btn-group">
-        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(form)">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(itemForm)">
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" [mat-dialog-close]="item">
+        <button mat-flat-button color="primary" (click)="submeter()">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>

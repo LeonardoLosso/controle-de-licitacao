@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalItemComponent } from '../modal-item/modal-item.component';
 import { FormularioBuscaService } from '../services/formulario-busca.service';
+import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 
 @Component({
   selector: 'app-busca-itens',
@@ -43,16 +44,19 @@ export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplifica
           this.service.criar(result).subscribe({
             next: () => {
               this.loadData();
-              this.messageService.openSnackBar('Item criado com sucesso!', 'success')
+              this.messageService.openSnackBar('Item criado com sucesso!', 'success');
             }
           });
         } else {
-          this.service.editar(result).subscribe({
-            next: () => {
-              this.loadData();
-              this.messageService.openSnackBar('Item editado com sucesso!', 'success')
-            }
-          });
+          const mudancas = result as MudancasParaPatch[];
+          if (mudancas.length > 0) {
+            this.service.editar(mudancas, cadastro.id).subscribe({
+              next: () => {
+                this.loadData();
+                this.messageService.openSnackBar('Item editado com sucesso!', 'success');
+              }
+            });
+          }
         }
       }
     });

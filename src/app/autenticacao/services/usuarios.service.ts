@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CrudBaseService } from 'src/app/core/services/crud-base.service';
-import { Listagem } from 'src/app/core/types/auxiliares';
+import { Listagem, MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { Permissoes, Usuario, UsuarioSimplificado } from 'src/app/core/types/usuarios';
 
 
@@ -33,9 +33,9 @@ export class UsuariosService extends CrudBaseService<Usuario, UsuarioSimplificad
     return this.http.get<Usuario>(`${this.URL}/usuarios`);
   }
 
-  public editar(cadastro: Usuario): Observable<Usuario> {
+  public editar(cadastro: MudancasParaPatch[]): Observable<Usuario> {
     // IMPLEMENTAR
-    return this.http.get<Usuario>(`${this.URL}/usuarios`);
+    return this.http.patch<Usuario>(`${this.URL}/usuarios`, cadastro);
   }
 
   public ObterRecursos(): Observable<Permissoes[]> {

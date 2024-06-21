@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CrudBaseService } from 'src/app/core/services/crud-base.service';
-import { Listagem } from 'src/app/core/types/auxiliares';
+import { Listagem, MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { Item, ItemSimplificado } from 'src/app/core/types/item';
 
 @Injectable({
@@ -40,14 +40,14 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
             path: "/status",
             value: novoValor
         }
-    return this.http.patch<Item>(`${this.URL}/itens/${id}`, [status]);
+    return this.http.patch<Item>(`${this.URL}/itens/status/${id}`, [status]);
   }
 
   public criar(cadastro: Item): Observable<Item> {
     return this.http.post<Item>(`${this.URL}/itens`, cadastro);
   }
 
-  public editar(cadastro: Item): Observable<Item> {
-    return this.http.put<Item>(`${this.URL}/itens`, cadastro);
+  public editar(patch: MudancasParaPatch[], id: number): Observable<Item> {
+    return this.http.patch<Item>(`${this.URL}/itens/${id}`, patch);
   }
 }
