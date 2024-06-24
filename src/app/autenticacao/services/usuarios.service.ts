@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,23 +14,37 @@ export class UsuariosService extends CrudBaseService<Usuario, UsuarioSimplificad
 
   constructor(private http: HttpClient) { super() }
 
-  public listar(): Observable<Listagem<UsuarioSimplificado>> {
-    return this.http.get<Listagem<UsuarioSimplificado>>(`${this.URL}/usuarios`);
+  public listar(pagina?: number, parametros?: { key: string, value: any }[]): Observable<Listagem<UsuarioSimplificado>> {
+    let params = new HttpParams();
+
+        if (pagina) params = params.append('pagina', pagina);
+        if (parametros) {
+            parametros.forEach(param => {
+                if (param.value != null) {
+                    params = params.append(param.key, param.value);
+                }
+            });
+        }
+    return this.http.get<Listagem<UsuarioSimplificado>>(`${this.URL}/usuarios`, {params});
   }
 
   public obterPorID(id: number): Observable<Usuario> {
-    // IMPLEMENTAR
-    return this.http.get<Usuario>(`${this.URL}/usuarios`);
+    return this.http.get<Usuario>(`${this.URL}/usuarios/${id}`);
   }
 
   public inativar(user: UsuarioSimplificado): Observable<Usuario> {
-    // IMPLEMENTAR
-    return this.http.get<Usuario>(`${this.URL}/usuarios`);
+    var id = user.id;
+        var novoValor = user.status === 1 ? '2' : '1';
+        var status = {
+            op: "replace",
+            path: "/status",
+            value: novoValor
+        }
+        return this.http.patch<Usuario>(`${this.URL}/entidades/status/${id}`, [status]);
   }
 
   public criar(cadastro: Usuario): Observable<Usuario> {
-    // IMPLEMENTAR
-    return this.http.get<Usuario>(`${this.URL}/usuarios`);
+    return this.http.post<Usuario>(`${this.URL}/usuarios`, cadastro);
   }
 
   public editar(cadastro: MudancasParaPatch[]): Observable<Usuario> {
@@ -39,6 +53,6 @@ export class UsuariosService extends CrudBaseService<Usuario, UsuarioSimplificad
   }
 
   public ObterRecursos(): Observable<Permissoes[]> {
-    return this.http.get<Permissoes[]>(`${this.URL}/permissoes`);
+    return this.http.get<Permissoes[]>(`${this.URL}/usuarios/recursos`);
   }
 }

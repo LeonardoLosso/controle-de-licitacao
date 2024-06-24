@@ -1,4 +1,4 @@
-<form #form="ngForm" class="dialog">
+'<form #form="ngForm" class="dialog">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Cadastro</h3>
@@ -11,8 +11,16 @@
 
             <!-- nome -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>nome</mat-label>
+                <mat-label>Nome</mat-label>
                 <input matInput name="nome" #nome="ngModel" [(ngModel)]="usuario.nome">
+            </mat-form-field>
+
+            <!-- nome de usuario -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nome de usuário</mat-label>
+                <input matInput name="userName" [formControl]="username" [disabled]="edicao">
+                <mat-error *ngIf="username?.errors?.['required']">Nome de usuário é obrigatório!</mat-error>
+
             </mat-form-field>
 
             <!-- cnpj -->
@@ -33,6 +41,22 @@
                 <mat-label>telefone</mat-label>
                 <input matInput name="telefone" #telefone="ngModel" [(ngModel)]="usuario.telefone"
                     [ngModel]="usuario.telefone | mascarasInput:'phone'">
+            </mat-form-field>
+
+            <!-- SENHA E CONFIRMA SENHA -->
+            <mat-form-field appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input matInput [formControl]="senha" type="password"
+                    placeholder="Digite sua senha">
+                <mat-error *ngIf="senha?.errors?.['required']">Senha é obrigatória</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Confirmar Senha</mat-label>
+                <input matInput [formControl]="resenha" type="password"
+                    placeholder="Repita sua senha">
+                <mat-error *ngIf="resenha?.errors?.['required']">Confirmação de Senha é obrigatória</mat-error>
+                <mat-error *ngIf="resenha?.errors?.['equalTo']">Senhas não coincidem</mat-error>
             </mat-form-field>
         </div>
 
@@ -89,7 +113,7 @@
 
         <h3>Permissões</h3>
         <mat-accordion>
-            <app-container-permissoes [usuario]="usuario"/>
+            <app-container-permissoes [usuario]="usuario" />
         </mat-accordion>
     </div>
     <div mat-dialog-actions class="btn-group">
@@ -97,9 +121,9 @@
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" [mat-dialog-close]="usuario">
+        <button mat-flat-button color="primary" (click)="submeter()">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>
     </div>
-</form>
+</form>'

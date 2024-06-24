@@ -11,7 +11,11 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
     super();
   }
 
-  public override obterDadosBusca(): {key: string, value: any}[] { return[] }
+  public override obterDadosBusca(): { key: string, value: any }[] {
+    return [
+      { key: 'status', value: this.obterControle('status').value?.id }
+    ]
+  }
 
   public override limparFiltros() {
     super.limparFiltros();

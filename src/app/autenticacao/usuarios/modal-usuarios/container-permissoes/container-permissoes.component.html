@@ -1,18 +1,18 @@
 <div *ngIf="usuario" class="telas">
-    <mat-expansion-panel class="pannel" *ngFor="let permissao of usuario.Permissoes">
+    <mat-expansion-panel class="pannel" *ngFor="let permissao of usuario.permissoes">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                <span class="nomeTela">Módulo: {{permissao.Tela}}</span>
+                <span class="nomeTela">{{permissao.tela}}</span>
             </mat-panel-title>
             <mat-panel-description>
-                Permissões do módulo {{permissao.Tela}}
+                Permissões do módulo {{permissao.tela}}
             </mat-panel-description>
         </mat-expansion-panel-header>
 
         <div class="recursos">
-            <ng-container *ngFor="let recurso of permissao.Recursos">
-                <mat-checkbox class="checkbox" [checked]="recurso.Permissao" color="primary"
-                    (change)="togglePermissao(recurso)">{{recurso.nome}}</mat-checkbox>
+            <ng-container *ngFor="let recurso of permissao.recursos">
+                <mat-checkbox class="checkbox" [checked]="recurso.permissaoRecurso" color="primary"
+                    (change)="togglePermissao(recurso)">{{recurso.nomeRecurso}}</mat-checkbox>
                 <mat-divider class="divider" />
             </ng-container>
         </div>

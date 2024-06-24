@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { UsuarioSimplificado } from 'src/app/core/types/usuarios';
 
 @Component({
@@ -9,13 +10,15 @@ import { UsuarioSimplificado } from 'src/app/core/types/usuarios';
 })
 export class UsuarioTabelaComponent {
   @Output() abrirDialog = new EventEmitter();
+  @Output() pagina = new EventEmitter();
+
   @Input() listaUsuarios!: UsuarioSimplificado[];
   @Input() control!: FormControl;
+  @Input() totalItems: number = 0;
+  @Input() isLoadingResults = false;
+  @Input() isRateLimitReached = false;
 
   private selecionado!: UsuarioSimplificado;
-
-  public isLoadingResults = false;
-  public isRateLimitReached = false
 
   public displayedColumns: string[] = ['codigo', 'status', 'nome', 'usuario', 'cpf'];
 
@@ -36,5 +39,9 @@ export class UsuarioTabelaComponent {
 
   doubleClick() {
     this.abrirDialog.emit();
+  }
+
+  mudaPagina(paginador: PageEvent) {
+    this.pagina.emit(paginador.pageIndex);
   }
 }

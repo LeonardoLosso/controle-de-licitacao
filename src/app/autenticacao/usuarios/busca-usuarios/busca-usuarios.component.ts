@@ -53,6 +53,26 @@ export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioS
   }
 
   protected override cadastroVazio(): Usuario {
-    throw new Error('Method not implemented.');
+    return {
+      id: 0,
+      password: '',
+      nome: '',
+      rePassword: '',
+      userName: '',
+      cpf: '',
+      email: '', 
+      telefone: '',
+      permissoes: [],
+      status: 1,
+      endereco: {
+        bairro: '',
+        cep: '',
+        cidade: '',
+        complemento: '',
+        logradouro: '',
+        numero: '',
+        uf: ''
+      }
+    }
   }
 }

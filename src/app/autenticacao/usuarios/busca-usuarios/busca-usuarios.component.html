@@ -15,8 +15,12 @@
         <app-busca-container [control]="pesquisa">
             <app-usuario-tabela 
                 (abrirDialog)="editar()" 
+                (pagina)="mudarPagina($event)"
                 [listaUsuarios]="lista"
                 [control]="selecionado"
+                [totalItems]="totalItems"
+                [isLoadingResults]="isLoadingResults"
+                [isRateLimitReached]="isRateLimitReached"
             />
         </app-busca-container>
     </form>

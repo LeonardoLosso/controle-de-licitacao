@@ -4,29 +4,32 @@ export interface UsuarioSimplificado {
     id: number,
     status: number,
     nome: string,
-    Usuario: string,
+    userName: string,
     cpf: string
 }
 
 export interface Usuario {
     id: number,
-    status: number,
+    password: string,
+    rePassword: string
+    userName: string,
     nome: string,
-    Usuario: string,
+    status: number,
     cpf: string,
     email: string
     telefone: string
-    Permissoes: Permissoes[] | null
+    permissoes: Permissoes[]
     endereco: Endereco
 }
 
 export interface Permissoes {
     id: number,
-    Tela: string,
-    Recursos: Recursos[]
+    tela: string,
+    recursos: Recursos[]
 }
 
 export interface Recursos {
-    nome: string,
-    Permissao: boolean
+    id: number,
+    nomeRecurso: string,
+    permissaoRecurso: boolean
 }
