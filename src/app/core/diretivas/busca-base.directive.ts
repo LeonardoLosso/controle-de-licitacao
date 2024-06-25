@@ -78,7 +78,7 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
 
   protected mensagemInativacao(): MensagemModal {
     const item = this.selecionado.value;
-    const nome = item.nome?? item.fantasia ?? undefined;
+    const nome = item.nome ?? item.fantasia ?? undefined;
     return {
       titulo: 'Inativar cadastro?',
       mensagem: 'Deseja inativar a cadastro??',

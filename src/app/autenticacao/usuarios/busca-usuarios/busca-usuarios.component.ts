@@ -7,6 +7,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
+import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 
 @Component({
   selector: 'app-busca-usuarios',
@@ -37,16 +38,24 @@ export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioS
 
     dialogRef.afterClosed().subscribe(result => {
 
-      console.log(result);
       if (result) {
         if (novo) {
           this.service.criar(result).subscribe({
-            next: () => this.loadData()
+            next: () => {
+              this.loadData();
+              this.messageService.openSnackBar('Usuário criado com sucesso!', 'success');
+            }
           });
         } else {
-          this.service.editar(result).subscribe({
-            next: () => this.loadData()
-          });
+          const mudancas = result as MudancasParaPatch[];
+          if (mudancas.length > 0) {
+            this.service.editar(mudancas, cadastro.id).subscribe({
+              next: () => {
+                this.loadData();
+                this.messageService.openSnackBar('Usuário editado com sucesso!', 'success');
+              }
+            });
+          }
         }
       }
     });

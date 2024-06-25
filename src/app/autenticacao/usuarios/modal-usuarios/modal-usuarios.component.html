@@ -16,11 +16,15 @@
             </mat-form-field>
 
             <!-- nome de usuario -->
-            <mat-form-field class="input" appearance="outline">
+            <mat-form-field class="input nomeUsuario" appearance="outline">
                 <mat-label>Nome de usuário</mat-label>
-                <input matInput name="userName" [formControl]="username" [disabled]="edicao">
-                <mat-error *ngIf="username?.errors?.['required']">Nome de usuário é obrigatório!</mat-error>
-
+                <input matInput name="userName" [formControl]="username" (keyup)="verificaCadastro()">
+                <mat-icon *ngIf="username.valid" matSuffix>check</mat-icon>
+                <mat-spinner matSuffix class="spin" *ngIf="username.pending" [diameter]="20"></mat-spinner>
+                <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
+                    <ng-container *ngIf="username.errors?.['usernameTaken']">Nome de usuário já existe.</ng-container>
+                    <ng-container *ngIf="username.errors?.['required']">O nome de usuário é obrigatório.</ng-container>
+                </mat-error>
             </mat-form-field>
 
             <!-- cnpj -->
@@ -46,15 +50,13 @@
             <!-- SENHA E CONFIRMA SENHA -->
             <mat-form-field appearance="outline">
                 <mat-label>Senha</mat-label>
-                <input matInput [formControl]="senha" type="password"
-                    placeholder="Digite sua senha">
+                <input matInput [formControl]="senha" type="password" placeholder="Digite sua senha">
                 <mat-error *ngIf="senha?.errors?.['required']">Senha é obrigatória</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Confirmar Senha</mat-label>
-                <input matInput [formControl]="resenha" type="password"
-                    placeholder="Repita sua senha">
+                <input matInput [formControl]="resenha" type="password" placeholder="Repita sua senha">
                 <mat-error *ngIf="resenha?.errors?.['required']">Confirmação de Senha é obrigatória</mat-error>
                 <mat-error *ngIf="resenha?.errors?.['equalTo']">Senhas não coincidem</mat-error>
             </mat-form-field>
@@ -113,7 +115,7 @@
 
         <h3>Permissões</h3>
         <mat-accordion>
-            <app-container-permissoes [usuario]="usuario" />
+            <app-container-permissoes [usuario]="usuario" [usuarioPermissoes]="permissoes" />
         </mat-accordion>
     </div>
     <div mat-dialog-actions class="btn-group">
@@ -121,7 +123,7 @@
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" (click)="submeter()">
+        <button mat-flat-button color="primary" (click)="submeter()" [disabled]="habilitaBotao()">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>

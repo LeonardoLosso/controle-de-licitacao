@@ -10,7 +10,7 @@ import { Permissoes, Recursos, Usuario } from 'src/app/core/types/usuarios';
 })
 export class ContainerPermissoesComponent implements OnInit {
   @Input() usuario!: Usuario
-  @Input() usuarioPermissoes!: FormControl<Permissoes[]>;
+  @Input() usuarioPermissoes!: FormControl<Permissoes[] | null>;
   private permissoes!: Permissoes[]
 
   constructor(private service: UsuariosService) { }
@@ -28,7 +28,7 @@ export class ContainerPermissoesComponent implements OnInit {
 
   togglePermissao(recurso: Recursos) {
     recurso.permissaoRecurso = !recurso.permissaoRecurso;
-    this.usuarioPermissoes.setValue(this.usuario.permissoes);
     this.usuarioPermissoes.markAsDirty();
+    this.usuarioPermissoes.setValue(this.usuario.permissoes);
   }
 }

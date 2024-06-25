@@ -4,11 +4,11 @@
         <div class="loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
             <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
             <div class="rate-limit-reached" *ngIf="isRateLimitReached">
-                GitHub's API rate limit has been reached. It will be reset in one minute.
+                Tempo limite de sincronização com banco de dados
             </div>
         </div>
 
-        <div class="table-container">
+        <div class="table-container" [class.bigger]="isLoadingResults || isRateLimitReached">
 
             <table mat-table [dataSource]="listaUsuarios" class="table">
 

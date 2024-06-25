@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 
 import { CrudBaseService } from 'src/app/core/services/crud-base.service';
 import { Listagem, MudancasParaPatch } from 'src/app/core/types/auxiliares';
@@ -40,19 +40,22 @@ export class UsuariosService extends CrudBaseService<Usuario, UsuarioSimplificad
             path: "/status",
             value: novoValor
         }
-        return this.http.patch<Usuario>(`${this.URL}/entidades/status/${id}`, [status]);
+        return this.http.patch<Usuario>(`${this.URL}/usuarios/status/${id}`, [status]);
   }
 
   public criar(cadastro: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.URL}/usuarios`, cadastro);
   }
 
-  public editar(cadastro: MudancasParaPatch[]): Observable<Usuario> {
-    // IMPLEMENTAR
-    return this.http.patch<Usuario>(`${this.URL}/usuarios`, cadastro);
+  public editar(cadastro: MudancasParaPatch[], id: number): Observable<Usuario> {
+    return this.http.patch<Usuario>(`${this.URL}/usuarios/${id}`, cadastro);
   }
 
   public ObterRecursos(): Observable<Permissoes[]> {
     return this.http.get<Permissoes[]>(`${this.URL}/usuarios/recursos`);
+  }
+
+  public ObterUsuario(userName: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.URL}/usuarios/username/${userName}`).pipe(delay(2000));
   }
 }
