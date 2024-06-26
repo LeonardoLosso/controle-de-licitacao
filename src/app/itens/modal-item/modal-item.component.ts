@@ -3,10 +3,10 @@ import { FormControl, NgForm } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 
 import { Item, ItemSimplificado } from 'src/app/core/types/item';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 
 @Component({

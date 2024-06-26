@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+
 import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 import { FormularioPesquisaService } from '../services/formulario-pesquisa.service';
 import { DocumentosService } from '../services/documentos.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { MensagemModal } from 'src/app/core/types/auxiliares';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';

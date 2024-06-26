@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BuscaItensComponent } from './busca-itens/busca-itens.component';
@@ -11,6 +10,7 @@ import { ModalItemComponent } from './modal-item/modal-item.component';
 import { FormBuscaItensComponent } from './busca-itens/form-busca-itens/form-busca-itens.component';
 import { ContainerCestaComponent } from './modal-item/container-cesta/container-cesta.component';
 import { LookupItensComponent } from './lookup-itens/lookup-itens.component';
+import { ItensRoutingModule } from './services/itens-routing.module';
 
 
 
@@ -30,7 +30,7 @@ import { LookupItensComponent } from './lookup-itens/lookup-itens.component';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    ItensRoutingModule
   ],
   exports: [
     BuscaItensComponent,

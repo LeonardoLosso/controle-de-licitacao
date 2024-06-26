@@ -1,9 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { EntidadeSimplificada } from 'src/app/core/types/entidade';
 import { FormularioBuscaService } from '../services/formulario-busca.service';
 import { EntidadesService } from '../services/entidades.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-lookup-entidades',

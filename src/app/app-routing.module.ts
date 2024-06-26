@@ -2,49 +2,31 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
-import { BuscaEntidadesComponent } from './entidades/busca-entidades/busca-entidades.component';
-import { BuscaItensComponent } from './itens/busca-itens/busca-itens.component';
-import { BuscaUsuariosComponent } from './autenticacao/usuarios/busca-usuarios/busca-usuarios.component';
-import { AtaComponent } from './licitacao/ata/ata.component';
-import { PesquisaComponent } from './licitacao/pesquisa/pesquisa.component';
-import { BaixaComponent } from './licitacao/baixa/baixa.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: MenuPrincipalComponent,
-    data: {menuName: 'Menu Principal'}
-  },
+
   {
     path: 'entidades',
-    component: BuscaEntidadesComponent,
-    data: {menuName: 'Buscar Entidades'}
+    loadChildren: () => import('./entidades/entidades.module').then(m => m.EntidadesModule)
   },
   {
     path: 'itens',
-    component: BuscaItensComponent,
-    data: {menuName: 'Buscar Itens'}
+    loadChildren: () => import('./itens/itens.module').then(m => m.ItensModule)
   },
   {
-    path: 'usuarios',
-    component: BuscaUsuariosComponent,
-    data: {menuName: 'Buscar Usuarios'}
-  },
-  {
-    path: 'licitacao/pesquisar',
-    component: PesquisaComponent,
-    data: {menuName: 'Pesquisar Licitações'}
+    path: 'auth',
+    loadChildren: () => import('./autenticacao/autenticacao.module').then(m => m.AutenticacaoModule)
   },
   {
     path: 'licitacao',
-    component: AtaComponent,
-    data: {menuName: 'Licitação'}
+    loadChildren: () => import('./licitacao/licitacao.module').then(m => m.LicitacaoModule)
   },
   {
-    path: 'licitacao/baixa',
-    component: BaixaComponent,
-    data: {menuName: 'Baixa'}
+    path: '',
+    component: MenuPrincipalComponent,
+    data: { menuName: 'Menu Principal' }
   }
+
 ];
 
 @NgModule({

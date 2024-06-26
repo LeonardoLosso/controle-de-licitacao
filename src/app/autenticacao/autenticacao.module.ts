@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 import { BuscaUsuariosComponent } from './usuarios/busca-usuarios/busca-usuarios.component';
 import { ModalUsuariosComponent } from './usuarios/modal-usuarios/modal-usuarios.component';
@@ -10,6 +9,8 @@ import { FormBuscaUsuariosComponent } from './usuarios/busca-usuarios/form-busca
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../core/material/material.module';
 import { ContainerPermissoesComponent } from './usuarios/modal-usuarios/container-permissoes/container-permissoes.component';
+import { AutenticacaoRoutingModule } from './services/autenticacao-routing.module';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -17,16 +18,17 @@ import { ContainerPermissoesComponent } from './usuarios/modal-usuarios/containe
     ModalUsuariosComponent,
     UsuarioTabelaComponent,
     FormBuscaUsuariosComponent,
-    ContainerPermissoesComponent
+    ContainerPermissoesComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
 
     SharedModule,
     MaterialModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule
+    AutenticacaoRoutingModule
   ],
   exports: [
     BuscaUsuariosComponent,

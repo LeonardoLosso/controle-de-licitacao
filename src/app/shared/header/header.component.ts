@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { filter } from 'rxjs';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  @Input() usuarioLogado!: boolean;
   menuName!: string;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }

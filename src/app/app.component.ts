@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'controle-de-licitacao';
+  public usuarioLogado: boolean = false;
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+
 import { UsuarioSimplificado } from 'src/app/core/types/usuarios';
 
 @Component({

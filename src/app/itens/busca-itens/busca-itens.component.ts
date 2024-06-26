@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { BuscaBaseDirective } from 'src/app/core/diretivas/busca-base.directive';
 import { Item, ItemSimplificado } from 'src/app/core/types/item';
 import { ItensService } from '../services/itens.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalItemComponent } from '../modal-item/modal-item.component';
 import { FormularioBuscaService } from '../services/formulario-busca.service';

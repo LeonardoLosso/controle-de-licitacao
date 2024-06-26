@@ -12,11 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { MenuPrincipalModule } from './menu-principal/menu-principal.module';
-import { MaterialModule } from './core/material/material.module';
-import { EntidadesModule } from './entidades/entidades.module';
-import { ItensModule } from './itens/itens.module';
-import { AutenticacaoModule } from './autenticacao/autenticacao.module';
-import { LicitacaoModule } from './licitacao/licitacao.module';
 import { ErrosInterceptor } from './core/erros/erros.interceptor';
 
 registerLocaleData(localePt);
@@ -46,12 +41,7 @@ export const MY_DATE_FORMATS = {
         HttpClientModule,
         ReactiveFormsModule,
         SharedModule,
-        MaterialModule,
-        MenuPrincipalModule,
-        EntidadesModule,
-        ItensModule,
-        AutenticacaoModule,
-        LicitacaoModule
+        MenuPrincipalModule
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },

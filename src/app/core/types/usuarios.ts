@@ -33,3 +33,9 @@ export interface Recursos {
     nomeRecurso: string,
     permissaoRecurso: boolean
 }
+
+export interface PessoaUsuaria {
+    userName: string,
+    recursos: number[],
+    exp: number
+}

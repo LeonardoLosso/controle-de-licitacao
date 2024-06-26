@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { ItemDeBaixa } from 'src/app/core/types/item';
 
 @Component({

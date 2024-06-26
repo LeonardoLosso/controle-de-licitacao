@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 import { BuscaEntidadesComponent } from './busca-entidades/busca-entidades.component';
 import { SharedModule } from '../shared/shared.module';
@@ -10,6 +9,7 @@ import { FormBuscaEntidadesComponent } from './busca-entidades/form-busca-entida
 import { EntidadeTabelaComponent } from './busca-entidades/entidade-tabela/entidade-tabela.component';
 import { ModalEntidadeComponent } from './modal-entidade/modal-entidade.component';
 import { LookupEntidadesComponent } from './lookup-entidades/lookup-entidades.component';
+import { EntidadesRoutingModule } from './services/entidades-routing.module';
 
 
 
@@ -28,7 +28,7 @@ import { LookupEntidadesComponent } from './lookup-entidades/lookup-entidades.co
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    EntidadesRoutingModule
 
   ],
   exports: [

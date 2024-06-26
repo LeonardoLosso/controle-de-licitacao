@@ -1,0 +1,31 @@
+<section class="login">
+    <form [formGroup]="loginForm" class="dados-login">
+        <!-- USERNAME -->
+        <mat-form-field class="input" appearance="outline">
+            <mat-label>Usuário</mat-label>
+            <input matInput formControlName="userName" placeholder="Digite seu usuario" required>
+            <mat-error *ngIf="loginForm.get('userName')?.errors?.['required']">Usuário é obrigatório</mat-error>
+        </mat-form-field>
+
+        <!-- SENHA -->
+        <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput="password" formControlName="senha" placeholder="Digite sua senha" required>
+            <mat-error *ngIf="loginForm.get('senha')?.errors">Senha é obrigatória</mat-error>
+
+        </mat-form-field>
+
+        <!-- BTN LOGAR -->
+        <button 
+            class="btn-login"
+            mat-fab 
+            extended
+            color="primary"
+            [disabled]="loginForm.invalid"
+            (click)="login()">
+            <mat-icon class="icone">login</mat-icon>
+            <span class="texto">L O G I N</span>
+        </button>
+
+    </form>
+</section>

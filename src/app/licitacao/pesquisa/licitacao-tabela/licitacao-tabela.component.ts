@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+
 import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 
 @Component({

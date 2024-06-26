@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+
 import { BuscaBaseDirective } from 'src/app/core/diretivas/busca-base.directive';
 import { Usuario, UsuarioSimplificado } from 'src/app/core/types/usuarios';
 import { ModalUsuariosComponent } from '../modal-usuarios/modal-usuarios.component';
 import { FormularioBuscaService } from '../../services/formulario-busca.service';
 import { UsuariosService } from '../../services/usuarios.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 

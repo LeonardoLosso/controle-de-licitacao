@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormularioAtaService } from '../services/formulario-ata.service';
 import { FormControl } from '@angular/forms';
 import { Location } from '@angular/common';
-import { ItemDeAta } from 'src/app/core/types/item';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { MatDialog } from '@angular/material/dialog';
+
+import { FormularioAtaService } from '../services/formulario-ata.service';
+import { ItemDeAta } from 'src/app/core/types/item';
+import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { ModalItemAtaComponent } from './modal-item-ata/modal-item-ata.component';
 

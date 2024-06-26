@@ -1,9 +1,10 @@
 import { Component, OnInit, Type } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
+
 import { FormularioAtaService } from '../../services/formulario-ata.service';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
-import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
 import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/lookup-entidades.component';
 
 @Component({

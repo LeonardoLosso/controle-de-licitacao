@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { FormularioBuscaService } from '../../services/formulario-busca.service';
 import { EnumTipoStatus } from 'src/app/core/types/enum';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';

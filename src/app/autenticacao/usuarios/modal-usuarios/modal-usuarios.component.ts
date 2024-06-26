@@ -1,8 +1,8 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EnumStringID, MudancasParaPatch } from 'src/app/core/types/auxiliares';
 
+import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { EnumUF } from 'src/app/core/types/enum';
 import { Permissoes, Usuario } from 'src/app/core/types/usuarios';
 import { FormValidations } from 'src/app/shared/form-validations';

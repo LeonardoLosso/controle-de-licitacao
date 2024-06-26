@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 import { AtaComponent } from './ata/ata.component';
 import { MaterialModule } from '../core/material/material.module';
@@ -18,6 +17,7 @@ import { CabecalhoBaixaComponent } from './baixa/cabecalho-baixa/cabecalho-baixa
 import { FormularioBaixaComponent } from './baixa/formulario-baixa/formulario-baixa.component';
 import { BaixaTabelaComponent } from './baixa/tabelas/baixa-tabela/baixa-tabela.component';
 import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-tabela.component';
+import { LicitacaoRoutingModule } from './services/licitacao-routing.module';
 
 
 
@@ -44,7 +44,7 @@ import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-t
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    LicitacaoRoutingModule
   ], exports: [
     AtaComponent,
     PesquisaComponent,
