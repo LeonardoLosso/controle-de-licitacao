@@ -52,7 +52,7 @@ export class ModalUsuariosComponent {
   }
 
   submeter() {
-    if (this.senha.valid && this.username.valid && this.resenha.valid) {
+    if (this.senha.valid && this.resenha.valid) {
       if (this.data.id !== 0) {
         const mudancas: MudancasParaPatch[] = [];
 
