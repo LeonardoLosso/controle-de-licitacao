@@ -1,31 +1,39 @@
 <section class="login">
     <form [formGroup]="loginForm" class="dados-login">
-        <!-- USERNAME -->
-        <mat-form-field class="input" appearance="outline">
-            <mat-label>Usuário</mat-label>
-            <input matInput formControlName="userName" placeholder="Digite seu usuario" required>
-            <mat-error *ngIf="loginForm.get('userName')?.errors?.['required']">Usuário é obrigatório</mat-error>
-        </mat-form-field>
+        <ng-container *ngIf="!logando">
+            <h1>Bem vindo!</h1>
+            <!-- USERNAME -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Usuário</mat-label>
+                <input matInput formControlName="userName" placeholder="Digite seu usuario" required>
+                <mat-error *ngIf="loginForm.get('userName')?.errors?.['required']">Usuário é obrigatório</mat-error>
+            </mat-form-field>
+    
+            <!-- SENHA -->
+    
+            <mat-form-field appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" required>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.get('senha')?.errors">Senha é obrigatória</mat-error>
+            </mat-form-field>
+    
+            <!-- BTN LOGAR -->
+            <button 
+                class="btn-login"
+                mat-fab 
+                extended
+                color="primary"
+                [disabled]="loginForm.invalid"
+                (click)="login()">
+                <mat-icon class="icone">login</mat-icon>
+                <span class="texto">L O G I N</span>
+            </button>
+        </ng-container>
 
-        <!-- SENHA -->
-        <mat-form-field appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input matInput="password" formControlName="senha" placeholder="Digite sua senha" required>
-            <mat-error *ngIf="loginForm.get('senha')?.errors">Senha é obrigatória</mat-error>
-
-        </mat-form-field>
-
-        <!-- BTN LOGAR -->
-        <button 
-            class="btn-login"
-            mat-fab 
-            extended
-            color="primary"
-            [disabled]="loginForm.invalid"
-            (click)="login()">
-            <mat-icon class="icone">login</mat-icon>
-            <span class="texto">L O G I N</span>
-        </button>
-
+        <mat-spinner *ngIf="logando"></mat-spinner>
     </form>
 </section>

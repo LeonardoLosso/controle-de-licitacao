@@ -22,7 +22,6 @@ export class UserService {
   private decodificarJWT() {
     const token = this.tokenService.retornarToken();
     const user = JWT.jwtDecode(token) as PessoaUsuaria;
-    debugger
     this.userSubject.next(user);
   }
 
@@ -42,5 +41,14 @@ export class UserService {
 
   estaLogado() {
     return this.tokenService.possuiToken();
+  }
+
+  verificaPermissao(id: number): boolean{
+    const user = this.userSubject.value;
+    
+    if(user)
+      return user.recursos.some(rec => rec === id);
+
+    return false;
   }
 }

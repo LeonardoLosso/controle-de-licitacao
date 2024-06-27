@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { UserService } from 'src/app/autenticacao/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +9,18 @@ import { filter } from 'rxjs';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
   @Input() usuarioLogado!: boolean;
   menuName!: string;
+  
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService
+  ) { 
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  }
+  user$ = this.userService.retornarUser();
 
   ngOnInit() {
     this.router.events
@@ -22,6 +31,12 @@ export class HeaderComponent {
           this.menuName = data['menuName'];
         });
       });
+  }
+
+
+  logout() {
+    this.userService.logout();
+    this.router.navigate(['auth/login']);
   }
 
   getChild(activatedRoute: ActivatedRoute): ActivatedRoute {

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 
 const routes: Routes = [
 
@@ -23,8 +22,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: MenuPrincipalComponent,
-    data: { menuName: 'Menu Principal' }
+    loadChildren: () => import('./menu-principal/menu-principal.module').then(m => m.MenuPrincipalModule)
+  },
+  {
+    path: '**',
+    redirectTo: '/',
+    pathMatch: 'full'
   }
 
 ];

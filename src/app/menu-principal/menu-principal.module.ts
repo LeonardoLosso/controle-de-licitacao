@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { MenuPrincipalComponent } from "./menu-principal.component";
 import { MaterialModule } from "../core/material/material.module";
 import { SharedModule } from "../shared/shared.module";
+import { MenuPrincipalRoutingModule } from "./services/menu-principal-routing.module";
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { SharedModule } from "../shared/shared.module";
         CommonModule,
 
         MaterialModule,
-        SharedModule
+        SharedModule,
+        MenuPrincipalRoutingModule
 
     ],
     exports: [

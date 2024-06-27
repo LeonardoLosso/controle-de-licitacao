@@ -3,17 +3,22 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { BuscaUsuariosComponent } from "../usuarios/busca-usuarios/busca-usuarios.component";
 import { LoginComponent } from "../login/login.component";
+import { authGuard, loginGuard, permGuard } from "../auth.guard";
 
 const routes: Routes = [
     {
         path: 'usuarios',
         component: BuscaUsuariosComponent,
-        data: {menuName: 'Buscar Usuarios'}
+        data: {
+            menuName: 'Buscar Usuarios',
+            recursoId: 601
+        },
+        canActivate: [authGuard, permGuard]
     },
     {
         path: 'login',
         component: LoginComponent,
-        data: {menuName: 'Login'}
+        canActivate: [loginGuard]
     }
 ];
 

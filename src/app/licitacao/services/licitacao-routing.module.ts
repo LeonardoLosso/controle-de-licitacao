@@ -1,8 +1,10 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+
 import { PesquisaComponent } from "../pesquisa/pesquisa.component";
 import { AtaComponent } from "../ata/ata.component";
 import { BaixaComponent } from "../baixa/baixa.component";
+import { authGuard, permGuard } from "src/app/autenticacao/auth.guard";
 
 
 
@@ -10,17 +12,29 @@ const routes: Routes = [
     {
         path: 'pesquisar',
         component: PesquisaComponent,
-        data: { menuName: 'Pesquisar Licitações' }
+        data: { 
+            menuName: 'Pesquisar Licitações',
+            recursoId: 301
+         },
+        canActivate: [authGuard, permGuard]
     },
     {
         path: 'baixa',
         component: BaixaComponent,
-        data: { menuName: 'Baixa' }
+        data: { 
+            menuName: 'Baixa',
+            recursoId: 401
+         },
+        canActivate: [authGuard, permGuard]
     },
     {
         path: '',
         component: AtaComponent,
-        data: { menuName: 'Licitação' }
+        data: { 
+            menuName: 'Licitação',
+            recursoId: 301
+         },
+        canActivate: [authGuard, permGuard]
     }
 ];
 

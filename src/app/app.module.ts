@@ -11,8 +11,8 @@ import localePt from '@angular/common/locales/pt';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { MenuPrincipalModule } from './menu-principal/menu-principal.module';
 import { ErrosInterceptor } from './core/erros/erros.interceptor';
+import { AutenticacaoInterceptor } from './autenticacao/autenticacao.interceptor';
 
 registerLocaleData(localePt);
 
@@ -40,13 +40,13 @@ export const MY_DATE_FORMATS = {
 
         HttpClientModule,
         ReactiveFormsModule,
-        SharedModule,
-        MenuPrincipalModule
+        SharedModule
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
         { provide: LOCALE_ID, useValue: 'pt-BR' },
+        { provide: HTTP_INTERCEPTORS, useClass: AutenticacaoInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrosInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]

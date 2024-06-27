@@ -11,7 +11,9 @@ import { AutenticacaoService } from '../services/autenticacao.service';
 })
 export class LoginComponent implements OnInit {
 
+  hide = true;
   loginForm!: FormGroup;
+  logando = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,19 +30,24 @@ export class LoginComponent implements OnInit {
 
   public login() {
 
-    if(this.loginForm.valid) {
+    if (this.loginForm.valid) {
       const userName = this.loginForm.value.userName;
       const password = this.loginForm.value.senha;
-
+      this.logando = true;
       this.authService.autenticar(userName, password).subscribe({
-          next: () => {
-              this.router.navigateByUrl('/');
-              this.loginForm.reset();
-          },
-          error: () => {
-              
-          },
+        next: () => {
+          this.router.navigateByUrl('/');
+          this.loginForm.reset();
+          this.logando = false;
+
+        },
+        error: () => {
+          this.logando = false;
+          const field = this.loginForm.get('senha');
+          field?.setValue('');
+          field?.updateValueAndValidity();
+        },
       });
-  }
+    }
   }
 }
