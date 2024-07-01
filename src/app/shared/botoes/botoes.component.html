@@ -6,6 +6,9 @@
         color="primary"
         aria-label="botao"
         aria-label="Botao de menu"
+        [appHasPermission]="permissao"
+        (hasPermission)="onHasPermission($event)"
+        [disabled]="botaoDesabilitado"
     >
         <mat-icon >{{icone}}</mat-icon>
     </button>
@@ -20,6 +23,9 @@
         mat-fab
         extended
         [color]="color"
+        [appHasPermission]="permissao"
+        (hasPermission)="onHasPermission($event)"
+        [disabled]="botaoDesabilitado"
     >
         <mat-icon class="icone">{{icone}}</mat-icon>
         <span class="texto">{{texto}}</span>

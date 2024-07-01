@@ -14,6 +14,7 @@ import { SeparadorMilharPipe } from './pipes/separador-milhar.pipe';
 import { MascarasInputPipe } from './pipes/mascaras-input.pipe';
 import { FormataEnumPipe } from './pipes/formata-enum.pipe';
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
+import { PermissaoDirective } from "./directive/permissao.directive";
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao
         SeparadorMilharPipe,
         MascarasInputPipe,
         FormataEnumPipe,
-        ModalConfirmacaoComponent
+        ModalConfirmacaoComponent,
+        PermissaoDirective
     ],
     imports: [
         CommonModule,
@@ -46,7 +48,8 @@ import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao
         SeparadorMilharPipe,
         MascarasInputPipe,
         FormataEnumPipe,
-        ModalConfirmacaoComponent
+        ModalConfirmacaoComponent,
+        PermissaoDirective
     ]
 })
 export class SharedModule { }

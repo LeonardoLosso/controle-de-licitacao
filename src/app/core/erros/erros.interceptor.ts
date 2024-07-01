@@ -7,13 +7,14 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { MensagemService } from '../services/mensagem.service';
 
 @Injectable()
 export class ErrosInterceptor implements HttpInterceptor {
 
-  constructor(private service: MensagemService) { }
+  constructor(private service: MensagemService, private router: Router) { }
 
   intercept(
     request: HttpRequest<HttpErrorResponse>,
@@ -36,6 +37,10 @@ export class ErrosInterceptor implements HttpInterceptor {
           errorMessage = error.error?.Message;
         } else if (error.status === 400){
           errorMessage = 'Requisição fora do padrão';
+        } else if (512){
+          errorMessage = "tokem expirado";
+          this.router.navigate(['auth/login']);
+          this.service.openSnackBar(errorMessage, 'error');
         }
 
         this.service.openSnackBar(errorMessage, 'error');

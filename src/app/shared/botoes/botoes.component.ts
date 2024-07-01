@@ -11,4 +11,11 @@ export class BotoesComponent {
   @Input() path!: string;
   @Input() color: string = 'primary'
   @Input() variant: 'btn-principal' | 'btn-cabecalho' = 'btn-principal'
+  @Input() permissao!: number;
+
+  botaoDesabilitado = false;
+
+  onHasPermission(hasPermission: boolean) {
+    this.botaoDesabilitado = !hasPermission;
+  }
 }

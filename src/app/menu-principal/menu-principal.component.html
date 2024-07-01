@@ -3,17 +3,17 @@
         <div class="botoes-container">
             <div class="wrapper">
 
-                <app-botoes icone="store" texto="Entidades" path="/entidades"/>
+                <app-botoes icone="store" texto="Entidades" path="/entidades" [permissao]="101"/>
 
-                <app-botoes icone="inventory_2" texto="Itens" path="/itens"/>
+                <app-botoes icone="inventory_2" texto="Itens" path="/itens" [permissao]="201"/>
 
-                <app-botoes icone="search" texto="Buscar Documentos" path="/licitacao/pesquisar"/>
+                <app-botoes icone="search" texto="Buscar Documentos" path="/licitacao/pesquisar" [permissao]="301"/>
 
-                <app-botoes icone="post_add" texto="Nova Licitação" path="/licitacao"/>
+                <app-botoes icone="post_add" texto="Nova Licitação" path="/licitacao" [permissao]="302"/>
 
-                <app-botoes icone="upload_file" texto="Importar Ata PDF"/>
+                <app-botoes icone="upload_file" texto="Importar Ata PDF" [permissao]="303"/>
 
-                <app-botoes icone="manage_accounts" texto="Config. Usuários" path="/auth/usuarios"/>
+                <app-botoes icone="manage_accounts" texto="Config. Usuários" path="/auth/usuarios" [permissao]="601"/>
             </div>
         </div>
     </app-container>

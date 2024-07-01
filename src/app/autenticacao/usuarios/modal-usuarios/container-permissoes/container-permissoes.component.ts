@@ -27,8 +27,19 @@ export class ContainerPermissoesComponent implements OnInit {
     });
   }
 
-  togglePermissao(recurso: Recursos) {
+  checaDisabled(recurso: Recursos, permissao: Permissoes): boolean {
+    if(recurso.nomeRecurso === 'Visualizar'){
+      return permissao.recursos.some(s => s.permissaoRecurso === true && s.nomeRecurso !== 'Visualizar');
+    }
+    return false;
+  }
+  togglePermissao(recurso: Recursos, permissao: Permissoes) {
     recurso.permissaoRecurso = !recurso.permissaoRecurso;
+
+    if (permissao.recursos.some(s => s.permissaoRecurso === true)) {
+      permissao.recursos[0].permissaoRecurso = true;
+    }
+
     this.usuarioPermissoes.markAsDirty();
     this.usuarioPermissoes.setValue(this.usuario.permissoes);
   }

@@ -2,14 +2,14 @@
     <ng-container>
         <app-botoes icone="home" path="/"/>
 
-        <app-botoes icone="store" path="/entidades"/>
+        <app-botoes icone="store" path="/entidades" [permissao]="101"/>
 
-        <app-botoes icone="inventory_2" path="/itens"/>
+        <app-botoes icone="inventory_2" path="/itens" [permissao]="201"/>
 
-        <app-botoes icone="search" path="/licitacao/pesquisar"/>
+        <app-botoes icone="search" path="/licitacao/pesquisar" [permissao]="301"/>
 
-        <app-botoes icone="post_add" path="/licitacao"/>
+        <app-botoes icone="post_add" path="/licitacao" [permissao]="302"/>
 
-        <app-botoes icone="manage_accounts" path="/auth/usuarios"/>
+        <app-botoes icone="manage_accounts" path="/auth/usuarios" [permissao]="601"/>
     </ng-container>
 </aside>
