@@ -1,4 +1,4 @@
-<form #itemForm="ngForm" class="dialog">
+<form #form="ngForm" class="dialog">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Cadastro</h3>
@@ -10,7 +10,7 @@
                     matInput 
                     name="id" 
                     disabled 
-                    [(ngModel)]="item.id" 
+                    [(ngModel)]="cadastro.id" 
                     #id="ngModel">
             </mat-form-field>
 
@@ -22,7 +22,7 @@
                     name="nome" 
                     #nome="ngModel" 
                     maxlength="100"
-                    [(ngModel)]="item.nome">
+                    [(ngModel)]="cadastro.nome">
             </mat-form-field>
 
             <!-- Unidade primária -->
@@ -33,7 +33,7 @@
                     name="ie" 
                     #ie="ngModel" 
                     maxlength="10"
-                    [(ngModel)]="item.unidadePrimaria">
+                    [(ngModel)]="cadastro.unidadePrimaria">
             </mat-form-field>
 
             <!-- Unidade secundária -->
@@ -44,15 +44,15 @@
                     name="fantasia" 
                     #fantasia="ngModel" 
                     maxlength="10"
-                    [(ngModel)]="item.unidadeSecundaria">
+                    [(ngModel)]="cadastro.unidadeSecundaria">
             </mat-form-field>
         </div>
 
         <h3>Nomes Auxiliares</h3>
         <div class="campo nomes">
             <mat-form-field class="chip-list" appearance="outline">
-                <mat-chip-grid #chipGrid [(ngModel)]="item.listaNomes" name="listaNomes" aria-label="Enter Items">
-                    <mat-chip-row *ngFor="let nomeAuxiliar of item.listaNomes" (removed)="remove(nomeAuxiliar)"
+                <mat-chip-grid #chipGrid [(ngModel)]="cadastro.listaNomes" name="listaNomes" aria-label="Enter Items">
+                    <mat-chip-row *ngFor="let nomeAuxiliar of cadastro.listaNomes" (removed)="remove(nomeAuxiliar)"
                         [editable]="true" (edited)="edit(nomeAuxiliar, $event)"
                         [aria-description]="'press enter to edit ' + nomeAuxiliar">
                         {{nomeAuxiliar}}
@@ -67,22 +67,29 @@
             </mat-form-field>
         </div>
 
-        <mat-checkbox class="checkbox" [checked]="item.ehCesta" color="primary"
-            (change)="toggleCesta(item)">Cesta</mat-checkbox>
+        <mat-checkbox class="checkbox" [checked]="cadastro.ehCesta" color="primary"
+            (change)="toggleCesta(cadastro)">Cesta</mat-checkbox>
 
-        <section *ngIf="item.ehCesta">
+        <section *ngIf="cadastro.ehCesta">
             <h3>Itens da cesta</h3>
             <app-container-cesta [listaControl]="listaControl"/>
         </section>
     </div>
     <div mat-dialog-actions class="btn-group">
-        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(itemForm)">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(form)">
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" (click)="submeter()">
+        <button 
+            mat-flat-button 
+            color="primary" 
+            (click)="submeter()"
+            [appHasPermission]="permissao"
+            (hasPermission)="onHasPermission($event)"
+            [disabled]="botaoDesabilitado">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>
     </div>
+    <ng-template #loadingSpinnerContainer></ng-template>
 </form>

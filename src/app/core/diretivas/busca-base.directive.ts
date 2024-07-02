@@ -1,19 +1,19 @@
-import { Directive, OnInit } from '@angular/core';
+import { Directive, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { MensagemService } from '../services/mensagem.service';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { MensagemModal } from '../types/auxiliares';
 import { FormularioBuscaBaseService } from '../services/formulario-busca-base.service';
 import { CrudBaseService } from '../services/crud-base.service';
-import { MatDialog } from '@angular/material/dialog';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
 
-@Directive({
-  selector: '[appBuscaBase]'
-})
+@Directive({})
 export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements OnInit {
+  @ViewChild('loadingSpinnerContainer', { read: ViewContainerRef }) loadingSpinnerContainer!: ViewContainerRef;
 
   public lista!: ObjetoSimplificado[];
   public selecionado!: FormControl;
@@ -62,12 +62,13 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     if (!id) {
       return this.messageService.openSnackBar('Nenhum cadastro selecionado');
     }
+    this.mostrarSpinner();
     this.service.obterPorID(id).subscribe({
       next: result => {
         cadastro = result
-
+        this.esconderSpinner();
         this.dialogCadastro(cadastro, false);
-      }
+      }, error: () => this.esconderSpinner(),
     });
 
   };
@@ -79,9 +80,10 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
   protected mensagemInativacao(): MensagemModal {
     const item = this.selecionado.value;
     const nome = item.nome ?? item.fantasia ?? undefined;
+    const msg = item?.status === 1 ? 'Inativar' : 'Reativar';
     return {
-      titulo: 'Inativar cadastro?',
-      mensagem: 'Deseja inativar a cadastro??',
+      titulo: `${msg} cadastro?`,
+      mensagem: `Deseja ${msg} a cadastro??`,
       item: `\nCód: ${item.id} - ${nome}`
     }
   }
@@ -126,11 +128,23 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> implements 
     });
   }
 
+  private mostrarSpinner() {
+    this.loadingSpinnerContainer.createComponent(LoadingSpinnerComponent);
+  }
+
+  private esconderSpinner() {
+    this.loadingSpinnerContainer.clear();
+  }
+
   private inativarCadastro(cadastro: ObjetoSimplificado) {
+    this.mostrarSpinner();
     this.service.inativar(cadastro).subscribe({
       next: () => {
         this.loadData();
-      }
+        this.esconderSpinner();
+        this.selecionado.setValue(null);
+        this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
+      },error: () => this.esconderSpinner()
     });
   }
 

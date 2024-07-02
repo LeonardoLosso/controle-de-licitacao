@@ -18,8 +18,11 @@ export interface MudancasParaPatch {
     [op: string]: any;
     path: string;
     value?: any;
-  }
+}
 
+export interface ICadastro{
+    id: number
+}
 //-----------[DROPDOWN MODEL]------------
 
 export interface EnumNumberID {
@@ -32,7 +35,7 @@ export interface EnumStringID {
     nome: string
 }
 
-export interface Listagem <T>{
+export interface Listagem<T> {
     page: 2,
     totalPage: 1,
     totalItems: 3,

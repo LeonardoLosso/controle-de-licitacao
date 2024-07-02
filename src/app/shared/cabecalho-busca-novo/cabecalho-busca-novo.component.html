@@ -5,14 +5,15 @@
                 [icone]="status === 1 || !status? 'block' : 'check'" 
                 [texto]="status === 1 || !status? 'Inativar' : 'Reativar'" 
                 [color]="status === 1 || !status? 'warn' : 'verde'" 
+                [permissao]="permissaoInativar"
                 variant="btn-cabecalho" 
                 (click)="inativar()"/>
 
-            <app-botoes icone="add" texto="Novo" variant="btn-cabecalho" (click)="novo()" />
+            <app-botoes icone="add" texto="Novo" variant="btn-cabecalho" (click)="novo()" [permissao]="permissaoNovo"/>
 
             <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelar()" />
 
-            <app-botoes icone="edit" texto="Editar" variant="btn-cabecalho" (click)="editar()" />
+            <app-botoes icone="edit" texto="Editar" variant="btn-cabecalho" (click)="editar()" [permissao]="permissaoEditar"/>
         </div>
 
         <div class="filtros">

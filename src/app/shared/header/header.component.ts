@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { UserService } from 'src/app/autenticacao/services/user.service';
 
 @Component({
@@ -10,7 +10,6 @@ import { UserService } from 'src/app/autenticacao/services/user.service';
 })
 export class HeaderComponent {
 
-  @Input() usuarioLogado!: boolean;
   menuName!: string;
   
   constructor(
@@ -18,7 +17,6 @@ export class HeaderComponent {
     private activatedRoute: ActivatedRoute,
     private userService: UserService
   ) { 
-
   }
   user$ = this.userService.retornarUser();
 
@@ -33,7 +31,11 @@ export class HeaderComponent {
       });
   }
 
-
+  retornaNome(): string{
+    let userName = "";
+    this.user$.subscribe(user => userName = user?.userName ?? "");
+    return userName
+  }
   logout() {
     this.userService.logout();
     this.router.navigate(['auth/login']);

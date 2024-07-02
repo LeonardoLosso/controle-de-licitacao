@@ -7,6 +7,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class CabecalhoBuscaNovoComponent {
     @Input() status: number = 1;
+
+    @Input() permissaoInativar: number = 0;
+    @Input() permissaoNovo: number = 0;
+    @Input() permissaoEditar: number = 0;
     
     @Output() realizarBusca = new EventEmitter();
     @Output() limparFiltros = new EventEmitter();

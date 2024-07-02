@@ -8,6 +8,9 @@
             (cancelarOperacao)="voltar()"
             (inativarCadastro)="inativar()"
             [status]="selecionado.value?.status"
+            [permissaoNovo]="102"
+            [permissaoEditar]="103"
+            [permissaoInativar]="104"
         >
             <app-form-busca-entidades/>
         </app-cabecalho-busca-novo>
@@ -24,4 +27,6 @@
             />
         </app-busca-container>
     </form>
+
+    <ng-template #loadingSpinnerContainer></ng-template>
 </section>

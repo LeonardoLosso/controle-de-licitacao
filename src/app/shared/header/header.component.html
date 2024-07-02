@@ -1,10 +1,17 @@
 <ng-container *ngIf="user$ | async as pessoaUsuaria;">
   <header class="header">
-      <mat-toolbar color="primary">
-          <span class="title"><h1>{{menuName}}</h1></span>
-          <span class="spacer"></span>
-          <button mat-stroked-button (click)="logout()">SAIR<mat-icon>logout</mat-icon></button>
-        </mat-toolbar>
+    <mat-toolbar color="primary">
+      <span class="title">
+        <h1>{{menuName}}</h1>
+      </span>
+      <span class="spacer"></span>
+      <div class="user-info">
+        <span>
+          Usuário | {{retornaNome()}}
+        </span>
+        <button mat-stroked-button (click)="logout()">DESLOGAR<mat-icon>logout</mat-icon></button>
+      </div>
+    </mat-toolbar>
   </header>
 
   <app-menu-lateral />

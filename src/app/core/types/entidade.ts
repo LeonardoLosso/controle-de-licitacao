@@ -1,4 +1,4 @@
-import { Endereco } from "./auxiliares"
+import { Endereco, ICadastro } from "./auxiliares"
 
 export interface EntidadeSimplificada {
     id: number,
@@ -10,7 +10,7 @@ export interface EntidadeSimplificada {
     email: string
 }
 
-export interface Entidade {
+export interface Entidade extends ICadastro{
     id: number,
     status: number,
     nome: string,

@@ -6,13 +6,13 @@
             <!-- Código -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Código</mat-label>
-                <input matInput name="id" disabled [(ngModel)]="usuario.id" #id="ngModel">
+                <input matInput name="id" disabled [(ngModel)]="cadastro.id" #id="ngModel">
             </mat-form-field>
 
             <!-- nome -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Nome</mat-label>
-                <input matInput name="nome" #nome="ngModel" [(ngModel)]="usuario.nome">
+                <input matInput name="nome" #nome="ngModel" [(ngModel)]="cadastro.nome">
             </mat-form-field>
 
             <!-- nome de usuario -->
@@ -30,21 +30,21 @@
             <!-- cnpj -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>cpf</mat-label>
-                <input matInput name="cpf" #cnpj="ngModel" [(ngModel)]="usuario.cpf"
-                    [ngModel]="usuario.cpf | mascarasInput:'cpf-cnpj'">
+                <input matInput name="cpf" #cnpj="ngModel" [(ngModel)]="cadastro.cpf"
+                    [ngModel]="cadastro.cpf | mascarasInput:'cpf-cnpj'">
             </mat-form-field>
 
             <!-- email -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>E-mail</mat-label>
-                <input matInput name="email" #email="ngModel" [(ngModel)]="usuario.email">
+                <input matInput name="email" #email="ngModel" [(ngModel)]="cadastro.email">
             </mat-form-field>
 
             <!-- telefone -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>telefone</mat-label>
-                <input matInput name="telefone" #telefone="ngModel" [(ngModel)]="usuario.telefone"
-                    [ngModel]="usuario.telefone | mascarasInput:'phone'">
+                <input matInput name="telefone" #telefone="ngModel" [(ngModel)]="cadastro.telefone"
+                    [ngModel]="cadastro.telefone | mascarasInput:'phone'">
             </mat-form-field>
 
             <!-- SENHA E CONFIRMA SENHA -->
@@ -67,14 +67,14 @@
             <!-- cep -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>cep</mat-label>
-                <input matInput name="cep" #cep="ngModel" [(ngModel)]="usuario.endereco.cep">
+                <input matInput name="cep" #cep="ngModel" [(ngModel)]="cadastro.endereco.cep">
             </mat-form-field>
 
             <!-- uf -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Estado</mat-label>
                 <input type="text" placeholder="Selecione" aria-label="Estado" matInput
-                    [(ngModel)]="usuario.endereco.uf" [matAutocomplete]="estado" name="uf" #uf="ngModel">
+                    [(ngModel)]="cadastro.endereco.uf" [matAutocomplete]="estado" name="uf" #uf="ngModel">
                 <mat-autocomplete [displayWith]="displayFnEstados" #estado="matAutocomplete">
                     <mat-option *ngFor="let estado of estados" [value]="estado.id">
                         {{estado.id}} - {{estado.nome}}
@@ -85,37 +85,37 @@
             <!-- cidade -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>cidade</mat-label>
-                <input matInput name="cidade" #cidade="ngModel" [(ngModel)]="usuario.endereco.cidade">
+                <input matInput name="cidade" #cidade="ngModel" [(ngModel)]="cadastro.endereco.cidade">
             </mat-form-field>
 
             <!-- bairro -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>bairro</mat-label>
-                <input matInput name="bairro" #bairro="ngModel" [(ngModel)]="usuario.endereco.bairro">
+                <input matInput name="bairro" #bairro="ngModel" [(ngModel)]="cadastro.endereco.bairro">
             </mat-form-field>
 
             <!-- numero -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Número</mat-label>
-                <input matInput name="numero" #numero="ngModel" [(ngModel)]="usuario.endereco.numero">
+                <input matInput name="numero" #numero="ngModel" [(ngModel)]="cadastro.endereco.numero">
             </mat-form-field>
 
             <!-- logradouro -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>logradouro</mat-label>
-                <input matInput name="logradouro" #logradouro="ngModel" [(ngModel)]="usuario.endereco.logradouro">
+                <input matInput name="logradouro" #logradouro="ngModel" [(ngModel)]="cadastro.endereco.logradouro">
             </mat-form-field>
 
             <!-- complemento -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>complemento</mat-label>
-                <input matInput name="complemento" #complemento="ngModel" [(ngModel)]="usuario.endereco.complemento">
+                <input matInput name="complemento" #complemento="ngModel" [(ngModel)]="cadastro.endereco.complemento">
             </mat-form-field>
         </div>
 
         <h3>Permissões</h3>
         <mat-accordion>
-            <app-container-permissoes [usuario]="usuario" [usuarioPermissoes]="permissoes" />
+            <app-container-permissoes [usuario]="cadastro" [usuarioPermissoes]="permissoes" />
         </mat-accordion>
     </div>
     <div mat-dialog-actions class="btn-group">
@@ -123,9 +123,16 @@
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" (click)="submeter()" [disabled]="habilitaBotao()">
+        <button 
+            mat-flat-button 
+            color="primary" 
+            (click)="submeter()" 
+            [disabled]="habilitaBotao()"
+            [appHasPermission]="permissao"
+            (hasPermission)="onHasPermission($event)">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>
     </div>
-</form>'
+    <ng-template #loadingSpinnerContainer></ng-template>
+</form>

@@ -1,3 +1,5 @@
+import { ICadastro } from "./auxiliares"
+
 export interface ItemSimplificado {
     id: number,
     status: number,
@@ -7,7 +9,7 @@ export interface ItemSimplificado {
     unidadeSecundaria: string
 }
 
-export interface Item {
+export interface Item extends ICadastro{
     id: number,
     status: number,
     ehCesta: boolean,

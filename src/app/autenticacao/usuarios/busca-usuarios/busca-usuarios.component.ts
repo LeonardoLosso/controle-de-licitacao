@@ -8,7 +8,6 @@ import { ModalUsuariosComponent } from '../modal-usuarios/modal-usuarios.compone
 import { FormularioBuscaService } from '../../services/formulario-busca.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
-import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 
 @Component({
   selector: 'app-busca-usuarios',
@@ -41,22 +40,11 @@ export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioS
 
       if (result) {
         if (novo) {
-          this.service.criar(result).subscribe({
-            next: () => {
-              this.loadData();
-              this.messageService.openSnackBar('Usuário criado com sucesso!', 'success');
-            }
-          });
+          this.loadData();
+          this.messageService.openSnackBar('Usuário criado com sucesso!', 'success');
         } else {
-          const mudancas = result as MudancasParaPatch[];
-          if (mudancas.length > 0) {
-            this.service.editar(mudancas, cadastro.id).subscribe({
-              next: () => {
-                this.loadData();
-                this.messageService.openSnackBar('Usuário editado com sucesso!', 'success');
-              }
-            });
-          }
+          this.loadData();
+          this.messageService.openSnackBar('Usuário editado com sucesso!', 'success');
         }
       }
     });
@@ -70,7 +58,7 @@ export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioS
       rePassword: '',
       userName: '',
       cpf: '',
-      email: '', 
+      email: '',
       telefone: '',
       permissoes: [],
       status: 1,

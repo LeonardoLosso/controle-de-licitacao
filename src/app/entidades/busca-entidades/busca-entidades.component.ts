@@ -8,7 +8,6 @@ import { FormularioBuscaService } from '../services/formulario-busca.service';
 import { EntidadesService } from '../services/entidades.service';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { BuscaBaseDirective } from 'src/app/core/diretivas/busca-base.directive';
-import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 
 @Component({
     selector: 'app-busca-entidades',
@@ -41,22 +40,11 @@ export class BuscaEntidadesComponent extends BuscaBaseDirective<Entidade, Entida
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 if (novo) {
-                    this.service.criar(result).subscribe({
-                        next: () => {
-                            this.loadData()
-                            this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
-                        }
-                    });
+                    this.loadData()
+                    this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
                 } else {
-                    const mudancas = result as MudancasParaPatch[];
-                    if (mudancas.length > 0) {
-                        this.service.editar(result, cadastro.id).subscribe({
-                            next: () => {
-                                this.loadData()
-                                this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
-                            }
-                        });
-                    }
+                    this.loadData()
+                    this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
                 }
             }
         });

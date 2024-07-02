@@ -16,6 +16,8 @@ export class BotoesComponent {
   botaoDesabilitado = false;
 
   onHasPermission(hasPermission: boolean) {
-    this.botaoDesabilitado = !hasPermission;
+    setTimeout(() => {
+      this.botaoDesabilitado = !hasPermission;
+    }, 0);
   }
 }

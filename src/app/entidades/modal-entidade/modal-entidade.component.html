@@ -1,4 +1,4 @@
-<form #entidadeForm="ngForm" class="dialog">
+<form #form="ngForm" class="dialog">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Cadastro</h3>
@@ -6,7 +6,7 @@
             <!-- Código -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Código</mat-label>
-                <input matInput name="id" disabled [(ngModel)]="entidade.id" #id="ngModel">
+                <input matInput name="id" disabled [(ngModel)]="cadastro.id" #id="ngModel">
             </mat-form-field>
             
             <!-- nome -->
@@ -17,7 +17,7 @@
                     matInput 
                     name="nome" 
                     #nome="ngModel" 
-                    [(ngModel)]="entidade.nome">
+                    [(ngModel)]="cadastro.nome">
             </mat-form-field>
 
             <!-- tipo de Cadastro -->
@@ -28,7 +28,7 @@
                     placeholder="Selecione"
                     aria-label="tipo do cadastro"
                     matInput
-                    [(ngModel)]="entidade.tipo"
+                    [(ngModel)]="cadastro.tipo"
                     [matAutocomplete]="auto"
                     name="tipo"
                     #tipo="ngModel"
@@ -48,8 +48,8 @@
                     name="cnpj" 
                     maxlength="18" 
                     #cnpj="ngModel" 
-                    [(ngModel)]="entidade.cnpj" 
-                    [ngModel]="entidade.cnpj | mascarasInput:'cpf-cnpj'">
+                    [(ngModel)]="cadastro.cnpj" 
+                    [ngModel]="cadastro.cnpj | mascarasInput:'cpf-cnpj'">
             </mat-form-field>
 
             <!-- ie -->
@@ -60,7 +60,7 @@
                     matInput 
                     name="ie" 
                     #ie="ngModel" 
-                    [(ngModel)]="entidade.ie">
+                    [(ngModel)]="cadastro.ie">
             </mat-form-field>
 
             <!-- fantasia -->
@@ -71,7 +71,7 @@
                     matInput 
                     name="fantasia" 
                     #fantasia="ngModel" 
-                    [(ngModel)]="entidade.fantasia">
+                    [(ngModel)]="cadastro.fantasia">
             </mat-form-field>
 
             <!-- email -->
@@ -82,7 +82,7 @@
                     matInput 
                     name="email" 
                     #email="ngModel" 
-                    [(ngModel)]="entidade.email">
+                    [(ngModel)]="cadastro.email">
             </mat-form-field>
 
             <!-- telefone -->
@@ -93,8 +93,8 @@
                     name="telefone" 
                     maxlength="16" 
                     #telefone="ngModel" 
-                    [(ngModel)]="entidade.telefone" 
-                    [ngModel]="entidade.telefone | mascarasInput:'phone'">
+                    [(ngModel)]="cadastro.telefone" 
+                    [ngModel]="cadastro.telefone | mascarasInput:'phone'">
             </mat-form-field>
         </div>
 
@@ -108,8 +108,8 @@
                     name="cep" 
                     #cep="ngModel" 
                     maxlength="9" 
-                    [(ngModel)]="entidade.endereco.cep" 
-                    [ngModel]="entidade.endereco.cep | mascarasInput: 'cep'">
+                    [(ngModel)]="cadastro.endereco.cep" 
+                    [ngModel]="cadastro.endereco.cep | mascarasInput: 'cep'">
             </mat-form-field>
 
             <!-- uf -->
@@ -120,7 +120,7 @@
                     placeholder="Selecione"
                     aria-label="Estado"
                     matInput
-                    [(ngModel)]="entidade.endereco.uf"
+                    [(ngModel)]="cadastro.endereco.uf"
                     [matAutocomplete]="estado"
                     name="uf" #uf="ngModel"
                 >
@@ -139,7 +139,7 @@
                     matInput 
                     name="cidade" 
                     #cidade="ngModel" 
-                    [(ngModel)]="entidade.endereco.cidade">
+                    [(ngModel)]="cadastro.endereco.cidade">
             </mat-form-field>
 
             <!-- bairro -->
@@ -150,7 +150,7 @@
                     matInput 
                     name="bairro" 
                     #bairro="ngModel" 
-                    [(ngModel)]="entidade.endereco.bairro">
+                    [(ngModel)]="cadastro.endereco.bairro">
             </mat-form-field>
 
             <!-- numero -->
@@ -161,7 +161,7 @@
                     matInput 
                     name="numero" 
                     #numero="ngModel" 
-                    [(ngModel)]="entidade.endereco.numero">
+                    [(ngModel)]="cadastro.endereco.numero">
             </mat-form-field>
 
             <!-- logradouro -->
@@ -172,7 +172,7 @@
                     matInput 
                     name="logradouro" 
                     #logradouro="ngModel" 
-                    [(ngModel)]="entidade.endereco.logradouro">
+                    [(ngModel)]="cadastro.endereco.logradouro">
             </mat-form-field>
 
             <!-- complemento -->
@@ -183,18 +183,25 @@
                     matInput 
                     name="complemento" 
                     #complemento="ngModel" 
-                    [(ngModel)]="entidade.endereco.complemento">
+                    [(ngModel)]="cadastro.endereco.complemento">
             </mat-form-field>
         </div>
     </div>
     <div mat-dialog-actions class="btn-group">
-        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(entidadeForm)">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(form)">
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" (click)="submeter()">
+        <button 
+            mat-flat-button 
+            color="primary" 
+            (click)="submeter()"
+            [appHasPermission]="permissao"
+            (hasPermission)="onHasPermission($event)"
+            [disabled]="botaoDesabilitado">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>
     </div>
+    <ng-template #loadingSpinnerContainer></ng-template>
 </form>

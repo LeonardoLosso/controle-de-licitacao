@@ -1,54 +1,32 @@
-import { Component, Inject, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { Entidade } from 'src/app/core/types/entidade';
+import { Entidade, EntidadeSimplificada } from 'src/app/core/types/entidade';
 import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { EnumTipoCadastro, EnumUF } from 'src/app/core/types/enum';
-import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
+import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive';
+import { EntidadesService } from '../services/entidades.service';
 
 @Component({
     selector: 'app-modal-entidade',
     templateUrl: './modal-entidade.component.html',
     styleUrls: ['./modal-entidade.component.scss']
 })
-export class ModalEntidadeComponent {
+export class ModalEntidadeComponent extends ModalCrudDirective<Entidade, EntidadeSimplificada> {
+    public override permissao: number = 102;
 
-    @ViewChild('entidadeForm') entidadeForm!: NgForm;
-
-    public entidade!: Entidade;
     public options = EnumTipoCadastro;
     public estados = EnumUF;
-    public titulo = "Novo Cadastro";
 
     constructor(
-        public dialogRef: MatDialogRef<ModalEntidadeComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: Entidade,
-        private dialog: MatDialog
-
+        dialogRef: MatDialogRef<ModalEntidadeComponent>,
+        @Inject(MAT_DIALOG_DATA) data: Entidade,
+        dialog: MatDialog,
+        service: EntidadesService
     ) {
-        this.entidade = { ...data };
-
-        if (data.id !== 0) {
-            this.titulo = "Editar Cadastro"
-        }
+        super(dialogRef, data, dialog, service);
     }
 
-    submeter() {
-        if (this.data.id !== 0) {
-            const mudancas: MudancasParaPatch[] = [];
-            for (const controlName in this.entidadeForm.controls) {
-                const control = this.entidadeForm.controls[controlName];
-                if (control.dirty && control.value !== control.pristine) {
-                    mudancas.push({ op: 'replace', path: `/${controlName}`, value: control.value });
-                }
-            }
-
-            return this.dialogRef.close(mudancas);
-        }
-
-        return this.dialogRef.close(this.entidade);
-    }
     displayFn(val: number): string {
         const value = EnumTipoCadastro.filter(f => f.id === val)[0];
         return value && value.nome ? `${value.nome}` : '';
@@ -59,27 +37,15 @@ export class ModalEntidadeComponent {
         return value && value.nome ? `${value.id} - ${value.nome}` : '';
     };
 
-    cancelar(form: NgForm) {
-        if (!form.dirty) {
-            return this.dialogRef.close();
+    protected override submeterEdicao(): MudancasParaPatch[] {
+        const mudancas: MudancasParaPatch[] = [];
+        for (const controlName in this.form.controls) {
+            const control = this.form.controls[controlName];
+            if (control.dirty && control.value !== control.pristine) {
+                mudancas.push({ op: 'replace', path: `/${controlName}`, value: control.value });
+            }
         }
-        this.confirmarCancelar();
-    }
 
-    private confirmarCancelar() {
-        const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
-            disableClose: true,
-            data: {
-                titulo: 'Cancelar',
-                mensagem: 'Deseja cancelar?',
-                item: `\nAs alterações NÃO serão salvas`
-            }
-        });
-
-        confirmacao.afterClosed().subscribe(result => {
-            if (result === true) {
-                this.dialogRef.close();
-            }
-        });
+        return mudancas;
     }
 }

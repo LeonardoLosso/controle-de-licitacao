@@ -1,4 +1,4 @@
-import { Endereco } from "./auxiliares"
+import { Endereco, ICadastro } from "./auxiliares"
 
 export interface UsuarioSimplificado {
     id: number,
@@ -8,7 +8,7 @@ export interface UsuarioSimplificado {
     cpf: string
 }
 
-export interface Usuario {
+export interface Usuario extends ICadastro{
     id: number,
     password: string,
     rePassword: string
