@@ -1,9 +1,9 @@
 <section class="filters">
-    <!-- Unidade dropdown -->
+    <!-- unidade dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>Unidade</mat-label>
-            <input type="text" placeholder="Selecione" aria-label="Unidade" matInput
+            <mat-label>unidade</mat-label>
+            <input type="text" placeholder="Selecione" aria-label="unidade" matInput
                 [formControl]="formService.obterControle('unidade')" [matAutocomplete]="unidade">
             <mat-autocomplete [displayWith]="displayUnidade" #unidade="matAutocomplete">
                 <mat-option *ngFor="let option of options" [value]="option">

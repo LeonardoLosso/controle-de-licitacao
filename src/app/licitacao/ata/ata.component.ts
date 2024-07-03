@@ -16,7 +16,7 @@ import { ModalItemAtaComponent } from './modal-item-ata/modal-item-ata.component
   styleUrls: ['./ata.component.scss']
 })
 export class AtaComponent implements OnInit {
-  private id!: string;
+  private id!: number;
 
   public status!: FormControl<number>;
   public listaItens!: FormControl<ItemDeAta[]>;
@@ -45,24 +45,24 @@ export class AtaComponent implements OnInit {
 
   salvar() {
     const control = this.form.obterControle('edital');
-    const id = control.value;
+    const edital = control.value;
 
     if (!control.valid) {
-      return this.errorMessage.openSnackBar('numero do edital é obrigatório');
+      return this.errorMessage.openSnackBar('numero do edital é obrigatório', 'alert');
     }
     this.form.salvar();
   }
 
   abrirBaixa() {
     const control = this.form.obterControle('edital');
-    const id = control.value;
+    const edital = control.value;
     
     if (control.valid) {
       this.salvar();
-      const queryParams = { ata: id };
+      const queryParams = { ata: edital };
       return this.router.navigate(['/licitacao/baixa'], { queryParams });
     }
-    return this.errorMessage.openSnackBar('numero do edital é obrigatório');
+    return this.errorMessage.openSnackBar('numero do edital é obrigatório', 'alert'); // mudar para verificar se já foi salvo
   }
 
   inativar() {
@@ -140,8 +140,9 @@ export class AtaComponent implements OnInit {
   private itemVazio(): ItemDeAta {
     return {
       id: 0,
+      ataId: this.form.idAta,
       nome: '',
-      Unidade: '',
+      unidade: '',
       Quantidade: 0,
       ValorUnitario: 0,
       ValorTotal: 0,

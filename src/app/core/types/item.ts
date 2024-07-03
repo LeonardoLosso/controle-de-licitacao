@@ -22,8 +22,9 @@ export interface Item extends ICadastro{
 
 export interface ItemDeAta {
     id: number,
+    ataId: number
     nome: string,
-    Unidade: string,
+    unidade: string,
     Quantidade: number,
     ValorUnitario: number,
     ValorTotal: number,
@@ -33,7 +34,7 @@ export interface ItemDeAta {
 export interface ItemDeBaixa {
     id: number,
     nome: string,
-    Unidade: string,
+    unidade: string,
 
     QtdeEmpenhada: number, //totalização das notas?
 

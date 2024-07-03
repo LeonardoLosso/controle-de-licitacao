@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -7,14 +7,19 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { MensagemService } from '../services/mensagem.service';
+import { UserService } from 'src/app/autenticacao/services/user.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrosInterceptor implements HttpInterceptor {
 
-  constructor(private service: MensagemService, private router: Router) { }
+  constructor(
+    private service: MensagemService, 
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   intercept(
     request: HttpRequest<HttpErrorResponse>,
@@ -38,7 +43,8 @@ export class ErrosInterceptor implements HttpInterceptor {
         } else if (error.status === 400){
           errorMessage = 'Requisição fora do padrão';
         } else if (512){
-          errorMessage = "tokem expirado";
+          errorMessage = "token expirado";
+          this.userService.logout();
           this.router.navigate(['auth/login']);
           this.service.openSnackBar(errorMessage, 'error');
         }

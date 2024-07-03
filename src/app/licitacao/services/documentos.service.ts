@@ -14,24 +14,33 @@ export class DocumentosService {
   constructor(private http: HttpClient) { }
 
   public listar(): Observable<AtaLicitacaoSimplificada[]> {
-    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`).pipe(
+    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/ata`).pipe(
       map(items => items.map(item => ({
         ...item,
-        DataLicitacao: this.convertToDate(item.DataLicitacao),
-        DataAta: this.convertToDate(item.DataAta)
+        dataLicitacao: this.convertToDate(item.dataLicitacao),
+        dataAta: this.convertToDate(item.dataAta)
       })))
     );
   }
 
   public obterAtaPorID(id: number): Observable<AtaLicitacao> {
-    const url = `${this.URL}/ataDoc/${id}`;
+    const url = `${this.URL}/ata/${id}`;
     return this.http.get<AtaLicitacao>(url).pipe(
       map((ata: any) => ({
         ...ata,
-        DataLicitacao: new Date(ata.DataLicitacao),
-        DataAta: new Date(ata.DataAta)
+        dataLicitacao: new Date(ata.dataLicitacao),
+        dataAta: new Date(ata.dataAta)
       }))
     );
+  }
+
+  public criar(dto: AtaLicitacao): Observable<AtaLicitacao[]> {
+    return this.http.post<AtaLicitacao[]>(`${this.URL}/ata`, dto);
+  }
+
+  public inativar(id: number): Observable<AtaLicitacaoSimplificada[]> {
+    // IMPLEMENTAR
+    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`);
   }
 
   public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
@@ -39,15 +48,10 @@ export class DocumentosService {
     return this.http.get<BaixaLicitacao>(url).pipe(
       map((ata: any) => ({
         ...ata,
-        DataLicitacao: new Date(ata.DataLicitacao),
-        DataAta: new Date(ata.DataAta)
+        dataLicitacao: new Date(ata.dataLicitacao),
+        dataAta: new Date(ata.dataAta)
       }))
     );
-  }
-
-  public inativar(id: number): Observable<AtaLicitacaoSimplificada[]> {
-    // IMPLEMENTAR
-    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`);
   }
 
   private convertToDate(value: any): Date {

@@ -6,6 +6,7 @@ import { ItemDeAta } from 'src/app/core/types/item';
 import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
+import { AtaLicitacao } from 'src/app/core/types/documentos';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ import { EnumNumberID } from 'src/app/core/types/auxiliares';
 export class FormularioAtaService {
 
   public formulario!: FormGroup;
+  public idAta!: number;
+  public totalReajustes!: number;
   private sttsControl!: FormControl<number>;
-
   constructor(private service: DocumentosService) {
     this.formulario = new FormGroup({
       edital: new FormControl(null, [Validators.required]),
@@ -49,7 +51,7 @@ export class FormularioAtaService {
     return control as FormControl<T>;
   }
 
-  public inicializarFormulario(id?: string) {
+  public inicializarFormulario(id: number) {
 
     this.limpar();
     if (id) {
@@ -65,7 +67,9 @@ export class FormularioAtaService {
   }
 
   public salvar() {
-
+    const ataLicitacao = this.retornaAta();
+    
+    this.service.criar(ataLicitacao).subscribe();
   }
 
   public inativar() {
@@ -78,7 +82,7 @@ export class FormularioAtaService {
     lista.setValue(novaLista);
   }
 
-  private preencher(id: string) {
+  private preencher(id: number) {
     const status = this.obterControle<number>('status');
     const edital = this.obterControle<string>('edital');
     const dataLicitacao = this.obterControle<Date>('dataLicitacao');
@@ -89,22 +93,22 @@ export class FormularioAtaService {
     const unidade = this.obterControle<EnumNumberID>('unidade');
     const itens = this.obterControle<ItemDeAta[]>('itens');
 
-    this.service.obterAtaPorID(1).subscribe({
+    this.service.obterAtaPorID(id).subscribe({
       next: result => {
         edital.setValue(result.id);
         status.setValue(result.status);
-        dataLicitacao.setValue(result.DataLicitacao);
-        dataAta.setValue(result.DataAta);
-        empresa.setValue(result.Empresa);
-        orgao.setValue(result.Orgao);
-        itens.setValue(result.Itens);
-        if (result.Vigencia) {
-          const data = new Date(result.Vigencia);
+        dataLicitacao.setValue(result.dataLicitacao);
+        dataAta.setValue(result.dataAta);
+        empresa.setValue(result.empresa);
+        orgao.setValue(result.orgao);
+        itens.setValue(result.itens);
+        if (result.vigencia) {
+          const data = new Date(result.vigencia);
           vigencia.setValue(data);
         }
-        if (result.Unidade) {
+        if (result.unidade) {
           //Desfazer gambi
-          const val = EnumTipoCadastro.filter(f => f.id === result.Unidade)[0];
+          const val = EnumTipoCadastro.filter(f => f.id === result.unidade)[0];
           unidade.setValue(val);
         }
       }
@@ -117,9 +121,9 @@ export class FormularioAtaService {
     this.obterControle<Date>('dataLicitacao').setValue(null);
     this.obterControle<Date>('dataAta').setValue(null);
     this.obterControle<Date>('vigencia').setValue(null);
-    this.obterControle<number>('empresa').setValue(null);
-    this.obterControle<number>('orgao').setValue(null);
-    this.obterControle<string>('unidade').setValue(null);
+    this.obterControle<Entidade>('empresa').setValue(null);
+    this.obterControle<Entidade>('orgao').setValue(null);
+    this.obterControle<EnumNumberID>('unidade').setValue(null);
     this.obterControle<ItemDeAta[]>('itens').setValue([]);
   }
 
@@ -141,5 +145,24 @@ export class FormularioAtaService {
     this.obterControle('empresa').enable();
     this.obterControle('orgao').enable();
     this.obterControle('unidade').enable();
+  }
+
+  private retornaAta(): AtaLicitacao{
+    
+    return {
+      id: this.idAta,
+      edital: this.obterControle('edital').value,
+      status: this.obterControle('status').value,
+      tipo: this.obterControle('unidade').value.id ?? 0,
+      unidade: this.obterControle('unidade').value.id ?? 0,
+      empresa: this.obterControle('empresa').value.id ?? 0,
+      orgao: this.obterControle('orgao').value.id ?? 0,
+      dataLicitacao: this.obterControle('dataLicitacao').value,
+      dataAta: this.obterControle('dataAta').value,
+      vigencia: this.obterControle('vigencia').value,
+      itens: this.obterControle('itens').value,
+      totalLicitado: 0,
+      totalReajustes: this.totalReajustes
+    }
   }
 }

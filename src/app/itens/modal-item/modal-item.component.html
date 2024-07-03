@@ -25,9 +25,9 @@
                     [(ngModel)]="cadastro.nome">
             </mat-form-field>
 
-            <!-- Unidade primária -->
+            <!-- unidade primária -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Unidade primária</mat-label>
+                <mat-label>unidade primária</mat-label>
                 <input 
                     matInput 
                     name="ie" 
@@ -36,9 +36,9 @@
                     [(ngModel)]="cadastro.unidadePrimaria">
             </mat-form-field>
 
-            <!-- Unidade secundária -->
+            <!-- unidade secundária -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Unidade secundária</mat-label>
+                <mat-label>unidade secundária</mat-label>
                 <input 
                     matInput 
                     name="fantasia" 
@@ -71,7 +71,7 @@
             (change)="toggleCesta(cadastro)">Cesta</mat-checkbox>
 
         <section *ngIf="cadastro.ehCesta">
-            <h3>Itens da cesta</h3>
+            <h3>itens da cesta</h3>
             <app-container-cesta [listaControl]="listaControl"/>
         </section>
     </div>

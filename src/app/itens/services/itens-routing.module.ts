@@ -11,7 +11,7 @@ const routes: Routes = [
         path: '',
         component: BuscaItensComponent,
         data: { 
-            menuName: 'Buscar Itens',
+            menuName: 'Buscar itens',
             recursoId: 201
          },
         canActivate: [authGuard, permGuard]

@@ -61,15 +61,15 @@ export class FormularioBaixaService {
       next: result => {
         edital.setValue(result.id);
         status.setValue(result.status);
-        dataLicitacao.setValue(result.DataLicitacao);
-        dataAta.setValue(result.DataAta);
-        empresa.setValue(result.Empresa);
-        orgao.setValue(result.Orgao);
-        itens.setValue(result.Itens);
+        dataLicitacao.setValue(result.dataLicitacao);
+        dataAta.setValue(result.dataAta);
+        empresa.setValue(result.empresa);
+        orgao.setValue(result.orgao);
+        itens.setValue(result.itens);
         empenhos.setValue(result.Empenhos);
 
-        if (result.Vigencia) {
-          const data = new Date(result.Vigencia);
+        if (result.vigencia) {
+          const data = new Date(result.vigencia);
           vigencia.setValue(data);
         }
       }

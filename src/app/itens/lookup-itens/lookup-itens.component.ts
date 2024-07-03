@@ -40,14 +40,14 @@ export class LookupItensComponent implements OnInit {
     if(this.selecionado.value){
       const item = this.selecionado.value as ItemSimplificado;
 
-      if(this.data.find(f => f.id === item.id))
+      if(this.data && this.data.find(f => f.id === item.id))
         return this.messageService.openSnackBar('Esse item já foi adicionado à cesta');
 
       this.messageService.openSnackBar('Item adicionado', 'success');
       return this.dialogRef.close(item);
     }
 
-    this.messageService.openSnackBar('Nenhum item selecionado');
+    this.messageService.openSnackBar('Nenhum item selecionado', 'alert');
   }
 
   private listar() {

@@ -38,21 +38,24 @@ export abstract class ModalCrudDirective<T extends ICadastro, TSimple> {
 
   protected submeter() {
     this.mostrarSpinner();
-
     if (this.edicao) {
       const mudancas = this.submeterEdicao();
       if (mudancas.length > 0) {
         this.service.editar(mudancas, this.cadastro.id).subscribe({
           next: () => {
             this.dialogRef.close(true);
-          }, error: () => this.esconderSpinner()
+          }, error: (err) => {
+            this.validaErro(err.message);
+          }
         });
       } else { this.esconderSpinner(); }
     } else {
       this.service.criar(this.cadastro).subscribe({
         next: () => {
           this.dialogRef.close(true);
-        }, error: () => this.esconderSpinner()
+        }, error: (err) => {
+          this.validaErro(err.message);
+        }
       });
     }
   }
@@ -77,7 +80,12 @@ export abstract class ModalCrudDirective<T extends ICadastro, TSimple> {
   private esconderSpinner() {
     this.loadingSpinnerContainer.clear();
   }
-
+  private validaErro(erro: string) {
+    this.esconderSpinner();
+    if (erro === 'token expirado') {
+      this.dialogRef.close(false);
+    }
+  }
   private confirmarCancelar() {
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,

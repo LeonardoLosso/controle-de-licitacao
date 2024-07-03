@@ -28,13 +28,13 @@ export class ModalItemAtaComponent {
       id: this.item.id,
       nome: this.item.nome,
       status: 1,
-      unidadePrimaria: this.item.Unidade,
+      unidadePrimaria: this.item.unidade,
       unidadeSecundaria: ''
     }
 
     this.formulario = new FormGroup({
       item: new FormControl(itemSimp.id === 0? null : itemSimp),
-      unidade: new FormControl(this.item.Unidade),
+      unidade: new FormControl(this.item.unidade),
       quantidade: new FormControl(this.item.Quantidade),
       valorUnitario: new FormControl(this.item.ValorUnitario),
       valorTotal: new FormControl({ value: this.item.ValorTotal, disabled: true })
@@ -56,8 +56,9 @@ export class ModalItemAtaComponent {
   confirmar() {
     const item: ItemDeAta = {
       id: this.item.id,
+      ataId: this.item.ataId,
       nome: this.item.nome,
-      Unidade: this.obterControle('unidade').value as string,
+      unidade: this.obterControle('unidade').value as string,
       Quantidade: this.obterControle('quantidade').value as number,
       ValorUnitario: this.obterControle('valorUnitario').value as number,
       ValorTotal: this.obterControle('valorTotal').value as number,
