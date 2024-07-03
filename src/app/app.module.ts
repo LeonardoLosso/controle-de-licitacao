@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
@@ -16,16 +16,16 @@ import { AutenticacaoInterceptor } from './autenticacao/autenticacao.interceptor
 
 registerLocaleData(localePt);
 
-export const MY_DATE_FORMATS = {
+export const MY_DATE_FORMATS: MatDateFormats = {
     parse: {
         dateInput: 'DD/MM/YYYY',
     },
     display: {
         dateInput: 'DD/MM/YYYY',
         monthYearLabel: 'MMMM YYYY',
-        dateA11yLabel: 'DD/MM/YYYY',
-        monthYearA11yLabel: 'MMMM YYYY',
-    },
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY'
+    }
 };
 
 @NgModule({

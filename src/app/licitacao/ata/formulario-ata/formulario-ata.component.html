@@ -12,7 +12,7 @@
     <!-- Data licitação -->
     <mat-form-field class="field" appearance="outline">
         <mat-label>Data licitação</mat-label>
-        <input matInput [matDatepicker]="dataLicitacao" [formControl]="formService.obterControle('dataLicitacao')">
+        <input matInput [matDatepicker]="dataLicitacao" [formControl]="formService.obterControle('dataLicitacao')"> 
         <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
         <mat-datepicker #dataLicitacao></mat-datepicker>
     </mat-form-field>
@@ -35,9 +35,11 @@
 
     <!-- Lookup empresa -->
     <mat-form-field class="lookup" appearance="outline">
-        <mat-label>empresa</mat-label>
-        <input matInput [formControl]="formService.obterControle('empresa')"
-            [value]="displayFn(formService.obterControle('empresa'))" (input)="limparValor('empresa')">
+        <mat-label>Empresa</mat-label>
+        <input matInput 
+            [formControl]="formService.obterControle('empresa')"
+            [value]="displayFn(formService.obterControle('empresa'))" 
+            (input)="limparValor('empresa')">
         <button mat-icon-button matSuffix (click)="acao('empresa')" [attr.aria-label]="'Abre lookup'"
             [disabled]="desabilitado()">
             <mat-icon>{{possuiValor('empresa')}}</mat-icon>
@@ -58,7 +60,7 @@
     <!-- unidade dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>unidade</mat-label>
+            <mat-label>Unidade</mat-label>
             <input type="text" placeholder="Selecione" aria-label="unidade" matInput
                 [formControl]="formService.obterControle('unidade')" [matAutocomplete]="unidade">
             <mat-autocomplete [displayWith]="displayUnidade" #unidade="matAutocomplete">

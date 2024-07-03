@@ -26,7 +26,7 @@ export class AtaComponent implements OnInit {
     public form: FormularioAtaService,
     private location: Location,
     private route: ActivatedRoute,
-    private errorMessage: MensagemService,
+    private messageService: MensagemService,
     private dialog: MatDialog,
     private router: Router
   ) { }
@@ -45,24 +45,31 @@ export class AtaComponent implements OnInit {
 
   salvar() {
     const control = this.form.obterControle('edital');
-    const edital = control.value;
 
     if (!control.valid) {
-      return this.errorMessage.openSnackBar('numero do edital é obrigatório', 'alert');
+      return this.messageService.openSnackBar('numero do edital é obrigatório', 'alert');
     }
-    this.form.salvar();
+    if (this.id) {
+      return this.form.editar();
+    }
+    return this.form.criar().subscribe({
+      next: () => {
+        this.messageService.openSnackBar('Ata criada com sucesso!', 'success');
+        //reload na pagina com ID
+      }
+    });
   }
 
   abrirBaixa() {
     const control = this.form.obterControle('edital');
     const edital = control.value;
-    
+
     if (control.valid) {
       this.salvar();
       const queryParams = { ata: edital };
       return this.router.navigate(['/licitacao/baixa'], { queryParams });
     }
-    return this.errorMessage.openSnackBar('numero do edital é obrigatório', 'alert'); // mudar para verificar se já foi salvo
+    return this.messageService.openSnackBar('numero do edital é obrigatório', 'alert'); // mudar para verificar se já foi salvo
   }
 
   inativar() {
@@ -109,7 +116,7 @@ export class AtaComponent implements OnInit {
     const item = this.selecionado.value;
 
     if (!item) {
-      return this.errorMessage.openSnackBar('Nenhum item selecionado');
+      return this.messageService.openSnackBar('Nenhum item selecionado');
     }
 
     this.form.excluirItem(item);

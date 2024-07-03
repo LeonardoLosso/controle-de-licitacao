@@ -7,6 +7,7 @@ import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
 import { AtaLicitacao } from 'src/app/core/types/documentos';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -66,12 +67,14 @@ export class FormularioAtaService {
     lista.setValue(novaLista);
   }
 
-  public salvar() {
+  public criar(): Observable<AtaLicitacao> {
     const ataLicitacao = this.retornaAta();
-    
-    this.service.criar(ataLicitacao).subscribe();
-  }
 
+    return this.service.criar(ataLicitacao);
+  }
+  public editar() {
+
+  }
   public inativar() {
 
   }
@@ -147,16 +150,16 @@ export class FormularioAtaService {
     this.obterControle('unidade').enable();
   }
 
-  private retornaAta(): AtaLicitacao{
-    
+  private retornaAta(): AtaLicitacao {
+
     return {
       id: this.idAta,
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value,
-      tipo: this.obterControle('unidade').value.id ?? 0,
-      unidade: this.obterControle('unidade').value.id ?? 0,
-      empresa: this.obterControle('empresa').value.id ?? 0,
-      orgao: this.obterControle('orgao').value.id ?? 0,
+      tipo: this.obterControle('unidade').value?.id ?? 0,
+      unidade: this.obterControle('unidade').value?.id ?? 0,
+      empresa: this.obterControle('empresa').value?.id ?? 0,
+      orgao: this.obterControle('orgao').value?.id ?? 0,
       dataLicitacao: this.obterControle('dataLicitacao').value,
       dataAta: this.obterControle('dataAta').value,
       vigencia: this.obterControle('vigencia').value,

@@ -20,14 +20,12 @@
             <!-- Quando criado no historico terá a data do dia atual, se nunca criado terá data da ATA-->
             <!-- Pedir confirmação para criar um novo reajuste (Criar a permissão)-->
             <!-- Criar um material tab que será uma table apenas visualização para se ter noção do historico -->
-            <mat-tab label="Second"> Content 2 </mat-tab>
-
-            <mat-tab>
+            <mat-tab *ngIf="form.idAta && form.idAta != 0">
                 <ng-template mat-tab-label>
-                    <mat-icon>add</mat-icon> Novo Reajuste
+                    <mat-icon>history</mat-icon> Histórico
                 </ng-template>
+                conteudo 2
             </mat-tab>
         </mat-tab-group>
-            
     </app-container>
 </section>

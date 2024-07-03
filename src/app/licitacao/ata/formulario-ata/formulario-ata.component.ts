@@ -44,7 +44,7 @@ export class FormularioAtaComponent implements OnInit{
   }
 
   displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.id} - ${control.value?.nome}` : '';
+    return control.value ? `${control.value?.id} - ${control.value?.fantasia}` : '';
   }
 
   limparValor(control: string) {

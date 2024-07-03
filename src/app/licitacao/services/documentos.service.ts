@@ -34,8 +34,8 @@ export class DocumentosService {
     );
   }
 
-  public criar(dto: AtaLicitacao): Observable<AtaLicitacao[]> {
-    return this.http.post<AtaLicitacao[]>(`${this.URL}/ata`, dto);
+  public criar(dto: AtaLicitacao): Observable<AtaLicitacao> {
+    return this.http.post<AtaLicitacao>(`${this.URL}/ata`, dto);
   }
 
   public inativar(id: number): Observable<AtaLicitacaoSimplificada[]> {
