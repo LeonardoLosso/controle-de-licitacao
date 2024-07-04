@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
@@ -13,14 +13,25 @@ export class DocumentosService {
 
   constructor(private http: HttpClient) { }
 
-  public listar(): Observable<AtaLicitacaoSimplificada[]> {
-    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/ata`).pipe(
-      map(items => items.map(item => ({
-        ...item,
-        dataLicitacao: this.convertToDate(item.dataLicitacao),
-        dataAta: this.convertToDate(item.dataAta)
-      })))
-    );
+  public listar(pagina?: number, parametros?: { key: string, value: any }[]): Observable<AtaLicitacaoSimplificada[]> {
+    let params = new HttpParams();
+
+    if (pagina) params = params.append('pagina', pagina);
+    if (parametros) {
+      parametros.forEach(param => {
+        if (param.value != null) {
+          params = params.append(param.key, param.value);
+        }
+      });
+    }
+    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/ata`, {params})
+    // .pipe(
+    //   map(items => items.map(item => ({
+    //     ...item,
+    //     dataLicitacao: this.convertToDate(item.dataLicitacao),
+    //     dataAta: this.convertToDate(item.dataAta)
+    //   })))
+    // );
   }
 
   public obterAtaPorID(id: number): Observable<AtaLicitacao> {
@@ -38,9 +49,15 @@ export class DocumentosService {
     return this.http.post<AtaLicitacao>(`${this.URL}/ata`, dto);
   }
 
-  public inativar(id: number): Observable<AtaLicitacaoSimplificada[]> {
-    // IMPLEMENTAR
-    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/documentos`);
+  public inativar(documento: AtaLicitacaoSimplificada): Observable<AtaLicitacao> {
+    var id = documento.id;
+    var novoValor = documento.status === 1 ? '2' : '1';
+    var status = {
+      op: "replace",
+      path: "/status",
+      value: novoValor
+    }
+    return this.http.patch<AtaLicitacao>(`${this.URL}/ata/status/${id}`, [status]);
   }
 
   public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {

@@ -14,10 +14,7 @@ import { BuscaBaseDirective } from 'src/app/core/diretivas/busca-base.directive'
     templateUrl: './busca-entidades.component.html',
     styleUrls: ['./busca-entidades.component.scss']
 })
-export class BuscaEntidadesComponent extends BuscaBaseDirective<Entidade, EntidadeSimplificada> implements OnInit {
-    protected initForm(): void {
-
-    }
+export class BuscaEntidadesComponent extends BuscaBaseDirective<Entidade, EntidadeSimplificada> {
 
     constructor(
         form: FormularioBuscaService,

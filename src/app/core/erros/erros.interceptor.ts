@@ -42,7 +42,7 @@ export class ErrosInterceptor implements HttpInterceptor {
           errorMessage = error.error?.Message;
         } else if (error.status === 400){
           errorMessage = 'Requisição fora do padrão';
-        } else if (512){
+        } else if (error.status === 512){
           errorMessage = "token expirado";
           this.userService.logout();
           this.router.navigate(['auth/login']);

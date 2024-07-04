@@ -6,10 +6,10 @@ import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/moda
 import { ICadastro, MudancasParaPatch } from '../types/auxiliares';
 import { CrudBaseService } from '../services/crud-base.service';
 import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
+import { SpinnerControlDirective } from './spinner-control.directive';
 
 @Directive({})
-export abstract class ModalCrudDirective<T extends ICadastro, TSimple> {
-  @ViewChild('loadingSpinnerContainer', { read: ViewContainerRef }) loadingSpinnerContainer!: ViewContainerRef;
+export abstract class ModalCrudDirective<T extends ICadastro, TSimple> extends SpinnerControlDirective {
   @ViewChild('form') form!: NgForm;
 
   public cadastro!: T;
@@ -27,6 +27,8 @@ export abstract class ModalCrudDirective<T extends ICadastro, TSimple> {
     private dialog: MatDialog,
     protected service: CrudBaseService<T, TSimple>
   ) {
+    super();
+
     this.cadastro = JSON.parse(JSON.stringify(this.data));
 
     if (data.id !== 0) {
@@ -73,13 +75,6 @@ export abstract class ModalCrudDirective<T extends ICadastro, TSimple> {
     this.confirmarCancelar();
   }
 
-  private mostrarSpinner() {
-    this.loadingSpinnerContainer.createComponent(LoadingSpinnerComponent);
-  }
-
-  private esconderSpinner() {
-    this.loadingSpinnerContainer.clear();
-  }
   private validaErro(erro: string) {
     this.esconderSpinner();
     if (erro === 'token expirado') {

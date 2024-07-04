@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -8,101 +7,47 @@ import { FormularioPesquisaService } from '../services/formulario-pesquisa.servi
 import { DocumentosService } from '../services/documentos.service';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { MensagemModal } from 'src/app/core/types/auxiliares';
-import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
+import { CrudPesquisaBaseDirective } from 'src/app/core/diretivas/crud-pesquisa-base.directive';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pesquisa',
   templateUrl: './pesquisa.component.html',
   styleUrls: ['./pesquisa.component.scss']
 })
-export class PesquisaComponent {
-  public lista!: AtaLicitacaoSimplificada[];
-  public selecionado!: FormControl;
-  public pesquisa!: FormControl;
+export class PesquisaComponent extends CrudPesquisaBaseDirective<AtaLicitacaoSimplificada> {
 
   constructor(
-    public form: FormularioPesquisaService,
+    form: FormularioPesquisaService,
     private service: DocumentosService,
-    private dialog: MatDialog,
-    private router: Router,
-    private errorMessage: MensagemService
-  ) { }
-
-  ngOnInit(): void {
-    this.selecionado = this.form.obterControle('selecionadoGrid');
-    this.pesquisa = this.form.obterControle('pesquisa');
-
-    this.loadData();
-  }
+    dialog: MatDialog,
+    router: Router,
+    messageService: MensagemService
+  ) { super(form, dialog, router, messageService) }
 
   public criar(): void {
-
+    this.router.navigate(['/licitacao']);
   };
-  public editar(): void {
-    const id: string = this.selecionado.value.id;
-
-    if (!id) {
-      return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
-    }
-
+  
+  protected override acaoEditar(id: number): void {
     const queryParams = { ata: id };
     this.router.navigate(['/licitacao'], { queryParams });
-  };
-
-  public voltar(): void {
-    this.router.navigate(['/']);
-  };
-
-  public buscar(): void {
   }
 
-  public limpar(): void {
-    this.form.limparFiltros();
-  }
-
-  public inativar() {
-    const cadastro = this.selecionado.value;
-
-    if (!cadastro) {
-      return this.errorMessage.openSnackBar('Nenhum cadastro selecionado');
-    }
-
-    this.inativarConfirmar();
-  }
-
-  private loadData() {
-    this.service.listar().subscribe({
-      next: result => {
-        this.lista = result;
-      }
-    });
-  }
-
-  private inativarCadastro() {
-    const id = this.selecionado.value.id;
-    this.service.inativar(id);
-  }
-
-  private mensagemInativacao(): MensagemModal {
+  protected override mensagemInativacao(): MensagemModal {
     const item = this.selecionado.value;
     return {
-      titulo: 'Inativar cadastro?',
+      titulo: 'Inativar documento?',
       mensagem: 'Deseja inativar a cadastro??',
       item: `\nCód: ${item.id} - ${item.nome}`
     }
   }
 
-  private inativarConfirmar() {
-    const dialogRef = this.dialog.open(ModalConfirmacaoComponent, {
-      disableClose: true,
-      data: this.mensagemInativacao()
-    });
+  protected override serviceInativar(cadastro: AtaLicitacaoSimplificada): Observable<any> {
+    return this.service.inativar(cadastro);
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.inativarCadastro();
-        // this.loadData() Se sucesso
-      }
-    });
+  protected override serviceListar(params: {key: string, value: any}[]): Observable<any> {
+    return this.service.listar(this.pagina, params);
   }
 }

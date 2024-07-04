@@ -1,5 +1,5 @@
 <section class="login">
-    <form [formGroup]="loginForm" class="dados-login">
+    <form [formGroup]="loginForm" class="dados-login" (ngSubmit)="login()">
         <ng-container *ngIf="!logando">
             <h1>Bem vindo!</h1>
             <!-- USERNAME -->
@@ -11,7 +11,7 @@
     
             <!-- SENHA -->
     
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" (keydown.enter)="login()">
                 <mat-label>Senha</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" required>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'password'"
@@ -28,7 +28,7 @@
                 extended
                 color="primary"
                 [disabled]="loginForm.invalid"
-                (click)="login()">
+                type="submit">
                 <mat-icon class="icone">login</mat-icon>
                 <span class="texto">L O G I N</span>
             </button>

@@ -19,7 +19,17 @@ export class FormularioPesquisaService extends FormularioBuscaBaseService {
     this.formBusca.addControl('dataAtaFinal', new FormControl(null));
   }
 
-  public override obterDadosBusca(): {key: string, value: any}[] { return [] }
+  public override obterDadosBusca(): {key: string, value: any}[] { 
+    return [
+      { key: 'status', value: this.obterControle('status').value?.id },
+      { key: 'tipo', value: this.obterControle('tipo').value?.id },
+      { key: 'unidade', value: this.obterControle('unidade').value?.id },
+      { key: 'dataInicial', value: this.obterControle('dataInicial').value },
+      { key: 'dataFinal', value: this.obterControle('dataFinal').value },
+      { key: 'dataAtaInicial', value: this.obterControle('dataAtaInicial').value },
+      { key: 'dataAtaFinal', value: this.obterControle('dataAtaFinal').value }
+    ]
+  }
 
   public override limparFiltros() {
     super.limparFiltros();

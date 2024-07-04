@@ -16,10 +16,6 @@ import { FormularioBuscaService } from '../services/formulario-busca.service';
 })
 export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplificado> {
 
-  protected initForm(): void {
-
-  }
-
   constructor(
     form: FormularioBuscaService,
     service: ItensService,

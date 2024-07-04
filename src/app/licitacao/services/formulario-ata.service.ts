@@ -155,7 +155,7 @@ export class FormularioAtaService {
     return {
       id: this.idAta,
       edital: this.obterControle('edital').value,
-      status: this.obterControle('status').value,
+      status: this.obterControle('status').value?.id ?? 1,
       tipo: this.obterControle('unidade').value?.id ?? 0,
       unidade: this.obterControle('unidade').value?.id ?? 0,
       empresa: this.obterControle('empresa').value?.id ?? 0,

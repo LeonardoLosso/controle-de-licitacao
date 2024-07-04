@@ -18,6 +18,9 @@ export class LookupEntidadesComponent {
   public listaEntidades!: EntidadeSimplificada[];
   public colunasGrid: string[] = ['codigo', 'nome', 'cnpj'];
 
+  public isLoadingResults = false;
+  public isRateLimitReached = false;
+
   constructor(
     public form: FormularioBuscaService,
     private service: EntidadesService,
@@ -37,9 +40,21 @@ export class LookupEntidadesComponent {
 
   private listar() {
     //filtra por status x tipo data = filtro
-    this.service.listar().subscribe({
+    const filtros = [{ key: 'status', value: 1 }];
+
+    if (this.data === 'empresa')
+      filtros.push({ key: 'tipo', value: 1 });
+
+    this.isLoadingResults = true;
+
+    this.service.listar(undefined, filtros).subscribe({
       next: result => {
+        this.isLoadingResults = false;
         this.listaEntidades = result.lista;
+      },
+      error: () => {
+        this.isRateLimitReached = true;
+        this.isLoadingResults = false;
       }
     });
   }

@@ -16,9 +16,6 @@ import { MensagemService } from 'src/app/core/services/mensagem.service';
 })
 export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioSimplificado> {
 
-  protected override initForm(): void {
-  }
-
   constructor(
     form: FormularioBuscaService,
     service: UsuariosService,

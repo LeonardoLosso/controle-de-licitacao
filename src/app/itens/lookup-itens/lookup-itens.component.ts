@@ -18,6 +18,9 @@ export class LookupItensComponent implements OnInit {
   public pesquisa = new FormControl('');
   public listaItens!: ItemSimplificado[];
   public colunasGrid: string[] = ['codigo', 'nome', 'unidadePri', 'unidadeSec'];
+  
+  public isLoadingResults = false;
+  public isRateLimitReached = false;
 
   constructor(
     private service: ItensService,

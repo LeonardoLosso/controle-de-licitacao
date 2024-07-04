@@ -37,9 +37,9 @@ export class FormularioAtaComponent implements OnInit{
     }
     switch (control) {
       case 'empresa':
-        return this.abrirLookup(LookupEntidadesComponent, valor, 'empresa');
+        return this.abrirLookup(LookupEntidadesComponent, valor, control);
       case 'orgao':
-        return this.abrirLookup(LookupEntidadesComponent, valor)
+        return this.abrirLookup(LookupEntidadesComponent, valor, control)
     }
   }
 

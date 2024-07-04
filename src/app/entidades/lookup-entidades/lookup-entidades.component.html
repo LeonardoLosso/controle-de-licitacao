@@ -7,7 +7,9 @@
                 [paginator]="false" 
                 [control]="form.obterControle('selecionadoGrid')"
                 [displayedColumns]="colunasGrid"
-                [listaEntidades]="listaEntidades"/>
+                [listaEntidades]="listaEntidades"
+                [isLoadingResults]="isLoadingResults"
+                [isRateLimitReached]="isRateLimitReached"/>
         </app-busca-container>
     </div>
     <div mat-dialog-actions class="btn-group">

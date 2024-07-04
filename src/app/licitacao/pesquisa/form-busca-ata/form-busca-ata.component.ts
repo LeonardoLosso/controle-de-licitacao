@@ -17,15 +17,7 @@ export class FormBuscaAtaComponent {
 
   constructor(public formService: FormularioPesquisaService) { }
 
-  displayStatus(val: EnumNumberID): string {
-    return val && val.nome ? `${val.nome}` : '';
-  }
-
-  displayTipo(val: EnumNumberID): string {
-    return val && val.nome ? `${val.nome}` : '';
-  }
-
-  displayUnidade(val: EnumNumberID): string {
+  displayFn(val: EnumNumberID): string {
     return val && val.nome ? `${val.nome}` : '';
   }
 }
