@@ -42,8 +42,8 @@ export class ItemTabelaComponent {
   doubleClick() {
     this.abrirDialog.emit();
   }
-  
-  mudaPagina(paginador: PageEvent){
+
+  mudaPagina(paginador: PageEvent) {
     this.pagina.emit(paginador.pageIndex);
-}
+  }
 }

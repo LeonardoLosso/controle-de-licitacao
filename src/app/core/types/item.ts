@@ -25,10 +25,10 @@ export interface ItemDeAta {
     ataId: number
     nome: string,
     unidade: string,
-    Quantidade: number,
-    ValorUnitario: number,
-    ValorTotal: number,
-    Desconto: number
+    quantidade: number,
+    valorUnitario: number,
+    valorTotal: number,
+    desconto: number
 }
 
 export interface ItemDeBaixa {

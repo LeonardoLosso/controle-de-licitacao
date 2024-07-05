@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { DocumentosService } from './documentos.service';
 import { ItemDeAta } from 'src/app/core/types/item';
@@ -7,7 +8,7 @@ import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
 import { AtaLicitacao } from 'src/app/core/types/documentos';
-import { Observable } from 'rxjs';
+import { EntidadesService } from 'src/app/entidades/services/entidades.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,11 @@ export class FormularioAtaService {
 
   public formulario!: FormGroup;
   public idAta!: number;
+  public totalLicitado!: number;
   public totalReajustes!: number;
   private sttsControl!: FormControl<number>;
-  constructor(private service: DocumentosService) {
+
+  constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
       edital: new FormControl(null, [Validators.required]),
       status: new FormControl(0),
@@ -42,6 +45,28 @@ export class FormularioAtaService {
       }
     });
 
+    const dataAta = this.obterControle<Date>('dataAta');
+    const vigencia = this.obterControle<Date>('vigencia');
+
+    dataAta.valueChanges.subscribe(value => {
+      if (value && value instanceof Date) {
+        const vigenciaDate = new Date(value);
+        vigenciaDate.setFullYear(value.getFullYear() + 1);
+        vigencia.setValue(vigenciaDate);
+      } else {
+        vigencia.setValue(null);
+      }
+    });
+
+    const orgao = this.obterControle<Entidade>('orgao');
+    const unidade = this.obterControle<EnumNumberID>('unidade');
+
+    orgao.valueChanges.subscribe(value => {
+      if (value && value.tipo === 3) {
+        const val = EnumTipoCadastro.filter(f => f.id === 3)[0]
+        unidade.setValue(val);
+      }
+    });
   }
 
   public obterControle<T>(nome: string): FormControl {
@@ -52,14 +77,7 @@ export class FormularioAtaService {
     return control as FormControl<T>;
   }
 
-  public inicializarFormulario(id: number) {
 
-    this.limpar();
-    if (id) {
-      this.preencher(id);
-    }
-
-  }
   public adicionarItem(item: ItemDeAta) {
     const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
     const novaLista = [...lista.value];
@@ -85,40 +103,31 @@ export class FormularioAtaService {
     lista.setValue(novaLista);
   }
 
-  private preencher(id: number) {
-    const status = this.obterControle<number>('status');
-    const edital = this.obterControle<string>('edital');
-    const dataLicitacao = this.obterControle<Date>('dataLicitacao');
-    const dataAta = this.obterControle<Date>('dataAta');
-    const vigencia = this.obterControle<Date>('vigencia');
-    const empresa = this.obterControle<Entidade>('empresa');
-    const orgao = this.obterControle<Entidade>('orgao');
-    const unidade = this.obterControle<EnumNumberID>('unidade');
-    const itens = this.obterControle<ItemDeAta[]>('itens');
-
-    this.service.obterAtaPorID(id).subscribe({
-      next: result => {
-        edital.setValue(result.id);
-        status.setValue(result.status);
-        dataLicitacao.setValue(result.dataLicitacao);
-        dataAta.setValue(result.dataAta);
-        empresa.setValue(result.empresa);
-        orgao.setValue(result.orgao);
-        itens.setValue(result.itens);
-        if (result.vigencia) {
-          const data = new Date(result.vigencia);
-          vigencia.setValue(data);
-        }
-        if (result.unidade) {
-          //Desfazer gambi
-          const val = EnumTipoCadastro.filter(f => f.id === result.unidade)[0];
-          unidade.setValue(val);
-        }
-      }
-    });
+  public retornaServiceObter(id: number): Observable<AtaLicitacao> {
+    return this.service.obterAtaPorID(id);
   }
 
-  private limpar() {
+  public setEmpresaPorID(id: number) {
+    const empresa = this.obterControle<Entidade>('empresa');
+    this.entidadeService.obterPorID(id)
+      .subscribe(value => empresa.setValue(value));
+  }
+
+  public setOrgaoPorID(id: number) {
+    const orgao = this.obterControle<Entidade>('orgao');
+    this.entidadeService.obterPorID(id)
+      .subscribe(value => orgao.setValue(value));
+  }
+
+  public setUnidadePorID(id: number) {
+    const unidade = this.obterControle<EnumNumberID>('unidade');
+    const val = EnumTipoCadastro.filter(f => f.id === id)[0];
+    unidade.setValue(val);
+  }
+
+  public limpar() {
+    this.idAta = 0;
+    this.totalLicitado = 0;
     this.obterControle<number>('status').setValue(0);
     this.obterControle<string>('edital').setValue(null);
     this.obterControle<Date>('dataLicitacao').setValue(null);
@@ -164,7 +173,7 @@ export class FormularioAtaService {
       dataAta: this.obterControle('dataAta').value,
       vigencia: this.obterControle('vigencia').value,
       itens: this.obterControle('itens').value,
-      totalLicitado: 0,
+      totalLicitado: this.totalLicitado,
       totalReajustes: this.totalReajustes
     }
   }

@@ -25,24 +25,18 @@ export class DocumentosService {
       });
     }
     return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/ata`, {params})
-    // .pipe(
-    //   map(items => items.map(item => ({
-    //     ...item,
-    //     dataLicitacao: this.convertToDate(item.dataLicitacao),
-    //     dataAta: this.convertToDate(item.dataAta)
-    //   })))
-    // );
   }
 
   public obterAtaPorID(id: number): Observable<AtaLicitacao> {
     const url = `${this.URL}/ata/${id}`;
-    return this.http.get<AtaLicitacao>(url).pipe(
-      map((ata: any) => ({
-        ...ata,
-        dataLicitacao: new Date(ata.dataLicitacao),
-        dataAta: new Date(ata.dataAta)
-      }))
-    );
+    return this.http.get<AtaLicitacao>(url)
+    // .pipe(
+    //   map((ata: any) => ({
+    //     ...ata,
+    //     dataLicitacao: new Date(ata.dataLicitacao),
+    //     dataAta: new Date(ata.dataAta)
+    //   }))
+    // );
   }
 
   public criar(dto: AtaLicitacao): Observable<AtaLicitacao> {

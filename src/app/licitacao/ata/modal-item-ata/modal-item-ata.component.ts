@@ -35,9 +35,9 @@ export class ModalItemAtaComponent {
     this.formulario = new FormGroup({
       item: new FormControl(itemSimp.id === 0? null : itemSimp),
       unidade: new FormControl(this.item.unidade),
-      quantidade: new FormControl(this.item.Quantidade),
-      valorUnitario: new FormControl(this.item.ValorUnitario),
-      valorTotal: new FormControl({ value: this.item.ValorTotal, disabled: true })
+      quantidade: new FormControl(this.item.quantidade),
+      valorUnitario: new FormControl(this.item.valorUnitario),
+      valorTotal: new FormControl({ value: this.item.valorTotal, disabled: true })
     });
     this.addListeners();
 
@@ -59,10 +59,10 @@ export class ModalItemAtaComponent {
       ataId: this.item.ataId,
       nome: this.item.nome,
       unidade: this.obterControle('unidade').value as string,
-      Quantidade: this.obterControle('quantidade').value as number,
-      ValorUnitario: this.obterControle('valorUnitario').value as number,
-      ValorTotal: this.obterControle('valorTotal').value as number,
-      Desconto: 0
+      quantidade: this.obterControle('quantidade').value as number,
+      valorUnitario: this.obterControle('valorUnitario').value as number,
+      valorTotal: this.obterControle('valorTotal').value as number,
+      desconto: 0
     }
     this.dialogRef.close(item)
   }

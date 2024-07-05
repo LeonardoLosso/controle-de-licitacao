@@ -37,7 +37,7 @@ export class ItemAtaTabelaComponent implements OnInit {
   }
 
   public getTotalCost() {
-    return this.listaItens.map(t => t.ValorTotal).reduce((acc, value) => acc + value, 0);
+    return this.listaItens.map(t => t.valorTotal).reduce((acc, value) => acc + value, 0);
   }
 
   public doubleClick() {

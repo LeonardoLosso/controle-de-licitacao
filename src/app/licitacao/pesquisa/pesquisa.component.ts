@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 import { FormularioPesquisaService } from '../services/formulario-pesquisa.service';
@@ -8,7 +9,6 @@ import { DocumentosService } from '../services/documentos.service';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { MensagemModal } from 'src/app/core/types/auxiliares';
 import { CrudPesquisaBaseDirective } from 'src/app/core/diretivas/crud-pesquisa-base.directive';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pesquisa',

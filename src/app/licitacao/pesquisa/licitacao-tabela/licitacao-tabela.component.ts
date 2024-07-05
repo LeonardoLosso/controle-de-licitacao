@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
 import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 
@@ -10,13 +11,16 @@ import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 })
 export class LicitacaoTabelaComponent {
   @Output() abrirDialog = new EventEmitter();
+  @Output() pagina = new EventEmitter();
+
   @Input() listaDocumentos!: AtaLicitacaoSimplificada[];
   @Input() control!: FormControl;
+  @Input() totalItems: number = 0;
+
+  @Input() isLoadingResults = false;
+  @Input() isRateLimitReached = false;
 
   private selecionado!: AtaLicitacaoSimplificada;
-
-  public isLoadingResults = false;
-  public isRateLimitReached = false
 
   public displayedColumns: string[] = ['codigo', 'orgao', 'unidade', 'dataLicitacao', 'dataAta', 'status', 'valor'];
 
@@ -28,7 +32,6 @@ export class LicitacaoTabelaComponent {
   }
 
   selecionar(valor: AtaLicitacaoSimplificada): string {
-
     if (valor === this.selecionado) {
       return 'selecionado';
     }
@@ -37,5 +40,9 @@ export class LicitacaoTabelaComponent {
 
   doubleClick() {
     this.abrirDialog.emit();
+  }
+
+  mudaPagina(paginador: PageEvent) {
+    this.pagina.emit(paginador.pageIndex);
   }
 }

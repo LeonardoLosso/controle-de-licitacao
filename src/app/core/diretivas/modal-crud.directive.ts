@@ -1,11 +1,10 @@
-import { Directive, Inject, ViewChild, ViewContainerRef } from '@angular/core';
+import { Directive, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { ICadastro, MudancasParaPatch } from '../types/auxiliares';
 import { CrudBaseService } from '../services/crud-base.service';
-import { LoadingSpinnerComponent } from 'src/app/shared/loading-spinner/loading-spinner.component';
 import { SpinnerControlDirective } from './spinner-control.directive';
 
 @Directive({})
