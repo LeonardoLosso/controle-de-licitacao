@@ -44,7 +44,7 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> extends Cru
     const msg = item?.status === 1 ? 'Inativar' : 'Reativar';
     return {
       titulo: `${msg} cadastro?`,
-      mensagem: `Deseja ${msg} a cadastro??`,
+      mensagem: `Deseja ${msg} o cadastro??`,
       item: `\nCód: ${item.id} - ${nome}`
     }
   }

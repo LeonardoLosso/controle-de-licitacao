@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { compare } from 'fast-json-patch';
 
 import { DocumentosService } from './documentos.service';
 import { ItemDeAta } from 'src/app/core/types/item';
@@ -20,6 +21,7 @@ export class FormularioAtaService {
   public totalLicitado!: number;
   public totalReajustes!: number;
   private sttsControl!: FormControl<number>;
+  private ataOriginal!: AtaLicitacao;
 
   constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
@@ -90,11 +92,18 @@ export class FormularioAtaService {
 
     return this.service.criar(ataLicitacao);
   }
-  public editar() {
+  public editar(): Observable<AtaLicitacao> | null {
+    const documento = this.retornaAta();
+    const patch = compare(this.ataOriginal, documento);
+    console.log(patch);
 
+    if (patch.length > 0)
+      return this.service.editar(patch, documento.id);
+
+    return null;
   }
-  public inativar() {
-
+  public inativar(): Observable<AtaLicitacao> {
+    return this.service.inativar(this.retornaAta());
   }
 
   public excluirItem(item: ItemDeAta) {
@@ -108,21 +117,32 @@ export class FormularioAtaService {
   }
 
   public setEmpresaPorID(id: number) {
+
+    this.ataOriginal.empresa = id as any;
+
     const empresa = this.obterControle<Entidade>('empresa');
     this.entidadeService.obterPorID(id)
-      .subscribe(value => empresa.setValue(value));
+      .subscribe(value => {
+        empresa.setValue(value);
+      });
   }
 
   public setOrgaoPorID(id: number) {
+
+    this.ataOriginal.orgao = id as any;
+
     const orgao = this.obterControle<Entidade>('orgao');
     this.entidadeService.obterPorID(id)
-      .subscribe(value => orgao.setValue(value));
+      .subscribe(value => {
+        orgao.setValue(value);
+      });
   }
 
   public setUnidadePorID(id: number) {
     const unidade = this.obterControle<EnumNumberID>('unidade');
     const val = EnumTipoCadastro.filter(f => f.id === id)[0];
     unidade.setValue(val);
+    this.ataOriginal.unidade = id;
   }
 
   public limpar() {
@@ -137,6 +157,10 @@ export class FormularioAtaService {
     this.obterControle<Entidade>('orgao').setValue(null);
     this.obterControle<EnumNumberID>('unidade').setValue(null);
     this.obterControle<ItemDeAta[]>('itens').setValue([]);
+  }
+
+  public setAtaOriginal() {
+    this.ataOriginal = this.retornaAta();
   }
 
   private desabilitarFormulario() {
@@ -164,7 +188,7 @@ export class FormularioAtaService {
     return {
       id: this.idAta,
       edital: this.obterControle('edital').value,
-      status: this.obterControle('status').value?.id ?? 1,
+      status: this.obterControle('status').value ?? 1,
       tipo: this.obterControle('unidade').value?.id ?? 0,
       unidade: this.obterControle('unidade').value?.id ?? 0,
       empresa: this.obterControle('empresa').value?.id ?? 0,

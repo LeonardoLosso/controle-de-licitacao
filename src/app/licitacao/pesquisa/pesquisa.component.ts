@@ -38,8 +38,8 @@ export class PesquisaComponent extends CrudPesquisaBaseDirective<AtaLicitacaoSim
     const item = this.selecionado.value;
     return {
       titulo: 'Inativar documento?',
-      mensagem: 'Deseja inativar a cadastro??',
-      item: `\nCód: ${item.id} - ${item.nome}`
+      mensagem: 'Deseja inativar a ata??',
+      item: `\nCód: ${item.edital} | ${item.orgao}`
     }
   }
 

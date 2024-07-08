@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
@@ -29,21 +29,14 @@ export class DocumentosService {
 
   public obterAtaPorID(id: number): Observable<AtaLicitacao> {
     const url = `${this.URL}/ata/${id}`;
-    return this.http.get<AtaLicitacao>(url)
-    // .pipe(
-    //   map((ata: any) => ({
-    //     ...ata,
-    //     dataLicitacao: new Date(ata.dataLicitacao),
-    //     dataAta: new Date(ata.dataAta)
-    //   }))
-    // );
+    return this.http.get<AtaLicitacao>(url);
   }
 
   public criar(dto: AtaLicitacao): Observable<AtaLicitacao> {
     return this.http.post<AtaLicitacao>(`${this.URL}/ata`, dto);
   }
 
-  public inativar(documento: AtaLicitacaoSimplificada): Observable<AtaLicitacao> {
+  public inativar(documento: AtaLicitacaoSimplificada | AtaLicitacao): Observable<AtaLicitacao> {
     var id = documento.id;
     var novoValor = documento.status === 1 ? '2' : '1';
     var status = {
@@ -54,18 +47,18 @@ export class DocumentosService {
     return this.http.patch<AtaLicitacao>(`${this.URL}/ata/status/${id}`, [status]);
   }
 
+  editar(documento: any, id: number): Observable<AtaLicitacao>{
+    return this.http.patch<AtaLicitacao>(`${this.URL}/ata/${id}`, documento);
+  }
   public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
     const url = `${this.URL}/baixaDoc/${id}`;
-    return this.http.get<BaixaLicitacao>(url).pipe(
-      map((ata: any) => ({
-        ...ata,
-        dataLicitacao: new Date(ata.dataLicitacao),
-        dataAta: new Date(ata.dataAta)
-      }))
-    );
-  }
-
-  private convertToDate(value: any): Date {
-    return value instanceof Date ? value : new Date(value);
+    return this.http.get<BaixaLicitacao>(url)
+    // .pipe(
+    //   map((ata: any) => ({
+    //     ...ata,
+    //     dataLicitacao: new Date(ata.dataLicitacao),
+    //     dataAta: new Date(ata.dataAta)
+    //   }))
+    // );
   }
 }

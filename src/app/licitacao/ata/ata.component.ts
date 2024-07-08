@@ -58,15 +58,29 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     this.form.totalLicitado = this.listaItens.value?.map(t => t.valorTotal).reduce((acc, value) => acc + value, 0);
 
     if (this.id && this.id != 0) {
-      return this.form.editar();
+      const service = this.form.editar();
+      if (service) {
+
+        return service.subscribe({
+          next: () => {
+            this.messageService.openSnackBar('Ata editada com sucesso!', 'success');
+
+            this.esconderSpinner();
+            this.inicializarFormulario(this.id);
+          }, error: () => this.esconderSpinner()
+        })
+      } else {
+        this.esconderSpinner();
+      }
     }
     return this.form.criar().subscribe({
       next: (value) => {
         this.messageService.openSnackBar('Ata criada com sucesso!', 'success');
-        this.id === value.id;
-        this.form.idAta === 1;
+        this.id = value.id;
+        this.form.idAta = value.id;
         this.listaItens.setValue(value.itens);
         this.esconderSpinner();
+        this.inicializarFormulario(this.id);
       }, error: () => this.esconderSpinner()
     });
   }
@@ -96,12 +110,21 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     confirmacao.afterClosed().subscribe(result => {
       if (result === true) {
-        if (this.status.value === 2) {
-          this.status.setValue(1);
-        } else {
-          this.status.setValue(2);
-        }
-        this.form.inativar();
+        if (this.form.idAta === 0)
+          return this.messageService.openSnackBar('Salve o documento antes de inativar', 'alert');
+
+        this.mostrarSpinner();
+
+        this.form.inativar().subscribe({
+          next: () => {
+            if (this.status.value === 2) {
+              this.status.setValue(1);
+            } else {
+              this.status.setValue(2);
+            }
+            this.esconderSpinner();
+          }, error: () => this.esconderSpinner()
+        });
       }
     });
 
@@ -171,6 +194,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   public inicializarFormulario(id: number) {
 
     this.form.limpar();
+
     if (id && id !== 0) {
       this.mostrarSpinner();
       this.preencher(id);
@@ -196,6 +220,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         status.setValue(result.status);
         dataLicitacao.setValue(result.dataLicitacao);
         dataAta.setValue(result.dataAta);
+        itens.setValue(result.itens);
+        this.form.setAtaOriginal();
         if (result.empresa) {
           const idObjeto: any = result.empresa;
           this.form.setEmpresaPorID(idObjeto);
@@ -211,9 +237,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         if (result.unidade) {
           this.form.setUnidadePorID(result.unidade);
         }
-        itens.setValue(result.itens);
 
-        this.esconderSpinner()
+        this.esconderSpinner();
       }, error: () => this.esconderSpinner()
     });
   }
