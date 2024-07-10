@@ -8,7 +8,8 @@
             (inativar)="inativar()"
             (novo)="novoItem()"
             (remover)="excluirItem()"
-            [status]="status.value">
+            [status]="status.value"
+            [permissao]="form.idAta && form.idAta !==0 ? 304 : 302">
             
             <app-formulario-ata/>
         </app-cabecalho-ata>
@@ -20,15 +21,11 @@
                     (editarItem)="editarItem()"/>
             </mat-tab>
 
-            <!-- NG FOR Número de reajustes A KEY eu preciso que seja composta ID ATA e sequencia-->
-            <!-- Quando criado no historico terá a data do dia atual, se nunca criado terá data da ATA-->
-            <!-- Pedir confirmação para criar um novo reajuste (Criar a permissão)-->
-            <!-- Criar um material tab que será uma table apenas visualização para se ter noção do historico -->
             <mat-tab *ngIf="form.idAta && form.idAta !== 0">
                 <ng-template mat-tab-label>
                     <mat-icon>history</mat-icon> Histórico
                 </ng-template>
-                conteudo 2
+                <app-historico [reajustes]="form.reajustes" (criar)="criarReajuste()" (excluir)="excluirReajuste()"/>
             </mat-tab>
         </mat-tab-group>
     </app-container>

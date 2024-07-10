@@ -7,7 +7,7 @@
 
     .table-container {
         position: relative;
-        max-height: 60vh;
+        max-height: 48vh;
         overflow: auto;
 
         table {
@@ -23,20 +23,6 @@
 
         }
     }
-}
-
-
-/*CLIQUE*/
-.mat-mdc-row .mat-mdc-cell {
-    cursor: pointer;
-}
-
-.mat-mdc-row:hover:not(.selecionado) {
-    background-color: #e9e8e8;
-}
-
-.selecionado {
-    background-color: #d8d8d8;
 }
 
 tr.mat-mdc-footer-row {

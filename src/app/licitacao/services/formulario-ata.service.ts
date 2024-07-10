@@ -8,7 +8,7 @@ import { ItemDeAta } from 'src/app/core/types/item';
 import { Entidade } from 'src/app/core/types/entidade';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
-import { AtaLicitacao } from 'src/app/core/types/documentos';
+import { AtaLicitacao, Reajuste } from 'src/app/core/types/documentos';
 import { EntidadesService } from 'src/app/entidades/services/entidades.service';
 
 @Injectable({
@@ -20,6 +20,7 @@ export class FormularioAtaService {
   public idAta!: number;
   public totalLicitado!: number;
   public totalReajustes!: number;
+  public reajustes!: Reajuste[];
   private sttsControl!: FormControl<number>;
   private ataOriginal!: AtaLicitacao;
 
@@ -95,7 +96,6 @@ export class FormularioAtaService {
   public editar(): Observable<AtaLicitacao> | null {
     const documento = this.retornaAta();
     const patch = compare(this.ataOriginal, documento);
-    console.log(patch);
 
     if (patch.length > 0)
       return this.service.editar(patch, documento.id);
@@ -114,6 +114,18 @@ export class FormularioAtaService {
 
   public retornaServiceObter(id: number): Observable<AtaLicitacao> {
     return this.service.obterAtaPorID(id);
+  }
+
+  public retornaServiceHistorico(reajuste: Reajuste): Observable<Reajuste[]> {
+    return this.service.gerarHistorico(reajuste);
+  }
+
+  public buscaHistorico() {
+    this.service.obterHistorico(this.idAta).subscribe({
+      next: (value) => {
+        this.reajustes = value;
+      }
+    });
   }
 
   public setEmpresaPorID(id: number) {

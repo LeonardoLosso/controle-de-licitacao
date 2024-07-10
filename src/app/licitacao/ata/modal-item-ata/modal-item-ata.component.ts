@@ -56,7 +56,7 @@ export class ModalItemAtaComponent {
   confirmar() {
     const item: ItemDeAta = {
       id: this.item.id,
-      ataId: this.item.ataId,
+      ataID: this.item.ataID,
       nome: this.item.nome,
       unidade: this.obterControle('unidade').value as string,
       quantidade: this.obterControle('quantidade').value as number,

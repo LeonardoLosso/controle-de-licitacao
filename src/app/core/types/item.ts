@@ -22,7 +22,19 @@ export interface Item extends ICadastro{
 
 export interface ItemDeAta {
     id: number,
-    ataId: number
+    ataID: number
+    nome: string,
+    unidade: string,
+    quantidade: number,
+    valorUnitario: number,
+    valorTotal: number,
+    desconto: number
+}
+
+export interface ItemDeReajuste {
+    id: number,
+    reajusteId: number,
+    ataID: number
     nome: string,
     unidade: string,
     quantidade: number,

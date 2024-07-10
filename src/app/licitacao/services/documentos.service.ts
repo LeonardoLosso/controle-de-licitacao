@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao } from 'src/app/core/types/documentos';
+import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, Reajuste } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class DocumentosService {
         }
       });
     }
-    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/ata`, {params})
+    return this.http.get<AtaLicitacaoSimplificada[]>(`${this.URL}/ata`, { params })
   }
 
   public obterAtaPorID(id: number): Observable<AtaLicitacao> {
@@ -47,7 +47,7 @@ export class DocumentosService {
     return this.http.patch<AtaLicitacao>(`${this.URL}/ata/status/${id}`, [status]);
   }
 
-  editar(documento: any, id: number): Observable<AtaLicitacao>{
+  editar(documento: any, id: number): Observable<AtaLicitacao> {
     return this.http.patch<AtaLicitacao>(`${this.URL}/ata/${id}`, documento);
   }
   public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
@@ -60,5 +60,13 @@ export class DocumentosService {
     //     dataAta: new Date(ata.dataAta)
     //   }))
     // );
+  }
+
+  public obterHistorico(id: number): Observable<Reajuste[]>{
+    return this.http.get<Reajuste[]>(`${this.URL}/ata/reajuste/${id}`);
+  }
+
+  public gerarHistorico(reajuste: Reajuste): Observable<Reajuste[]>{
+    return this.http.post<Reajuste[]>(`${this.URL}/ata/reajuste`, reajuste);
   }
 }

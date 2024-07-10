@@ -2,8 +2,8 @@
     <div class="botoes">
         <div class="btn-group">
             
-            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" (click)="salvarDocumento()" />
-            <app-botoes icone="add" texto="Adicionar item" variant="btn-cabecalho" (click)="adicionar()" />            
+            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" (click)="salvarDocumento()" [permissao]="permissao"/>
+            <app-botoes icone="add" texto="Adicionar item" variant="btn-cabecalho" (click)="adicionar()" [permissao]="permissao"/>            
         </div>
 
         <div class="btn-group">
@@ -12,14 +12,15 @@
                 [icone]="verificaStatus()? 'block' : 'check'"
                 [texto]="verificaStatus()? 'Inativar Ata' : 'Reativar Ata'"
                 [color]="verificaStatus()? 'warn' : 'verde'" 
-                (click)="inativarDocumento()" />
+                (click)="inativarDocumento()" 
+                [permissao]="305"/>
 
-            <app-botoes icone="delete" texto="Remover item" variant="btn-cabecalho" (click)="excluir()" />
+            <app-botoes icone="delete" texto="Remover item" variant="btn-cabecalho" (click)="excluir()" [permissao]="permissao"/>
         </div>
 
         <div class="btn-group">
-            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
-            <app-botoes icone="description" texto="Baixa" variant="btn-cabecalho" color="verde" (click)="abrirBaixa()" />
+            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()"/>
+            <app-botoes icone="description" texto="Baixa" variant="btn-cabecalho" color="verde" (click)="abrirBaixa()" [permissao]="401"/>
 
         </div>
     </div>

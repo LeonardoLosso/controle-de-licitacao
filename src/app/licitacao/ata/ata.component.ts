@@ -5,11 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { FormularioAtaService } from '../services/formulario-ata.service';
-import { ItemDeAta } from 'src/app/core/types/item';
+import { ItemDeAta, ItemDeReajuste } from 'src/app/core/types/item';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { ModalItemAtaComponent } from './modal-item-ata/modal-item-ata.component';
 import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
+import { Reajuste } from 'src/app/core/types/documentos';
 
 @Component({
   selector: 'app-ata',
@@ -47,7 +48,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     })
   }
 
-  salvar() {
+  async salvar() {
     const control = this.form.obterControle('edital');
 
     if (!control.valid) {
@@ -61,7 +62,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       const service = this.form.editar();
       if (service) {
 
-        return service.subscribe({
+        return await service.subscribe({
           next: () => {
             this.messageService.openSnackBar('Ata editada com sucesso!', 'success');
 
@@ -150,7 +151,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     const item = this.selecionado.value;
 
     if (!item) {
-      return this.messageService.openSnackBar('Nenhum item selecionado');
+      return this.messageService.openSnackBar('Nenhum item selecionado', 'alert');
     }
 
     this.form.excluirItem(item);
@@ -178,10 +179,68 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     });
   }
 
+  criarReajuste() {
+    if (this.listaItens.value.length === 0)
+      return this.messageService.openSnackBar('Não é possivel gerar historico sem itens', 'alert');
+
+    if (this.status.value === 2)
+      return this.messageService.openSnackBar('Não é possivel gerar historico de ata desativada', 'alert');
+
+    const dataControl = this.form.obterControle<Date>('dataAta');
+
+    if (!dataControl.value)
+      return this.messageService.openSnackBar('Não é possivel gerar historico sem data da ata', 'alert');
+
+    this.novoReajuste(dataControl.value);
+  }
+
+  novoReajuste(data: Date) {
+
+    if (this.form.totalReajustes !== 0)
+      data = new Date();
+
+    const reajuste: Reajuste = {
+      id: 0,
+      ataID: this.form.idAta,
+      data: data,
+      itens: []
+    }
+
+    for (const item of this.listaItens.value) {
+      const itemReajuste: ItemDeReajuste = {
+        id: item.id,
+        ataID: reajuste.ataID,
+        reajusteId: reajuste.id,
+        nome: item.nome,
+        quantidade: item.quantidade,
+        unidade: item.unidade,
+        valorTotal: item.valorTotal,
+        valorUnitario: item.valorUnitario,
+        desconto: item.desconto
+      }
+
+      reajuste.itens.push(itemReajuste);
+    }
+
+    this.mostrarSpinner();
+    this.form.retornaServiceHistorico(reajuste)
+      .subscribe({
+        next: () => {
+          this.esconderSpinner();
+          this.form.totalReajustes++;
+          this.salvar();
+        }, error: () => this.esconderSpinner()
+      });
+  }
+
+  excluirReajuste(){
+    
+  }
+
   private itemVazio(): ItemDeAta {
     return {
       id: 0,
-      ataId: this.form.idAta,
+      ataID: this.form.idAta,
       nome: '',
       unidade: '',
       quantidade: 0,
@@ -237,6 +296,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         if (result.unidade) {
           this.form.setUnidadePorID(result.unidade);
         }
+        this.form.buscaHistorico();
 
         this.esconderSpinner();
       }, error: () => this.esconderSpinner()

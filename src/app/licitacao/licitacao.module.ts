@@ -18,6 +18,8 @@ import { FormularioBaixaComponent } from './baixa/formulario-baixa/formulario-ba
 import { BaixaTabelaComponent } from './baixa/tabelas/baixa-tabela/baixa-tabela.component';
 import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-tabela.component';
 import { LicitacaoRoutingModule } from './services/licitacao-routing.module';
+import { HistoricoComponent } from './ata/historico/historico.component';
+import { TabelaHistoricoReajusteComponent } from './ata/historico/tabela-historico-reajuste/tabela-historico-reajuste.component';
 
 
 
@@ -36,6 +38,8 @@ import { LicitacaoRoutingModule } from './services/licitacao-routing.module';
     FormularioBaixaComponent,
     BaixaTabelaComponent,
     EmpenhoTabelaComponent,
+    HistoricoComponent,
+    TabelaHistoricoReajusteComponent,
   ],
   imports: [
     CommonModule,

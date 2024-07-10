@@ -1,0 +1,9 @@
+.btn-group{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+    .btn:not(:last-child){
+        margin-right: 30px;
+    }
+}
