@@ -12,12 +12,14 @@ export class BotoesComponent {
   @Input() color: string = 'primary'
   @Input() variant: 'btn-principal' | 'btn-cabecalho' = 'btn-principal'
   @Input() permissao!: number;
+  @Input() botaoDesabilitado = false;
 
-  botaoDesabilitado = false;
 
   onHasPermission(hasPermission: boolean) {
-    setTimeout(() => {
-      this.botaoDesabilitado = !hasPermission;
-    }, 0);
+    if (!this.botaoDesabilitado) {
+      setTimeout(() => {
+        this.botaoDesabilitado = !hasPermission;
+      }, 0);
+    }
   }
 }

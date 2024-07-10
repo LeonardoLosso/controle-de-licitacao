@@ -53,13 +53,6 @@ export class DocumentosService {
   public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
     const url = `${this.URL}/baixaDoc/${id}`;
     return this.http.get<BaixaLicitacao>(url)
-    // .pipe(
-    //   map((ata: any) => ({
-    //     ...ata,
-    //     dataLicitacao: new Date(ata.dataLicitacao),
-    //     dataAta: new Date(ata.dataAta)
-    //   }))
-    // );
   }
 
   public obterHistorico(id: number): Observable<Reajuste[]>{
@@ -68,5 +61,15 @@ export class DocumentosService {
 
   public gerarHistorico(reajuste: Reajuste): Observable<Reajuste[]>{
     return this.http.post<Reajuste[]>(`${this.URL}/ata/reajuste`, reajuste);
+  }
+
+  public excluirHistorico(reajuste: Reajuste): Observable<Reajuste[]> {
+    const httpParams = new HttpParams()
+      .set('ataId', reajuste.ataID.toString())
+      .set('reajusteId', reajuste.id.toString());
+  
+    const options = { params: httpParams };
+  
+    return this.http.delete<Reajuste[]>(`${this.URL}/ata/reajuste`, options);
   }
 }

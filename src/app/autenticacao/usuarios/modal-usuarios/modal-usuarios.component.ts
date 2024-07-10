@@ -103,15 +103,8 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
     });
   }
 
-  protected override submeterEdicao(): MudancasParaPatch[] {
-    const mudancas: MudancasParaPatch[] = [];
-
-    for (const controlName in this.form.controls) {
-      const control = this.form.controls[controlName];
-      if (control.dirty && control.value !== control.pristine) {
-        mudancas.push({ op: 'replace', path: `/${controlName}`, value: control.value });
-      }
-    }
+  protected override editar(): MudancasParaPatch[] {
+    const mudancas = super.editar();
 
     if (this.senha.value) {
       mudancas.push({ op: 'replace', path: `/password`, value: this.senha.value });

@@ -6,8 +6,10 @@
             <!-- Lookup Item -->
             <mat-form-field class="lookup" appearance="outline">
                 <mat-label>Item</mat-label>
-                <input matInput formControlName="item" 
-                    [value]="displayFn(obterControle('item'))" 
+                <input matInput 
+                    formControlName="item" 
+                    [formControl]="obterControle('item')"
+                    [value]="displayFn()" 
                     (input)="limparValor()">
                 <button mat-icon-button matSuffix (click)="lookupDeItem()" [attr.aria-label]="'Abre lookup'">
                     <mat-icon>{{possuiValor()}}</mat-icon>
@@ -42,13 +44,14 @@
         </div>
     </div>
     <div mat-dialog-actions class="btn-group">
-        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar()">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(formulario)">
             <mat-icon matPrefix>undo</mat-icon>
             Cancelar
         </button>
-        <button mat-flat-button color="primary" (click)="confirmar()">
+        <button mat-flat-button color="primary" (click)="submeter()">
             <mat-icon matPrefix>save</mat-icon>
             Salvar
         </button>
     </div>
+    <ng-template #loadingSpinnerContainer></ng-template>
 </form>

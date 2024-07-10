@@ -9,6 +9,7 @@ import { Reajuste } from 'src/app/core/types/documentos';
 })
 export class HistoricoComponent {
 
+  private selectedTabIndex: number = 0;
   @Input() reajustes!: Reajuste[];
   @Output() criar = new EventEmitter();
   @Output() excluir = new EventEmitter();
@@ -20,7 +21,10 @@ export class HistoricoComponent {
   }
 
   public excluirHistorico() {
-    this.excluir.emit();
+    this.excluir.emit(this.selectedTabIndex);
   }
-  
+
+  onTabChange(index: number) {
+    this.selectedTabIndex = index;
+  }
 }

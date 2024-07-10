@@ -8,6 +8,7 @@
             (click)="gerarHistorico()" 
             [permissao]="306"/>
         <app-botoes 
+            [botaoDesabilitado]="!reajustes || !(reajustes.length > 0)"
             class="btn" 
             icone="delete" 
             texto="Excluir" 
@@ -17,9 +18,9 @@
             color="warn"/>
     </section>
     
-    <mat-tab-group *ngIf="reajustes && reajustes.length > 0">
+    <mat-tab-group *ngIf="reajustes && reajustes.length > 0" (selectedIndexChange)="onTabChange($event)">
         <mat-tab
-            *ngFor="let reajuste of reajustes"
+            *ngFor="let reajuste of reajustes; let i = index"
             label="{{reajuste.data | date: 'dd/MM/yyyy'}}">
             <app-tabela-historico-reajuste
                 *ngIf="reajuste.itens.length > 0"

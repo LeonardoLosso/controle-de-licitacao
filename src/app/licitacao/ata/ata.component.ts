@@ -147,6 +147,25 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     });
   }
 
+  editarItem() {
+    if (!this.selecionado.value) {
+      return this.messageService.openSnackBar('Nenhum item selecionado', 'alert');
+    }
+    const item: ItemDeAta = this.selecionado.value as ItemDeAta;
+
+    const dialogRef = this.dialog.open(ModalItemAtaComponent, {
+      disableClose: true,
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.listaItens.value.indexOf(item);
+        const edit: ItemDeAta = result
+        this.form.editarItem(edit, index);
+      }
+    });
+  }
   excluirItem() {
     const item = this.selecionado.value;
 
@@ -155,11 +174,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     }
 
     this.form.excluirItem(item);
-  }
-
-  editarItem() {
-    const item = this.selecionado.value;
-    //item modal
   }
 
   cancelar() {
@@ -227,14 +241,41 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       .subscribe({
         next: () => {
           this.esconderSpinner();
-          this.form.totalReajustes++;
+          this.form.totalReajustes += 1;
           this.salvar();
         }, error: () => this.esconderSpinner()
       });
   }
 
-  excluirReajuste(){
-    
+  excluirReajuste(index: number) {
+    const dataReajuste = new Date(this.form.reajustes[index].data);
+
+    const dia = dataReajuste.getDate();
+    const mes = dataReajuste.getMonth() + 1;
+    const ano = dataReajuste.getFullYear();
+
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Excluir do historico',
+        mensagem: `Deseja excluir o reajuste ${dia}/${mes}/${ano} ?`,
+        item: `\nAs alterações NÃO serão salvas`
+      }
+    });
+
+    confirmacao.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.mostrarSpinner()
+        this.form.retornaServiceExcluirHistorico(index)
+          .subscribe({
+            next: () => {
+              this.esconderSpinner();
+              this.form.totalReajustes -= 1;
+              this.salvar();
+            }, error: () => this.esconderSpinner()
+          });
+      }
+    });
   }
 
   private itemVazio(): ItemDeAta {
@@ -275,6 +316,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       next: result => {
         this.form.idAta = result.id;
         this.form.totalLicitado = result.totalLicitado;
+        this.form.totalReajustes = result.totalReajustes;
         edital.setValue(result.edital);
         status.setValue(result.status);
         dataLicitacao.setValue(result.dataLicitacao);

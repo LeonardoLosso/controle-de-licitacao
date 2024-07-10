@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { compare } from 'fast-json-patch';
+// import { diff } from 'deep-diff';
+
 
 import { DocumentosService } from './documentos.service';
 import { ItemDeAta } from 'src/app/core/types/item';
@@ -88,6 +90,21 @@ export class FormularioAtaService {
     lista.setValue(novaLista);
   }
 
+  public editarItem(item: ItemDeAta, index: number) {
+    if (index > -1) {
+      const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
+      
+      lista.value[index].id = item.id;
+      lista.value[index].nome = item.nome;
+      lista.value[index].quantidade = item.quantidade ;
+      lista.value[index].unidade = item.unidade;
+      lista.value[index].valorUnitario = item.valorUnitario;
+      lista.value[index].desconto = item.desconto;
+      lista.value[index].valorTotal = item.valorTotal;
+    }
+  }
+
+
   public criar(): Observable<AtaLicitacao> {
     const ataLicitacao = this.retornaAta();
 
@@ -96,8 +113,9 @@ export class FormularioAtaService {
   public editar(): Observable<AtaLicitacao> | null {
     const documento = this.retornaAta();
     const patch = compare(this.ataOriginal, documento);
-
-    if (patch.length > 0)
+    // const patch = diff(this.ataOriginal, documento);
+    debugger
+    if (patch && patch.length > 0)
       return this.service.editar(patch, documento.id);
 
     return null;
@@ -114,6 +132,10 @@ export class FormularioAtaService {
 
   public retornaServiceObter(id: number): Observable<AtaLicitacao> {
     return this.service.obterAtaPorID(id);
+  }
+
+  public retornaServiceExcluirHistorico(index: number): Observable<any>{
+    return this.service.excluirHistorico(this.reajustes[index]);
   }
 
   public retornaServiceHistorico(reajuste: Reajuste): Observable<Reajuste[]> {
@@ -172,7 +194,8 @@ export class FormularioAtaService {
   }
 
   public setAtaOriginal() {
-    this.ataOriginal = this.retornaAta();
+    const ata = this.retornaAta();
+    this.ataOriginal = JSON.parse(JSON.stringify(ata));
   }
 
   private desabilitarFormulario() {

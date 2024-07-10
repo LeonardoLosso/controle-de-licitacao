@@ -1,71 +1,54 @@
-import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModalBaseDirective } from 'src/app/core/diretivas/modal-base.directive';
+
 import { ItemDeAta, ItemSimplificado } from 'src/app/core/types/item';
 import { LookupItensComponent } from 'src/app/itens/lookup-itens/lookup-itens.component';
-import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 
 @Component({
   selector: 'app-modal-item-ata',
   templateUrl: './modal-item-ata.component.html',
   styleUrls: ['./modal-item-ata.component.scss']
 })
-export class ModalItemAtaComponent {
+export class ModalItemAtaComponent extends ModalBaseDirective<ItemDeAta> implements OnInit {
 
-  public item!: ItemDeAta;
-  public titulo = "Novo Item";
   public formulario!: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<ModalItemAtaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ItemDeAta,
-    private dialog: MatDialog
+    dialogRef: MatDialogRef<ModalItemAtaComponent>,
+    @Inject(MAT_DIALOG_DATA) data: ItemDeAta,
+    dialog: MatDialog
 
-  ) {
-    this.item = { ...data };
+  ) { super(dialogRef, data, dialog) }
+
+  ngOnInit(): void {
     const itemSimp: ItemSimplificado = {
-      ehCesta: false,
-      id: this.item.id,
-      nome: this.item.nome,
+      id: this.cadastro.id,
       status: 1,
-      unidadePrimaria: this.item.unidade,
+      ehCesta: false,
+      nome: this.cadastro.nome,
+      unidadePrimaria: this.cadastro.unidade,
       unidadeSecundaria: ''
     }
 
     this.formulario = new FormGroup({
-      item: new FormControl(itemSimp.id === 0? null : itemSimp),
-      unidade: new FormControl(this.item.unidade),
-      quantidade: new FormControl(this.item.quantidade),
-      valorUnitario: new FormControl(this.item.valorUnitario),
-      valorTotal: new FormControl({ value: this.item.valorTotal, disabled: true })
+      item: new FormControl(itemSimp.id === 0 ? null : `${itemSimp.id} - ${itemSimp.nome}`),
+      unidade: new FormControl(this.cadastro.unidade),
+      quantidade: new FormControl(this.cadastro.quantidade),
+      valorUnitario: new FormControl(this.cadastro.valorUnitario),
+      valorTotal: new FormControl({ value: this.cadastro.valorTotal, disabled: true })
     });
     this.addListeners();
-
-    if (data.id !== 0) {
-      this.titulo = "Editar Item"
-    }
-
   }
 
-  cancelar() {
-    if (!this.formulario.dirty) {
-      return this.dialogRef.close();
-    }
-    this.confirmarCancelar();
+  protected override acaoNovo(): void {
+    this.retornaItem();
   }
-  confirmar() {
-    const item: ItemDeAta = {
-      id: this.item.id,
-      ataID: this.item.ataID,
-      nome: this.item.nome,
-      unidade: this.obterControle('unidade').value as string,
-      quantidade: this.obterControle('quantidade').value as number,
-      valorUnitario: this.obterControle('valorUnitario').value as number,
-      valorTotal: this.obterControle('valorTotal').value as number,
-      desconto: 0
-    }
-    this.dialogRef.close(item)
+  protected override acaoEditar(): void {
+    this.retornaItem();
   }
+
   //-----------------------------
   public obterControle<T>(nome: string): FormControl {
     const control = this.formulario.get(nome);
@@ -75,9 +58,16 @@ export class ModalItemAtaComponent {
     return control as FormControl<T>;
   }
 
-  displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.id} - ${control.value?.nome}` : '';
+  displayFn(): string {
+    const control = this.obterControle('item');
+    if (control.value && control.value.id) {
+      const id = control.value.id;
+      const nome = control.value.nome;
+      return `${id} - ${nome}`;
+    }
+    return control.value;
   }
+
   limparValor() {
     const valor = this.obterControle('item');
     valor.setValue(null);
@@ -100,13 +90,13 @@ export class ModalItemAtaComponent {
         item.setValue(result);
         unidade.setValue(result.unidadePrimaria);
 
-        this.item.id = result.id;
-        this.item.nome = result.nome;
+        this.cadastro.id = result.id;
+        this.cadastro.nome = result.nome;
       }
     });
   }
   //-----------------------------
-  
+
   addListeners(): void {
     this.obterControle('quantidade').valueChanges.subscribe(() => {
       this.updateValorTotal();
@@ -123,20 +113,18 @@ export class ModalItemAtaComponent {
     const valorTotal = quantidade * valorUnitario;
     this.obterControle('valorTotal').setValue(valorTotal);
   }
-  private confirmarCancelar() {
-    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
-      disableClose: true,
-      data: {
-        titulo: 'Cancelar',
-        mensagem: 'Deseja cancelar?',
-        item: `\nAs alterações NÃO serão salvas`
-      }
-    });
 
-    confirmacao.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.dialogRef.close();
-      }
-    });
+  private retornaItem() {
+    const item: ItemDeAta = {
+      id: this.cadastro.id,
+      ataID: this.cadastro.ataID,
+      nome: this.cadastro.nome,
+      unidade: this.obterControle('unidade').value as string,
+      quantidade: this.obterControle('quantidade').value as number,
+      valorUnitario: this.obterControle('valorUnitario').value as number,
+      valorTotal: this.obterControle('valorTotal').value as number,
+      desconto: 0
+    }
+    this.dialogRef.close(item);
   }
 }

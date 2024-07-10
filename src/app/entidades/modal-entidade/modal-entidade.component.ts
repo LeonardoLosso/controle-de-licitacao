@@ -36,16 +36,4 @@ export class ModalEntidadeComponent extends ModalCrudDirective<Entidade, Entidad
         const value = EnumUF.filter(f => f.id === val)[0];
         return value && value.nome ? `${value.id} - ${value.nome}` : '';
     };
-
-    protected override submeterEdicao(): MudancasParaPatch[] {
-        const mudancas: MudancasParaPatch[] = [];
-        for (const controlName in this.form.controls) {
-            const control = this.form.controls[controlName];
-            if (control.dirty && control.value !== control.pristine) {
-                mudancas.push({ op: 'replace', path: `/${controlName}`, value: control.value });
-            }
-        }
-
-        return mudancas;
-    }
 }

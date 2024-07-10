@@ -78,35 +78,8 @@ export class ModalItemComponent extends ModalCrudDirective<Item, ItemSimplificad
     }
   }
 
-  protected override submeterEdicao(): MudancasParaPatch[] {
-    const mudancas: MudancasParaPatch[] = [];
-
-    for (const controlName in this.form.controls) {
-      const control = this.form.controls[controlName];
-      if (control.dirty && control.value !== control.pristine) {
-        mudancas.push({ op: 'replace', path: `/${controlName}`, value: control.value });
-      }
-    }
-
-    const listaNomesControl = this.form.controls['listaNomes'];
-    if (listaNomesControl && listaNomesControl.dirty) {
-      const nomesOriginais = this.data.listaNomes;
-      const nomesNovos = listaNomesControl.value;
-
-      // Adicionados
-      for (const nome of nomesNovos) {
-        if (!nomesOriginais.includes(nome)) {
-          mudancas.push({ op: 'add', path: '/listaNomes/-', value: nome });
-        }
-      }
-
-      // Removidos
-      for (const nome of nomesOriginais) {
-        if (!nomesNovos.includes(nome)) {
-          mudancas.push({ op: 'remove', path: `/listaNomes/${nomesOriginais.indexOf(nome)}` });
-        }
-      }
-    }
+  protected override editar(): MudancasParaPatch[] {
+    const mudancas = super.editar();
 
     if (this.listaControl.dirty) {
       const itensOriginais = this.data.listaItens;
@@ -126,6 +99,7 @@ export class ModalItemComponent extends ModalCrudDirective<Item, ItemSimplificad
         }
       }
     }
+    console.log(mudancas)
     return mudancas;
   }
 
