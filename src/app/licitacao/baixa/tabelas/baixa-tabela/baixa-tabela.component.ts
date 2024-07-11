@@ -22,14 +22,14 @@ export class BaixaTabelaComponent {
   }
 
   public getTotalEmpenhado() {
-    return this.listaItens.map(t => t.ValorEmpenhado).reduce((acc, value) => acc + value, 0);
+    return this.listaItens.map(t => t.valorEmpenhado).reduce((acc, value) => acc + value, 0);
   }
 
   public getTotalLicitado() {
-    return this.listaItens.map(t => t.ValorLicitado).reduce((acc, value) => acc + value, 0);
+    return this.listaItens.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
   }
 
   public getTotalSaldo() {
-    return this.listaItens.map(t => t.Saldo).reduce((acc, value) => acc + value, 0);
+    return this.listaItens.map(t => t.saldo).reduce((acc, value) => acc + value, 0);
   }  
 }

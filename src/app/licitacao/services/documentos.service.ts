@@ -36,6 +36,10 @@ export class DocumentosService {
     return this.http.post<AtaLicitacao>(`${this.URL}/ata`, dto);
   }
 
+  editar(documento: any, id: number): Observable<AtaLicitacao> {
+    return this.http.patch<AtaLicitacao>(`${this.URL}/ata/${id}`, documento);
+  }
+
   public inativar(documento: AtaLicitacaoSimplificada | AtaLicitacao): Observable<AtaLicitacao> {
     var id = documento.id;
     var novoValor = documento.status === 1 ? '2' : '1';
@@ -47,19 +51,11 @@ export class DocumentosService {
     return this.http.patch<AtaLicitacao>(`${this.URL}/ata/status/${id}`, [status]);
   }
 
-  editar(documento: any, id: number): Observable<AtaLicitacao> {
-    return this.http.patch<AtaLicitacao>(`${this.URL}/ata/${id}`, documento);
-  }
-  public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
-    const url = `${this.URL}/baixaDoc/${id}`;
-    return this.http.get<BaixaLicitacao>(url)
-  }
-
-  public obterHistorico(id: number): Observable<Reajuste[]>{
+  public obterHistorico(id: number): Observable<Reajuste[]> {
     return this.http.get<Reajuste[]>(`${this.URL}/ata/reajuste/${id}`);
   }
 
-  public gerarHistorico(reajuste: Reajuste): Observable<Reajuste[]>{
+  public gerarHistorico(reajuste: Reajuste): Observable<Reajuste[]> {
     return this.http.post<Reajuste[]>(`${this.URL}/ata/reajuste`, reajuste);
   }
 
@@ -67,9 +63,14 @@ export class DocumentosService {
     const httpParams = new HttpParams()
       .set('ataId', reajuste.ataID.toString())
       .set('reajusteId', reajuste.id.toString());
-  
+
     const options = { params: httpParams };
-  
+
     return this.http.delete<Reajuste[]>(`${this.URL}/ata/reajuste`, options);
+  }
+
+  public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
+    const url = `${this.URL}/baixa/${id}`;
+    return this.http.get<BaixaLicitacao>(url)
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { compare } from 'fast-json-patch';
-// import { diff } from 'deep-diff';
 
 
 import { DocumentosService } from './documentos.service';
@@ -86,7 +85,7 @@ export class FormularioAtaService {
   public adicionarItem(item: ItemDeAta) {
     const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
     const novaLista = [...lista.value];
-    novaLista.push(item);
+    novaLista.unshift(item);
     lista.setValue(novaLista);
   }
 
@@ -113,8 +112,6 @@ export class FormularioAtaService {
   public editar(): Observable<AtaLicitacao> | null {
     const documento = this.retornaAta();
     const patch = compare(this.ataOriginal, documento);
-    // const patch = diff(this.ataOriginal, documento);
-    debugger
     if (patch && patch.length > 0)
       return this.service.editar(patch, documento.id);
 

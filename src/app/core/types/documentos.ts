@@ -35,7 +35,8 @@ export interface Reajuste{
 }
 //------------------------------------------------
 export interface BaixaLicitacao {
-    id: string,
+    id: number,
+    edital: number,
     status: number,
     dataLicitacao: Date,
     dataAta: Date,
@@ -43,25 +44,25 @@ export interface BaixaLicitacao {
     empresa: string,
     orgao: string,
     itens: ItemDeBaixa[],
-    Empenhos: EmpenhoSimplificado[]
+    empenhos: EmpenhoSimplificado[]
 }
 
 export interface Empenho {
     id: string,
-    IdAta: string,
+    idAta: number,
     status: number,
-    DataEmpenho: Date,
-    Saldo: number,
-    Valor: number,
+    dataEmpenho: Date,
+    saldo: number,
+    valor: number,
     itens: ItemDeBaixa[],
-    Empenhos: EmpenhoSimplificado[]
+    empenhos: EmpenhoSimplificado[]
 }
 
 export interface EmpenhoSimplificado {
     id: string,
-    IdAta: string,
+    idAta: string,
     status: number,
-    DataEmpenho: Date,
-    Saldo: number,
-    Valor: number
+    dataEmpenho: Date,
+    saldo: number,
+    valor: number
 }

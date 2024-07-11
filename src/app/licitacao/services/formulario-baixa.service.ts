@@ -66,7 +66,7 @@ export class FormularioBaixaService {
         empresa.setValue(result.empresa);
         orgao.setValue(result.orgao);
         itens.setValue(result.itens);
-        empenhos.setValue(result.Empenhos);
+        empenhos.setValue(result.empenhos);
 
         if (result.vigencia) {
           const data = new Date(result.vigencia);

@@ -11,6 +11,7 @@ import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/moda
 import { ModalItemAtaComponent } from './modal-item-ata/modal-item-ata.component';
 import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
 import { Reajuste } from 'src/app/core/types/documentos';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-ata',
@@ -131,40 +132,86 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
   }
 
-  novoItem() {
+  async novoItem() {
     const item = this.itemVazio();
 
-    const dialogRef = this.dialog.open(ModalItemAtaComponent, {
-      disableClose: true,
-      data: item
-    });
+    const result = await this.abreModalItem(item);
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const novoItem: ItemDeAta = result;
+    if (result) {
+      const novoItem: ItemDeAta = result;
+
+      if (await this.validarDuplicado(novoItem)) {
+
         this.form.adicionarItem(novoItem);
       }
-    });
+    }
   }
 
-  editarItem() {
+  async editarItem() {
     if (!this.selecionado.value) {
       return this.messageService.openSnackBar('Nenhum item selecionado', 'alert');
     }
     const item: ItemDeAta = this.selecionado.value as ItemDeAta;
 
+    const result = await this.abreModalItem(item);
+
+    if (result) {
+      const index = this.listaItens.value.indexOf(item);
+      const edit: ItemDeAta = result
+
+      if (await this.validarDuplicado(edit, index)) {
+        this.form.editarItem(edit, index);
+      }
+    }
+  }
+
+  private async abreModalItem(item: ItemDeAta): Promise<ItemDeAta> {
     const dialogRef = this.dialog.open(ModalItemAtaComponent, {
       disableClose: true,
       data: item
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const index = this.listaItens.value.indexOf(item);
-        const edit: ItemDeAta = result
-        this.form.editarItem(edit, index);
+    return await lastValueFrom(dialogRef.afterClosed());
+  }
+
+  private trataDuplicado(item: ItemDeAta, duplicado: ItemDeAta) {
+    item.quantidade += duplicado.quantidade;
+    item.valorTotal = item.valorUnitario * item.quantidade;
+    this.form.excluirItem(duplicado);
+  }
+  private itemDuplicado(item: ItemDeAta, index?: number): ItemDeAta | null {
+
+    const lista = this.listaItens.value.filter(i => i.id === item.id && i.valorUnitario === item.valorUnitario);
+    if (lista.length >= 1) {
+
+      if (!index) return lista[0];
+
+      if (this.listaItens.value[index] !== lista[0]) return lista[0];
+    }
+
+    return null;
+  }
+  private async validarDuplicado(item: ItemDeAta, index?: number) {
+    const duplicado = this.itemDuplicado(item, index);
+
+    if (duplicado) {
+      if (!(await this.confirmaDuplicado(item, duplicado))) return false;
+
+      this.trataDuplicado(item, duplicado);
+    }
+    return true;
+  }
+  private async confirmaDuplicado(item: ItemDeAta, duplicado: ItemDeAta): Promise<boolean> {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Item Duplicado',
+        mensagem: 'Deseja prosseguir mesmo asim?',
+        item: `\nCaso confirme o item será agrupado com o item já existente`
       }
     });
+
+    return await lastValueFrom(confirmacao.afterClosed());
   }
   excluirItem() {
     const item = this.selecionado.value;
@@ -229,8 +276,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         quantidade: item.quantidade,
         unidade: item.unidade,
         valorTotal: item.valorTotal,
-        valorUnitario: item.valorUnitario,
-        desconto: item.desconto
+        valorUnitario: item.valorUnitario
       }
 
       reajuste.itens.push(itemReajuste);
@@ -287,7 +333,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       quantidade: 0,
       valorUnitario: 0,
       valorTotal: 0,
-      desconto: 0
+      desconto: 0,
+      duplicado: true
     }
   }
 

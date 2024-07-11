@@ -28,7 +28,8 @@ export interface ItemDeAta {
     quantidade: number,
     valorUnitario: number,
     valorTotal: number,
-    desconto: number
+    desconto: number,
+    duplicado?: boolean
 }
 
 export interface ItemDeReajuste {
@@ -39,23 +40,23 @@ export interface ItemDeReajuste {
     unidade: string,
     quantidade: number,
     valorUnitario: number,
-    valorTotal: number,
-    desconto: number
+    valorTotal: number
 }
 
 export interface ItemDeBaixa {
     id: number,
+    baixaId: number,
     nome: string,
     unidade: string,
 
-    QtdeEmpenhada: number, //totalização das notas?
+    qtdeEmpenhada: number, //totalização das notas?
 
-    QtdeLicitada: number, //ja é preenchido com esses valores lá da ATA
-    QtdeAEmpenhar: number, //Quanto ainda falta para empenhar (empenhado - licitado)
+    qtdeLicitada: number, //ja é preenchido da ATA
+    qtdeAEmpenhar: number, //Quanto ainda falta para empenhar (empenhado - licitado)
 
-    ValorEmpenhado: number, //quantidade empenhada * valor unitário
+    valorEmpenhado: number, //quantidade empenhada * valor unitário
 
-    ValorLicitado: number, //já preenchido vem da ATA
-    Saldo: number, //
-    ValorUnitario: number, // já vem preenchido vem preenchido da ATA
+    valorLicitado: number, //já preenchido vem da ATA
+    saldo: number, //
+    valorUnitario: number, // já vem preenchido vem preenchido da ATA
 }
