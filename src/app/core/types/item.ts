@@ -9,7 +9,7 @@ export interface ItemSimplificado {
     unidadeSecundaria: string
 }
 
-export interface Item extends ICadastro{
+export interface Item extends ICadastro {
     id: number,
     status: number,
     ehCesta: boolean,
@@ -59,4 +59,8 @@ export interface ItemDeBaixa {
     valorLicitado: number, //já preenchido vem da ATA
     saldo: number, //
     valorUnitario: number, // já vem preenchido vem preenchido da ATA
+}
+
+export interface ItemDeEmpenho {
+
 }
