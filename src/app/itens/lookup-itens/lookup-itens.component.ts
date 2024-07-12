@@ -18,7 +18,7 @@ export class LookupItensComponent implements OnInit {
   public pesquisa = new FormControl('');
   public listaItens!: ItemSimplificado[];
   public colunasGrid: string[] = ['codigo', 'nome', 'unidadePri', 'unidadeSec'];
-  
+
   public isLoadingResults = false;
   public isRateLimitReached = false;
 
@@ -27,7 +27,7 @@ export class LookupItensComponent implements OnInit {
     public dialogRef: MatDialogRef<LookupItensComponent>,
     private messageService: MensagemService,
     @Inject(MAT_DIALOG_DATA) public data: ItemSimplificado[],
-  ) { 
+  ) {
     this.pesquisa.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged()).subscribe((value) => {
@@ -40,10 +40,10 @@ export class LookupItensComponent implements OnInit {
   }
 
   public confirmar() {
-    if(this.selecionado.value){
+    if (this.selecionado.value) {
       const item = this.selecionado.value as ItemSimplificado;
 
-      if(this.data && this.data.find(f => f.id === item.id))
+      if (this.data && this.data.find(f => f.id === item.id))
         return this.messageService.openSnackBar('Esse item já foi adicionado à cesta');
 
       this.messageService.openSnackBar('Item adicionado', 'success');
@@ -55,11 +55,14 @@ export class LookupItensComponent implements OnInit {
 
   private listar() {
     const params = [
-      {key: 'status', value: 1},
-      {key: 'tipo', value: 'Item'}
+      { key: 'status', value: 1 as any }
+
     ]
 
-    params.push({key: 'search', value: this.pesquisa.value?? ''})
+    if (this.data)
+
+      params.push({ key: 'tipo', value: 'Item' });
+    params.push({ key: 'search', value: this.pesquisa.value ?? '' })
 
     this.service.listar(undefined, params).subscribe({
       next: result => {

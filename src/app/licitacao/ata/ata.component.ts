@@ -49,7 +49,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     })
   }
 
-  async salvar() {
+  async salvar(preencher: boolean = true) {
     const control = this.form.obterControle('edital');
 
     if (!control.valid) {
@@ -59,35 +59,57 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     this.form.totalLicitado = this.listaItens.value?.map(t => t.valorTotal).reduce((acc, value) => acc + value, 0);
 
-    if (this.id && this.id != 0) {
-      return await this.metodoEditar();
+    try {
+      if (this.id && this.id != 0)
+        await this.metodoEditar();
+      else
+        await this.metodoNovo();
+    } finally {
+      this.esconderSpinner();
+      this.inicializarFormulario(this.id, preencher);
     }
-    return await this.metodoNovo();
   }
 
   private async metodoNovo() {
     const result = await this.form.criar();
 
-    if(result){
-      this.messageService.openSnackBar('Ata criada com sucesso!', 'success');
-        this.id = result.id;
-        this.form.idAta = result.id;
-        this.listaItens.setValue(result.itens);
-      }
-      this.esconderSpinner();
-      this.inicializarFormulario(this.id);
+    if (result) {
+      this.messageService.openSnackBar('ATA criada com sucesso!', 'success');
+      this.id = result.id;
+      this.form.idAta = result.id;
+      this.listaItens.setValue(result.itens);
+
+      await this.criarBaixa();
+    }
   }
   private async metodoEditar() {
     const result = await this.form.editar();
     if (result) {
-      this.messageService.openSnackBar('Ata editada com sucesso!', 'success');
+      this.form.idAta = this.id;
+      this.messageService.openSnackBar('ATA editada com sucesso!', 'success');
+
+      await this.editarBaixa();
     }
-    this.esconderSpinner();
-    this.inicializarFormulario(this.id);
   }
+
+  private async criarBaixa() {
+    const result = await this.form.criarBaixa();
+
+    if (result)
+      this.messageService.openSnackBar('BAIXA criada com sucesso!', 'success');
+  }
+
+  private async editarBaixa() {
+    const result = await this.form.editarBaixa();
+
+    if (result)
+      this.messageService.openSnackBar('BAIXA editada com sucesso!', 'success');
+  }
+
+  
   async abrirBaixa() {
     if (this.id && this.id !== 0) {
-      await this.salvar();
+      await this.salvar(false);
       const queryParams = { ata: this.id };
       return this.router.navigate(['/licitacao/baixa'], { queryParams });
     }
@@ -190,13 +212,13 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     const duplicado = this.itemDuplicado(item, index);
 
     if (duplicado) {
-      if (!(await this.confirmaDuplicado(item, duplicado))) return false;
+      if (!(await this.confirmaDuplicado())) return false;
 
       this.trataDuplicado(item, duplicado);
     }
     return true;
   }
-  private async confirmaDuplicado(item: ItemDeAta, duplicado: ItemDeAta): Promise<boolean> {
+  private async confirmaDuplicado(): Promise<boolean> {
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -333,11 +355,11 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     }
   }
 
-  public inicializarFormulario(id: number) {
+  public inicializarFormulario(id: number, preencher: boolean = true) {
 
     this.form.limpar();
 
-    if (id && id !== 0) {
+    if (id && id !== 0 && preencher) {
       this.mostrarSpinner();
       this.preencher(id);
     }
@@ -363,6 +385,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         status.setValue(result.status);
         dataLicitacao.setValue(result.dataLicitacao);
         dataAta.setValue(result.dataAta);
+        vigencia.setValue(result.vigencia);
         itens.setValue(result.itens);
         this.form.setAtaOriginal();
         if (result.empresa) {
@@ -372,10 +395,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         if (result.orgao) {
           const idObjeto: any = result.orgao;
           this.form.setOrgaoPorID(idObjeto);
-        }
-        if (result.vigencia) {
-          const data = new Date(result.vigencia);
-          vigencia.setValue(data);
         }
         if (result.unidade) {
           this.form.setUnidadePorID(result.unidade);

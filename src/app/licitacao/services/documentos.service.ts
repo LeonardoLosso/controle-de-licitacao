@@ -36,7 +36,7 @@ export class DocumentosService {
     return this.http.post<AtaLicitacao>(`${this.URL}/ata`, dto);
   }
 
-  editar(documento: any, id: number): Observable<AtaLicitacao> {
+  public editar(documento: any, id: number): Observable<AtaLicitacao> {
     return this.http.patch<AtaLicitacao>(`${this.URL}/ata/${id}`, documento);
   }
 
@@ -72,5 +72,13 @@ export class DocumentosService {
   public obterBaixaPorID(id: number): Observable<BaixaLicitacao> {
     const url = `${this.URL}/baixa/${id}`;
     return this.http.get<BaixaLicitacao>(url)
+  }
+
+  public criarBaixa(id: number): Observable<BaixaLicitacao>{
+    return this.http.post<BaixaLicitacao>(`${this.URL}/baixa`, id);
+  }
+
+  public editarBaixa(id: number): Observable<BaixaLicitacao>{
+    return this.http.put<BaixaLicitacao>(`${this.URL}/baixa/atualizar`, id);
   }
 }

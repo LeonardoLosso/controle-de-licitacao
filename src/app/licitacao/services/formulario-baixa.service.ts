@@ -5,6 +5,8 @@ import { DocumentosService } from './documentos.service';
 import { Entidade } from 'src/app/core/types/entidade';
 import { ItemDeBaixa } from 'src/app/core/types/item';
 import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
+import { lastValueFrom } from 'rxjs';
+import { EntidadesService } from 'src/app/entidades/services/entidades.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class FormularioBaixaService {
   public formulario!: FormGroup;
   public idAta!: number;
 
-  constructor(private service: DocumentosService) {
+  constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
       edital: new FormControl(null),
       status: new FormControl(0),
@@ -39,46 +41,9 @@ export class FormularioBaixaService {
     return control as FormControl<T>;
   }
 
-  public inicializarFormulario(id?: number) {
+ 
 
-    this.limpar();
-    if (id && id!== 0) {
-      this.preencher(id);
-    }
-
-  }
-  private preencher(id: number) {
-    const status = this.obterControle<number>('status');
-    const edital = this.obterControle<string>('edital');
-    const dataLicitacao = this.obterControle<Date>('dataLicitacao');
-    const dataAta = this.obterControle<Date>('dataAta');
-    const vigencia = this.obterControle<Date>('vigencia');
-    const empresa = this.obterControle<Entidade>('empresa');
-    const orgao = this.obterControle<Entidade>('orgao');
-    const itens = this.obterControle<ItemDeBaixa[]>('itens');
-    const empenhos = this.obterControle<EmpenhoSimplificado[]>('empenhos');
-
-    this.service.obterBaixaPorID(id).subscribe({
-      next: result => {
-        this.idAta = result.id;
-        edital.setValue(result.edital);
-        status.setValue(result.status);
-        dataLicitacao.setValue(result.dataLicitacao);
-        dataAta.setValue(result.dataAta);
-        empresa.setValue(result.empresa);
-        orgao.setValue(result.orgao);
-        itens.setValue(result.itens);
-        empenhos.setValue(result.empenhos);
-
-        if (result.vigencia) {
-          const data = new Date(result.vigencia);
-          vigencia.setValue(data);
-        }
-      }
-    });
-  }
-
-  private limpar() {
+  public limpar() {
     this.idAta = 0;
     this.obterControle<number>('status').setValue(0);
     this.obterControle<string>('edital').setValue(null);
@@ -89,6 +54,13 @@ export class FormularioBaixaService {
     this.obterControle<number>('orgao').setValue(null);
     this.obterControle<ItemDeBaixa[]>('itens').setValue([]);
     this.obterControle<EmpenhoSimplificado[]>('empenhos').setValue([]);
+  }
+
+  public async ObterEntidade(id: number){
+    return await lastValueFrom(this.entidadeService.obterPorID(id));
+  }
+  public async obterBaixaPorID(id: number){
+    return await lastValueFrom(this.service.obterBaixaPorID(id));
   }
 
   private desabilitarFormulario() {

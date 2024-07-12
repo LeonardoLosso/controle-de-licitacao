@@ -18,12 +18,15 @@
                     <app-baixa-tabela [listaItens]="listaItens.value"/>
 
                 </mat-tab>
-                <mat-tab label="empenhos">
+                <mat-tab label="Empenhos">
 
                     <app-empenho-tabela 
                         [listaEmpenhos]="listaEmpenho.value" 
                         [control]="selecionado" 
                         (editarEmpenho)="editarEmpenho()"/>
+
+                </mat-tab>
+                <mat-tab label="Totalizadores">
 
                 </mat-tab>
             </mat-tab-group>

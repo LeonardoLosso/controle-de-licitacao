@@ -92,10 +92,10 @@ export class FormularioAtaService {
   public editarItem(item: ItemDeAta, index: number) {
     if (index > -1) {
       const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
-      
+
       lista.value[index].id = item.id;
       lista.value[index].nome = item.nome;
-      lista.value[index].quantidade = item.quantidade ;
+      lista.value[index].quantidade = item.quantidade;
       lista.value[index].unidade = item.unidade;
       lista.value[index].valorUnitario = item.valorUnitario;
       lista.value[index].desconto = item.desconto;
@@ -109,15 +109,30 @@ export class FormularioAtaService {
 
     return await lastValueFrom(this.service.criar(ataLicitacao));
   }
-  public async editar(){
+  public async criarBaixa() {
+    const id = this.idAta;
+    if (id)
+      return await lastValueFrom(this.service.criarBaixa(id));
+    else
+      return null;
+  }
+  public async editar() {
     const documento = this.retornaAta();
     const patch = compare(this.ataOriginal, documento);
     if (patch && patch.length > 0)
       return await lastValueFrom(this.service.editar(patch, documento.id));
-    else{
-      return null
+    else {
+      return null;
     }
   }
+  public async editarBaixa() {
+    const id = this.idAta;
+    if (id)
+      return await lastValueFrom(this.service.editarBaixa(id));
+    else
+      return null;
+  }
+
   public inativar(): Observable<AtaLicitacao> {
     return this.service.inativar(this.retornaAta());
   }
@@ -132,7 +147,7 @@ export class FormularioAtaService {
     return this.service.obterAtaPorID(id);
   }
 
-  public retornaServiceExcluirHistorico(index: number): Observable<any>{
+  public retornaServiceExcluirHistorico(index: number): Observable<any> {
     return this.service.excluirHistorico(this.reajustes[index]);
   }
 
