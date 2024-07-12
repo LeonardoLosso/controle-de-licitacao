@@ -15,7 +15,7 @@ import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
   styleUrls: ['./baixa.component.scss']
 })
 export class BaixaComponent implements OnInit {
-  private id!: string;
+  private id!: number;
 
   public status!: FormControl;
   public selecionado!: FormControl;

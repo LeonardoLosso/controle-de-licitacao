@@ -12,6 +12,7 @@ import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
 export class FormularioBaixaService {
 
   public formulario!: FormGroup;
+  public idAta!: number;
 
   constructor(private service: DocumentosService) {
     this.formulario = new FormGroup({
@@ -38,15 +39,15 @@ export class FormularioBaixaService {
     return control as FormControl<T>;
   }
 
-  public inicializarFormulario(id?: string) {
+  public inicializarFormulario(id?: number) {
 
     this.limpar();
-    if (id) {
+    if (id && id!== 0) {
       this.preencher(id);
     }
 
   }
-  private preencher(id: string) {
+  private preencher(id: number) {
     const status = this.obterControle<number>('status');
     const edital = this.obterControle<string>('edital');
     const dataLicitacao = this.obterControle<Date>('dataLicitacao');
@@ -57,9 +58,10 @@ export class FormularioBaixaService {
     const itens = this.obterControle<ItemDeBaixa[]>('itens');
     const empenhos = this.obterControle<EmpenhoSimplificado[]>('empenhos');
 
-    this.service.obterBaixaPorID(1).subscribe({
+    this.service.obterBaixaPorID(id).subscribe({
       next: result => {
-        edital.setValue(result.id);
+        this.idAta = result.id;
+        edital.setValue(result.edital);
         status.setValue(result.status);
         dataLicitacao.setValue(result.dataLicitacao);
         dataAta.setValue(result.dataAta);
@@ -77,6 +79,7 @@ export class FormularioBaixaService {
   }
 
   private limpar() {
+    this.idAta = 0;
     this.obterControle<number>('status').setValue(0);
     this.obterControle<string>('edital').setValue(null);
     this.obterControle<Date>('dataLicitacao').setValue(null);

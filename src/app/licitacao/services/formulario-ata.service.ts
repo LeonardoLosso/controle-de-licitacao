@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { compare } from 'fast-json-patch';
 
 
@@ -104,18 +104,19 @@ export class FormularioAtaService {
   }
 
 
-  public criar(): Observable<AtaLicitacao> {
+  public async criar() {
     const ataLicitacao = this.retornaAta();
 
-    return this.service.criar(ataLicitacao);
+    return await lastValueFrom(this.service.criar(ataLicitacao));
   }
-  public editar(): Observable<AtaLicitacao> | null {
+  public async editar(){
     const documento = this.retornaAta();
     const patch = compare(this.ataOriginal, documento);
     if (patch && patch.length > 0)
-      return this.service.editar(patch, documento.id);
-
-    return null;
+      return await lastValueFrom(this.service.editar(patch, documento.id));
+    else{
+      return null
+    }
   }
   public inativar(): Observable<AtaLicitacao> {
     return this.service.inativar(this.retornaAta());

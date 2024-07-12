@@ -60,43 +60,38 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     this.form.totalLicitado = this.listaItens.value?.map(t => t.valorTotal).reduce((acc, value) => acc + value, 0);
 
     if (this.id && this.id != 0) {
-      const service = this.form.editar();
-      if (service) {
-
-        return await service.subscribe({
-          next: () => {
-            this.messageService.openSnackBar('Ata editada com sucesso!', 'success');
-
-            this.esconderSpinner();
-            this.inicializarFormulario(this.id);
-          }, error: () => this.esconderSpinner()
-        })
-      } else {
-        this.esconderSpinner();
-      }
+      return await this.metodoEditar();
     }
-    return this.form.criar().subscribe({
-      next: (value) => {
-        this.messageService.openSnackBar('Ata criada com sucesso!', 'success');
-        this.id = value.id;
-        this.form.idAta = value.id;
-        this.listaItens.setValue(value.itens);
-        this.esconderSpinner();
-        this.inicializarFormulario(this.id);
-      }, error: () => this.esconderSpinner()
-    });
+    return await this.metodoNovo();
   }
 
-  abrirBaixa() {
-    const control = this.form.obterControle('edital');
-    const edital = control.value;
+  private async metodoNovo() {
+    const result = await this.form.criar();
 
-    if (control.valid) {
-      this.salvar();
-      const queryParams = { ata: edital };
+    if(result){
+      this.messageService.openSnackBar('Ata criada com sucesso!', 'success');
+        this.id = result.id;
+        this.form.idAta = result.id;
+        this.listaItens.setValue(result.itens);
+      }
+      this.esconderSpinner();
+      this.inicializarFormulario(this.id);
+  }
+  private async metodoEditar() {
+    const result = await this.form.editar();
+    if (result) {
+      this.messageService.openSnackBar('Ata editada com sucesso!', 'success');
+    }
+    this.esconderSpinner();
+    this.inicializarFormulario(this.id);
+  }
+  async abrirBaixa() {
+    if (this.id && this.id !== 0) {
+      await this.salvar();
+      const queryParams = { ata: this.id };
       return this.router.navigate(['/licitacao/baixa'], { queryParams });
     }
-    return this.messageService.openSnackBar('numero do edital é obrigatório', 'alert'); // mudar para verificar se já foi salvo
+    return this.messageService.openSnackBar('É preciso salvar o documento para criar baixa', 'alert');
   }
 
   inativar() {
