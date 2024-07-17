@@ -15,10 +15,10 @@ export class CabecalhoBaixaComponent {
   @Output() remover = new EventEmitter();
 
   @Output() cancelar = new EventEmitter();
-  @Output() salvar = new EventEmitter();
+  @Output() editarEmpenho = new EventEmitter();
 
-  salvarDocumento() {
-    this.salvar.emit();
+  editar() {
+    this.editarEmpenho.emit();
   }
 
   abrirBaixa() {

@@ -37,7 +37,7 @@ export class ErrosInterceptor implements HttpInterceptor {
         } else if (error.status === 401) {
           errorMessage = `Não autorizado`;
         } else if (error.status === 0){
-          errorMessage = 'Servidor off-line';
+          errorMessage = 'Servidor não encontrado';
         } else if (error.status === 501){
           errorMessage = error.error?.Message;
         } else if (error.status === 400){

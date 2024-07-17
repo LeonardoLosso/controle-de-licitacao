@@ -5,6 +5,7 @@ import { PesquisaComponent } from "../pesquisa/pesquisa.component";
 import { AtaComponent } from "../ata/ata.component";
 import { BaixaComponent } from "../baixa/baixa.component";
 import { authGuard, permGuard } from "src/app/autenticacao/auth.guard";
+import { EmpenhoComponent } from "../empenho/empenho.component";
 
 
 
@@ -24,6 +25,15 @@ const routes: Routes = [
         data: { 
             menuName: 'Baixa',
             recursoId: 401
+         },
+        canActivate: [authGuard, permGuard]
+    },
+    {
+        path: 'empenho',
+        component: EmpenhoComponent,
+        data: { 
+            menuName: 'Empenho',
+            recursoId: 407
          },
         canActivate: [authGuard, permGuard]
     },

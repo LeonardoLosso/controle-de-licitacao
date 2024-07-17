@@ -62,5 +62,16 @@ export interface ItemDeBaixa {
 }
 
 export interface ItemDeEmpenho {
+    id: number,
+    empenhoId: number, 
+    baixaId: number,
+    nome: string,
+    unidade: string,
+    qtdeEmpenhada: number,
+    qtdeEntregue: number,
+    qtdeAEntregar: number,
+    valorEntregue: number,
+    valorUnitario: number,
+    total: number
 
 }

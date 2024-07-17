@@ -10,8 +10,8 @@ import { ItemDeBaixa } from 'src/app/core/types/item';
 export class BaixaTabelaComponent {
   @Input() listaItens!: ItemDeBaixa[];
   public displayedColumns: string[] = [
-    'codigo', 'nome', 'unidade', 
-    'qtdeEmpenhada', 'qtdeLicitada', 'qtdeAEmpenhar', 
+    'codigo', 'nome', 'unidade',
+    'qtdeEmpenhada', 'qtdeLicitada', 'qtdeAEmpenhar',
     'valorEmpenhado', 'valorLicitado', 'saldo', 'valorUnitario'
   ];
 
@@ -22,14 +22,20 @@ export class BaixaTabelaComponent {
   }
 
   public getTotalEmpenhado() {
-    return this.listaItens.map(t => t.valorEmpenhado).reduce((acc, value) => acc + value, 0);
+    if (this.listaItens)
+      return this.listaItens.map(t => t.valorEmpenhado).reduce((acc, value) => acc + value, 0);
+    else return '';
   }
 
   public getTotalLicitado() {
-    return this.listaItens.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
+    if (this.listaItens)
+      return this.listaItens.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
+    else return '';
   }
 
   public getTotalSaldo() {
-    return this.listaItens.map(t => t.saldo).reduce((acc, value) => acc + value, 0);
-  }  
+    if (this.listaItens)
+      return this.listaItens.map(t => t.saldo).reduce((acc, value) => acc + value, 0);
+    else return '';
+  }
 }

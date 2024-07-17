@@ -20,6 +20,13 @@ import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-t
 import { LicitacaoRoutingModule } from './services/licitacao-routing.module';
 import { HistoricoComponent } from './ata/historico/historico.component';
 import { TabelaHistoricoReajusteComponent } from './ata/historico/tabela-historico-reajuste/tabela-historico-reajuste.component';
+import { EmpenhoComponent } from './empenho/empenho.component';
+import { CabecalhoEmpenhoComponent } from './empenho/cabecalho-empenho/cabecalho-empenho.component';
+import { FormularioEmpenhoComponent } from './empenho/formulario-empenho/formulario-empenho.component';
+import { EmpenhoTabelaItensComponent } from './empenho/empenho-tabela-itens/empenho-tabela-itens.component';
+import { EmpenhoTabelaNotasComponent } from './empenho/empenho-tabela-notas/empenho-tabela-notas.component';
+import { ModalItemEmpenhoComponent } from './empenho/modal-item-empenho/modal-item-empenho.component';
+import { LookupItemEmpenhoComponent } from './empenho/modal-item-empenho/lookup-item-empenho/lookup-item-empenho.component';
 
 
 
@@ -40,6 +47,13 @@ import { TabelaHistoricoReajusteComponent } from './ata/historico/tabela-histori
     EmpenhoTabelaComponent,
     HistoricoComponent,
     TabelaHistoricoReajusteComponent,
+    EmpenhoComponent,
+    CabecalhoEmpenhoComponent,
+    FormularioEmpenhoComponent,
+    EmpenhoTabelaItensComponent,
+    EmpenhoTabelaNotasComponent,
+    ModalItemEmpenhoComponent,
+    LookupItemEmpenhoComponent,
   ],
   imports: [
     CommonModule,

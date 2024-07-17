@@ -1,25 +1,25 @@
 <section class="barra-tarefas">
     <div class="botoes">
         <div class="btn-group">
-            <app-botoes icone="upload" texto="Importar Empenho" variant="btn-cabecalho" color="verde" [permissao]="404" (click)="abrirBaixa()" />
-            <app-botoes icone="add" texto="Novo Empenho" variant="btn-cabecalho" [permissao]="402" (click)="adicionar()" />            
+            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" [permissao]="406" (click)="salvar()" />
+            <app-botoes icone="add" texto="Novo item" variant="btn-cabecalho" [permissao]="402" (click)="adicionarItem()" />
         </div>
 
         <div class="btn-group">
             <app-botoes 
                 variant="btn-cabecalho"
                 [icone]="verificaStatus()? 'block' : 'check'"
-                [texto]="verificaStatus()? 'Inativar baixa' : 'Reativar baixa'"
+                [texto]="verificaStatus()? 'Inativar empenho' : 'Reativar empenho'"
                 [color]="verificaStatus()? 'warn' : 'verde'" 
                 [permissao]="405"
                 (click)="inativarDocumento()" />
 
-            <app-botoes icone="delete" texto="Excluir Empenho" variant="btn-cabecalho" [permissao]="403" (click)="excluir()" />
+            <app-botoes icone="delete" texto="Excluir item" variant="btn-cabecalho" [permissao]="403" (click)="removerItem()" />
         </div>
 
         <div class="btn-group">
             <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()"/>
-            <app-botoes icone="edit" texto="Editar Empenho" variant="btn-cabecalho" disabled [permissao]="407" (click)="editar()"/>
+            <app-botoes icone="edit" texto="Editar item" variant="btn-cabecalho" disabled [permissao]="407" (click)="editarItem()"/>
         </div>
     </div>
 

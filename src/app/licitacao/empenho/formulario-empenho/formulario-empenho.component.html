@@ -1,0 +1,36 @@
+<form [formGroup]="formService.formulario" class="formulario">
+
+    <!-- ID -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Código</mat-label>
+        <input matInput [value]="formService.id" disabled>
+    </mat-form-field>
+
+    <!-- Edital -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Edital</mat-label>
+        <input matInput [formControl]="formService.obterControle('edital')">
+    </mat-form-field>
+    
+    <!-- Lookup Órgão -->
+    <mat-form-field class="lookup" appearance="outline">
+        <mat-label>Órgão</mat-label>
+        <input matInput [formControl]="formService.obterControle('orgao')"
+            [value]="displayFn(formService.obterControle('orgao'))">
+    </mat-form-field>
+
+    <!-- Data -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Data do empenho</mat-label>
+        <input matInput [matDatepicker]="dataLicitacao" [formControl]="formService.obterControle('data')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
+        <mat-datepicker #dataLicitacao></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Lookup unidade -->
+    <mat-form-field class="lookup" appearance="outline">
+        <mat-label>Unidade</mat-label>
+        <input matInput [formControl]="formService.obterControle('unidade')"
+            [value]="displayFn(formService.obterControle('unidade'))">
+    </mat-form-field>
+</form>

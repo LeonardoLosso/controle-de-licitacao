@@ -1,9 +1,10 @@
+<ng-template #loadingSpinnerContainer></ng-template>
 <section class="busca-docmentos">
     <app-container>
             <app-cabecalho-baixa
                 (cancelar)="cancelar()"
                 (acao)="importarEmpenho()"
-                (salvar)="salvar()"
+                (editarEmpenho)="editarEmpenho()"
                 (inativar)="inativar()"
                 (novo)="novoEmpenho()"
                 (remover)="excluirEmpenho()"
@@ -12,7 +13,7 @@
                 <app-formulario-baixa/>
             </app-cabecalho-baixa>
 
-            <mat-tab-group>
+            <mat-tab-group class="tab-group">
                 <mat-tab label="Resumo">
 
                     <app-baixa-tabela [listaItens]="listaItens.value"/>

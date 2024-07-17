@@ -56,17 +56,22 @@ export class LookupItensComponent implements OnInit {
   private listar() {
     const params = [
       { key: 'status', value: 1 as any }
-
     ]
 
     if (this.data)
-
       params.push({ key: 'tipo', value: 'Item' });
+
     params.push({ key: 'search', value: this.pesquisa.value ?? '' })
+
+    this.isLoadingResults = true;
 
     this.service.listar(undefined, params).subscribe({
       next: result => {
+        this.isLoadingResults = false;
         this.listaItens = result.lista;
+      }, error: () => {
+        this.isLoadingResults = false;
+        this.isRateLimitReached = true;
       }
     });
   }

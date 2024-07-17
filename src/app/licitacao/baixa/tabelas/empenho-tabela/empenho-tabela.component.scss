@@ -24,3 +24,15 @@
         }
     }
 }
+/*CLIQUE*/
+.mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+}
+
+.mat-mdc-row:hover:not(.selecionado) {
+    background-color: #e9e8e8
+}
+
+.selecionado {
+    background-color: #d8d8d8
+}

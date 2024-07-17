@@ -123,7 +123,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         titulo: 'Inativar',
         mensagem: 'Deseja inativar ata?',
         item: `\nAs alterações NÃO salvas serão descartadas`
-
       }
     });
 

@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { lastValueFrom } from 'rxjs';
 
 import { FormularioBaixaService } from '../services/formulario-baixa.service';
 import { ItemDeBaixa } from 'src/app/core/types/item';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
+import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
+import { MensagemService } from 'src/app/core/services/mensagem.service';
 
 @Component({
   selector: 'app-baixa',
   templateUrl: './baixa.component.html',
   styleUrls: ['./baixa.component.scss']
 })
-export class BaixaComponent implements OnInit {
+export class BaixaComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
   private id!: number;
 
   public status!: FormControl;
@@ -26,21 +29,59 @@ export class BaixaComponent implements OnInit {
     private form: FormularioBaixaService,
     private dialog: MatDialog,
     private location: Location,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private mensagemService: MensagemService,
+    private router: Router
+  ) { super() }
 
   ngOnInit(): void {
-
     this.inicializaFormControl();
-
-    this.inicializaDados();
   }
 
-  public salvar() { }
-  public inativar() { }
-  public novoEmpenho() { } //cria novo response e joga para tela de empenho
-  public editarEmpenho() { } //abrir tela de empenho
-  public excluirEmpenho() { } //lógica inativar/reativar/excluir
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.inicializaDados();
+    })
+  }
+
+  public async novoEmpenho() {
+    this.mostrarSpinner();
+    try {
+      const result = await this.form.novoEmpenho();
+      if (result) {
+        this.mensagemService.openSnackBar("Empenho criado com sucesso!", 'success');
+        this.goToEdit(result.id);
+      }
+    } finally {
+      this.esconderSpinner();
+    }
+  }
+  public editarEmpenho() {
+    const empenho = this.selecionado.value;
+
+    if (!empenho) return this.mensagemService.openSnackBar("Nenhum empenho selecionado", 'alert');
+
+    this.goToEdit(empenho.id);
+  }
+  public async excluirEmpenho() {
+    const empenho = this.selecionado.value;
+
+    if (!empenho) return this.mensagemService.openSnackBar("Nenhum empenho selecionado", 'alert');
+
+    if (!(await this.confirmarExclusao(empenho))) return;
+
+    this.mostrarSpinner()
+    try {
+      const result = await this.form.excluirEmpenho(empenho.id);
+      if (result) {
+        this.mensagemService.openSnackBar("Empenho excluido com sucesso!", 'success');
+        this.inicializaDados();
+      }
+
+    } finally {
+      this.esconderSpinner();
+    }
+  }
   public importarEmpenho() { }//importação + redirecionamento com novo id
 
   public cancelar() {
@@ -59,25 +100,51 @@ export class BaixaComponent implements OnInit {
       }
     });
   }
+
+  public async inativar() {
+    if (!(await this.confirmarInativacao())) return;
+
+    this.mostrarSpinner();
+
+    try {
+      if (await this.form.inativar()) {
+        if (this.status.value === 2) {
+          this.status.setValue(1);
+        } else {
+          this.status.setValue(2);
+        }
+        this.mensagemService.openSnackBar("Empenho inativado com sucesso!", 'success');
+      }
+    } finally {
+      this.esconderSpinner();
+    }
+  }
+
   private inicializaFormControl() {
     this.status = this.form.obterControle('status');
     this.listaItens = this.form.obterControle<ItemDeBaixa[]>('itens');
     this.listaEmpenho = this.form.obterControle<EmpenhoSimplificado[]>('empenhos');
     this.selecionado = this.form.obterControle<ItemDeBaixa>('selecionadoGrid');
   }
-  private inicializaDados() {
+  private async inicializaDados() {
     this.route.queryParams.subscribe(params => {
       this.id = params['ata'];
     });
 
-    this.inicializarFormulario(this.id);
+    await this.inicializarFormulario(this.id);
   }
 
-  public inicializarFormulario(id?: number) {
+  public async inicializarFormulario(id?: number) {
 
     this.form.limpar();
     if (id && id !== 0) {
-      this.preencher(id);
+      this.mostrarSpinner();
+      try {
+        await this.preencher(id);
+      }
+      finally {
+        this.esconderSpinner();
+      }
     }
 
   }
@@ -94,16 +161,56 @@ export class BaixaComponent implements OnInit {
 
     const result = await this.form.obterBaixaPorID(id);
 
-    this.form.idAta = result.id;
-    edital.setValue(result.edital);
-    status.setValue(result.status);
-    dataLicitacao.setValue(result.dataLicitacao);
-    dataAta.setValue(result.dataAta);
-    vigencia.setValue(result.vigencia);
-    itens.setValue(result.itens);
-    empenhos.setValue(result.empenhos);
+    if (result) {
+      this.form.idAta = result.id;
+      edital.setValue(result.edital);
+      status.setValue(result.status);
+      dataLicitacao.setValue(result.dataLicitacao);
+      dataAta.setValue(result.dataAta);
+      vigencia.setValue(result.vigencia);
+      itens.setValue(result.itens);
 
-    empresa.setValue(await this.form.ObterEntidade(result.empresa as any));
-    orgao.setValue(await this.form.ObterEntidade(result.orgao as any));
+      empresa.setValue(await this.form.ObterEntidade(result.empresa as any));
+      orgao.setValue(await this.form.ObterEntidade(result.orgao as any));
+
+      empenhos.setValue(await this.form.listarEmpenhos(result.id));
+      if (empenhos.value) {
+        for (var empenho of empenhos.value as EmpenhoSimplificado[]) {
+          empenho.orgao = await this.form.ObterEntidade(empenho.orgao as any);
+          empenho.unidade = await this.form.ObterEntidade(empenho.unidade as any);
+        }
+      }
+    }
+  }
+
+  private async confirmarInativacao() {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Inativar',
+        mensagem: 'Deseja inativar baixa?',
+        item: `\nAs alterações NÃO salvas serão descartadas`
+      }
+    });
+
+    return await lastValueFrom(confirmacao.afterClosed());
+  }
+
+  private async confirmarExclusao(empenho: EmpenhoSimplificado) {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Excluir',
+        mensagem: 'Deseja excluir empenho?',
+        item: `${empenho.id} - ${empenho.edital}`
+      }
+    });
+
+    return await lastValueFrom(confirmacao.afterClosed());
+  }
+
+  private goToEdit(id: number) {
+    const queryParams = { empenho: id };
+    return this.router.navigate(['/licitacao/empenho'], { queryParams });
   }
 }

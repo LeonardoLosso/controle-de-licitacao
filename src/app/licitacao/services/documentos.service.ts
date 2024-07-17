@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, Reajuste } from 'src/app/core/types/documentos';
+import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, Empenho, EmpenhoSimplificado, Reajuste } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -80,5 +80,35 @@ export class DocumentosService {
 
   public editarBaixa(id: number): Observable<BaixaLicitacao>{
     return this.http.put<BaixaLicitacao>(`${this.URL}/baixa/atualizar`, id);
+  }
+
+  public inativarBaixa(documento: BaixaLicitacao): Observable<BaixaLicitacao> {
+    var id = documento.id;
+    var novoValor = documento.status === 1 ? '2' : '1';
+    var status = {
+      op: "replace",
+      path: "/status",
+      value: novoValor
+    }
+    return this.http.patch<BaixaLicitacao>(`${this.URL}/baixa/status/${id}`, [status]);
+  }
+
+  public listarEmpenhos(id: number): Observable<EmpenhoSimplificado[]>{
+    const url = `${this.URL}/empenho/${id}`;
+    return this.http.get<EmpenhoSimplificado[]>(url)
+  }
+
+  public criarEmpenho(dto: BaixaLicitacao): Observable<Empenho>{
+    const url = `${this.URL}/empenho`
+    return this.http.post<Empenho>(url, dto);
+  }
+
+  public excluirEmpenho(id: number): Observable<Empenho>{
+    const httpParams = new HttpParams()
+      .set('id', id.toString());
+
+    const options = { params: httpParams };
+    const url = `${this.URL}/empenho`
+    return this.http.delete<Empenho>(url, options);
   }
 }

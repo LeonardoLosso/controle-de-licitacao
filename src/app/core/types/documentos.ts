@@ -43,26 +43,28 @@ export interface BaixaLicitacao {
     vigencia: Date,
     empresa: string,
     orgao: string,
-    itens: ItemDeBaixa[],
-    empenhos: EmpenhoSimplificado[]
+    itens: ItemDeBaixa[]
 }
 
 export interface Empenho {
     id: number,
     baixaId: number,
     edital: string,
+    unidade: Entidade,
+    orgao: Entidade,
     status: number,
     dataEmpenho: Date,
     saldo: number,
     valor: number,
-    itens: ItemDeEmpenho[],
-    notas: Notas[]
+    itens: ItemDeEmpenho[]
 }
 
 export interface EmpenhoSimplificado {
     id: number,
     baixaId: number,
     edital: string,
+    unidade: Entidade,
+    orgao: Entidade,
     status: number,
     dataEmpenho: Date,
     saldo: number,
