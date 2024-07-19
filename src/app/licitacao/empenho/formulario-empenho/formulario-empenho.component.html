@@ -3,7 +3,7 @@
     <!-- ID -->
     <mat-form-field class="field" appearance="outline">
         <mat-label>Código</mat-label>
-        <input matInput [value]="formService.id" disabled>
+        <input matInput [formControl]="formService.obterControle('idEmpenho')">
     </mat-form-field>
 
     <!-- Edital -->
@@ -13,7 +13,7 @@
     </mat-form-field>
     
     <!-- Lookup Órgão -->
-    <mat-form-field class="lookup" appearance="outline">
+    <mat-form-field class="field" appearance="outline">
         <mat-label>Órgão</mat-label>
         <input matInput [formControl]="formService.obterControle('orgao')"
             [value]="displayFn(formService.obterControle('orgao'))">
@@ -28,9 +28,16 @@
     </mat-form-field>
 
     <!-- Lookup unidade -->
-    <mat-form-field class="lookup" appearance="outline">
+    <mat-form-field class="field" appearance="outline">
         <mat-label>Unidade</mat-label>
         <input matInput [formControl]="formService.obterControle('unidade')"
             [value]="displayFn(formService.obterControle('unidade'))">
+        <button 
+            mat-icon-button 
+            matSuffix 
+            (click)="acao()" 
+            [attr.aria-label]="'Abre lookup'">
+            <mat-icon>{{possuiValor()}}</mat-icon>
+        </button>
     </mat-form-field>
 </form>

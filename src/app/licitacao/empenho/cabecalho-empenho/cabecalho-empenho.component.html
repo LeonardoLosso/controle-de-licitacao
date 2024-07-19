@@ -2,24 +2,24 @@
     <div class="botoes">
         <div class="btn-group">
             <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" [permissao]="406" (click)="salvar()" />
-            <app-botoes icone="add" texto="Novo item" variant="btn-cabecalho" [permissao]="402" (click)="adicionarItem()" />
+            <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" [permissao]="402" (click)="adicionarItem()" />
         </div>
 
         <div class="btn-group">
             <app-botoes 
                 variant="btn-cabecalho"
                 [icone]="verificaStatus()? 'block' : 'check'"
-                [texto]="verificaStatus()? 'Inativar empenho' : 'Reativar empenho'"
+                [texto]="verificaStatus()? 'Inativar Empenho' : 'Reativar Empenho'"
                 [color]="verificaStatus()? 'warn' : 'verde'" 
                 [permissao]="405"
                 (click)="inativarDocumento()" />
 
-            <app-botoes icone="delete" texto="Excluir item" variant="btn-cabecalho" [permissao]="403" (click)="removerItem()" />
+            <app-botoes icone="delete" texto="Excluir Item" variant="btn-cabecalho" [permissao]="403" (click)="removerItem()" />
         </div>
 
         <div class="btn-group">
             <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()"/>
-            <app-botoes icone="edit" texto="Editar item" variant="btn-cabecalho" disabled [permissao]="407" (click)="editarItem()"/>
+            <app-botoes icone="edit" texto="Editar Item" variant="btn-cabecalho" (click)="editarItem()"/>
         </div>
     </div>
 

@@ -64,9 +64,11 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         await this.metodoEditar();
       else
         await this.metodoNovo();
+    } catch {
+      preencher = false;
     } finally {
       this.esconderSpinner();
-      this.inicializarFormulario(this.id, preencher);
+      await this.inicializarFormulario(this.id, preencher);
     }
   }
 
@@ -106,7 +108,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.messageService.openSnackBar('BAIXA editada com sucesso!', 'success');
   }
 
-  
+
   async abrirBaixa() {
     if (this.id && this.id !== 0) {
       await this.salvar(false);

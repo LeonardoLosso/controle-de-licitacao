@@ -4,6 +4,10 @@
         <app-cabecalho-empenho
             (cancelar)="cancelar()"
             (acao)="salvar()"
+            (adicionar)="adicionar()"
+            (inativar)="inativar()"
+            (excluir)="excluir()"
+            (editar)="editar()"
             [status]="status.value">
             
             <app-formulario-empenho/>
@@ -17,7 +21,7 @@
             </mat-tab>
             
             <mat-tab label="Notas">
-
+                <app-empenho-tabela-notas/>
             </mat-tab>
         </mat-tab-group>
     </app-container>

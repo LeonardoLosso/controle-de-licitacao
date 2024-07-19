@@ -111,4 +111,24 @@ export class DocumentosService {
     const url = `${this.URL}/empenho`
     return this.http.delete<Empenho>(url, options);
   }
+
+  public obterEmpenho(id: number): Observable<Empenho>{
+    const url = `${this.URL}/empenho/obter/${id}`;
+    return this.http.get<Empenho>(url);
+  }
+
+  public inativarEmpenho(documento: Empenho): Observable<Empenho> {
+    var id = documento.id;
+    var novoValor = documento.status === 1 ? '2' : '1';
+    var status = {
+      op: "replace",
+      path: "/status",
+      value: novoValor
+    }
+    return this.http.patch<Empenho>(`${this.URL}/empenho/status/${id}`, [status]);
+  }
+
+  public editarEmpenho(documento: any, id: number): Observable<Empenho> {
+    return this.http.patch<Empenho>(`${this.URL}/empenho/${id}`, documento);
+  }
 }

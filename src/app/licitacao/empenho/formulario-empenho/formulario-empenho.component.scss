@@ -1,0 +1,14 @@
+.formulario {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+
+    .field {
+        max-width: 300px;
+        width: 100%;
+    }
+
+}

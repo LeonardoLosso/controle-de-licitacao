@@ -113,7 +113,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
         } else {
           this.status.setValue(2);
         }
-        this.mensagemService.openSnackBar("Empenho inativado com sucesso!", 'success');
+        this.mensagemService.openSnackBar("Baixa inativada com sucesso!", 'success');
       }
     } finally {
       this.esconderSpinner();
@@ -134,7 +134,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
     await this.inicializarFormulario(this.id);
   }
 
-  public async inicializarFormulario(id?: number) {
+  private async inicializarFormulario(id?: number) {
 
     this.form.limpar();
     if (id && id !== 0) {
@@ -146,7 +146,6 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
         this.esconderSpinner();
       }
     }
-
   }
   private async preencher(id: number) {
     const status = this.form.obterControle<number>('status');
