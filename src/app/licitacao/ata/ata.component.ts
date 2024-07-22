@@ -202,7 +202,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     const lista = this.listaItens.value.filter(i => i.id === item.id && i.valorUnitario === item.valorUnitario);
     if (lista.length >= 1) {
 
-      if (!index) return lista[0];
+      if (!index && index !==0) return lista[0];
 
       if (this.listaItens.value[index] !== lista[0]) return lista[0];
     }

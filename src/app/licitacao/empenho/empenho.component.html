@@ -16,7 +16,10 @@
         <mat-tab-group class="tab-group">
             <mat-tab label="Itens">
                 
-                <app-empenho-tabela-itens [listaItens]="listaItens.value"/>
+                <app-empenho-tabela-itens 
+                    [listaItens]="listaItens.value" 
+                    [control]="selecionado"
+                    (abrirDialog)="editar()"/>
 
             </mat-tab>
             

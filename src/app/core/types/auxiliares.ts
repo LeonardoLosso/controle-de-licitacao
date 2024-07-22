@@ -23,6 +23,12 @@ export interface MudancasParaPatch {
 export interface ICadastro{
     id: number
 }
+
+export interface IItem extends ICadastro{
+    id: number,
+    nome: string, 
+    unidade: string
+}
 //-----------[DROPDOWN MODEL]------------
 
 export interface EnumNumberID {

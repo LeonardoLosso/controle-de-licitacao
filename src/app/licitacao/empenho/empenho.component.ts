@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { MatTabGroup } from '@angular/material/tabs';
+import { lastValueFrom } from 'rxjs';
 
 import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
 import { FormularioEmpenhoService } from '../services/formulario-empenho.service';
@@ -11,7 +11,7 @@ import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ItemDeEmpenho } from 'src/app/core/types/item';
 import { Notas } from 'src/app/core/types/documentos';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
-import { lastValueFrom } from 'rxjs';
+import { ModalItemEmpenhoComponent } from './modal-item-empenho/modal-item-empenho.component';
 
 @Component({
   selector: 'app-empenho',
@@ -25,7 +25,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   public status!: FormControl;
   public selecionado!: FormControl;
   public itemSelecionado!: FormControl;
-  public listaItens!: FormControl;
+  public listaItens!: FormControl<ItemDeEmpenho[]>;
   public listaDocumentos!: FormControl;
 
 
@@ -65,7 +65,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   }
 
   public async salvar(preencher: boolean = true) {
-    
+
     this.mostrarSpinner();
     try {
       const result = await this.form.editar();
@@ -98,17 +98,48 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     }
   }
 
-  public adicionar() {
+  public async adicionar() {
+    const item = this.itemVazio();
 
+    const result = await this.abreModalItem(item);
+
+    if (result) {
+      const novoItem: ItemDeEmpenho = result;
+
+      if (!await this.validarDuplicado(novoItem)) return this.mensagemService.openSnackBar('Item duplicado!', 'alert');
+
+      this.form.adicionarItem(novoItem);
+    }
+  }
+
+  public async editar() {
+    if (!this.selecionado.value) {
+      return this.mensagemService.openSnackBar('Nenhum item selecionado', 'alert');
+    }
+    const item: ItemDeEmpenho = this.selecionado.value as ItemDeEmpenho;
+
+    const result = await this.abreModalItem(item);
+
+    if (result) {
+      const index = this.listaItens.value.indexOf(item);
+      const edit: ItemDeEmpenho = result
+
+      if (!await this.validarDuplicado(edit, index)) return this.mensagemService.openSnackBar('Item duplicado!', 'alert');
+
+      this.form.editarItem(edit, index);
+    }
   }
 
   public excluir() {
+    const item = this.selecionado.value;
 
+    if (!item) {
+      return this.mensagemService.openSnackBar('Nenhum item selecionado', 'alert');
+    }
+
+    this.form.excluirItem(item);
   }
 
-  public editar() {
-
-  }
   //----------------------------------------------
   private async confirmarInativacao() {
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
@@ -138,6 +169,31 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     await this.inicializarFormulario(this.id);
   }
 
+  private async abreModalItem(item: ItemDeEmpenho): Promise<ItemDeEmpenho> {
+    const dialogRef = this.dialog.open(ModalItemEmpenhoComponent, {
+      disableClose: true,
+      data: item
+    });
+
+    return await lastValueFrom(dialogRef.afterClosed());
+  }
+
+  private itemVazio(): ItemDeEmpenho {
+    return {
+      id: 0,
+      baixaID: this.form.idAta,
+      empenhoId: this.id,
+      nome: '',
+      unidade: '',
+      qtdeAEntregar: 0,
+      qtdeEmpenhada: 0,
+      qtdeEntregue: 0,
+      total: 0,
+      valorEntregue: 0,
+      valorUnitario: 0
+    }
+  }
+
   private async inicializarFormulario(id?: number, preencher: boolean = true) {
     this.form.limpar();
     if (id && id !== 0 && preencher) {
@@ -164,7 +220,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     const result = await this.form.ObterEmpenho(id);
 
     if (result) {
-      this.form.idAta = result.baixaId;
+      this.form.idAta = result.baixaID;
       idEmpenho.setValue(result.id);
       edital.setValue(result.edital);
       status.setValue(result.status);
@@ -176,5 +232,27 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
 
       this.form.setEmpenhoOriginal();
     }
+  }
+
+  private async validarDuplicado(item: ItemDeEmpenho, index?: number) {
+    const duplicado = this.itemDuplicado(item, index);
+
+    if (duplicado)
+      return false;
+
+    return true;
+  }
+
+  private itemDuplicado(item: ItemDeEmpenho, index?: number): ItemDeEmpenho | null {
+
+    const lista = this.listaItens.value.filter(i => i.id === item.id && i.valorUnitario === item.valorUnitario);
+    if (lista.length >= 1) {
+
+      if (!index && index != 0) return lista[0];
+
+      if (this.listaItens.value[index] !== lista[0]) return lista[0];
+    }
+
+    return null;
   }
 }

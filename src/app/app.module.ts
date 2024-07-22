@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { ErrosInterceptor } from './core/erros/erros.interceptor';
 import { AutenticacaoInterceptor } from './autenticacao/autenticacao.interceptor';
+import { ModalItemDocumentoBaseDirective } from './core/diretivas/modal-item-documento-base.directive';
 
 registerLocaleData(localePt);
 

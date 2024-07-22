@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { ItemDeBaixa } from 'src/app/core/types/item';
 
@@ -8,12 +9,20 @@ import { ItemDeBaixa } from 'src/app/core/types/item';
   styleUrls: ['./baixa-tabela.component.scss']
 })
 export class BaixaTabelaComponent {
+  @Output() abrirDialog = new EventEmitter();
+
   @Input() listaItens!: ItemDeBaixa[];
-  public displayedColumns: string[] = [
+  @Input() control!: FormControl;
+  @Input() isLoadingResults = false;
+  @Input() isRateLimitReached = false;
+  @Input() totalizadores = true;
+  @Input() displayedColumns: string[] = [
     'codigo', 'nome', 'unidade',
     'qtdeEmpenhada', 'qtdeLicitada', 'qtdeAEmpenhar',
     'valorEmpenhado', 'valorLicitado', 'saldo', 'valorUnitario'
   ];
+
+  private selecionado!: ItemDeBaixa;
 
   constructor() { }
 
@@ -37,5 +46,26 @@ export class BaixaTabelaComponent {
     if (this.listaItens)
       return this.listaItens.map(t => t.saldo).reduce((acc, value) => acc + value, 0);
     else return '';
+  }
+
+  public clickGrid(valor: ItemDeBaixa) {
+    if (this.control) {
+      this.selecionado = valor;
+      this.control.setValue(valor);
+    }
+  }
+
+  public selecionar(valor: ItemDeBaixa): string {
+
+    if (valor === this.selecionado && this.control) {
+      return 'selecionado';
+    }
+    return '';
+  }
+
+  public doubleClick() {
+    if (this.control) {
+      this.abrirDialog.emit();
+    }
   }
 }

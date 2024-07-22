@@ -6,6 +6,7 @@ import { compare } from 'fast-json-patch';
 import { EntidadesService } from 'src/app/entidades/services/entidades.service';
 import { DocumentosService } from './documentos.service';
 import { Empenho } from 'src/app/core/types/documentos';
+import { ItemDeEmpenho } from 'src/app/core/types/item';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,6 @@ export class FormularioEmpenhoService {
     this.idAta = 0;
     this.formulario.reset();
   }
-
   public obterControle<T>(nome: string): FormControl {
     const control = this.formulario.get(nome);
     if (!control) {
@@ -48,11 +48,38 @@ export class FormularioEmpenhoService {
     const empenho = this.retornaEmpenho();
     this.empenhoOriginal = JSON.parse(JSON.stringify(empenho));
   }
+  public adicionarItem(item: ItemDeEmpenho) {
+    const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
+    const novaLista = [...lista.value];
+    novaLista.unshift(item);
+    lista.setValue(novaLista);
+  }
+  public editarItem(item: ItemDeEmpenho, index: number) {
+    if (index > -1) {
+      const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
+
+      lista.value[index].id = item.id;
+      lista.value[index].nome = item.nome;
+      lista.value[index].unidade = item.unidade;
+
+      lista.value[index].qtdeAEntregar = item.qtdeAEntregar;
+      lista.value[index].qtdeEmpenhada = item.qtdeEmpenhada;
+      lista.value[index].qtdeEntregue = item.qtdeEntregue;
+
+      lista.value[index].valorEntregue = item.valorEntregue;
+      lista.value[index].valorUnitario = item.valorUnitario;
+      lista.value[index].total = item.total;
+    }
+  }
+  public excluirItem(item: ItemDeEmpenho) {
+    const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
+    const novaLista = lista.value.filter(i => i !== item);
+    lista.setValue(novaLista);
+  }
   //-----------------[Service]-----------------
   public async inativar() {
     return await lastValueFrom(this.service.inativarEmpenho(this.retornaEmpenho()));
   }
-
   public async editar() {
     const documento = this.retornaEmpenho();
     const patch = compare(this.empenhoOriginal, documento);
@@ -66,21 +93,18 @@ export class FormularioEmpenhoService {
   public async ObterEntidade(id: number) {
     return await lastValueFrom(this.entidadeService.obterPorID(id));
   }
-
   public async ObterEmpenho(id: number) {
     return await lastValueFrom(this.service.obterEmpenho(id));
   }
-
   private desabilitarFormulario() {
     this.obterControle('idEmpenho').disable();
     this.obterControle('edital').disable();
     this.obterControle('orgao').disable();
   }
-
   private retornaEmpenho(): Empenho {
     return {
       id: this.obterControle('idEmpenho').value,
-      baixaId: this.idAta,
+      baixaID: this.idAta,
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value ?? 1,
       orgao: this.obterControle('orgao').value?.id ?? 0,

@@ -1,1 +1,42 @@
-<p>lookup-item-empenho works!</p>
+<div class="dialog">
+    <h1 mat-dialog-title>Lookup de itens</h1>
+    <div mat-dialog-content class="mensagem">
+        <mat-radio-group [formControl]="query">
+            <mat-radio-button class="example-margin" value="baixa">Baixa</mat-radio-button>
+            <mat-radio-button class="example-margin" value="geral">Todos</mat-radio-button>
+          </mat-radio-group>
+        <app-busca-container [control]="pesquisa" [page]="false">
+
+            <app-baixa-tabela
+                (abrirDialog)="confirmar()"
+                [control]="selecionado"
+                [displayedColumns]="colunasGrid"
+                [listaItens]="listaItens"
+                [isLoadingResults]="isLoadingResults"
+                [isRateLimitReached]="isRateLimitReached"
+                [totalizadores]="false"
+            />
+            
+        </app-busca-container>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button 
+            class="Cancelar" 
+            mat-stroked-button
+            cdkFocusInitial
+            color="warn"
+            mat-dialog-close
+        >
+            <mat-icon matPrefix>undo</mat-icon>
+            Cancelar
+        </button>
+        <button 
+            mat-flat-button 
+            color="primary"
+            (click)="confirmar()"
+        >
+            <mat-icon matPrefix>check</mat-icon>
+            Confirmar
+        </button>
+    </div>
+</div>

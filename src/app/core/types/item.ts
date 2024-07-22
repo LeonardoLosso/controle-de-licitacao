@@ -45,7 +45,7 @@ export interface ItemDeReajuste {
 
 export interface ItemDeBaixa {
     id: number,
-    baixaId: number,
+    baixaID: number,
     nome: string,
     unidade: string,
 
@@ -64,7 +64,7 @@ export interface ItemDeBaixa {
 export interface ItemDeEmpenho {
     id: number,
     empenhoId: number, 
-    baixaId: number,
+    baixaID: number,
     nome: string,
     unidade: string,
     qtdeEmpenhada: number,

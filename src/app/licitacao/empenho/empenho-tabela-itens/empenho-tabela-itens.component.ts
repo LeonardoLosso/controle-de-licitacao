@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { ItemDeEmpenho } from 'src/app/core/types/item';
 
@@ -8,35 +9,55 @@ import { ItemDeEmpenho } from 'src/app/core/types/item';
   styleUrls: ['./empenho-tabela-itens.component.scss']
 })
 export class EmpenhoTabelaItensComponent {
+
+  @Output() abrirDialog = new EventEmitter();
   @Input() listaItens!: ItemDeEmpenho[];
-  private totalEntregue!: number;
-  private total!: number;
+  @Input() control!: FormControl;
+
+  private selecionado!: ItemDeEmpenho;
 
   public displayedColumns: string[] = [
     'codigo', 'nome', 'unidade',
-    'qtdeEmpenhada', 'valorUnitario', 'qtdeEmpenhada',
-    'qtdeEntregue', 'qtdeAEntregar', 'valorEntregue', 'total'
+    'qtdeEmpenhada', 'valorUnitario', 'qtdeEntregue',
+    'qtdeAEntregar', 'valorEntregue', 'total'
   ];
 
+  clickGrid(valor: ItemDeEmpenho) {
+    this.selecionado = valor;
+    this.control.setValue(valor);
+  }
+
+  selecionar(valor: ItemDeEmpenho): string {
+
+    if (valor === this.selecionado) {
+      return 'selecionado';
+    }
+    return '';
+  }
+
+  doubleClick() {
+    this.abrirDialog.emit();
+  }
+
+
   public getSaldo() {
-    if (this.listaItens)
-      return this.total - this.totalEntregue;
-    else return '';
+    if (this.listaItens && this.listaItens.length > 0){
+      return this.getTotal() - this.getTotalEntregue();
+    }
+    else return 0;
   }
 
   public getTotalEntregue() {
-    if (this.listaItens){
-      this.totalEntregue = this.listaItens.map(t => t.valorEntregue).reduce((acc, value) => acc + value, 0);
-      return this.totalEntregue;
+    if (this.listaItens && this.listaItens.length > 0) {
+      return this.listaItens.map(t => t.valorEntregue).reduce((acc, value) => acc + value, 0);
     }
-    else return '';
+    else return 0;
   }
 
   public getTotal() {
-    if (this.listaItens){
-      this.total = this.listaItens.map(t => t.total).reduce((acc, value) => acc + value, 0);
-      return this.total;
+    if (this.listaItens && this.listaItens.length > 0) {
+      return this.listaItens.map(t => t.total).reduce((acc, value) => acc + value, 0);
     }
-    else return '';
+    else return 0;
   }
 }

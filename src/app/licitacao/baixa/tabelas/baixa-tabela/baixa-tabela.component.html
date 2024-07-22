@@ -1,7 +1,12 @@
 <section class="tabela">
     <div class="container mat-elevation-z8">
-
-        <div class="table-container">
+        <div class="loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            <div class="rate-limit-reached" *ngIf="isRateLimitReached">
+                Tempo limite de sincronização com banco de dados
+            </div>
+        </div>
+        <div class="table-container" [class.bigger]="isLoadingResults || isRateLimitReached"> 
 
             <table mat-table [dataSource]="listaItens" class="table">
 
@@ -82,8 +87,11 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="clickGrid(row)" (dblclick)="doubleClick()" [ngClass]="selecionar(row)"></tr>
+                <ng-container *ngIf="totalizadores">
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+                </ng-container>
             </table>
         </div>
     </div>

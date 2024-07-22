@@ -1,7 +1,7 @@
 <app-container [ngClass]="classeContainer()">
     <div class="search">
-        <span class="spacer"></span>
-        <mat-form-field class="search-box" appearance="outline">
+        <span *ngIf="page" class="spacer"></span>
+        <mat-form-field class="search-box" [class.full-size]="!page" appearance="outline">
             <mat-label>Pesquisar...</mat-label>
 
             <input matInput type="text" [formControl]="control">

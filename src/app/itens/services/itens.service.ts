@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CrudBaseService } from 'src/app/core/services/crud-base.service';
 import { Listagem, MudancasParaPatch } from 'src/app/core/types/auxiliares';
-import { Item, ItemSimplificado } from 'src/app/core/types/item';
+import { Item, ItemDeBaixa, ItemSimplificado } from 'src/app/core/types/item';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +34,12 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
 
   public inativar(item: ItemSimplificado): Observable<Item> {
     var id = item.id;
-        var novoValor = item.status === 1 ? '2' : '1';
-        var status = {
-            op: "replace",
-            path: "/status",
-            value: novoValor
-        }
+    var novoValor = item.status === 1 ? '2' : '1';
+    var status = {
+      op: "replace",
+      path: "/status",
+      value: novoValor
+    }
     return this.http.patch<Item>(`${this.URL}/itens/status/${id}`, [status]);
   }
 
@@ -49,5 +49,18 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
 
   public editar(patch: MudancasParaPatch[], id: number): Observable<Item> {
     return this.http.patch<Item>(`${this.URL}/itens/${id}`, patch);
+  }
+
+  public listarItensBaixa(id: number, parametros?: { key: string, value: any }[]): Observable<ItemDeBaixa[]> {
+    let params = new HttpParams();
+
+    if (parametros) {
+      parametros.forEach(param => {
+        if (param.value != null) {
+          params = params.append(param.key, param.value);
+        }
+      });
+    }
+    return this.http.get<ItemDeBaixa[]>(`${this.URL}/baixa/itens/${id}`,{ params });
   }
 }

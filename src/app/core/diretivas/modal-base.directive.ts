@@ -5,9 +5,7 @@ import { ICadastro } from '../types/auxiliares';
 import { SpinnerControlDirective } from './spinner-control.directive';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 
-@Directive({
-  selector: '[appModalBase]'
-})
+@Directive({})
 export abstract class ModalBaseDirective<T extends ICadastro> extends SpinnerControlDirective {
 
   public titulo = "Novo";

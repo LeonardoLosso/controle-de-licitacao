@@ -27,10 +27,10 @@ export interface AtaLicitacaoSimplificada {
     dataAta: Date,
     totalLicitado: number
 }
-export interface Reajuste{
+export interface Reajuste {
     id: number,
     ataID: number
-    data:Date,
+    data: Date,
     itens: ItemDeReajuste[]
 }
 //------------------------------------------------
@@ -48,7 +48,7 @@ export interface BaixaLicitacao {
 
 export interface Empenho {
     id: number,
-    baixaId: number,
+    baixaID: number,
     edital: string,
     unidade: Entidade,
     orgao: Entidade,
@@ -61,7 +61,7 @@ export interface Empenho {
 
 export interface EmpenhoSimplificado {
     id: number,
-    baixaId: number,
+    baixaID: number,
     edital: string,
     unidade: Entidade,
     orgao: Entidade,
@@ -71,6 +71,6 @@ export interface EmpenhoSimplificado {
     valor: number
 }
 
-export interface Notas{
+export interface Notas {
 
 }

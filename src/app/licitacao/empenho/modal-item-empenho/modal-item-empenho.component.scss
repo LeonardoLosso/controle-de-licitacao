@@ -1,0 +1,39 @@
+.dialog {
+    h2 {
+        margin: 16px 0 0 24px;
+    }
+
+    h3 {
+        margin-bottom: 0;
+    }
+
+    .campo {
+        background-color: #ececec;
+        padding: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        border-radius: 5px;
+
+
+        &:not(:last-child) {
+            margin-bottom: 16px;
+        }
+
+        .right-align {
+            text-align: right;
+        }
+    }
+
+    .mat-mdc-outlined-button:not(:disabled) {
+        border-color: #f44336;
+    }
+
+    .btn-group {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+    }
+}
