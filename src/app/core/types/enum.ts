@@ -31,7 +31,7 @@ export const EnumUF: EnumStringID[] = [
 ]
 
 export const EnumTipoCadastro: EnumNumberID[] = [
-    { id: 1, nome: 'empresa' },
+    { id: 1, nome: 'Empresa' },
     { id: 2, nome: 'Prefeitura' },
     { id: 3, nome: 'Policia' },
     { id: 4, nome: 'Secretaria' },

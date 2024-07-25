@@ -19,7 +19,6 @@ import { BaixaTabelaComponent } from './baixa/tabelas/baixa-tabela/baixa-tabela.
 import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-tabela.component';
 import { LicitacaoRoutingModule } from './services/licitacao-routing.module';
 import { HistoricoComponent } from './ata/historico/historico.component';
-import { TabelaHistoricoReajusteComponent } from './ata/historico/tabela-historico-reajuste/tabela-historico-reajuste.component';
 import { EmpenhoComponent } from './empenho/empenho.component';
 import { CabecalhoEmpenhoComponent } from './empenho/cabecalho-empenho/cabecalho-empenho.component';
 import { FormularioEmpenhoComponent } from './empenho/formulario-empenho/formulario-empenho.component';
@@ -46,7 +45,6 @@ import { LookupItemEmpenhoComponent } from './empenho/modal-item-empenho/lookup-
     BaixaTabelaComponent,
     EmpenhoTabelaComponent,
     HistoricoComponent,
-    TabelaHistoricoReajusteComponent,
     EmpenhoComponent,
     CabecalhoEmpenhoComponent,
     FormularioEmpenhoComponent,

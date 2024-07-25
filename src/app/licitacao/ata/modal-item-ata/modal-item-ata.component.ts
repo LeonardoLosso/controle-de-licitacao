@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ModalItemDocumentoBaseDirective } from 'src/app/core/diretivas/modal-item-documento-base.directive';
 
+import { ModalItemDocumentoBaseDirective } from 'src/app/core/diretivas/modal-item-documento-base.directive';
 import { ItemDeAta, ItemSimplificado } from 'src/app/core/types/item';
 import { LookupItensComponent } from 'src/app/itens/lookup-itens/lookup-itens.component';
 
@@ -14,6 +14,7 @@ import { LookupItensComponent } from 'src/app/itens/lookup-itens/lookup-itens.co
 export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemDeAta> {
 
   public lookupItem = LookupItensComponent;
+  public possuiEmpenho: boolean = false;
 
   constructor(
     dialogRef: MatDialogRef<ModalItemAtaComponent>,
@@ -30,6 +31,15 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
       valorUnitario: new FormControl(this.cadastro.valorUnitario),
       valorTotal: new FormControl({ value: this.cadastro.valorTotal, disabled: true })
     });
+    this.obterControle('unidade').disable();
+
+    this.possuiEmpenho = true;
+
+    ///FAZER A REQUISIÇÃO PARA CONFIRMAR
+
+    if (this.possuiEmpenho) {
+      this.obterControle('quantidade').disable();
+    }
   }
 
   protected override retornaItem(): ItemDeAta {

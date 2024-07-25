@@ -57,7 +57,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   async salvar(preencher: boolean = true) {
     const control = this.form.obterControle('edital');
 
-    if (!control.valid) {
+    if (!control.value) {
       return this.messageService.openSnackBar('numero do edital é obrigatório', 'alert');
     }
     this.mostrarSpinner();

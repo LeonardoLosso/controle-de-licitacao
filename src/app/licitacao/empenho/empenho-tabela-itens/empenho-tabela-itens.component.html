@@ -53,7 +53,7 @@
                 <!-- Quantidade licitada -->
                 <ng-container matColumnDef="qtdeEmpenhada">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Empenhada</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
@@ -67,14 +67,14 @@
                 <!-- Quantidade entregue -->
                 <ng-container matColumnDef="qtdeEntregue">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Entregue</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeEntregue}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeEntregue}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
                 <!-- Quantidade a entregar -->
                 <ng-container matColumnDef="qtdeAEntregar">
                     <th mat-header-cell *matHeaderCellDef>Saldo (Qtde)</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeAEntregar}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeAEntregar}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef>Saldo: <strong>{{getSaldo()| currency:'R$'}}</strong></td>
                 </ng-container>
 

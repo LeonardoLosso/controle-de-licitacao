@@ -40,21 +40,21 @@
                 <!-- Quantidade empenhada Column -->
                 <ng-container matColumnDef="qtdeEmpenhada">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Empenhada (Notas)</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
                 <!-- Quantidade licitada -->
                 <ng-container matColumnDef="qtdeLicitada">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Licitada (Ata)</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeLicitada}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeLicitada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
                 <!-- Quantidade a empenhar -->
                 <ng-container matColumnDef="qtdeAEmpenhar">
                     <th mat-header-cell *matHeaderCellDef>Falta Empenhar (Qtde)</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeAEmpenhar}}</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeAEmpenhar}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef>Totalizadores: </td>
                 </ng-container>
 

@@ -10,11 +10,12 @@
                 tipo="item"
                 [control]="obterControle('item')"
                 [tipoDaLookup]="lookupItem"
+                [apenasLeitura]="possuiEmpenho"
                 (result)="lookupDeItem($event)"/>
 
             <!-- unidade -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>unidade</mat-label>
+                <mat-label>Unidade</mat-label>
                 <input matInput formControlName="unidade">
             </mat-form-field>
 
@@ -26,14 +27,14 @@
 
             <!-- valor Unitário -->
             <mat-form-field floatLabel="always">
-                <mat-label>valor unitário</mat-label>
+                <mat-label>Valor Unitário</mat-label>
                 <input matInput type="number" class="right-align" placeholder="0" formControlName="valorUnitario">
                 <span matTextPrefix>R$</span>
             </mat-form-field>
 
             <!-- valor Total -->
             <mat-form-field floatLabel="always">
-                <mat-label>valor total</mat-label>
+                <mat-label>Valor Total</mat-label>
                 <input matInput type="number" class="right-align" placeholder="0" formControlName="valorTotal">
                 <span matTextPrefix>R$</span>
             </mat-form-field>

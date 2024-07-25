@@ -98,6 +98,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       }
     } finally {
       this.esconderSpinner();
+      await this.inicializarFormulario(this.id)
     }
   }
 
@@ -227,7 +228,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
 
     if (result) {
       this.form.idAta = result.baixaID;
-      
+
       idEmpenho.setValue(result.id);
       edital.setValue(result.edital);
       status.setValue(result.status);
