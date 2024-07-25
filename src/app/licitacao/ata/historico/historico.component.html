@@ -22,9 +22,13 @@
         <mat-tab
             *ngFor="let reajuste of reajustes; let i = index"
             label="{{reajuste.data | date: 'dd/MM/yyyy'}}">
-            <app-tabela-historico-reajuste
+            <app-item-ata-tabela
                 *ngIf="reajuste.itens.length > 0"
-                [listaItens]="reajuste.itens"/>
+                [listaItens]="reajuste.itens"
+                [reajuste]="true"/>
+            <!-- <app-tabela-historico-reajuste
+                *ngIf="reajuste.itens.length > 0"
+                [listaItens]="reajuste.itens"/> -->
         </mat-tab>
     </mat-tab-group>
 </section>

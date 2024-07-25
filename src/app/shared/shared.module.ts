@@ -16,6 +16,7 @@ import { FormataEnumPipe } from './pipes/formata-enum.pipe';
 import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao.component';
 import { PermissaoDirective } from "./directive/permissao.directive";
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { LookupBaseComponent } from './componentes/lookup-base/lookup-base.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
         FormataEnumPipe,
         ModalConfirmacaoComponent,
         PermissaoDirective,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        LookupBaseComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +53,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
         MascarasInputPipe,
         FormataEnumPipe,
         ModalConfirmacaoComponent,
-        PermissaoDirective
+        PermissaoDirective,
+        LookupBaseComponent
     ]
 })
 export class SharedModule { }

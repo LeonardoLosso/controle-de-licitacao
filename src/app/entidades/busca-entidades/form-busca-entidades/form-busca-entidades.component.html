@@ -1,7 +1,7 @@
 <section class="filters">
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>tipo do cadastro</mat-label>
+            <mat-label>Tipo do Cadastro</mat-label>
             <input type="text" placeholder="Selecione" aria-label="tipo do cadastro" matInput
                 [formControl]="formService.obterControle('tipo')" [matAutocomplete]="auto">
             <mat-autocomplete [displayWith]="displayFn" #auto="matAutocomplete">
@@ -14,7 +14,7 @@
     
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>status</mat-label>
+            <mat-label>Status</mat-label>
             <input type="text" placeholder="Selecione" aria-label="status" matInput
                 [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
             <mat-autocomplete [displayWith]="displayFnStatus" #stts="matAutocomplete">
@@ -26,7 +26,7 @@
     </ng-container>
 
     <mat-form-field class="field" appearance="outline">
-        <mat-label>cidade</mat-label>
+        <mat-label>Cidade</mat-label>
         <input matInput [formControl]="formService.obterControle('cidade')">
     </mat-form-field>
 </section>

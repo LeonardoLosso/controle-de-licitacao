@@ -16,7 +16,7 @@
 
             <!-- nome -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>nome</mat-label>
+                <mat-label>Nome</mat-label>
                 <input 
                     matInput 
                     name="nome" 
@@ -27,7 +27,7 @@
 
             <!-- unidade primária -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>unidade primária</mat-label>
+                <mat-label>Unidade Primária</mat-label>
                 <input 
                     matInput 
                     name="unidadePrimaria" 
@@ -38,7 +38,7 @@
 
             <!-- unidade secundária -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>unidade secundária</mat-label>
+                <mat-label>Unidade Secundária</mat-label>
                 <input 
                     matInput 
                     name="unidadeSecundaria" 
@@ -71,7 +71,7 @@
             (change)="toggleCesta(cadastro)">Cesta</mat-checkbox>
 
         <section *ngIf="cadastro.ehCesta">
-            <h3>itens da cesta</h3>
+            <h3>Itens da Cesta</h3>
             <app-container-cesta [listaControl]="listaControl"/>
         </section>
     </div>

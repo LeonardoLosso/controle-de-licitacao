@@ -1,7 +1,7 @@
 <section class="filters">
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>status</mat-label>
+            <mat-label>Status</mat-label>
             <input type="text" placeholder="Selecione" aria-label="status" matInput
                 [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
             <mat-autocomplete [displayWith]="displayFnStatus" #stts="matAutocomplete">
@@ -14,7 +14,7 @@
 
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>tipo</mat-label>
+            <mat-label>Tipo</mat-label>
             <input type="text" placeholder="Selecione" aria-label="tipo" matInput
                 [formControl]="formService.obterControle('ehCesta')" [matAutocomplete]="tipo">
             <mat-autocomplete #tipo="matAutocomplete">
@@ -26,12 +26,12 @@
     </ng-container>
 
     <mat-form-field class="field" appearance="outline">
-        <mat-label>unidade primária</mat-label>
+        <mat-label>Unidade Primária</mat-label>
         <input matInput [formControl]="formService.obterControle('unidadePri')">
     </mat-form-field>
 
     <mat-form-field class="field" appearance="outline">
-        <mat-label>unidade secundária</mat-label>
+        <mat-label>Unidade Secundária</mat-label>
         <input matInput [formControl]="formService.obterControle('unidadeSec')">
     </mat-form-field>
 </section>

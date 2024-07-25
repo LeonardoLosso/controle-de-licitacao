@@ -13,6 +13,8 @@ import { LookupItensComponent } from 'src/app/itens/lookup-itens/lookup-itens.co
 })
 export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemDeAta> {
 
+  public lookupItem = LookupItensComponent;
+
   constructor(
     dialogRef: MatDialogRef<ModalItemAtaComponent>,
     @Inject(MAT_DIALOG_DATA) data: ItemDeAta,
@@ -29,7 +31,7 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
       valorTotal: new FormControl({ value: this.cadastro.valorTotal, disabled: true })
     });
   }
-  
+
   protected override retornaItem(): ItemDeAta {
     return {
       id: this.cadastro.id,
@@ -44,22 +46,18 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
   }
   //-----------------------------
 
-  public lookupDeItem() {
+  public lookupDeItem(ev: any) {
 
-    const item = this.obterControle('item');
-    const unidade = this.obterControle('unidade');
-    const dialogRef = this.dialog.open(LookupItensComponent, {
-      disableClose: true
-    });
+    const result = ev;
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        item.setValue(result);
-        unidade.setValue(result.unidadePrimaria);
+    if (result) {
+      const item = this.obterControle('item');
+      const unidade = this.obterControle('unidade');
+      item.setValue(result);
+      unidade.setValue(result.unidadePrimaria);
 
-        this.cadastro.id = result.id;
-        this.cadastro.nome = result.nome;
-      }
-    });
+      this.cadastro.id = result.id;
+      this.cadastro.nome = result.nome;
+    }
   }
 }

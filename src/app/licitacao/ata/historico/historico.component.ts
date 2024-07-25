@@ -10,7 +10,7 @@ import { Reajuste } from 'src/app/core/types/documentos';
 export class HistoricoComponent {
 
   private selectedTabIndex: number = 0;
-  @Input() reajustes!: Reajuste[];
+  @Input() reajustes!: any[];
   @Output() criar = new EventEmitter();
   @Output() excluir = new EventEmitter();
 

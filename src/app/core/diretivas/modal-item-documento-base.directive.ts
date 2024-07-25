@@ -51,26 +51,6 @@ export abstract class ModalItemDocumentoBaseDirective<T extends IItem> extends M
     return control as FormControl<T>;
   }
 
-  public displayFn(): string {
-    const control = this.obterControle('item');
-    if (control.value && control.value.id) {
-      const id = control.value.id;
-      const nome = control.value.nome;
-      return `${id} - ${nome}`;
-    }
-    return control.value;
-  }
-
-  public limparValor() {
-    const valor = this.obterControle('item');
-    valor.setValue(null);
-  }
-  public possuiValor(): string {
-    const valor = this.obterControle('item');
-    return valor.value?.id ? 'close' : 'search';
-  }
-
-
   private addListeners(): void {
     this.obterControle('quantidade').valueChanges.subscribe(() => {
       this.updateValorTotal();

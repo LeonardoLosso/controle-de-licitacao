@@ -1,7 +1,7 @@
 <section class="filters">
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>status</mat-label>
+            <mat-label>Status</mat-label>
             <input type="text" placeholder="Selecione" aria-label="status" matInput
                 [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
             <mat-autocomplete [displayWith]="displayFnStatus" #stts="matAutocomplete">

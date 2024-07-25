@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ModalItemDocumentoBaseDirective } from 'src/app/core/diretivas/modal-item-documento-base.directive';
 import { ItemDeEmpenho, ItemSimplificado } from 'src/app/core/types/item';
 import { LookupItemEmpenhoComponent } from './lookup-item-empenho/lookup-item-empenho.component';
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-modal-item-empenho',
@@ -13,6 +12,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<ItemDeEmpenho> {
 
+ public lookupItem = LookupItemEmpenhoComponent;
 
   constructor(
     dialogRef: MatDialogRef<ModalItemEmpenhoComponent>,
@@ -55,9 +55,9 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
     }
   }
 
-  public async lookupDeItem() {
+  public async lookupDeItem(ev: any) {
 
-    const result = await this.retornaLookup();
+    const result = ev;
 
     if (result) {
       const item = this.obterControle('item');
@@ -73,16 +73,6 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
       valorUnitario.setValue(result.valorUnitario);
 
     }
-  }
-
-  public async retornaLookup() {
-
-    const dialogRef = this.dialog.open(LookupItemEmpenhoComponent, {
-      disableClose: true,
-      data: this.data
-    });
-
-    return await lastValueFrom(dialogRef.afterClosed());
   }
 
   private desabilitarForm() {

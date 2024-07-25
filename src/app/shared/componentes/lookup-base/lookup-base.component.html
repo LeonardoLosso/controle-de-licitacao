@@ -1,0 +1,14 @@
+<mat-form-field class="field" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput 
+        [formControl]="control"
+        [value]="displayFn()"
+        (input)="limparValor()">
+    <button *ngIf="!apenasLeitura"
+        mat-icon-button 
+        matSuffix 
+        (click)="acao()" 
+        [attr.aria-label]="'Abre lookup'">
+        <mat-icon>{{possuiValor()}}</mat-icon>
+    </button>
+</mat-form-field>

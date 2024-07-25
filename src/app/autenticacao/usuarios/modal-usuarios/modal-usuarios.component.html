@@ -17,7 +17,7 @@
 
             <!-- nome de usuario -->
             <mat-form-field class="input nomeUsuario" appearance="outline">
-                <mat-label>Nome de usuário</mat-label>
+                <mat-label>Nome de Usuário</mat-label>
                 <input matInput name="userName" [formControl]="username" (keyup)="verificaCadastro()">
                 <mat-icon *ngIf="username.valid" matSuffix>check</mat-icon>
                 <mat-spinner matSuffix class="spin" *ngIf="username.pending" [diameter]="20"></mat-spinner>
@@ -29,7 +29,7 @@
 
             <!-- cnpj -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>cpf</mat-label>
+                <mat-label>CPF</mat-label>
                 <input matInput name="cpf" #cnpj="ngModel" [(ngModel)]="cadastro.cpf"
                     [ngModel]="cadastro.cpf | mascarasInput:'cpf-cnpj'">
             </mat-form-field>
@@ -42,7 +42,7 @@
 
             <!-- telefone -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>telefone</mat-label>
+                <mat-label>Telefone</mat-label>
                 <input matInput name="telefone" #telefone="ngModel" [(ngModel)]="cadastro.telefone"
                     [ngModel]="cadastro.telefone | mascarasInput:'phone'">
             </mat-form-field>
@@ -66,7 +66,7 @@
         <div class="campo endereco">
             <!-- cep -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>cep</mat-label>
+                <mat-label>CEP</mat-label>
                 <input matInput name="cep" #cep="ngModel" [(ngModel)]="cadastro.endereco.cep">
             </mat-form-field>
 
@@ -84,13 +84,13 @@
 
             <!-- cidade -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>cidade</mat-label>
+                <mat-label>Cidade</mat-label>
                 <input matInput name="cidade" #cidade="ngModel" [(ngModel)]="cadastro.endereco.cidade">
             </mat-form-field>
 
             <!-- bairro -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>bairro</mat-label>
+                <mat-label>Bairro</mat-label>
                 <input matInput name="bairro" #bairro="ngModel" [(ngModel)]="cadastro.endereco.bairro">
             </mat-form-field>
 
@@ -102,13 +102,13 @@
 
             <!-- logradouro -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>logradouro</mat-label>
+                <mat-label>Logradouro</mat-label>
                 <input matInput name="logradouro" #logradouro="ngModel" [(ngModel)]="cadastro.endereco.logradouro">
             </mat-form-field>
 
             <!-- complemento -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>complemento</mat-label>
+                <mat-label>Complemento</mat-label>
                 <input matInput name="complemento" #complemento="ngModel" [(ngModel)]="cadastro.endereco.complemento">
             </mat-form-field>
         </div>

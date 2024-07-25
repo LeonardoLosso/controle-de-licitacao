@@ -13,11 +13,11 @@
     </mat-form-field>
     
     <!-- Lookup Órgão -->
-    <mat-form-field class="field" appearance="outline">
-        <mat-label>Órgão</mat-label>
-        <input matInput [formControl]="formService.obterControle('orgao')"
-            [value]="displayFn(formService.obterControle('orgao'))">
-    </mat-form-field>
+     <app-lookup-base
+        class="field"
+        label="Órgão"
+        [control]="formService.obterControle('orgao')"
+        [apenasLeitura]="true"/>
 
     <!-- Data -->
     <mat-form-field class="field" appearance="outline">
@@ -28,18 +28,12 @@
     </mat-form-field>
 
     <!-- Lookup unidade -->
-    <mat-form-field class="field" appearance="outline">
-        <mat-label>Unidade</mat-label>
-        <input matInput [formControl]="formService.obterControle('unidade')"
-            [value]="displayFn(formService.obterControle('unidade'))">
-        <button 
-            mat-icon-button 
-            matSuffix 
-            (click)="acao()" 
-            [attr.aria-label]="'Abre lookup'">
-            <mat-icon>{{possuiValor()}}</mat-icon>
-        </button>
-    </mat-form-field>
+    <app-lookup-base
+        class="field"
+        label="Unidade"
+        [control]="formService.obterControle('unidade')"
+        [data]="'orgao'"
+        [tipoDaLookup]="lookupDeEntidades"/>
 
     <!-- Valor -->
     <mat-form-field floatLabel="always" class="field number" appearance="outline">

@@ -51,7 +51,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.inicializarFormulario(this.id);
-    })
+    });
   }
 
   async salvar(preencher: boolean = true) {
@@ -343,54 +343,59 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     }
   }
 
-  public inicializarFormulario(id: number, preencher: boolean = true) {
+  public async inicializarFormulario(id: number, preencher: boolean = true) {
 
     this.form.limpar();
 
     if (id && id !== 0 && preencher) {
       this.mostrarSpinner();
-      this.preencher(id);
+      try {
+        await this.preencher(id);
+      }
+      finally {
+        this.esconderSpinner();
+      }
     }
 
   }
 
-  private preencher(id: number) {
-    const status = this.form.obterControle<number>('status');
+  private async preencher(id: number) {
     const edital = this.form.obterControle<string>('edital');
+    const empresa = this.form.obterControle('empresa');
+    const orgao = this.form.obterControle('orgao');
     const dataLicitacao = this.form.obterControle<Date>('dataLicitacao');
     const dataAta = this.form.obterControle<Date>('dataAta');
     const vigencia = this.form.obterControle<Date>('vigencia');
     const itens = this.form.obterControle<ItemDeAta[]>('itens');
+    const status = this.form.obterControle<number>('status');
+    
+    const result = await this.form.obterAta(id);
 
-    const observable = this.form.retornaServiceObter(id);
+    if (result) {
+      this.form.idAta = result.id;
+      this.form.totalLicitado = result.totalLicitado;
+      this.form.totalReajustes = result.totalReajustes;
 
-    observable.subscribe({
-      next: result => {
-        this.form.idAta = result.id;
-        this.form.totalLicitado = result.totalLicitado;
-        this.form.totalReajustes = result.totalReajustes;
-        edital.setValue(result.edital);
-        status.setValue(result.status);
-        dataLicitacao.setValue(result.dataLicitacao);
-        dataAta.setValue(result.dataAta);
-        vigencia.setValue(result.vigencia);
-        itens.setValue(result.itens);
-        this.form.setAtaOriginal();
-        if (result.empresa) {
-          const idObjeto: any = result.empresa;
-          this.form.setEmpresaPorID(idObjeto);
-        }
-        if (result.orgao) {
-          const idObjeto: any = result.orgao;
-          this.form.setOrgaoPorID(idObjeto);
-        }
-        if (result.unidade) {
-          this.form.setUnidadePorID(result.unidade);
-        }
-        this.form.buscaHistorico();
+      edital.setValue(result.edital);
+      status.setValue(result.status);
+      dataLicitacao.setValue(result.dataLicitacao);
+      dataAta.setValue(result.dataAta);
+      vigencia.setValue(result.vigencia);
+      itens.setValue(result.itens);
 
-        this.esconderSpinner();
-      }, error: () => this.esconderSpinner()
-    });
+      if (result.empresa)
+        empresa.setValue(await this.form.obterEntidade(result.empresa as any));
+
+      if (result.orgao)
+        orgao.setValue(await this.form.obterEntidade(result.orgao as any));
+
+      if (result.unidade)
+        this.form.setUnidadePorID(result.unidade);
+
+      this.form.setAtaOriginal();
+
+      await this.form.buscaHistorico();
+    }
+
   }
 }

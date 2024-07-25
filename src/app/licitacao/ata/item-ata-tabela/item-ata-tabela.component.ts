@@ -11,6 +11,7 @@ import { ItemDeAta } from 'src/app/core/types/item';
 export class ItemAtaTabelaComponent implements OnInit {
   @Input() listaItens!: ItemDeAta[];
   @Input() control!: FormControl;
+  @Input() reajuste!: boolean;
   @Output() editarItem = new EventEmitter();
 
   private selecionado!: ItemDeAta;
@@ -24,19 +25,21 @@ export class ItemAtaTabelaComponent implements OnInit {
   }
 
   public clickGrid(valor: ItemDeAta) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
+    if (!this.reajuste) {
+      this.selecionado = valor;
+      this.control.setValue(valor);
+    }
   }
 
   public selecionar(valor: ItemDeAta): string {
 
-    if (valor === this.selecionado) {
+    if (valor === this.selecionado && !this.reajuste) {
       return 'selecionado';
     }
     return '';
   }
 
-  public getTotalItems(){
+  public getTotalItems() {
     return this.listaItens.length;
   }
 
@@ -45,6 +48,7 @@ export class ItemAtaTabelaComponent implements OnInit {
   }
 
   public doubleClick() {
-    this.editarItem.emit();
+    if (!this.reajuste)
+      this.editarItem.emit();
   }
 }

@@ -1,5 +1,4 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { FormularioAtaService } from '../../services/formulario-ata.service';
@@ -14,12 +13,12 @@ import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/loo
 })
 export class FormularioAtaComponent implements OnInit{
 
-  options = EnumTipoCadastro;
-  statusControl!: FormControl<number>;
-
+  public options = EnumTipoCadastro;
+  public statusControl!: FormControl<number>;
+  public lookupDeEntidades = LookupEntidadesComponent;
+  
   constructor(
-    public formService: FormularioAtaService,
-    private dialog: MatDialog
+    public formService: FormularioAtaService
   ) { }
 
   ngOnInit(): void {
@@ -30,45 +29,7 @@ export class FormularioAtaComponent implements OnInit{
     return val && val.nome ? `${val.nome}` : '';
   }
 
-  acao(control: string) {
-    const valor = this.formService.obterControle(control);
-    if (valor.value?.id) {
-      return valor.setValue(null);
-    }
-    switch (control) {
-      case 'empresa':
-        return this.abrirLookup(LookupEntidadesComponent, valor, control);
-      case 'orgao':
-        return this.abrirLookup(LookupEntidadesComponent, valor, control)
-    }
-  }
-
-  displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.id} - ${control.value?.fantasia}` : '';
-  }
-
-  limparValor(control: string) {
-    const valor = this.formService.obterControle(control);
-    valor.setValue(null);
-  }
-
-  possuiValor(control: string): string {
-    const valor = this.formService.obterControle(control);
-    return valor.value?.id ? 'close' : 'search';
-  }
-  
   desabilitado(): boolean{
     return this.statusControl.value === 2;
-  }
-
-  private abrirLookup(component: Type<any>, valor: FormControl, filtro: string = 'orgao') {
-    const dialogRef = this.dialog.open(component, {
-      disableClose: true,
-      data: filtro
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      valor.setValue(result);
-    });
   }
 }

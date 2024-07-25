@@ -1,6 +1,4 @@
-import { Component, Type } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { Component } from '@angular/core';
 
 import { FormularioEmpenhoService } from '../../services/formulario-empenho.service';
 import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/lookup-entidades.component';
@@ -11,36 +9,10 @@ import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/loo
   styleUrls: ['./formulario-empenho.component.scss']
 })
 export class FormularioEmpenhoComponent {
+  public lookupDeEntidades = LookupEntidadesComponent;
 
   constructor(
-    public formService: FormularioEmpenhoService,
-    private dialog: MatDialog
+    public formService: FormularioEmpenhoService
   ) { }
 
-  public displayFn(control: FormControl): string {
-    return control.value ? `${control.value?.id} - ${control.value?.fantasia}` : '';
-  }
-
-  public acao() {
-    const valor = this.formService.obterControle('unidade');
-    if (valor.value?.id) {
-      return valor.setValue(null);
-    }
-    return this.abrirLookup(LookupEntidadesComponent, valor);
-  }
-  public possuiValor(): string {
-    const valor = this.formService.obterControle('unidade');
-    return valor.value?.id ? 'close' : 'search';
-  }
-
-  private abrirLookup(component: Type<any>, valor: FormControl) {
-    const dialogRef = this.dialog.open(component, {
-      disableClose: true,
-      data: 'orgao'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      valor.setValue(result);
-    });
-  }
 }

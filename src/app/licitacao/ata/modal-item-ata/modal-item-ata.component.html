@@ -4,17 +4,13 @@
         <h3>Dados do Item</h3>
         <div class="campo dados">
             <!-- Lookup Item -->
-            <mat-form-field class="lookup" appearance="outline">
-                <mat-label>Item</mat-label>
-                <input matInput 
-                    formControlName="item" 
-                    [formControl]="obterControle('item')"
-                    [value]="displayFn()" 
-                    (input)="limparValor()">
-                <button mat-icon-button matSuffix (click)="lookupDeItem()" [attr.aria-label]="'Abre lookup'">
-                    <mat-icon>{{possuiValor()}}</mat-icon>
-                </button>
-            </mat-form-field>
+            <app-lookup-base
+                class="field"
+                label="Item"
+                tipo="item"
+                [control]="obterControle('item')"
+                [tipoDaLookup]="lookupItem"
+                (result)="lookupDeItem($event)"/>
 
             <!-- unidade -->
             <mat-form-field class="input" appearance="outline">
