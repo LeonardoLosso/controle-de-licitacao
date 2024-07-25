@@ -39,6 +39,20 @@ body {
     color: #e6f700 !important;
 }
 
-.bigger{
+.bigger {
     height: 600px;
+}
+
+// -------------[TABLE COMMOM]
+.mat-cell-date {
+    text-align: center !important;
+}
+
+.mat-column-status {
+    text-align: center !important;
+    max-width: 45px !important;
+}
+
+.mat-cell-money {
+    text-align: right !important;
 }

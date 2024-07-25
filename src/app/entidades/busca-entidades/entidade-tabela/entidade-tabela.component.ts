@@ -17,7 +17,7 @@ export class EntidadeTabelaComponent {
     @Input() listaEntidades!: EntidadeSimplificada[];
     @Input() control!: FormControl;
     @Input() paginator: boolean = true;
-    @Input() displayedColumns: string[] = ['codigo', 'status', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
+    @Input() displayedColumns: string[] = [ 'status','codigo', 'nome', 'tipo', 'telefone', 'email', 'cnpj'];
     @Input() totalItems: number = 0;
     @Input() isLoadingResults = false;
     @Input() isRateLimitReached = false;

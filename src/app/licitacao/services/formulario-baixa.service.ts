@@ -43,7 +43,7 @@ export class FormularioBaixaService {
     this.formulario.reset();
   }
 
-  public async ObterEntidade(id: number){
+  public async obterEntidade(id: number){
     return await lastValueFrom(this.entidadeService.obterPorID(id));
   }
   public async obterBaixaPorID(id: number){

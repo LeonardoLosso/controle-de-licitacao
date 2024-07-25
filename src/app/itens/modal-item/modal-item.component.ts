@@ -99,7 +99,6 @@ export class ModalItemComponent extends ModalCrudDirective<Item, ItemSimplificad
         }
       }
     }
-    console.log(mudancas)
     return mudancas;
   }
 

@@ -16,8 +16,7 @@ export class FormataEnumPipe implements PipeTransform {
                 return cadastro ? `${cadastro.id} - ${cadastro.nome}` : 'Desconhecido';
 
             case 'status':
-                const status = EnumTipoStatus.find(item => item.id === id);
-                return status ? `${status.id} - ${status.nome}` : 'Desconhecido';
+                return id === 1? '🟢' : '🔴';
             
             default: 
                 return '';

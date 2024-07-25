@@ -21,7 +21,7 @@ export class UsuarioTabelaComponent {
 
   private selecionado!: UsuarioSimplificado;
 
-  public displayedColumns: string[] = ['codigo', 'status', 'nome', 'usuario', 'cpf'];
+  public displayedColumns: string[] = ['status', 'codigo', 'nome', 'usuario', 'cpf'];
 
   constructor() { }
 

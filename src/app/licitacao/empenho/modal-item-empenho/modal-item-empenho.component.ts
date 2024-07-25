@@ -29,20 +29,29 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
       valorUnitario: new FormControl(this.cadastro.valorUnitario),
       valorTotal: new FormControl({ value: this.cadastro.total, disabled: true })
     });
+    this.desabilitarForm();
+
+    const item = this.obterControle('item');
+    item.valueChanges.subscribe(() => this.desabilitarForm())
   }
   protected override retornaItem(): ItemDeEmpenho {
+    const unidade = this.obterControle('unidade').value as string
+    const qtdeEmpenhada = this.obterControle('quantidade').value as number;
+    const valorUnitario = this.obterControle('valorUnitario').value as number;
+    const total = this.obterControle('valorTotal').value as number;
     return {
       id: this.cadastro.id,
       baixaID: this.cadastro.baixaID,
       empenhoId: this.cadastro.empenhoId,
       nome: this.cadastro.nome,
-      unidade: this.obterControle('unidade').value as string,
-      qtdeEmpenhada: this.obterControle('quantidade').value as number,
+      unidade: unidade,
+      qtdeEmpenhada: qtdeEmpenhada,
       qtdeEntregue: this.cadastro.qtdeEntregue,
-      qtdeAEntregar: this.cadastro.qtdeAEntregar,
+      qtdeAEntregar: qtdeEmpenhada - this.cadastro.qtdeEntregue,
       valorEntregue: this.cadastro.valorEntregue,
-      valorUnitario: this.obterControle('valorUnitario').value as number,
-      total: this.obterControle('valorTotal').value as number
+      valorUnitario: valorUnitario,
+      itemDeBaixa: this.cadastro.itemDeBaixa,
+      total: total
     }
   }
 
@@ -54,13 +63,15 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
       const item = this.obterControle('item');
       const unidade = this.obterControle('unidade');
       const valorUnitario = this.obterControle('valorUnitario');
+      
+      this.cadastro.id = result.id;
+      this.cadastro.nome = result.nome;
+      this.cadastro.itemDeBaixa = result.itemDeBaixa;
 
       item.setValue(result);
       unidade.setValue(result.unidade);
       valorUnitario.setValue(result.valorUnitario);
-      
-      this.cadastro.id = result.id;
-      this.cadastro.nome = result.nome;
+
     }
   }
 
@@ -72,5 +83,18 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
     });
 
     return await lastValueFrom(dialogRef.afterClosed());
+  }
+
+  private desabilitarForm() {
+    const unidade = this.obterControle('unidade');
+    const valorUnitario = this.obterControle('valorUnitario');
+
+    if (this.cadastro.itemDeBaixa) {
+      unidade.disable();
+      valorUnitario.disable();
+    } else {
+      unidade.enable();
+      valorUnitario.enable();
+    }
   }
 }

@@ -30,7 +30,7 @@
 
                 <!-- status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef>status</th>
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
                     <td mat-cell *matCellDef="let row">{{row.status | formataEnum: 'status'}}</td>
                 </ng-container>
 
@@ -52,26 +52,26 @@
 
                 <!-- unidade Column -->
                 <ng-container matColumnDef="unidade">
-                    <th mat-header-cell *matHeaderCellDef>unidade</th>
+                    <th mat-header-cell *matHeaderCellDef>Unidade</th>
                     <td mat-cell *matCellDef="let row">{{row.unidade | formataEnum: 'tipo'}}</td>
                 </ng-container>
 
                 <!-- Data Licitação -->
                 <ng-container matColumnDef="dataLicitacao">
-                    <th mat-header-cell *matHeaderCellDef>Data da Licitação</th>
-                    <td mat-cell *matCellDef="let row">{{row.dataLicitacao | date: 'dd/MM/yyyy' }}</td>
+                    <th mat-header-cell *matHeaderCellDef class="mat-cell-date">Data da Licitação</th>
+                    <td mat-cell *matCellDef="let row" class="mat-cell-date">{{row.dataLicitacao | date: 'dd/MM/yyyy' }}</td>
                 </ng-container>
 
                 <!-- Data Ata -->
                 <ng-container matColumnDef="dataAta">
-                    <th mat-header-cell *matHeaderCellDef>Data da Ata</th>
-                    <td mat-cell *matCellDef="let row">{{row.dataAta | date: 'dd/MM/yyyy' }}</td>
+                    <th mat-header-cell *matHeaderCellDef class="mat-cell-date">Data da Ata</th>
+                    <td mat-cell *matCellDef="let row" class="mat-cell-date">{{row.dataAta | date: 'dd/MM/yyyy' }}</td>
                 </ng-container>
 
                 <!-- valor Column -->
                 <ng-container matColumnDef="valor">
-                    <th mat-header-cell *matHeaderCellDef>valor licitado</th>
-                    <td mat-cell *matCellDef="let row"><strong>{{row.totalLicitado | currency:'R$'}}</strong></td>
+                    <th mat-header-cell *matHeaderCellDef class="mat-cell-money">Valor Licitado</th>
+                    <td mat-cell *matCellDef="let row" class="mat-cell-money"><strong>{{row.totalLicitado | currency:'R$'}}</strong></td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

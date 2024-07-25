@@ -72,6 +72,7 @@ export interface ItemDeEmpenho {
     qtdeAEntregar: number,
     valorEntregue: number,
     valorUnitario: number,
+    itemDeBaixa: boolean,
     total: number
 
 }

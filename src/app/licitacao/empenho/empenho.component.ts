@@ -73,7 +73,10 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       if (result) {
         this.mensagemService.openSnackBar('Empenho editado com sucesso!', 'success');
       }
-    } finally {
+    } catch (ex) {
+      debugger
+    }
+    finally {
       this.esconderSpinner();
       await this.inicializarFormulario(this.id, preencher)
     }
@@ -105,8 +108,8 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
 
     if (result) {
       const novoItem: ItemDeEmpenho = result;
-
-      if (!await this.validarDuplicado(novoItem)) return this.mensagemService.openSnackBar('Item duplicado!', 'alert');
+      if (!await this.validarDuplicado(novoItem))
+        return this.mensagemService.openSnackBar('Item duplicado!', 'alert');
 
       this.form.adicionarItem(novoItem);
     }
@@ -124,9 +127,10 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       const index = this.listaItens.value.indexOf(item);
       const edit: ItemDeEmpenho = result
 
-      if (!await this.validarDuplicado(edit, index)) return this.mensagemService.openSnackBar('Item duplicado!', 'alert');
+      if (!await this.validarDuplicado(edit, index))
+        return this.mensagemService.openSnackBar('Item duplicado!', 'alert');
 
-      this.form.editarItem(edit, index);
+      await this.form.editarItem(edit, index);
     }
   }
 
@@ -190,6 +194,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       qtdeEntregue: 0,
       total: 0,
       valorEntregue: 0,
+      itemDeBaixa: false,
       valorUnitario: 0
     }
   }
@@ -212,23 +217,29 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     const edital = this.form.obterControle<string>('edital');
     const status = this.form.obterControle<number>('status');
     const data = this.form.obterControle<Date>('data');
+    const valor = this.form.obterControle<Date>('valor');
     const unidade = this.form.obterControle('unidade');
     const orgao = this.form.obterControle('orgao');
     const itens = this.form.obterControle<ItemDeEmpenho[]>('itens');
     const documentos = this.form.obterControle<Notas[]>('documentos');
 
-    const result = await this.form.ObterEmpenho(id);
+    const result = await this.form.obterEmpenho(id);
 
     if (result) {
       this.form.idAta = result.baixaID;
+      
       idEmpenho.setValue(result.id);
       edital.setValue(result.edital);
       status.setValue(result.status);
       data.setValue(result.dataEmpenho);
       itens.setValue(result.itens);
+      valor.setValue(result.valor);
 
-      unidade.setValue(await this.form.ObterEntidade(result.unidade as any));
-      orgao.setValue(await this.form.ObterEntidade(result.orgao as any));
+      if (result.unidade)
+        unidade.setValue(await this.form.obterEntidade(result.unidade as any));
+
+      if (result.orgao)
+        orgao.setValue(await this.form.obterEntidade(result.orgao as any));
 
       this.form.setEmpenhoOriginal();
     }

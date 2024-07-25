@@ -22,7 +22,7 @@ export class LicitacaoTabelaComponent {
 
   private selecionado!: AtaLicitacaoSimplificada;
 
-  public displayedColumns: string[] = ['codigo', 'status', 'empresa', 'orgao', 'unidade', 'dataLicitacao', 'dataAta', 'valor'];
+  public displayedColumns: string[] = [ 'status', 'codigo', 'empresa', 'orgao', 'unidade', 'dataLicitacao', 'dataAta', 'valor'];
 
   constructor() { }
 

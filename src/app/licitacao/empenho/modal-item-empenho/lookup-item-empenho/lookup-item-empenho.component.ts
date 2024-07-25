@@ -57,7 +57,8 @@ export class LookupItemEmpenhoComponent implements OnInit {
   public confirmar() {
     if (this.selecionado.value) {
       const item = this.selecionado.value as ItemDeEmpenho;
-
+      item.itemDeBaixa = this.query.value === 'baixa';
+      
       this.messageService.openSnackBar('Item adicionado', 'success');
       return this.dialogRef.close(item);
     }

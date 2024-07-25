@@ -74,11 +74,11 @@ export class DocumentosService {
     return this.http.get<BaixaLicitacao>(url)
   }
 
-  public criarBaixa(id: number): Observable<BaixaLicitacao>{
+  public criarBaixa(id: number): Observable<BaixaLicitacao> {
     return this.http.post<BaixaLicitacao>(`${this.URL}/baixa`, id);
   }
 
-  public editarBaixa(id: number): Observable<BaixaLicitacao>{
+  public editarBaixa(id: number): Observable<BaixaLicitacao> {
     return this.http.put<BaixaLicitacao>(`${this.URL}/baixa/atualizar`, id);
   }
 
@@ -93,17 +93,17 @@ export class DocumentosService {
     return this.http.patch<BaixaLicitacao>(`${this.URL}/baixa/status/${id}`, [status]);
   }
 
-  public listarEmpenhos(id: number): Observable<EmpenhoSimplificado[]>{
+  public listarEmpenhos(id: number): Observable<EmpenhoSimplificado[]> {
     const url = `${this.URL}/empenho/${id}`;
     return this.http.get<EmpenhoSimplificado[]>(url)
   }
 
-  public criarEmpenho(dto: BaixaLicitacao): Observable<Empenho>{
+  public criarEmpenho(dto: BaixaLicitacao): Observable<Empenho> {
     const url = `${this.URL}/empenho`
     return this.http.post<Empenho>(url, dto);
   }
 
-  public excluirEmpenho(id: number): Observable<Empenho>{
+  public excluirEmpenho(id: number): Observable<Empenho> {
     const httpParams = new HttpParams()
       .set('id', id.toString());
 
@@ -112,7 +112,7 @@ export class DocumentosService {
     return this.http.delete<Empenho>(url, options);
   }
 
-  public obterEmpenho(id: number): Observable<Empenho>{
+  public obterEmpenho(id: number): Observable<Empenho> {
     const url = `${this.URL}/empenho/obter/${id}`;
     return this.http.get<Empenho>(url);
   }

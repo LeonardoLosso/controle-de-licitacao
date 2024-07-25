@@ -28,7 +28,8 @@ export class FormularioEmpenhoService {
       unidade: new FormControl(null),
       itens: new FormControl([]),
       documentos: new FormControl([]),
-      data: new FormControl(null)
+      data: new FormControl(null),
+      valor: new FormControl(0)
     });
     this.desabilitarFormulario();
   }
@@ -51,25 +52,28 @@ export class FormularioEmpenhoService {
   public adicionarItem(item: ItemDeEmpenho) {
     const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
     const novaLista = [...lista.value];
-    novaLista.unshift(item);
+    novaLista.push(item);
     lista.setValue(novaLista);
   }
   public editarItem(item: ItemDeEmpenho, index: number) {
-    if (index > -1) {
-      const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
 
-      lista.value[index].id = item.id;
-      lista.value[index].nome = item.nome;
-      lista.value[index].unidade = item.unidade;
+    if (index < 0) return;
+    
+    const itemOriginal = this.obterControle('itens').value[index] as ItemDeEmpenho;
 
-      lista.value[index].qtdeAEntregar = item.qtdeAEntregar;
-      lista.value[index].qtdeEmpenhada = item.qtdeEmpenhada;
-      lista.value[index].qtdeEntregue = item.qtdeEntregue;
+    itemOriginal.id = item.id;
+    itemOriginal.nome = item.nome;
+    itemOriginal.unidade = item.unidade;
 
-      lista.value[index].valorEntregue = item.valorEntregue;
-      lista.value[index].valorUnitario = item.valorUnitario;
-      lista.value[index].total = item.total;
-    }
+    itemOriginal.qtdeAEntregar = item.qtdeEmpenhada - item.qtdeAEntregar;
+    itemOriginal.qtdeEmpenhada = item.qtdeEmpenhada;
+    itemOriginal.qtdeEntregue = item.qtdeEntregue;
+
+    itemOriginal.valorEntregue = item.valorEntregue;
+    itemOriginal.valorUnitario = item.valorUnitario;
+    itemOriginal.total = item.total;
+    
+    itemOriginal.itemDeBaixa = item.itemDeBaixa;
   }
   public excluirItem(item: ItemDeEmpenho) {
     const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
@@ -82,18 +86,18 @@ export class FormularioEmpenhoService {
   }
   public async editar() {
     const documento = this.retornaEmpenho();
+    
     const patch = compare(this.empenhoOriginal, documento);
-    console.log(this.empenhoOriginal)
     if (patch && patch.length > 0)
       return await lastValueFrom(this.service.editarEmpenho(patch, documento.id));
     else {
       return null;
     }
   }
-  public async ObterEntidade(id: number) {
+  public async obterEntidade(id: number) {
     return await lastValueFrom(this.entidadeService.obterPorID(id));
   }
-  public async ObterEmpenho(id: number) {
+  public async obterEmpenho(id: number) {
     return await lastValueFrom(this.service.obterEmpenho(id));
   }
   private desabilitarFormulario() {
@@ -111,7 +115,7 @@ export class FormularioEmpenhoService {
       unidade: this.obterControle('unidade').value?.id ?? 0,
       dataEmpenho: this.obterControle('data').value,
       saldo: 0,
-      valor: 0,
+      valor: this.obterControle('valor').value,
       itens: this.obterControle('itens').value
     }
   }

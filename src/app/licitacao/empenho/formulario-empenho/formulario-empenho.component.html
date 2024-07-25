@@ -40,4 +40,11 @@
             <mat-icon>{{possuiValor()}}</mat-icon>
         </button>
     </mat-form-field>
+
+    <!-- Valor -->
+    <mat-form-field floatLabel="always" class="field number" appearance="outline">
+        <mat-label>Valor do Empenho</mat-label>
+        <input matInput type="number" class="right-align" placeholder="0" formControlName="valor">
+        <span matTextPrefix>R$</span>
+    </mat-form-field>
 </form>

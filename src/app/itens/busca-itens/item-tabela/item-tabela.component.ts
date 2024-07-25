@@ -17,7 +17,7 @@ export class ItemTabelaComponent {
   @Input() control!: FormControl;
   @Input() paginator: boolean = true;
   @Input() totalItems: number = 0;
-  @Input() displayedColumns: string[] = ['codigo', 'nome', 'status', 'cesta', 'unidadePri', 'unidadeSec'];
+  @Input() displayedColumns: string[] = ['status', 'codigo', 'nome', 'cesta', 'unidadePri', 'unidadeSec'];
   @Input() isLoadingResults = false;
   @Input() isRateLimitReached = false;
 

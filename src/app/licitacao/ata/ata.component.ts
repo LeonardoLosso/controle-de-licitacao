@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -27,7 +26,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
   constructor(
     public form: FormularioAtaService,
-    private location: Location,
     private route: ActivatedRoute,
     private messageService: MensagemService,
     private dialog: MatDialog,
@@ -41,6 +39,13 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     this.route.queryParams.subscribe(params => {
       this.id = params['ata'];
+
+      const edital = this.form.obterControle<string>('edital');
+      if (this.id)
+        edital.disable();
+      else
+        edital.enable()
+
     });
   }
   ngAfterViewInit(): void {
@@ -192,17 +197,12 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     return await lastValueFrom(dialogRef.afterClosed());
   }
 
-  private trataDuplicado(item: ItemDeAta, duplicado: ItemDeAta) {
-    item.quantidade += duplicado.quantidade;
-    item.valorTotal = item.valorUnitario * item.quantidade;
-    this.form.excluirItem(duplicado);
-  }
   private itemDuplicado(item: ItemDeAta, index?: number): ItemDeAta | null {
 
     const lista = this.listaItens.value.filter(i => i.id === item.id && i.valorUnitario === item.valorUnitario);
     if (lista.length >= 1) {
 
-      if (!index && index !==0) return lista[0];
+      if (!index && index !== 0) return lista[0];
 
       if (this.listaItens.value[index] !== lista[0]) return lista[0];
     }
@@ -213,23 +213,10 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     const duplicado = this.itemDuplicado(item, index);
 
     if (duplicado) {
-      if (!(await this.confirmaDuplicado())) return false;
-
-      this.trataDuplicado(item, duplicado);
+      this.messageService.openSnackBar('Não é possivel inserir um item duplicado', 'alert');
+      return false;
     }
     return true;
-  }
-  private async confirmaDuplicado(): Promise<boolean> {
-    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
-      disableClose: true,
-      data: {
-        titulo: 'Item Duplicado',
-        mensagem: 'Deseja prosseguir mesmo asim?',
-        item: `\nCaso confirme o item será agrupado com o item já existente`
-      }
-    });
-
-    return await lastValueFrom(confirmacao.afterClosed());
   }
   excluirItem() {
     const item = this.selecionado.value;
@@ -253,7 +240,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     confirmacao.afterClosed().subscribe(result => {
       if (result === true) {
-        this.location.back();
+        this.router.navigate(['/licitacao/pesquisar']);
       }
     });
   }

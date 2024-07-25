@@ -18,7 +18,7 @@ export class BaixaTabelaComponent {
   @Input() totalizadores = true;
   @Input() displayedColumns: string[] = [
     'codigo', 'nome', 'unidade',
-    'qtdeEmpenhada', 'qtdeLicitada', 'qtdeAEmpenhar',
+    'qtdeLicitada', 'qtdeEmpenhada', 'qtdeAEmpenhar',
     'valorEmpenhado', 'valorLicitado', 'saldo', 'valorUnitario'
   ];
 

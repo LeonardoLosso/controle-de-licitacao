@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Location } from '@angular/common';
 import { lastValueFrom } from 'rxjs';
 
 import { FormularioBaixaService } from '../services/formulario-baixa.service';
@@ -28,7 +27,6 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
   constructor(
     private form: FormularioBaixaService,
     private dialog: MatDialog,
-    private location: Location,
     private route: ActivatedRoute,
     private mensagemService: MensagemService,
     private router: Router
@@ -96,7 +94,8 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
 
     confirmacao.afterClosed().subscribe(result => {
       if (result === true) {
-        this.location.back();
+        const queryParams = { ata: this.id };
+        this.router.navigate(['/licitacao'], { queryParams });
       }
     });
   }
@@ -169,14 +168,20 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       vigencia.setValue(result.vigencia);
       itens.setValue(result.itens);
 
-      empresa.setValue(await this.form.ObterEntidade(result.empresa as any));
-      orgao.setValue(await this.form.ObterEntidade(result.orgao as any));
+      if (result.empresa)
+        empresa.setValue(await this.form.obterEntidade(result.empresa as any));
+
+      if (result.orgao)
+        orgao.setValue(await this.form.obterEntidade(result.orgao as any));
 
       empenhos.setValue(await this.form.listarEmpenhos(result.id));
       if (empenhos.value) {
         for (var empenho of empenhos.value as EmpenhoSimplificado[]) {
-          empenho.orgao = await this.form.ObterEntidade(empenho.orgao as any);
-          empenho.unidade = await this.form.ObterEntidade(empenho.unidade as any);
+          if (empenho.orgao)
+            empenho.orgao = await this.form.obterEntidade(empenho.orgao as any);
+
+          if (empenho.unidade)
+            empenho.unidade = await this.form.obterEntidade(empenho.unidade as any);
         }
       }
     }

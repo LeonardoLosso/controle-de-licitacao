@@ -85,7 +85,7 @@ export class FormularioAtaService {
   public adicionarItem(item: ItemDeAta) {
     const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
     const novaLista = [...lista.value];
-    novaLista.unshift(item);
+    novaLista.push(item);
     lista.setValue(novaLista);
   }
 
