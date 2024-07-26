@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Reajuste } from 'src/app/core/types/documentos';
-
 @Component({
   selector: 'app-historico',
   templateUrl: './historico.component.html',

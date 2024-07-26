@@ -117,7 +117,7 @@ export abstract class CrudPesquisaBaseDirective<ObjetoSimplificado> extends Spin
     });
   }
 
-  private inativarCadastro(cadastro: ObjetoSimplificado) {
+  protected inativarCadastro(cadastro: ObjetoSimplificado) {
     this.mostrarSpinner();
     this.serviceInativar(cadastro)
       .subscribe({

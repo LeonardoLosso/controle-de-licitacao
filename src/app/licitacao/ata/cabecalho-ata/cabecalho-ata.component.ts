@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CabecalhoAtaComponent {
   @Input() status: number = 0;
   @Input() permissao: number = 302;
+  @Input() possuiEmpenho: boolean = false;
   
   @Output() acao = new EventEmitter();
   

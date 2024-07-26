@@ -19,7 +19,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class AtaComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
   private id: number = 0;
-
+  public possuiEmpenho = false;
   public status!: FormControl<number>;
   public listaItens!: FormControl<ItemDeAta[]>;
   public selecionado!: FormControl;
@@ -45,13 +45,18 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         edital.disable();
       else
         edital.enable()
-
     });
+
+    if (this.id) this.setBoolEmpenho();
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.inicializarFormulario(this.id);
     });
+  }
+
+  private async setBoolEmpenho() {
+    this.possuiEmpenho = await this.form.possuiEmpenho(this.id);
   }
 
   async salvar(preencher: boolean = true) {
@@ -65,8 +70,12 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     this.form.totalLicitado = this.listaItens.value?.map(t => t.valorTotal).reduce((acc, value) => acc + value, 0);
 
     try {
-      if (this.id && this.id != 0)
-        await this.metodoEditar();
+      if (this.id && this.id != 0) {
+        if (this.status.value === 2)
+          this.messageService.openSnackBar('Documento está inativo', 'alert');
+        else
+          await this.metodoEditar();
+      }
       else
         await this.metodoNovo();
     } catch {
@@ -123,7 +132,10 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     return this.messageService.openSnackBar('É preciso salvar o documento para criar baixa', 'alert');
   }
 
-  inativar() {
+  async inativar() {
+    if (this.form.idAta === 0)
+      return this.messageService.openSnackBar('Salve o documento antes de inativar', 'alert');
+
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -133,29 +145,25 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       }
     });
 
-    confirmacao.afterClosed().subscribe(result => {
-      if (result === true) {
-        if (this.form.idAta === 0)
-          return this.messageService.openSnackBar('Salve o documento antes de inativar', 'alert');
+    const confirma = await lastValueFrom(confirmacao.afterClosed());
+    if (confirma === true) {
+      this.mostrarSpinner();
 
-        this.mostrarSpinner();
-
-        this.form.inativar().subscribe({
-          next: () => {
-            if (this.status.value === 2) {
-              this.status.setValue(1);
-            } else {
-              this.status.setValue(2);
-            }
-            this.esconderSpinner();
-          }, error: () => this.esconderSpinner()
-        });
+      try {
+        if (await this.form.inativarBaixa()) {
+          await this.form.inativar();
+          await this.inicializarFormulario(this.id);
+        }
+      } finally {
+        this.esconderSpinner();
       }
-    });
-
+    }
   }
 
   async novoItem() {
+    if (this.status.value === 2) return this.messageService.openSnackBar('Documento está inativo', 'alert');
+
+    if (this.possuiEmpenho) return this.messageService.openSnackBar('Essa ata possui empenhos!', 'alert');
     const item = this.itemVazio();
 
     const result = await this.abreModalItem(item);
@@ -171,6 +179,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   }
 
   async editarItem() {
+    if (this.status.value === 2) return this.messageService.openSnackBar('Documento está inativo', 'alert');
+
     if (!this.selecionado.value) {
       return this.messageService.openSnackBar('Nenhum item selecionado', 'alert');
     }
@@ -219,6 +229,9 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     return true;
   }
   excluirItem() {
+    if (this.status.value === 2) return this.messageService.openSnackBar('Documento está inativo', 'alert');
+
+    if (this.possuiEmpenho) return this.messageService.openSnackBar('Essa ata possui empenhos!', 'alert');
     const item = this.selecionado.value;
 
     if (!item) {
@@ -368,7 +381,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     const vigencia = this.form.obterControle<Date>('vigencia');
     const itens = this.form.obterControle<ItemDeAta[]>('itens');
     const status = this.form.obterControle<number>('status');
-    
+
     const result = await this.form.obterAta(id);
 
     if (result) {

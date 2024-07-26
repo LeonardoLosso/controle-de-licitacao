@@ -40,9 +40,8 @@ export class DocumentosService {
     return this.http.patch<AtaLicitacao>(`${this.URL}/ata/${id}`, documento);
   }
 
-  public inativar(documento: AtaLicitacaoSimplificada | AtaLicitacao): Observable<AtaLicitacao> {
-    var id = documento.id;
-    var novoValor = documento.status === 1 ? '2' : '1';
+  public inativar(id: number, statusAtual: number): Observable<AtaLicitacao> {
+    var novoValor = statusAtual === 1 ? '2' : '1';
     var status = {
       op: "replace",
       path: "/status",
@@ -82,9 +81,8 @@ export class DocumentosService {
     return this.http.put<BaixaLicitacao>(`${this.URL}/baixa/atualizar`, id);
   }
 
-  public inativarBaixa(documento: BaixaLicitacao): Observable<BaixaLicitacao> {
-    var id = documento.id;
-    var novoValor = documento.status === 1 ? '2' : '1';
+  public inativarBaixa(id: number, statusAtual: number): Observable<BaixaLicitacao> {
+    var novoValor = statusAtual === 1 ? '2' : '1';
     var status = {
       op: "replace",
       path: "/status",
@@ -116,7 +114,7 @@ export class DocumentosService {
     const url = `${this.URL}/empenho/obter/${id}`;
     return this.http.get<Empenho>(url);
   }
-
+  
   public inativarEmpenho(documento: Empenho): Observable<Empenho> {
     var id = documento.id;
     var novoValor = documento.status === 1 ? '2' : '1';
@@ -127,8 +125,13 @@ export class DocumentosService {
     }
     return this.http.patch<Empenho>(`${this.URL}/empenho/status/${id}`, [status]);
   }
-
+  
   public editarEmpenho(documento: any, id: number): Observable<Empenho> {
     return this.http.patch<Empenho>(`${this.URL}/empenho/${id}`, documento);
+  }
+
+  public possuiEmpenho(id: number): Observable<boolean> {
+    const url = `${this.URL}/empenho/existe/${id}`;
+    return this.http.get<boolean>(url);
   }
 }

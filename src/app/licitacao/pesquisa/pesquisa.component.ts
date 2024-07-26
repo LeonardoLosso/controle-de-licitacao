@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
 import { FormularioPesquisaService } from '../services/formulario-pesquisa.service';
@@ -28,7 +28,7 @@ export class PesquisaComponent extends CrudPesquisaBaseDirective<AtaLicitacaoSim
   public criar(): void {
     this.router.navigate(['/licitacao']);
   };
-  
+
   protected override acaoEditar(id: number): void {
     const queryParams = { ata: id };
     this.router.navigate(['/licitacao'], { queryParams });
@@ -44,10 +44,23 @@ export class PesquisaComponent extends CrudPesquisaBaseDirective<AtaLicitacaoSim
   }
 
   protected override serviceInativar(cadastro: AtaLicitacaoSimplificada): Observable<any> {
-    return this.service.inativar(cadastro);
+    return this.service.inativar(cadastro.id, cadastro.status);
   }
+  protected override async inativarCadastro(cadastro: AtaLicitacaoSimplificada) {
+    this.mostrarSpinner();
 
-  protected override serviceListar(params: {key: string, value: any}[]): Observable<any> {
+    try {
+      if (await lastValueFrom(this.service.inativarBaixa(cadastro.id, cadastro.status))) {
+        await lastValueFrom(this.service.inativar(cadastro.id, cadastro.status));
+        this.loadData();
+        this.messageService.openSnackBar('Status atualizado com sucesso!', 'success');
+        this.selecionado.setValue(null);
+      }
+    } finally {
+      this.esconderSpinner();
+    }
+  }
+  protected override serviceListar(params: { key: string, value: any }[]): Observable<any> {
     return this.service.listar(this.pagina, params);
   }
 }

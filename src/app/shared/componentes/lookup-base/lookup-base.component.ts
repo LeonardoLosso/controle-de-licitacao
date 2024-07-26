@@ -29,7 +29,7 @@ export class LookupBaseComponent {
 
   public possuiValor(): string {
     const valor = this.control;
-    return valor.value?.id ? 'close' : 'search';
+    return valor.value? 'close' : 'search';
   }
 
   public acao() {

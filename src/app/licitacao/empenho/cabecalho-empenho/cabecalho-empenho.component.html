@@ -2,28 +2,34 @@
     <div class="botoes">
         <div class="btn-group">
             <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" [permissao]="406" (click)="salvar()" />
-            <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" [permissao]="402" (click)="adicionarItem()" />
-        </div>
-
-        <div class="btn-group">
-            <app-botoes 
-                variant="btn-cabecalho"
-                [icone]="verificaStatus()? 'block' : 'check'"
+            <app-botoes variant="btn-cabecalho" [icone]="verificaStatus()? 'block' : 'check'"
                 [texto]="verificaStatus()? 'Inativar Empenho' : 'Reativar Empenho'"
-                [color]="verificaStatus()? 'warn' : 'verde'" 
-                [permissao]="405"
-                (click)="inativarDocumento()" />
-
-            <app-botoes icone="delete" texto="Excluir Item" variant="btn-cabecalho" [permissao]="403" (click)="removerItem()" />
+                [color]="verificaStatus()? 'warn' : 'verde'" [permissao]="405" (click)="inativarDocumento()" />
+            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
         </div>
 
-        <div class="btn-group">
-            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()"/>
-            <app-botoes icone="edit" texto="Editar Item" variant="btn-cabecalho" (click)="editarItem()"/>
-        </div>
+        <ng-container *ngIf="label === 'Item'; else template">
+            <div class="btn-group">
+                <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" [permissao]="406"
+                    (click)="adicionarItem()" />
+                <app-botoes icone="delete" texto="Excluir Item" variant="btn-cabecalho" [permissao]="406"
+                    (click)="removerItem()" />
+                <app-botoes icone="edit" texto="Editar Item" variant="btn-cabecalho" (click)="editarItem()" />
+            </div>
+        </ng-container>
     </div>
 
     <div class="formulario">
         <ng-content></ng-content>
     </div>
 </section>
+
+<ng-template #template>
+    <div class="btn-group">
+        <app-botoes icone="add" texto="Adicionar Nota" variant="btn-cabecalho" [permissao]="702"
+            (click)="adicionarNotas()" />
+        <app-botoes icone="delete" texto="Excluir Nota" variant="btn-cabecalho" [permissao]="703"
+            (click)="removerNotas()" />
+        <app-botoes icone="edit" texto="Editar Nota" variant="btn-cabecalho" [permissao]="704" (click)="editarNotas()" />
+    </div>
+</ng-template>

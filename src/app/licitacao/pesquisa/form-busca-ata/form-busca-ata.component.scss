@@ -1,13 +1,11 @@
 .filters {
-    width: 100%;
-
-    background-color: #ececec;
+    margin-top: 22px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
-
-
+    align-items: center;
+    column-gap: 20px;
+    
     .field {
         max-width: 337px;
         width: 100%;

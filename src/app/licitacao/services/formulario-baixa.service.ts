@@ -43,24 +43,40 @@ export class FormularioBaixaService {
     this.formulario.reset();
   }
 
-  public async obterEntidade(id: number){
+  public async obterEntidade(id: number) {
     return await lastValueFrom(this.entidadeService.obterPorID(id));
   }
-  public async obterBaixaPorID(id: number){
+  public async obterBaixaPorID(id: number) {
     return await lastValueFrom(this.service.obterBaixaPorID(id));
   }
-  public async listarEmpenhos(id: number){
+  public async listarEmpenhos(id: number) {
     return await lastValueFrom(this.service.listarEmpenhos(id));
   }
-  public async novoEmpenho(){
+  public async novoEmpenho() {
     return await lastValueFrom(this.service.criarEmpenho(this.retornaBaixa()));
   }
-  public async excluirEmpenho(id: number){
+  public async excluirEmpenho(id: number) {
     return await lastValueFrom(this.service.excluirEmpenho(id));
   }
-  
-  public async inativar(){
-    return await lastValueFrom(this.service.inativarBaixa(this.retornaBaixa()));
+
+  public async inativar() {
+    if (!this.idAta)
+      return null;
+    const status = this.obterControle('status').value;
+    if(!status)
+      return null
+    
+    return await lastValueFrom(this.service.inativarBaixa(this.idAta, status));
+  }
+
+  public async inativarAta() {
+    if (!this.idAta)
+      return null;
+    const status = this.obterControle('status').value;
+    if(!status)
+      return null
+
+    return await lastValueFrom(this.service.inativar(this.idAta, status));
   }
 
   private desabilitarFormulario() {

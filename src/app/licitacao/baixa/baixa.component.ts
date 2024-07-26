@@ -83,21 +83,8 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
   public importarEmpenho() { }//importação + redirecionamento com novo id
 
   public cancelar() {
-    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
-      disableClose: true,
-      data: {
-        titulo: 'Cancelar',
-        mensagem: 'Deseja cancelar?',
-        item: `\nAs alterações NÃO serão salvas`
-      }
-    });
-
-    confirmacao.afterClosed().subscribe(result => {
-      if (result === true) {
-        const queryParams = { ata: this.id };
-        this.router.navigate(['/licitacao'], { queryParams });
-      }
-    });
+    const queryParams = { ata: this.id };
+    this.router.navigate(['/licitacao'], { queryParams });
   }
 
   public async inativar() {
@@ -107,12 +94,10 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
 
     try {
       if (await this.form.inativar()) {
-        if (this.status.value === 2) {
-          this.status.setValue(1);
-        } else {
-          this.status.setValue(2);
-        }
         this.mensagemService.openSnackBar("Baixa inativada com sucesso!", 'success');
+
+        if (await this.form.inativarAta())
+          await this.inicializarFormulario(this.id)
       }
     } finally {
       this.esconderSpinner();

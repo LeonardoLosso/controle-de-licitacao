@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ModalItemDocumentoBaseDirective } from 'src/app/core/diretivas/modal-item-documento-base.directive';
 import { ItemDeAta, ItemSimplificado } from 'src/app/core/types/item';
 import { LookupItensComponent } from 'src/app/itens/lookup-itens/lookup-itens.component';
+import { DocumentosService } from '../../services/documentos.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-modal-item-ata',
@@ -19,7 +21,8 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
   constructor(
     dialogRef: MatDialogRef<ModalItemAtaComponent>,
     @Inject(MAT_DIALOG_DATA) data: ItemDeAta,
-    dialog: MatDialog
+    dialog: MatDialog,
+    private service: DocumentosService
 
   ) { super(dialogRef, data, dialog) }
 
@@ -33,15 +36,15 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
     });
     this.obterControle('unidade').disable();
 
-    this.possuiEmpenho = true;
-
-    ///FAZER A REQUISIÇÃO PARA CONFIRMAR
-
+    if(this.data?.ataID)
+      this.setBoolEmpenho();
+  }
+  private async setBoolEmpenho(){
+    this.possuiEmpenho = await lastValueFrom(this.service.possuiEmpenho(this.data.ataID));
     if (this.possuiEmpenho) {
       this.obterControle('quantidade').disable();
     }
   }
-
   protected override retornaItem(): ItemDeAta {
     return {
       id: this.cadastro.id,

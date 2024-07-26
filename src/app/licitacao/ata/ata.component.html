@@ -9,7 +9,8 @@
             (novo)="novoItem()"
             (remover)="excluirItem()"
             [status]="status.value"
-            [permissao]="form.idAta && form.idAta !==0 ? 304 : 302">
+            [permissao]="form.idAta && form.idAta !==0 ? 304 : 302"
+            [possuiEmpenho]="possuiEmpenho">
             
             <app-formulario-ata/>
         </app-cabecalho-ata>

@@ -2,7 +2,7 @@
     <!-- unidade dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>unidade</mat-label>
+            <mat-label>Unidade</mat-label>
             <input type="text" placeholder="Selecione" aria-label="unidade" matInput
                 [formControl]="formService.obterControle('unidade')" [matAutocomplete]="unidade">
             <mat-autocomplete [displayWith]="displayFn" #unidade="matAutocomplete">
@@ -16,7 +16,7 @@
     <!-- tipo do documento dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>tipo documento</mat-label>
+            <mat-label>Tipo Documento</mat-label>
             <input type="text" placeholder="Selecione" aria-label="tipo documento" matInput
                 [formControl]="formService.obterControle('tipo')" [matAutocomplete]="tipo">
             <mat-autocomplete [displayWith]="displayFn" #tipo="matAutocomplete">
@@ -30,7 +30,7 @@
     <!-- status dropdown -->
     <ng-container>
         <mat-form-field class="field" appearance="outline">
-            <mat-label>status</mat-label>
+            <mat-label>Status</mat-label>
             <input type="text" placeholder="Selecione" aria-label="status" matInput
                 [formControl]="formService.obterControle('status')" [matAutocomplete]="stts">
             <mat-autocomplete [displayWith]="displayFn" #stts="matAutocomplete">
@@ -43,7 +43,7 @@
 
     <!-- data inicial -->
     <mat-form-field appearance="outline">
-        <mat-label>Data inicial</mat-label>
+        <mat-label>Data Inicial</mat-label>
         <input matInput [matDatepicker]="dataInicial" [formControl]="formService.obterControle('dataInicial')">
         <mat-datepicker-toggle matIconSuffix [for]="dataInicial"></mat-datepicker-toggle>
         <mat-datepicker #dataInicial></mat-datepicker>
@@ -51,7 +51,7 @@
 
     <!-- data final -->
     <mat-form-field appearance="outline">
-        <mat-label>Data final</mat-label>
+        <mat-label>Data Final</mat-label>
         <input matInput [matDatepicker]="dataFinal" [formControl]="formService.obterControle('dataFinal')">
         <mat-datepicker-toggle matIconSuffix [for]="dataFinal"></mat-datepicker-toggle>
         <mat-datepicker #dataFinal></mat-datepicker>
@@ -59,7 +59,7 @@
 
     <!-- data inicial -->
     <mat-form-field appearance="outline">
-        <mat-label>Data ata inicial</mat-label>
+        <mat-label>Data Ata Inicial</mat-label>
         <input matInput [matDatepicker]="dataAtaInicial" [formControl]="formService.obterControle('dataAtaInicial')">
         <mat-datepicker-toggle matIconSuffix [for]="dataAtaInicial"></mat-datepicker-toggle>
         <mat-datepicker #dataAtaInicial></mat-datepicker>
@@ -67,7 +67,7 @@
 
     <!-- data final -->
     <mat-form-field appearance="outline">
-        <mat-label>Data ata final</mat-label>
+        <mat-label>Data Ata Final</mat-label>
         <input matInput [matDatepicker]="dataAtaFinal" [formControl]="formService.obterControle('dataAtaFinal')">
         <mat-datepicker-toggle matIconSuffix [for]="dataAtaFinal"></mat-datepicker-toggle>
         <mat-datepicker #dataAtaFinal></mat-datepicker>

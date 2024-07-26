@@ -123,8 +123,23 @@ export class FormularioAtaService {
       return null;
   }
 
-  public inativar(): Observable<AtaLicitacao> {
-    return this.service.inativar(this.retornaAta());
+  public async inativar() {
+    if (!this.idAta)
+      return null;
+    const status = this.obterControle('status').value;
+    if (!status)
+      return null
+
+    return lastValueFrom(this.service.inativar(this.idAta, status));
+  }
+  public async inativarBaixa() {
+    if (!this.idAta)
+      return null;
+    const status = this.obterControle('status').value;
+    if (!status)
+      return null
+
+    return lastValueFrom(this.service.inativarBaixa(this.idAta, status));
   }
 
   public excluirItem(item: ItemDeAta) {
@@ -147,12 +162,16 @@ export class FormularioAtaService {
 
   public async buscaHistorico() {
     const result = await lastValueFrom(this.service.obterHistorico(this.idAta));
-    if(result)
+    if (result)
       this.reajustes = result;
   }
 
   public async obterEntidade(id: number) {
     return await lastValueFrom(this.entidadeService.obterPorID(id));
+  }
+
+  public async possuiEmpenho(id: number) {
+    return await lastValueFrom(this.service.possuiEmpenho(id));
   }
 
   public setUnidadePorID(id: number) {
@@ -191,9 +210,9 @@ export class FormularioAtaService {
   }
 
   private habilitarFormulario() {
-    if(!this.idAta)
+    if (!this.idAta)
       this.obterControle('dataLicitacao').enable();
-    
+
     this.obterControle('dataAta').enable();
     this.obterControle('vigencia').enable();
     this.obterControle('empresa').enable();

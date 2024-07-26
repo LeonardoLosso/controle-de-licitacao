@@ -1,19 +1,20 @@
 <ng-template #loadingSpinnerContainer></ng-template>
 <section class="busca-docmentos">
     <app-container>
-        <app-cabecalho-empenho
-            (cancelar)="cancelar()"
-            (acao)="salvar()"
-            (adicionar)="adicionar()"
-            (inativar)="inativar()"
-            (excluir)="excluir()"
-            (editar)="editar()"
-            [status]="status.value">
+        <app-cabecalho-empenho 
+            (cancelar)="cancelar()" (acao)="salvar()" (inativar)="inativar()"
+            (adicionar)="adicionar()"(excluir)="excluir()"(editar)="editar()"
+            (adicionarNota)="adicionarNota()" (excluirNota)="excluirNota()" (editarNota)="editarNota()"
+            [status]="status.value"
+            [label]="label">
             
             <app-formulario-empenho/>
         </app-cabecalho-empenho>
 
-        <mat-tab-group class="tab-group">
+        <mat-tab-group 
+            class="tab-group"
+            (selectedIndexChange)="onTabChange($event)"
+        >
             <mat-tab label="Itens">
                 
                 <app-empenho-tabela-itens 

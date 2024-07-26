@@ -21,12 +21,14 @@ import { ModalItemEmpenhoComponent } from './modal-item-empenho/modal-item-empen
 export class EmpenhoComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
 
   private id!: number;
+  private aba!: FormControl;
 
   public status!: FormControl;
   public selecionado!: FormControl;
-  public itemSelecionado!: FormControl;
+  public documentoSelecionado!: FormControl;
   public listaItens!: FormControl<ItemDeEmpenho[]>;
   public listaDocumentos!: FormControl;
+  public label: 'Item' | 'Nota' = 'Item'
 
 
   constructor(
@@ -45,6 +47,10 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     setTimeout(() => {
       this.inicializaDados();
     })
+  }
+  onTabChange(index: number) {
+    this.aba.setValue(index);
+    this.label = this.aba.value === 0? 'Item' : 'Nota'
   }
   //-------------------[Botões]-------------------
   public cancelar() {
@@ -145,6 +151,16 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     this.form.excluirItem(item);
   }
 
+  public adicionarNota(){
+
+  }
+
+  public excluirNota(){
+
+  }
+  public editarNota(){
+    
+  }
   //----------------------------------------------
   private async confirmarInativacao() {
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
@@ -152,7 +168,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       data: {
         titulo: 'Inativar',
         mensagem: 'Deseja inativar empenho?',
-        item: `\nAs alterações NÃO salvas serão descartadas`
+        item: `\nOs valores e quantidades não entregues serão recalculados`
       }
     });
 
@@ -164,7 +180,9 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     this.listaItens = this.form.obterControle<ItemDeEmpenho[]>('itens');
     this.listaDocumentos = this.form.obterControle<Notas[]>('documentos');
     this.selecionado = this.form.obterControle<Notas>('selecionadoGrid');
-    this.itemSelecionado = this.form.obterControle<ItemDeEmpenho>('itemSelecionadoGrid');
+    this.documentoSelecionado = this.form.obterControle<ItemDeEmpenho>('documentoSelecionado');
+    this.aba = this.form.obterControle<ItemDeEmpenho>('abaSelecionada');
+
   }
 
   private async inicializaDados() {
