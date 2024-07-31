@@ -1,0 +1,111 @@
+<form #form="ngForm" class="dialog">
+    <h2>{{titulo}}</h2>
+    <div mat-dialog-content>
+        <h3>Cabeçalho do Documento</h3>
+        <div class="campo dados">
+            <!-- ID -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Código</mat-label>
+                <input matInput 
+                    name="id" 
+                    disabled 
+                    [(ngModel)]="cadastro.id" 
+                    #id="ngModel">
+            </mat-form-field>
+            
+            <!-- Numero da nota -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nº Nota</mat-label>
+                <input matInput 
+                    name="numNota" 
+                    [(ngModel)]="cadastro.numNota" 
+                    #numNota="ngModel">
+            </mat-form-field>
+            
+            <!-- Empenho -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nº Empenho</mat-label>
+                <input 
+                    maxlength="50"
+                    matInput 
+                    name="empenhoID" 
+                    disabled 
+                    #empenhoID="ngModel" 
+                    [(ngModel)]="cadastro.empenhoID">
+            </mat-form-field>
+
+            <!-- Edital -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Edital</mat-label>
+                <input
+                    placeholder="Selecione"
+                    disabled 
+                    matInput
+                    [(ngModel)]="cadastro.edital"
+                    name="edital"
+                    #edital="ngModel"
+                >
+            </mat-form-field>
+
+            <!-- Lookup Órgão -->
+            <app-lookup-base
+                class="field"
+                label="Órgão"
+                [control]="unidadeControl"
+                [apenasLeitura]="true"/>
+
+            <!-- Data de Emissão-->
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Data de Emissão</mat-label>
+                <input 
+                    matInput 
+                    [matDatepicker]="dataLicitacao" 
+                    [(ngModel)]="cadastro.dataEmissao"
+                    name="dataEmissao"
+                    #dataEmissao="ngModel">
+                <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
+                <mat-datepicker #dataLicitacao></mat-datepicker>
+            </mat-form-field>
+
+            <!-- Data da Entrega-->
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Data da Entrega</mat-label>
+                <input 
+                    matInput 
+                    [matDatepicker]="data" 
+                    [(ngModel)]="cadastro.dataEntrega"
+                    name="dataEntrega"
+                    #dataEntrega="ngModel">
+                <mat-datepicker-toggle matIconSuffix [for]="data"></mat-datepicker-toggle>
+                <mat-datepicker #data></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="tabela">
+            <span class="botoes">
+                <app-botoes icone="delete" texto="Remover" color="warn" variant="btn-cabecalho" (click)="removerItem()" />
+                <app-botoes icone="add" texto="Adicionar" variant="btn-cabecalho" (click)="addItem()" />
+            </span>
+            <app-item-nota-tabela
+                [control]="selecionado"
+                [listaItens]="listaItens"
+                (abrirDialog)="editarItem()"/>
+        </div>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(form)">
+            <mat-icon matPrefix>undo</mat-icon>
+            Cancelar
+        </button>
+        <button 
+            mat-flat-button 
+            color="primary" 
+            (click)="submeter()"
+            [appHasPermission]="permissao"
+            (hasPermission)="onHasPermission($event)"
+            [disabled]="botaoDesabilitado">
+            <mat-icon matPrefix>save</mat-icon>
+            Salvar
+        </button>
+    </div>
+    <ng-template #loadingSpinnerContainer></ng-template>
+</form>

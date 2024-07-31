@@ -11,7 +11,8 @@
                 [control]="obterControle('item')"
                 [data]="this.data"
                 [tipoDaLookup]="lookupItem"
-                (result)="lookupDeItem($event)"/>
+                (result)="lookupDeItem($event)"
+                [apenasLeitura]="apenasLeitura"/>
 
             <!-- unidade -->
             <mat-form-field class="input" appearance="outline">
@@ -21,7 +22,7 @@
 
             <!-- Quantidade -->
             <mat-form-field class="input" appearance="outline">
-                <mat-label>Quantidade do Empenho</mat-label>
+                <mat-label>Quantidade</mat-label>
                 <input matInput type="number" class="right-align" formControlName="quantidade">
             </mat-form-field>
 

@@ -23,10 +23,7 @@ export class ContainerCestaComponent implements OnInit {
     public form: FormularioBuscaService,
     private messageService: MensagemService,
     protected dialog: MatDialog
-  ) {
-
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.selecionado = this.form.obterControle('selecionadoGrid');

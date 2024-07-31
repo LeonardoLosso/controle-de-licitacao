@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { Entidade, EntidadeSimplificada } from 'src/app/core/types/entidade';
-import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { EnumTipoCadastro, EnumUF } from 'src/app/core/types/enum';
 import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive';
 import { EntidadesService } from '../services/entidades.service';

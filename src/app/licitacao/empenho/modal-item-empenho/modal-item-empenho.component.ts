@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import { ModalItemDocumentoBaseDirective } from 'src/app/core/diretivas/modal-item-documento-base.directive';
 import { ItemDeEmpenho, ItemSimplificado } from 'src/app/core/types/item';
 import { LookupItemEmpenhoComponent } from './lookup-item-empenho/lookup-item-empenho.component';
@@ -12,7 +13,7 @@ import { LookupItemEmpenhoComponent } from './lookup-item-empenho/lookup-item-em
 })
 export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<ItemDeEmpenho> {
 
- public lookupItem = LookupItemEmpenhoComponent;
+  public lookupItem = LookupItemEmpenhoComponent;
 
   constructor(
     dialogRef: MatDialogRef<ModalItemEmpenhoComponent>,
@@ -63,7 +64,7 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
       const item = this.obterControle('item');
       const unidade = this.obterControle('unidade');
       const valorUnitario = this.obterControle('valorUnitario');
-      
+
       this.cadastro.id = result.id;
       this.cadastro.nome = result.nome;
       this.cadastro.itemDeBaixa = result.itemDeBaixa;

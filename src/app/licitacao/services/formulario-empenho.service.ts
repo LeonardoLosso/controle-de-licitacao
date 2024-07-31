@@ -20,6 +20,7 @@ export class FormularioEmpenhoService {
   constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
       idEmpenho: new FormControl(0),
+      numEmpenho: new FormControl(''),
       edital: new FormControl(null),
       status: new FormControl(0),
       selecionadoGrid: new FormControl(null),
@@ -33,6 +34,11 @@ export class FormularioEmpenhoService {
       valor: new FormControl(0)
     });
     this.desabilitarFormulario();
+
+    const status = this.obterControle('status');
+    status.valueChanges.subscribe(() => {
+      this.desabilitarFormulario();
+    })
   }
 
   public limpar() {
@@ -59,7 +65,7 @@ export class FormularioEmpenhoService {
   public editarItem(item: ItemDeEmpenho, index: number) {
 
     if (index < 0) return;
-    
+
     const itemOriginal = this.obterControle('itens').value[index] as ItemDeEmpenho;
 
     itemOriginal.id = item.id;
@@ -73,7 +79,7 @@ export class FormularioEmpenhoService {
     itemOriginal.valorEntregue = item.valorEntregue;
     itemOriginal.valorUnitario = item.valorUnitario;
     itemOriginal.total = item.total;
-    
+
     itemOriginal.itemDeBaixa = item.itemDeBaixa;
   }
   public excluirItem(item: ItemDeEmpenho) {
@@ -87,7 +93,7 @@ export class FormularioEmpenhoService {
   }
   public async editar() {
     const documento = this.retornaEmpenho();
-    
+
     const patch = compare(this.empenhoOriginal, documento);
     if (patch && patch.length > 0)
       return await lastValueFrom(this.service.editarEmpenho(patch, documento.id));
@@ -105,10 +111,27 @@ export class FormularioEmpenhoService {
     this.obterControle('idEmpenho').disable();
     this.obterControle('edital').disable();
     this.obterControle('orgao').disable();
+
+
+    const data = this.obterControle('data');
+    const unidade = this.obterControle('unidade');
+    const valor = this.obterControle('valor');
+
+    data.enable();
+    unidade.enable();
+    valor.enable();
+
+    const status = this.obterControle('status').value ?? 1;
+    if (status === 2) {
+      data.disable();
+      unidade.disable();
+      valor.disable();
+    }
   }
   private retornaEmpenho(): Empenho {
     return {
       id: this.obterControle('idEmpenho').value,
+      numEmpenho: this.obterControle('numEmpenho').value,
       baixaID: this.idAta,
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value ?? 1,

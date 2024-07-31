@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CrudBaseService } from 'src/app/core/services/crud-base.service';
 import { Listagem, MudancasParaPatch } from 'src/app/core/types/auxiliares';
-import { Item, ItemDeBaixa, ItemSimplificado } from 'src/app/core/types/item';
+import { Item, ItemDeBaixa, ItemDeEmpenho, ItemSimplificado } from 'src/app/core/types/item';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +61,10 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
         }
       });
     }
-    return this.http.get<ItemDeBaixa[]>(`${this.URL}/baixa/itens/${id}`,{ params });
+    return this.http.get<ItemDeBaixa[]>(`${this.URL}/baixa/itens/${id}`, { params });
+  }
+
+  public listarItensEmpenho(id: number): Observable<ItemDeEmpenho[]> {
+    return this.http.get<ItemDeEmpenho[]>(`${this.URL}/empenho/itens/${id}`);
   }
 }

@@ -13,7 +13,7 @@
     </mat-form-field>
     
     <!-- Lookup Órgão -->
-     <app-lookup-base
+    <app-lookup-base
         class="field"
         label="Órgão"
         [control]="formService.obterControle('orgao')"
@@ -33,7 +33,8 @@
         label="Unidade"
         [control]="formService.obterControle('unidade')"
         [data]="'orgao'"
-        [tipoDaLookup]="lookupDeEntidades"/>
+        [tipoDaLookup]="lookupDeEntidades"
+        [apenasLeitura]="formService.obterControle('status').value === 2"/>
 
     <!-- Valor -->
     <mat-form-field floatLabel="always" class="field number" appearance="outline">

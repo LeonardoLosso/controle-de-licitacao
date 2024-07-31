@@ -26,10 +26,10 @@
 
 <ng-template #template>
     <div class="btn-group">
-        <app-botoes icone="add" texto="Adicionar Nota" variant="btn-cabecalho" [permissao]="702"
+        <app-botoes icone="add" texto="Adicionar Nota" variant="btn-cabecalho" [permissao]="status !==2? 502 : 15"
             (click)="adicionarNotas()" />
-        <app-botoes icone="delete" texto="Excluir Nota" variant="btn-cabecalho" [permissao]="703"
+        <app-botoes icone="delete" texto="Excluir Nota" variant="btn-cabecalho" [permissao]="status !==2? 504 : 15"
             (click)="removerNotas()" />
-        <app-botoes icone="edit" texto="Editar Nota" variant="btn-cabecalho" [permissao]="704" (click)="editarNotas()" />
+        <app-botoes icone="edit" texto="Editar Nota" variant="btn-cabecalho" [permissao]="status !==2? 503 : 15" (click)="editarNotas()" />
     </div>
 </ng-template>

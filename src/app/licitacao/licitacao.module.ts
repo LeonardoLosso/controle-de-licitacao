@@ -26,6 +26,10 @@ import { EmpenhoTabelaItensComponent } from './empenho/empenho-tabela-itens/empe
 import { EmpenhoTabelaNotasComponent } from './empenho/empenho-tabela-notas/empenho-tabela-notas.component';
 import { ModalItemEmpenhoComponent } from './empenho/modal-item-empenho/modal-item-empenho.component';
 import { LookupItemEmpenhoComponent } from './empenho/modal-item-empenho/lookup-item-empenho/lookup-item-empenho.component';
+import { ModalNotaComponent } from './notas/modal-nota/modal-nota.component';
+import { ItemNotaTabelaComponent } from './notas/item-nota-tabela/item-nota-tabela.component';
+import { ModalItemNotaComponent } from './notas/modal-item-nota/modal-item-nota.component';
+import { LookupItemNotaComponent } from './notas/lookup-item-nota/lookup-item-nota.component';
 
 
 
@@ -52,6 +56,10 @@ import { LookupItemEmpenhoComponent } from './empenho/modal-item-empenho/lookup-
     EmpenhoTabelaNotasComponent,
     ModalItemEmpenhoComponent,
     LookupItemEmpenhoComponent,
+    ModalNotaComponent,
+    ItemNotaTabelaComponent,
+    ModalItemNotaComponent,
+    LookupItemNotaComponent,
   ],
   imports: [
     CommonModule,

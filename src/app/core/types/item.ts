@@ -74,5 +74,15 @@ export interface ItemDeEmpenho {
     valorUnitario: number,
     itemDeBaixa: boolean,
     total: number
+}
 
+export interface ItemDeNota {
+    id: number,
+    nome: string,
+    notaID: number,
+    empenhoID: number,
+    unidade: string,
+    quantidade: number,
+    valorUnitario: number,
+    valorTotal: number
 }

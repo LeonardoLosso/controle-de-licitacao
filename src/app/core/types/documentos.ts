@@ -1,5 +1,5 @@
 import { Entidade } from "./entidade"
-import { ItemDeAta, ItemDeBaixa, ItemDeEmpenho, ItemDeReajuste } from "./item"
+import { ItemDeAta, ItemDeBaixa, ItemDeEmpenho, ItemDeNota, ItemDeReajuste } from "./item"
 
 export interface AtaLicitacao {
     id: number,
@@ -48,6 +48,7 @@ export interface BaixaLicitacao {
 
 export interface Empenho {
     id: number,
+    numEmpenho: string,
     baixaID: number,
     edital: string,
     unidade: Entidade,
@@ -61,6 +62,7 @@ export interface Empenho {
 
 export interface EmpenhoSimplificado {
     id: number,
+    numEmpenho: string,
     baixaID: number,
     edital: string,
     unidade: Entidade,
@@ -71,6 +73,26 @@ export interface EmpenhoSimplificado {
     valor: number
 }
 
-export interface Notas {
+export interface Nota {
+    id: number,
+    numNota: string,
+    empenhoID: number,
+    numEmpenho: string,
+    baixaID: number,
+    edital: string,
+    unidade: Entidade,
+    dataEmissao: Date,
+    dataEntrega: Date,
+    itens: ItemDeNota[]
+}
 
+export interface NotaSimplificada {
+    id: number,
+    numNota: string,
+    empenhoID: number,
+    numEmpenho: string,
+    unidade: Entidade,
+    dataEmissao: Date,
+    dataEntrega: Date,
+    valorEntregue: number
 }

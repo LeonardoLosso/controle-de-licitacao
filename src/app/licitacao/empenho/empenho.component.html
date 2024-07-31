@@ -12,6 +12,7 @@
         </app-cabecalho-empenho>
 
         <mat-tab-group 
+            [selectedIndex]="aba.value"
             class="tab-group"
             (selectedIndexChange)="onTabChange($event)"
         >
@@ -25,7 +26,10 @@
             </mat-tab>
             
             <mat-tab label="Notas">
-                <app-empenho-tabela-notas/>
+                <app-empenho-tabela-notas
+                    [listaDocumentos]="listaDocumentos.value"
+                    [control]="documentoSelecionado"
+                    (abrirDialog)="editarNota()"/>
             </mat-tab>
         </mat-tab-group>
     </app-container>
