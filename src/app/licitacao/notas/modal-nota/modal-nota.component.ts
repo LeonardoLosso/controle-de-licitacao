@@ -3,21 +3,22 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { FormControl } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
 
-import { Nota } from 'src/app/core/types/documentos';
+import { Nota, NotaSimplificada } from 'src/app/core/types/documentos';
 import { NotasService } from '../../services/notas.service';
-import { ModalBaseDirective } from 'src/app/core/diretivas/modal-base.directive';
 import { ItemDeNota } from 'src/app/core/types/item';
 import { LookupItemNotaComponent } from '../lookup-item-nota/lookup-item-nota.component';
+import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive';
+import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
+import { compare } from 'fast-json-patch';
 
 @Component({
   selector: 'app-modal-nota',
   templateUrl: './modal-nota.component.html',
   styleUrls: ['./modal-nota.component.scss']
 })
-export class ModalNotaComponent extends ModalBaseDirective<Nota> {
+export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificada> {
 
   public override permissao: number = 502;
-  public botaoDesabilitado = false;
 
   public unidadeControl = new FormControl();
   public listaItens!: ItemDeNota[];
@@ -28,17 +29,20 @@ export class ModalNotaComponent extends ModalBaseDirective<Nota> {
     dialogRef: MatDialogRef<ModalNotaComponent>,
     @Inject(MAT_DIALOG_DATA) data: Nota,
     dialog: MatDialog,
-    private service: NotasService
+    service: NotasService
   ) {
-    super(dialogRef, data, dialog);
+    super(dialogRef, data, dialog, service);
 
-    if (this.cadastro.unidade)
+    if (this.cadastro.unidade){
       this.unidadeControl.setValue(`${this.cadastro.unidade.id} - ${this.cadastro.unidade.fantasia}`);
+      this.cadastro.unidade = this.cadastro.unidade.id as any;
+    }
 
     this.listaItens = this.cadastro.itens;
     this.listaControl.setValue(this.listaItens);
+    
 
-    if(this.edicao){
+    if (this.edicao) {
       this.titulo += ' ' + this.data.numNota;
     }
   }
@@ -65,25 +69,15 @@ export class ModalNotaComponent extends ModalBaseDirective<Nota> {
     }
   }
 
-  public editarItem() {
-
-  }
-
   public removerItem() {
 
   }
-  protected override acaoEditar(): void {
+  protected override editar(): MudancasParaPatch[] {
+    this.cadastro.itens = this.listaControl.value as ItemDeNota[];
 
-  }
+    const patch = compare( this.data, this.cadastro)
 
-  protected override acaoNovo(): void {
-
-  }
-
-  protected onHasPermission(hasPermission: boolean) {
-    setTimeout(() => {
-      this.botaoDesabilitado = !hasPermission;
-    }, 0);
+    return patch;
   }
 
   private async abreModalItem(item: ItemDeNota): Promise<ItemDeNota> {

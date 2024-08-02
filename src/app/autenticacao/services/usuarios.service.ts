@@ -33,9 +33,9 @@ export class UsuariosService extends CrudBaseService<Usuario, UsuarioSimplificad
   }
 
   public inativar(user: UsuarioSimplificado): Observable<Usuario> {
-    var id = user.id;
-        var novoValor = user.status === 1 ? '2' : '1';
-        var status = {
+    const id = user.id;
+        const novoValor = user.status === 1 ? '2' : '1';
+        const status = {
             op: "replace",
             path: "/status",
             value: novoValor

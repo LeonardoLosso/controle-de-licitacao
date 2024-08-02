@@ -29,7 +29,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   public listaItens!: FormControl<ItemDeEmpenho[]>;
   public listaDocumentos!: FormControl<NotaSimplificada[]>;
   public label: 'Item' | 'Nota' = 'Item'
-
+  public possuiPermissao = true;
 
   constructor(
     private form: FormularioEmpenhoService,
@@ -162,17 +162,54 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       dataEntrega: new Date(),
       itens: []
     }
-    var result = await this.abreModalNota(novaNota);
-    if(result){
-      debugger
+    const result = await this.abreModalNota(novaNota);
+    if (result) {
+      this.mensagemService.openSnackBar("Nota adicionada com sucesso!", 'success');
+      this.inicializarFormulario(this.id);
     }
   }
 
-  public excluirNota() {
+  public async excluirNota() {
+    const nota = this.documentoSelecionado.value;
 
+    if (!nota) return this.mensagemService.openSnackBar("Nenhuma nota selecionada", 'alert');
+
+    if (!(await this.confirmarExclusao(nota))) return;
+
+    this.mostrarSpinner()
+    try {
+      const result = await this.form.excluirNota(nota.id);
+      if (result) {
+        this.mensagemService.openSnackBar("Nota excluida com sucesso!", 'success');
+        this.inicializaDados();
+      }
+
+    } finally {
+      this.esconderSpinner();
+    }
   }
-  public editarNota() {
 
+  public async editarNota() {
+    const select = this.documentoSelecionado.value;
+
+    if (!select) return this.mensagemService.openSnackBar("Nenhuma nota selecionada", 'alert');
+
+    this.mostrarSpinner()
+    try {
+      const nota = await this.form.obterNotaPorID(select.id);
+
+      if (nota) {
+        nota.unidade = this.form.obterControle('unidade').value;
+        const result = await this.abreModalNota(nota);
+        if (result) {
+          this.mensagemService.openSnackBar("Nota editada com sucesso!", 'success');
+          this.inicializarFormulario(this.id);
+        }
+      }
+
+    } finally {
+      this.esconderSpinner();
+    }
   }
   //----------------------------------------------
   private async confirmarInativacao() {
@@ -182,6 +219,18 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
         titulo: 'Inativar',
         mensagem: 'Deseja inativar empenho?',
         item: `\nOs valores e quantidades não entregues serão recalculados`
+      }
+    });
+
+    return await lastValueFrom(confirmacao.afterClosed());
+  }
+  private async confirmarExclusao(nota: NotaSimplificada) {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Excluir',
+        mensagem: 'Deseja excluir nota?',
+        item: `${nota.numNota} - ${nota.numEmpenho}`
       }
     });
 
@@ -247,6 +296,13 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       this.mostrarSpinner();
       try {
         await this.preencher(id);
+        const documentos = this.form.obterControle<Nota[]>('documentos');
+        documentos.setValue(await this.form.obterNotas(id));
+      }
+      catch (ex) {
+        if (ex instanceof (Error))
+          if (ex.cause === 401 && ex.message.includes('nota'))
+            this.possuiPermissao = false;
       }
       finally {
         this.esconderSpinner();
@@ -263,8 +319,6 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     const unidade = this.form.obterControle('unidade');
     const orgao = this.form.obterControle('orgao');
     const itens = this.form.obterControle<ItemDeEmpenho[]>('itens');
-    const documentos = this.form.obterControle<Nota[]>('documentos');
-
     const result = await this.form.obterEmpenho(id);
 
     if (result) {

@@ -33,9 +33,9 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
   }
 
   public inativar(item: ItemSimplificado): Observable<Item> {
-    var id = item.id;
-    var novoValor = item.status === 1 ? '2' : '1';
-    var status = {
+    const id = item.id;
+    const novoValor = item.status === 1 ? '2' : '1';
+    const status = {
       op: "replace",
       path: "/status",
       value: novoValor

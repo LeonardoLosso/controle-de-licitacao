@@ -160,15 +160,6 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
         orgao.setValue(await this.form.obterEntidade(result.orgao as any));
 
       empenhos.setValue(await this.form.listarEmpenhos(result.id));
-      if (empenhos.value) {
-        for (var empenho of empenhos.value as EmpenhoSimplificado[]) {
-          if (empenho.orgao)
-            empenho.orgao = await this.form.obterEntidade(empenho.orgao as any);
-
-          if (empenho.unidade)
-            empenho.unidade = await this.form.obterEntidade(empenho.unidade as any);
-        }
-      }
     }
   }
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, Empenho, EmpenhoSimplificado, Reajuste } from 'src/app/core/types/documentos';
+import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, Empenho, EmpenhoSimplificado, Nota, NotaSimplificada, Reajuste } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -41,8 +41,8 @@ export class DocumentosService {
   }
 
   public inativar(id: number, statusAtual: number): Observable<AtaLicitacao> {
-    var novoValor = statusAtual === 1 ? '2' : '1';
-    var status = {
+    const novoValor = statusAtual === 1 ? '2' : '1';
+    const status = {
       op: "replace",
       path: "/status",
       value: novoValor
@@ -82,8 +82,8 @@ export class DocumentosService {
   }
 
   public inativarBaixa(id: number, statusAtual: number): Observable<BaixaLicitacao> {
-    var novoValor = statusAtual === 1 ? '2' : '1';
-    var status = {
+    const novoValor = statusAtual === 1 ? '2' : '1';
+    const status = {
       op: "replace",
       path: "/status",
       value: novoValor
@@ -116,9 +116,9 @@ export class DocumentosService {
   }
   
   public inativarEmpenho(documento: Empenho): Observable<Empenho> {
-    var id = documento.id;
-    var novoValor = documento.status === 1 ? '2' : '1';
-    var status = {
+    const id = documento.id;
+    const novoValor = documento.status === 1 ? '2' : '1';
+    const status = {
       op: "replace",
       path: "/status",
       value: novoValor
@@ -133,5 +133,22 @@ export class DocumentosService {
   public possuiEmpenho(id: number): Observable<boolean> {
     const url = `${this.URL}/empenho/existe/${id}`;
     return this.http.get<boolean>(url);
+  }
+
+  public obterNotas(id: number): Observable<NotaSimplificada[]> {
+    const url = `${this.URL}/nota/${id}`;
+    return this.http.get<NotaSimplificada[]>(url);
+  }
+  public excluirNota(id: number): Observable<Nota> {
+    const httpParams = new HttpParams()
+      .set('id', id.toString());
+
+    const options = { params: httpParams };
+    const url = `${this.URL}/nota`
+    return this.http.delete<Nota>(url, options);
+  }
+  public obterNotaPorID(id: number): Observable<Nota> {
+    const url = `${this.URL}/nota/obter/${id}`;
+    return this.http.get<Nota>(url);
   }
 }

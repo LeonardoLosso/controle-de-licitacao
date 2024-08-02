@@ -25,7 +25,7 @@
 
             </mat-tab>
             
-            <mat-tab label="Notas">
+            <mat-tab label="Notas" *ngIf="possuiPermissao">
                 <app-empenho-tabela-notas
                     [listaDocumentos]="listaDocumentos.value"
                     [control]="documentoSelecionado"

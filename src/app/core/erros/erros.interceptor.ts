@@ -48,10 +48,12 @@ export class ErrosInterceptor implements HttpInterceptor {
           this.router.navigate(['auth/login']);
           this.service.openSnackBar(errorMessage, 'error');
         }
+        let url = '';
+
+        if(error.url) url = error.url;
 
         this.service.openSnackBar(errorMessage, 'error');
-
-        return throwError(() => new Error(errorMessage));
+        return throwError(() => new Error(`${errorMessage} na rota: ${url}`, {cause: error.status?? 0}));
       })
     );
   }

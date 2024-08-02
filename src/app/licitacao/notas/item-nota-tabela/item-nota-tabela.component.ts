@@ -44,4 +44,9 @@ export class ItemNotaTabelaComponent {
     }
     else return 0;
   }
+
+  public calculaTotal(row: ItemDeNota) {
+    row.valorTotal = row.valorUnitario * row.quantidade;
+    console.log(row)
+  }
 }

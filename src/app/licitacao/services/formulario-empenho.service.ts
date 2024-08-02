@@ -107,6 +107,16 @@ export class FormularioEmpenhoService {
   public async obterEmpenho(id: number) {
     return await lastValueFrom(this.service.obterEmpenho(id));
   }
+  public async obterNotas(id: number) {
+    return await lastValueFrom(this.service.obterNotas(id));
+  }
+  public async obterNotaPorID(id: number){
+    return await lastValueFrom(this.service.obterNotaPorID(id));
+  }
+  public async excluirNota(id: number) {
+    return await lastValueFrom(this.service.excluirNota(id));
+  }
+  //--------------------------------------------
   private desabilitarFormulario() {
     this.obterControle('idEmpenho').disable();
     this.obterControle('edital').disable();

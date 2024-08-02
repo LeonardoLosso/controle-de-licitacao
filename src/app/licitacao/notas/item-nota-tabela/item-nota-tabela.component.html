@@ -43,7 +43,8 @@
                                 name="numNota" 
                                 type="number"
                                 [(ngModel)]="row.quantidade" 
-                                #numNota="ngModel">
+                                #numNota="ngModel"
+                                (input)="calculaTotal(row)">
                             <span matTextPrefix>R$</span>
                         </mat-form-field>
                     </td>

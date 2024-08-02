@@ -32,9 +32,9 @@ export class EntidadesService extends CrudBaseService<Entidade, EntidadeSimplifi
     }
 
     public inativar(entidade: EntidadeSimplificada): Observable<Entidade> {
-        var id = entidade.id;
-        var novoValor = entidade.status === 1 ? '2' : '1';
-        var status = {
+        const id = entidade.id;
+        const novoValor = entidade.status === 1 ? '2' : '1';
+        const status = {
             op: "replace",
             path: "/status",
             value: novoValor

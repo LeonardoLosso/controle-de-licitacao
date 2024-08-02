@@ -23,10 +23,19 @@
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
+                <!-- Código Column -->
+                <ng-container matColumnDef="numNota">
+                    <th mat-header-cell *matHeaderCellDef disableClear>
+                        Nº Nota
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.numNota | separadorMilhar}}</td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
                 <!-- nome Column -->
                 <ng-container matColumnDef="empenho">
                     <th mat-header-cell *matHeaderCellDef disableClear>
-                        Empenho
+                        Nº Empenho
                     </th>
                     <td mat-cell *matCellDef="let row">{{row.numEmpenho}}</td>
                     <td mat-footer-cell *matFooterCellDef></td>
@@ -58,7 +67,7 @@
                 <!-- valor total -->
                 <ng-container matColumnDef="valorEntregue">
                     <th mat-header-cell *matHeaderCellDef>Total da Nota</th>
-                    <td mat-cell *matCellDef="let row"><strong>{{row.valorEntregue}}</strong></td>
+                    <td mat-cell *matCellDef="let row"><strong>{{row.valorEntregue | currency:'R$'}}</strong></td>
                     <td mat-footer-cell *matFooterCellDef><strong>{{getTotal() | currency: 'R$'}}</strong></td>
                 </ng-container>
 

@@ -16,7 +16,7 @@ export class EmpenhoTabelaNotasComponent {
   private selecionado!: NotaSimplificada;
 
   public displayedColumns: string[] = [
-    'codigo', 'empenho', 'unidade',
+    'codigo', 'numNota', 'unidade',
     'dataEmissao', 'dataEntrega', 'valorEntregue'
   ];
 

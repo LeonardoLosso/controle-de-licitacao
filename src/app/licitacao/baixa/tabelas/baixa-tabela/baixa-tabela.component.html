@@ -39,8 +39,8 @@
 
                 <!-- Quantidade empenhada Column -->
                 <ng-container matColumnDef="qtdeEmpenhada">
-                    <th mat-header-cell *matHeaderCellDef>Quantidade Empenhada (Notas)</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}} ({{row.unidade}})</td>
+                    <th mat-header-cell *matHeaderCellDef>Quantidade Empenhada</th>
+                    <td class="azul" mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
@@ -55,27 +55,27 @@
                 <ng-container matColumnDef="qtdeAEmpenhar">
                     <th mat-header-cell *matHeaderCellDef>Falta Empenhar (Qtde)</th>
                     <td mat-cell *matCellDef="let row">{{row.qtdeAEmpenhar}} ({{row.unidade}})</td>
-                    <td mat-footer-cell *matFooterCellDef>Totalizadores: </td>
+                    <td mat-footer-cell *matFooterCellDef>TOTALIZADORES: </td>
                 </ng-container>
 
                 <!-- valor empenhado Column -->
                 <ng-container matColumnDef="valorEmpenhado">
-                    <th mat-header-cell *matHeaderCellDef>Valor Empenhado (Notas)</th>
-                    <td mat-cell *matCellDef="let row"><strong>{{row.valorEmpenhado | currency:'R$'}}</strong></td>
+                    <th mat-header-cell *matHeaderCellDef>Valor Empenhado</th>
+                    <td mat-cell *matCellDef="let row" [class.verde-cell]="row.qtdeAEmpenhar <= 0"><strong>{{row.valorEmpenhado | currency:'R$'}}</strong></td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalEmpenhado() | currency:'R$'}}</td>
                 </ng-container>
 
                 <!-- valor licitado Column -->
                 <ng-container matColumnDef="valorLicitado">
                     <th mat-header-cell *matHeaderCellDef>Valor Licitado (Ata)</th>
-                    <td mat-cell *matCellDef="let row"><strong>{{row.valorLicitado | currency:'R$'}}</strong></td>
+                    <td mat-cell *matCellDef="let row" [class.verde-cell]="row.qtdeAEmpenhar <= 0"><strong>{{row.valorLicitado | currency:'R$'}}</strong></td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalLicitado() | currency:'R$'}}</td>
                 </ng-container>
 
                 <!-- saldo Column -->
                 <ng-container matColumnDef="saldo">
                     <th mat-header-cell *matHeaderCellDef>Falta Empenhar (R$)</th>
-                    <td mat-cell *matCellDef="let row"><strong>{{row.saldo | currency:'R$'}}</strong></td>
+                    <td mat-cell *matCellDef="let row" [class.verde-cell]="row.qtdeAEmpenhar <= 0"><strong>{{row.saldo | currency:'R$'}}</strong></td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalSaldo() | currency:'R$'}}</td>
                 </ng-container>
 
@@ -87,7 +87,7 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.verde]="row.qtdeAEmpenhar <= 0"
                     (click)="clickGrid(row)" (dblclick)="doubleClick()" [ngClass]="selecionar(row)"></tr>
                 <ng-container *ngIf="totalizadores">
                     <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
