@@ -1,7 +1,7 @@
 .tabela {
     margin-top: 22px;
+    
 }
-
 .container {
     position: relative;
 
@@ -73,4 +73,14 @@
 tr.mat-mdc-footer-row {
     background-color: #e9e8e8;
     font-weight: bold;
+}
+
+:host::ng-deep .mat-mdc-form-field-bottom-align::before {
+    display: none !important;
+}
+
+.mat-column-quantidade {
+    text-align: center !important;
+    max-width: 270px !important;
+    width: 270px !important;
 }

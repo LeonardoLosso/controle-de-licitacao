@@ -1,7 +1,12 @@
 <section class="tabela">
     <div class="container mat-elevation-z8">
-
-        <div class="table-container">
+        <div class="loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            <div class="rate-limit-reached" *ngIf="isRateLimitReached">
+                Tempo limite de sincronização com banco de dados
+            </div>
+        </div>
+        <div class="table-container" [class.bigger]="isLoadingResults || isRateLimitReached">
 
             <table mat-table [dataSource]="listaItens" class="table">
 

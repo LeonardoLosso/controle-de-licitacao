@@ -33,4 +33,19 @@
         display: flex;
         justify-content: center;
     }
+
+    .botoes{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 5px 0;
+        .btn:not(:last-child){
+            margin-right: 30px;
+        }
+    }
+}
+
+:host::ng-deep .btn-cabecalho {
+    width: 100% !important;
+    max-width: 180px;
 }

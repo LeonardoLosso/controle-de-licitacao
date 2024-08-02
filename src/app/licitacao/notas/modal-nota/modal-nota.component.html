@@ -1,7 +1,6 @@
 <form #form="ngForm" class="dialog">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
-        <h3>Cabeçalho do Documento</h3>
         <div class="campo dados">
             <!-- ID -->
             <mat-form-field class="input" appearance="outline">
@@ -82,13 +81,12 @@
         </div>
         <div class="tabela">
             <span class="botoes">
-                <app-botoes icone="delete" texto="Remover" color="warn" variant="btn-cabecalho" (click)="removerItem()" />
-                <app-botoes icone="add" texto="Adicionar" variant="btn-cabecalho" (click)="addItem()" />
+                <app-botoes class="btn" icone="add" texto="Adicionar Item" variant="btn-cabecalho" (click)="addItem()" />
+                <app-botoes class="btn" icone="delete" texto="Remover Item" color="warn" variant="btn-cabecalho" (click)="removerItem()" />
             </span>
             <app-item-nota-tabela
                 [control]="selecionado"
-                [listaItens]="listaItens"
-                (abrirDialog)="editarItem()"/>
+                [listaItens]="listaItens"/>
         </div>
     </div>
     <div mat-dialog-actions class="btn-group">

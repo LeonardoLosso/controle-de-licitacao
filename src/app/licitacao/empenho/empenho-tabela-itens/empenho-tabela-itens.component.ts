@@ -13,7 +13,8 @@ export class EmpenhoTabelaItensComponent {
   @Output() abrirDialog = new EventEmitter();
   @Input() listaItens!: ItemDeEmpenho[];
   @Input() control!: FormControl;
-
+  @Input() isLoadingResults = false;
+  @Input() isRateLimitReached = false;
   private selecionado!: ItemDeEmpenho;
 
   public displayedColumns: string[] = [

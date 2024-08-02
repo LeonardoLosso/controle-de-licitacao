@@ -7,7 +7,7 @@ import { Nota } from 'src/app/core/types/documentos';
 import { NotasService } from '../../services/notas.service';
 import { ModalBaseDirective } from 'src/app/core/diretivas/modal-base.directive';
 import { ItemDeNota } from 'src/app/core/types/item';
-import { ModalItemNotaComponent } from '../modal-item-nota/modal-item-nota.component';
+import { LookupItemNotaComponent } from '../lookup-item-nota/lookup-item-nota.component';
 
 @Component({
   selector: 'app-modal-nota',
@@ -22,7 +22,7 @@ export class ModalNotaComponent extends ModalBaseDirective<Nota> {
   public unidadeControl = new FormControl();
   public listaItens!: ItemDeNota[];
   public listaControl = new FormControl<ItemDeNota[]>([]);
-  public selecionado!: FormControl<ItemDeNota>;
+  public selecionado = new FormControl<ItemDeNota | null>(null);
 
   constructor(
     dialogRef: MatDialogRef<ModalNotaComponent>,
@@ -37,6 +37,10 @@ export class ModalNotaComponent extends ModalBaseDirective<Nota> {
 
     this.listaItens = this.cadastro.itens;
     this.listaControl.setValue(this.listaItens);
+
+    if(this.edicao){
+      this.titulo += ' ' + this.data.numNota;
+    }
   }
 
   public async addItem() {
@@ -83,7 +87,7 @@ export class ModalNotaComponent extends ModalBaseDirective<Nota> {
   }
 
   private async abreModalItem(item: ItemDeNota): Promise<ItemDeNota> {
-    const dialogRef = this.dialog.open(ModalItemNotaComponent, {
+    const dialogRef = this.dialog.open(LookupItemNotaComponent, {
       disableClose: true,
       data: item
     });

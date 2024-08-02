@@ -216,6 +216,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
 
   private async abreModalNota(documento: Nota): Promise<NotaSimplificada> {
     const dialogRef = this.dialog.open(ModalNotaComponent, {
+      width: '60%',
       disableClose: true,
       data: documento
     });

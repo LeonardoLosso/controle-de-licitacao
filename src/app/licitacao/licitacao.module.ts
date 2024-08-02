@@ -28,7 +28,6 @@ import { ModalItemEmpenhoComponent } from './empenho/modal-item-empenho/modal-it
 import { LookupItemEmpenhoComponent } from './empenho/modal-item-empenho/lookup-item-empenho/lookup-item-empenho.component';
 import { ModalNotaComponent } from './notas/modal-nota/modal-nota.component';
 import { ItemNotaTabelaComponent } from './notas/item-nota-tabela/item-nota-tabela.component';
-import { ModalItemNotaComponent } from './notas/modal-item-nota/modal-item-nota.component';
 import { LookupItemNotaComponent } from './notas/lookup-item-nota/lookup-item-nota.component';
 
 
@@ -58,7 +57,6 @@ import { LookupItemNotaComponent } from './notas/lookup-item-nota/lookup-item-no
     LookupItemEmpenhoComponent,
     ModalNotaComponent,
     ItemNotaTabelaComponent,
-    ModalItemNotaComponent,
     LookupItemNotaComponent,
   ],
   imports: [

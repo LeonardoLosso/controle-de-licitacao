@@ -1,7 +1,7 @@
 <div class="cesta">
     <span class="botoes">
-        <app-botoes icone="delete" texto="Remover" color="warn" variant="btn-cabecalho" (click)="removerItem()" />
         <app-botoes icone="add" texto="Adicionar" variant="btn-cabecalho" (click)="addItem()" />
+        <app-botoes icone="delete" texto="Remover" color="warn" variant="btn-cabecalho" (click)="removerItem()" />
     </span>
     <span class="tabela" *ngIf="exibeTabela()">
         <app-item-tabela 
