@@ -33,6 +33,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   ) { super() }
 
   ngOnInit(): void {
+    this.form.limpar();
     this.status = this.form.obterControle<number>('status');
     this.listaItens = this.form.obterControle<ItemDeAta[]>('itens');
     this.selecionado = this.form.obterControle<ItemDeAta>('selecionadoGrid');
@@ -209,7 +210,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
   private itemDuplicado(item: ItemDeAta, index?: number): ItemDeAta | null {
 
-    const lista = this.listaItens.value.filter(i => i.id === item.id && i.valorUnitario === item.valorUnitario);
+    const lista = this.listaItens.value.filter(i => i.id === item.id);
     if (lista.length >= 1) {
 
       if (!index && index !== 0) return lista[0];

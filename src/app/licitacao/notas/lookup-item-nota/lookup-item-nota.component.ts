@@ -56,7 +56,6 @@ export class LookupItemNotaComponent {
       this.data.unidade = item.unidade
       this.data.valorUnitario = item.valorUnitario;
 
-      this.messageService.openSnackBar('Item adicionado', 'success');
       return this.dialogRef.close(this.data);
     }
 

@@ -17,7 +17,7 @@ export class EmpenhoTabelaComponent {
 
 
   public displayedColumns: string[] = [
-    'status', 'codigo', 'edital', 'data', 'orgao', 'unidade', 'saldo', 'valor'
+    'status', 'codigo', 'numEmpenho', 'edital', 'data', 'orgao', 'unidade', 'saldo', 'valor'
   ];
 
   clickGrid(valor: EmpenhoSimplificado) {

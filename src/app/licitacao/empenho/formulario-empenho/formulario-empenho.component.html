@@ -8,6 +8,12 @@
 
     <!-- Edital -->
     <mat-form-field class="field" appearance="outline">
+        <mat-label>Nº Empenho</mat-label>
+        <input matInput [formControl]="formService.obterControle('numEmpenho')">
+    </mat-form-field>
+    
+    <!-- Edital -->
+    <mat-form-field class="field" appearance="outline">
         <mat-label>Edital</mat-label>
         <input matInput [formControl]="formService.obterControle('edital')">
     </mat-form-field>

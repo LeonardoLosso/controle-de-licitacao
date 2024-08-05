@@ -86,7 +86,8 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   }
 
   public async inativar() {
-    if (!(await this.confirmarInativacao())) return;
+    if (this.status.value && this.status.value !== 2)
+      if (!(await this.confirmarInativacao())) return;
 
     this.mostrarSpinner();
 
@@ -238,6 +239,8 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   }
 
   private inicializaFormControl() {
+    this.form.limpar();
+    
     this.status = this.form.obterControle('status');
     this.listaItens = this.form.obterControle<ItemDeEmpenho[]>('itens');
     this.listaDocumentos = this.form.obterControle<Nota[]>('documentos');
@@ -313,6 +316,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   private async preencher(id: number) {
     const idEmpenho = this.form.obterControle<string>('idEmpenho');
     const edital = this.form.obterControle<string>('edital');
+    const numEmpenho = this.form.obterControle<string>('numEmpenho');
     const status = this.form.obterControle<number>('status');
     const data = this.form.obterControle<Date>('data');
     const valor = this.form.obterControle<Date>('valor');
@@ -325,6 +329,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       this.form.idAta = result.baixaID;
 
       idEmpenho.setValue(result.id);
+      numEmpenho.setValue(result.numEmpenho);
       edital.setValue(result.edital);
       status.setValue(result.status);
       data.setValue(result.dataEmpenho);
@@ -352,7 +357,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
 
   private itemDuplicado(item: ItemDeEmpenho, index?: number): ItemDeEmpenho | null {
 
-    const lista = this.listaItens.value.filter(i => i.id === item.id && i.valorUnitario === item.valorUnitario);
+    const lista = this.listaItens.value.filter(i => i.id === item.id);
     if (lista.length >= 1) {
 
       if (!index && index != 0) return lista[0];

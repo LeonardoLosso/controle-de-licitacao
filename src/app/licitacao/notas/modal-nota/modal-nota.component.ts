@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
+import { compare } from 'fast-json-patch';
 import { lastValueFrom } from 'rxjs';
 
 import { Nota, NotaSimplificada } from 'src/app/core/types/documentos';
@@ -9,7 +10,7 @@ import { ItemDeNota } from 'src/app/core/types/item';
 import { LookupItemNotaComponent } from '../lookup-item-nota/lookup-item-nota.component';
 import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive';
 import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
-import { compare } from 'fast-json-patch';
+import { MensagemService } from 'src/app/core/services/mensagem.service';
 
 @Component({
   selector: 'app-modal-nota',
@@ -29,18 +30,19 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     dialogRef: MatDialogRef<ModalNotaComponent>,
     @Inject(MAT_DIALOG_DATA) data: Nota,
     dialog: MatDialog,
-    service: NotasService
+    service: NotasService,
+    private messageService: MensagemService
   ) {
     super(dialogRef, data, dialog, service);
 
-    if (this.cadastro.unidade){
+    if (this.cadastro.unidade) {
       this.unidadeControl.setValue(`${this.cadastro.unidade.id} - ${this.cadastro.unidade.fantasia}`);
       this.cadastro.unidade = this.cadastro.unidade.id as any;
     }
 
     this.listaItens = this.cadastro.itens;
     this.listaControl.setValue(this.listaItens);
-    
+
 
     if (this.edicao) {
       this.titulo += ' ' + this.data.numNota;
@@ -60,22 +62,37 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     };
     const novoItem = await this.abreModalItem(itemVazio);
     if (novoItem) {
+
+      if (!await this.validarDuplicado(novoItem))
+        return this.messageService.openSnackBar('Item duplicado!', 'alert');
+
       this.listaItens = this.listaItens ?? [];
 
       this.listaItens.push(novoItem);
       this.listaItens = [...this.listaItens];
       this.listaControl.setValue(this.listaItens);
       this.listaControl.markAsDirty();
+      this.messageService.openSnackBar('Item adicionado', 'success');
     }
   }
 
   public removerItem() {
+    const item = this.selecionado.value;
 
+    if (!item) {
+      return this.messageService.openSnackBar('Nenhum item selecionado');
+    }
+
+    if (this.listaItens) {
+      this.listaItens = [...this.listaItens.filter(i => i.id !== item.id)];
+      this.listaControl.setValue(this.listaItens);
+      this.listaControl.markAsDirty();
+    }
   }
   protected override editar(): MudancasParaPatch[] {
     this.cadastro.itens = this.listaControl.value as ItemDeNota[];
 
-    const patch = compare( this.data, this.cadastro)
+    const patch = compare(this.data, this.cadastro)
 
     return patch;
   }
@@ -87,5 +104,27 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     });
 
     return await lastValueFrom(dialogRef.afterClosed());
+  }
+
+  private async validarDuplicado(item: ItemDeNota, index?: number) {
+    const duplicado = this.itemDuplicado(item, index);
+
+    if (duplicado)
+      return false;
+
+    return true;
+  }
+
+  private itemDuplicado(item: ItemDeNota, index?: number): ItemDeNota | null {
+
+    const lista = this.listaItens.filter(i => i.id === item.id);
+    if (lista.length >= 1) {
+
+      if (!index && index != 0) return lista[0];
+
+      if (this.listaItens[index] !== lista[0]) return lista[0];
+    }
+
+    return null;
   }
 }

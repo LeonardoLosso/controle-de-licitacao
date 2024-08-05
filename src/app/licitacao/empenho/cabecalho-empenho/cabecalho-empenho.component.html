@@ -1,20 +1,20 @@
 <section class="barra-tarefas">
     <div class="botoes">
         <div class="btn-group">
-            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" [permissao]="406" (click)="salvar()" />
+            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" [permissao]="status === 2? 15 : 406" (click)="salvar()" />
             <app-botoes variant="btn-cabecalho" [icone]="verificaStatus()? 'block' : 'check'"
-                [texto]="verificaStatus()? 'Inativar Empenho' : 'Reativar Empenho'"
+                [texto]="verificaStatus()? 'Encerrar Empenho' : 'Abrir Empenho'"
                 [color]="verificaStatus()? 'warn' : 'verde'" [permissao]="405" (click)="inativarDocumento()" />
-            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
+            <app-botoes icone="undo" texto="Voltar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
         </div>
 
         <ng-container *ngIf="label === 'Item'; else template">
             <div class="btn-group">
-                <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" [permissao]="406"
+                <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" [permissao]="status === 2? 15 : 406"
                     (click)="adicionarItem()" />
-                <app-botoes icone="delete" texto="Excluir Item" variant="btn-cabecalho" [permissao]="406"
+                <app-botoes icone="delete" texto="Excluir Item" variant="btn-cabecalho" [permissao]="status === 2? 15 : 406"
                     (click)="removerItem()" />
-                <app-botoes icone="edit" texto="Editar Item" variant="btn-cabecalho" (click)="editarItem()" />
+                <app-botoes icone="edit" texto="Editar Item" variant="btn-cabecalho" (click)="editarItem()" [permissao]="status === 2? 15 : 0" />
             </div>
         </ng-container>
     </div>
@@ -30,6 +30,6 @@
             (click)="adicionarNotas()" />
         <app-botoes icone="delete" texto="Excluir Nota" variant="btn-cabecalho" [permissao]="status !==2? 504 : 15"
             (click)="removerNotas()" />
-        <app-botoes icone="edit" texto="Editar Nota" variant="btn-cabecalho" [permissao]="status !==2? 503 : 15" (click)="editarNotas()" />
+        <app-botoes icone="visibility" texto="Ver Nota" variant="btn-cabecalho" [permissao]="503" (click)="editarNotas()" />
     </div>
 </ng-template>

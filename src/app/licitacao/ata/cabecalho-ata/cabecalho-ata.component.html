@@ -2,7 +2,7 @@
     <div class="botoes">
         <div class="btn-group">
             <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" (click)="salvarDocumento()"
-                [permissao]="permissao" />
+                [permissao]="status === 2? 15 : permissao" />
             <app-botoes variant="btn-cabecalho" [icone]="verificaStatus()? 'block' : 'check'"
                 [texto]="verificaStatus()? 'Inativar Ata' : 'Reativar Ata'" [color]="verificaStatus()? 'warn' : 'verde'"
                 (click)="inativarDocumento()" [permissao]="305" />
@@ -11,9 +11,9 @@
 
         <div class="btn-group">
             <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" (click)="adicionar()"
-                [permissao]="possuiEmpenho? 15 : permissao" />
+                [permissao]="possuiEmpenho || (status === 2)? 15 : permissao" />
             <app-botoes icone="delete" texto="Remover Item" variant="btn-cabecalho" (click)="excluir()"
-                [permissao]="possuiEmpenho? 15 : permissao" />
+                [permissao]="possuiEmpenho || (status === 2)? 15 : permissao" />
             <app-botoes icone="description" texto="Baixa" variant="btn-cabecalho" color="verde" (click)="abrirBaixa()"
                 [permissao]="401" />
         </div>

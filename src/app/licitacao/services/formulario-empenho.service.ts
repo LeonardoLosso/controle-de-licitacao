@@ -126,14 +126,17 @@ export class FormularioEmpenhoService {
     const data = this.obterControle('data');
     const unidade = this.obterControle('unidade');
     const valor = this.obterControle('valor');
+    const numEmpenho = this.obterControle('numEmpenho');
 
     data.enable();
+    numEmpenho.enable();
     unidade.enable();
     valor.enable();
 
     const status = this.obterControle('status').value ?? 1;
     if (status === 2) {
       data.disable();
+      numEmpenho.disable();
       unidade.disable();
       valor.disable();
     }
@@ -141,9 +144,9 @@ export class FormularioEmpenhoService {
   private retornaEmpenho(): Empenho {
     return {
       id: this.obterControle('idEmpenho').value,
-      numEmpenho: this.obterControle('numEmpenho').value,
       baixaID: this.idAta,
       edital: this.obterControle('edital').value,
+      numEmpenho: this.obterControle('numEmpenho').value,
       status: this.obterControle('status').value ?? 1,
       orgao: this.obterControle('orgao').value?.id ?? 0,
       unidade: this.obterControle('unidade').value?.id ?? 0,
