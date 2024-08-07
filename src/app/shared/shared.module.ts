@@ -17,6 +17,7 @@ import { ModalConfirmacaoComponent } from './modal-confirmacao/modal-confirmacao
 import { PermissaoDirective } from "./directive/permissao.directive";
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { LookupBaseComponent } from './componentes/lookup-base/lookup-base.component';
+import { ModalImportacaoComponent } from './modal-importacao/modal-importacao.component';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { LookupBaseComponent } from './componentes/lookup-base/lookup-base.compo
         ModalConfirmacaoComponent,
         PermissaoDirective,
         LoadingSpinnerComponent,
-        LookupBaseComponent
+        LookupBaseComponent,
+        ModalImportacaoComponent
     ],
     imports: [
         CommonModule,

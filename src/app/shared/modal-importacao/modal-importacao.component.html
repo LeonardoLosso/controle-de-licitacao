@@ -1,0 +1,33 @@
+<div class="dialog">
+    <form (submit)="onFileSelected($event)" enctype="multipart/form-data">
+        <h1 mat-dialog-title>Importar {{data.titulo}}</h1>
+        <div mat-dialog-content class="alinhamento">
+            <input type="file" accept=".PDF" (change)="handleFileInput($event)" #fileInput style="display: none;">
+            <h3>{{fileInput.value? fileInput.value : 'Selecione um PDF'}}</h3>
+            <button mat-raised-button color="primary" (click)="fileInput.click()">
+                <mat-icon>attach_file</mat-icon> Selecionar Arquivo
+            </button>
+        </div>
+        <div mat-dialog-actions class="btn-group">
+            <button 
+                class="Cancelar" 
+                mat-stroked-button
+                cdkFocusInitial
+                color="warn"
+                mat-dialog-close
+            >
+                <mat-icon matPrefix>undo</mat-icon>
+                Cancelar
+            </button>
+            <button 
+                mat-flat-button 
+                color="primary"
+                type="submit"
+            >
+                <mat-icon matPrefix>check</mat-icon>
+                Importar
+            </button>
+        </div>
+    </form>
+    <ng-template #loadingSpinnerContainer></ng-template>
+</div>
