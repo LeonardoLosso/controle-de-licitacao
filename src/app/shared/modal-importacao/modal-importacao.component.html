@@ -4,7 +4,7 @@
         <div mat-dialog-content class="alinhamento">
             <input type="file" accept=".PDF" (change)="handleFileInput($event)" #fileInput style="display: none;">
             <h3>{{fileInput.value? fileInput.value : 'Selecione um PDF'}}</h3>
-            <button mat-raised-button color="primary" (click)="fileInput.click()">
+            <button mat-raised-button type="button" color="primary" (click)="fileInput.click()">
                 <mat-icon>attach_file</mat-icon> Selecionar Arquivo
             </button>
         </div>
@@ -14,6 +14,7 @@
                 mat-stroked-button
                 cdkFocusInitial
                 color="warn"
+                type="button"
                 mat-dialog-close
             >
                 <mat-icon matPrefix>undo</mat-icon>
