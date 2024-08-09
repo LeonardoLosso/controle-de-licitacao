@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
+import { AtaLicitacao } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -41,10 +42,15 @@ export class ModalImportacaoComponent extends SpinnerControlDirective {
 
     this.mostrarSpinner();
     try {
-      const result = await lastValueFrom(this.http.post<any>(`${this.URL}/upload/ata`, formData));
+      const result = await lastValueFrom(this.http.post<AtaLicitacao>(`${this.URL}/upload/ata`, formData));
+      if(result){
+        this.dialogRef.close(result.id);
+      }
     }
     finally{
       this.esconderSpinner();
     }
   }
+
+  
 }
