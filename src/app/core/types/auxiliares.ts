@@ -1,7 +1,8 @@
 export interface MensagemModal {
     titulo: string,
     mensagem: string,
-    item: string
+    item: string,
+    info?: boolean
 }
 
 export interface Endereco {

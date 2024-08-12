@@ -6,6 +6,7 @@
     </div>
     <div mat-dialog-actions class="btn-group">
         <button 
+            *ngIf="!data.info"
             class="Cancelar" 
             mat-stroked-button
             cdkFocusInitial
@@ -21,7 +22,7 @@
             [mat-dialog-close]="true"
         >
             <mat-icon matPrefix>check</mat-icon>
-            Sim
+            {{!data.info? 'Sim' : 'Continuar'}}
         </button>
     </div>
 </div>

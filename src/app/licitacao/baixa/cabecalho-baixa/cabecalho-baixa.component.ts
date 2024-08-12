@@ -21,7 +21,7 @@ export class CabecalhoBaixaComponent {
     this.editarEmpenho.emit();
   }
 
-  abrirBaixa() {
+  importar() {
     this.acao.emit();
   }
 

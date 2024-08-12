@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
-import { AtaLicitacao } from 'src/app/core/types/documentos';
+import { AtaLicitacao, Empenho } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
+import { ModalConfirmacaoComponent } from '../modal-confirmacao/modal-confirmacao.component';
 
 @Component({
   selector: 'app-modal-importacao',
@@ -19,6 +20,7 @@ export class ModalImportacaoComponent extends SpinnerControlDirective {
   constructor(
     private dialogRef: MatDialogRef<ModalImportacaoComponent>,
     private http: HttpClient,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { super() }
 
@@ -41,16 +43,33 @@ export class ModalImportacaoComponent extends SpinnerControlDirective {
     formData.append('file', file);
 
     this.mostrarSpinner();
+    let result: any;
     try {
-      const result = await lastValueFrom(this.http.post<AtaLicitacao>(`${this.URL}/upload/ata`, formData));
-      if(result){
-        this.dialogRef.close(result.id);
+      if (this.data.titulo === 'Ata')
+        result = await lastValueFrom(this.http.post<AtaLicitacao>(`${this.URL}/upload/ata`, formData));
+      else
+        result = await lastValueFrom(this.http.post<Empenho>(`${this.URL}/upload/empenho/${this.data.idBaixa}`, formData));
+    }
+    finally {
+      this.esconderSpinner();
+      if (result) {
+        if ((await this.confirmarInativacao()))
+          this.dialogRef.close(result.id);
       }
     }
-    finally{
-      this.esconderSpinner();
-    }
+  }
+  private async confirmarInativacao() {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Importação bem sucedida',
+        mensagem: 'A importação foi um sucesso!',
+        item: `\nPor favor revise e corrija os dados na proxima tela, se necessário`,
+        info: true
+      }
+    });
+
+    return await lastValueFrom(confirmacao.afterClosed());
   }
 
-  
 }

@@ -10,6 +10,7 @@ import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/moda
 import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
 import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
+import { ModalImportacaoComponent } from 'src/app/shared/modal-importacao/modal-importacao.component';
 
 @Component({
   selector: 'app-baixa',
@@ -80,7 +81,19 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       this.esconderSpinner();
     }
   }
-  public importarEmpenho() { }//importação + redirecionamento com novo id
+  public importarEmpenho() { 
+    const dialogRef = this.dialog.open(ModalImportacaoComponent, {
+      data: {
+        titulo: "Empenho",
+        idBaixa: this.id
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result =>{
+      if(result)
+        this.goToEdit(result);
+    })
+  }
 
   public cancelar() {
     const queryParams = { ata: this.id };
