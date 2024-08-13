@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-botoes',
@@ -14,6 +14,11 @@ export class BotoesComponent {
   @Input() permissao!: number;
   @Input() botaoDesabilitado = false;
 
+  @Output() acao = new EventEmitter();
+
+  doClick(){
+    this.acao.emit();
+  }
 
   onHasPermission(hasPermission: boolean) {
     if (!this.botaoDesabilitado) {

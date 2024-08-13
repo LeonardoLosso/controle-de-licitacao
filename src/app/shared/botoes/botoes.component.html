@@ -9,6 +9,7 @@
         [appHasPermission]="permissao"
         (hasPermission)="onHasPermission($event)"
         [disabled]="botaoDesabilitado"
+        (click)="doClick()"
     >
         <mat-icon >{{icone}}</mat-icon>
     </button>
@@ -26,6 +27,7 @@
         [appHasPermission]="permissao"
         (hasPermission)="onHasPermission($event)"
         [disabled]="botaoDesabilitado"
+        (click)="doClick()"
     >
         <mat-icon class="icone">{{icone}}</mat-icon>
         <span class="texto">{{texto}}</span>

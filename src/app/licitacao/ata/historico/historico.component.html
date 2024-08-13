@@ -5,7 +5,7 @@
             icone="add" 
             texto="Reajuste" 
             variant="btn-cabecalho" 
-            (click)="gerarHistorico()" 
+            (acao)="gerarHistorico()" 
             [permissao]="306"/>
         <app-botoes 
             [botaoDesabilitado]="!reajustes || !(reajustes.length > 0)"
@@ -13,7 +13,7 @@
             icone="delete" 
             texto="Excluir" 
             variant="btn-cabecalho" 
-            (click)="excluirHistorico()" 
+            (acao)="excluirHistorico()" 
             [permissao]="307" 
             color="warn"/>
     </section>

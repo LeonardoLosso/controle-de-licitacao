@@ -81,8 +81,8 @@
         </div>
         <div class="tabela">
             <span class="botoes">
-                <app-botoes class="btn" icone="add" texto="Adicionar Item" variant="btn-cabecalho" (click)="addItem()" />
-                <app-botoes class="btn" icone="delete" texto="Remover Item" color="warn" variant="btn-cabecalho" (click)="removerItem()" />
+                <app-botoes class="btn" icone="add" texto="Adicionar Item" variant="btn-cabecalho" (acao)="addItem()" />
+                <app-botoes class="btn" icone="delete" texto="Remover Item" color="warn" variant="btn-cabecalho" (acao)="removerItem()" />
             </span>
             <app-item-nota-tabela
                 [control]="selecionado"

@@ -2,20 +2,20 @@
     <div class="botoes">
         <div class="btn-group">
             <app-botoes icone="upload" texto="Importar Empenho" variant="btn-cabecalho" [color]="status === 2? '' : 'verde'" [permissao]="status === 2? 15 : 404"
-                (click)="importar()" />
+                (acao)="importar()" />
             <app-botoes variant="btn-cabecalho" [icone]="verificaStatus()? 'block' : 'check'"
                 [texto]="verificaStatus()? 'Inativar Baixa' : 'Reativar Baixa'"
-                [color]="verificaStatus()? 'warn' : 'verde'" [permissao]="405" (click)="inativarDocumento()" />
-            <app-botoes icone="undo" texto="Voltar" variant="btn-cabecalho" (click)="cancelarOperacao()" />
+                [color]="verificaStatus()? 'warn' : 'verde'" [permissao]="405" (acao)="inativarDocumento()" />
+            <app-botoes icone="undo" texto="Voltar" variant="btn-cabecalho" (acao)="cancelarOperacao()" />
         </div>
 
         <div class="btn-group">
             <app-botoes icone="add" texto="Novo Empenho" variant="btn-cabecalho" [permissao]="status === 2? 15 : 402"
-                (click)="adicionar()" />
+                (acao)="adicionar()" />
             <app-botoes icone="delete" texto="Excluir Empenho" variant="btn-cabecalho" [permissao]="status === 2? 15 : 403"
-                (click)="excluir()" />
+                (acao)="excluir()" />
             <app-botoes icone="visibility" texto="Ver Empenho" variant="btn-cabecalho" disabled [permissao]="407"
-                (click)="editar()" />
+                (acao)="editar()" />
         </div>
 
     </div>
