@@ -72,7 +72,6 @@ export class ModalItemEmpenhoComponent extends ModalItemDocumentoBaseDirective<I
       item.setValue(result);
       unidade.setValue(result.unidade);
       valorUnitario.setValue(result.valorUnitario);
-
     }
   }
 

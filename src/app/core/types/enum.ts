@@ -47,6 +47,6 @@ export const EnumTipoStatus: EnumNumberID[] = [
 ]
 
 export const EnumTipoDocumento: EnumNumberID[] = [
-    { id: 1, nome: 'Prefeitura' },
-    { id: 2, nome: 'Policia' }
+    { id: 2, nome: 'Prefeitura' },
+    { id: 3, nome: 'Policia' }
 ]

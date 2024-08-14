@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { FormularioBaixaService } from '../../services/formulario-baixa.service';
@@ -8,13 +8,12 @@ import { FormularioBaixaService } from '../../services/formulario-baixa.service'
   templateUrl: './formulario-baixa.component.html',
   styleUrls: ['./formulario-baixa.component.scss']
 })
-export class FormularioBaixaComponent implements OnInit {
+export class FormularioBaixaComponent {
 
   constructor(
     public formService: FormularioBaixaService
   ) { }
 
-  ngOnInit(): void { }
 
   displayFn(control: FormControl): string {
     return control.value ? `${control.value?.id} - ${control.value?.fantasia}` : '';

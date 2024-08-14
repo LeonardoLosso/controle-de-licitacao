@@ -42,10 +42,15 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.id = params['ata'];
 
       const edital = this.form.obterControle<string>('edital');
-      if (this.id)
+      const unidade = this.form.obterControle('unidade');
+      if (this.id) {
         edital.disable();
-      else
+        unidade.disable();
+      }
+      else {
         edital.enable()
+        unidade.enable()
+      }
     });
 
     if (this.id) this.setBoolEmpenho();
@@ -126,7 +131,12 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
   async abrirBaixa() {
     if (this.id && this.id !== 0) {
+      const tipo = this.form.obterControle('unidade').value.id;
       await this.salvar(false);
+      if (tipo === 3) {
+        const queryParams = { ata: this.id };
+        return this.router.navigate(['/licitacao/baixa/policia'], { queryParams });
+      }
       const queryParams = { ata: this.id };
       return this.router.navigate(['/licitacao/baixa'], { queryParams });
     }

@@ -114,7 +114,7 @@ export class DocumentosService {
     const url = `${this.URL}/empenho/obter/${id}`;
     return this.http.get<Empenho>(url);
   }
-  
+
   public inativarEmpenho(documento: Empenho): Observable<Empenho> {
     const id = documento.id;
     const novoValor = documento.status === 1 ? '2' : '1';
@@ -125,7 +125,7 @@ export class DocumentosService {
     }
     return this.http.patch<Empenho>(`${this.URL}/empenho/status/${id}`, [status]);
   }
-  
+
   public editarEmpenho(documento: any, id: number): Observable<Empenho> {
     return this.http.patch<Empenho>(`${this.URL}/empenho/${id}`, documento);
   }
@@ -150,5 +150,10 @@ export class DocumentosService {
   public obterNotaPorID(id: number): Observable<Nota> {
     const url = `${this.URL}/nota/obter/${id}`;
     return this.http.get<Nota>(url);
+  }
+
+  public obterBaixaPoliciaPorID(id: number): Observable<BaixaLicitacao> {
+    const url = `${this.URL}/baixa/${id}`;
+    return this.http.get<BaixaLicitacao>(url)
   }
 }

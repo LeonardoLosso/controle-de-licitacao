@@ -1,33 +1,33 @@
 <ng-template #loadingSpinnerContainer></ng-template>
 <section class="busca-docmentos">
     <app-container>
-            <app-cabecalho-baixa
-                (cancelar)="cancelar()"
-                (acao)="importarEmpenho()"
-                (editarEmpenho)="editarEmpenho()"
-                (inativar)="inativar()"
-                (novo)="novoEmpenho()"
-                (remover)="excluirEmpenho()"
-                [status]="status.value">
-                
-                <app-formulario-baixa/>
-            </app-cabecalho-baixa>
+        <app-cabecalho-baixa
+            (cancelar)="cancelar()"
+            (acao)="importarEmpenho()"
+            (editarEmpenho)="editarEmpenho()"
+            (inativar)="inativar()"
+            (novo)="novoEmpenho()"
+            (remover)="excluirEmpenho()"
+            [status]="status.value">
+            
+            <app-formulario-baixa/>
+        </app-cabecalho-baixa>
 
-            <mat-tab-group class="tab-group">
-                <mat-tab label="Resumo">
+        <mat-tab-group class="tab-group">
+            <mat-tab label="Resumo">
 
-                    <app-baixa-tabela [listaItens]="listaItens.value"/>
+                <app-baixa-tabela [listaItens]="listaItens.value"/>
 
-                </mat-tab>
-                <mat-tab label="Empenhos">
+            </mat-tab>
+            <mat-tab label="Empenhos">
 
-                    <app-empenho-tabela 
-                        [listaEmpenhos]="listaEmpenho.value" 
-                        [control]="selecionado" 
-                        (editar)="editarEmpenho()"/>
+                <app-empenho-tabela 
+                    [listaEmpenhos]="listaEmpenho.value" 
+                    [control]="selecionado" 
+                    (editar)="editarEmpenho()"/>
 
-                </mat-tab>
-            </mat-tab-group>
+            </mat-tab>
+        </mat-tab-group>
             
     </app-container>
 </section>

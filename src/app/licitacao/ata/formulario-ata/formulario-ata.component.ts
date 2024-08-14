@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 
 import { FormularioAtaService } from '../../services/formulario-ata.service';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
-import { EnumTipoCadastro } from 'src/app/core/types/enum';
+import { EnumTipoDocumento } from 'src/app/core/types/enum';
 import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/lookup-entidades.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/loo
 })
 export class FormularioAtaComponent implements OnInit{
 
-  public options = EnumTipoCadastro;
+  public options = EnumTipoDocumento;
   public statusControl!: FormControl<number>;
   public lookupDeEntidades = LookupEntidadesComponent;
   

@@ -34,6 +34,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
   ) { super() }
 
   ngOnInit(): void {
+    this.form.limpar();
     this.inicializaFormControl();
   }
 

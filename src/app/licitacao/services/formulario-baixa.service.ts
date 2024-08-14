@@ -25,7 +25,7 @@ export class FormularioBaixaService {
       empresa: new FormControl(null),
       orgao: new FormControl(null),
       itens: new FormControl([]),
-      empenhos: new FormControl([]),
+      empenhos: new FormControl([])
     });
 
     this.desabilitarFormulario();

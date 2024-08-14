@@ -72,7 +72,7 @@ export class FormularioEmpenhoService {
     itemOriginal.nome = item.nome;
     itemOriginal.unidade = item.unidade;
 
-    itemOriginal.qtdeAEntregar = item.qtdeAEntregar - item.qtdeEntregue;
+    itemOriginal.qtdeAEntregar = item.qtdeEmpenhada - item.qtdeEntregue;
     itemOriginal.qtdeEmpenhada = item.qtdeEmpenhada;
     itemOriginal.qtdeEntregue = item.qtdeEntregue;
 

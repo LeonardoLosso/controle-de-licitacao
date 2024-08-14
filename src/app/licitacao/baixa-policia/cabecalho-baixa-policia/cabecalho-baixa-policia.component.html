@@ -1,0 +1,38 @@
+<section class="barra-tarefas">
+    <div class="botoes">
+        <div class="btn-group">
+            <app-botoes icone="save" texto="Salvar" variant="btn-cabecalho" (acao)="salvarDocumento()"
+                [permissao]="status === 2? 15 : 0" />
+            <app-botoes variant="btn-cabecalho" [icone]="verificaStatus()? 'block' : 'check'"
+                [texto]="verificaStatus()? 'Inativar Baixa' : 'Reativar Baixa'"
+                [color]="verificaStatus()? 'warn' : 'verde'" [permissao]="405" (acao)="inativarDocumento()" />
+            <app-botoes icone="undo" texto="Voltar" variant="btn-cabecalho" (acao)="cancelarOperacao()" />
+        </div>
+
+        <ng-container *ngIf="label === 'Empenho'; else template">
+            <div class="btn-group">
+                <app-botoes icone="add" texto="Novo Empenho" variant="btn-cabecalho" [permissao]="status === 2? 15 : 402"
+                    (acao)="adicionar()" />
+                <app-botoes icone="delete" texto="Excluir Empenho" variant="btn-cabecalho" [permissao]="status === 2? 15 : 403"
+                    (acao)="excluir()" />
+                <app-botoes icone="edit" texto="Editar Empenho" variant="btn-cabecalho" disabled [permissao]="407"
+                    (acao)="editar()" />
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="formulario">
+        <ng-content></ng-content>
+    </div>
+</section>
+
+<ng-template #template>
+    <div class="btn-group">
+        <app-botoes icone="add" texto="Adicionar Nota" variant="btn-cabecalho" [permissao]="status !==2? 502 : 15"
+            (acao)="adicionarNotas()" />
+        <app-botoes icone="delete" texto="Excluir Nota" variant="btn-cabecalho" [permissao]="status !==2? 504 : 15"
+            (acao)="removerNotas()" />
+        <app-botoes icone="visibility" texto="Ver Nota" variant="btn-cabecalho" [permissao]="503" (acao)="editarNotas()" />
+    </div>
+</ng-template>

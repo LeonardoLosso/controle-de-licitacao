@@ -1,0 +1,47 @@
+<form [formGroup]="formService.formulario" class="formulario">
+
+    <!-- Edital -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Edital</mat-label>
+        <input matInput [formControl]="formService.obterControle('edital')">
+    </mat-form-field>
+
+    <!-- Data licitação -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Data Licitação</mat-label>
+        <input matInput [matDatepicker]="dataLicitacao" [formControl]="formService.obterControle('dataLicitacao')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
+        <mat-datepicker #dataLicitacao></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Data ata -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Data Ata</mat-label>
+        <input matInput [matDatepicker]="dataAta" [formControl]="formService.obterControle('dataAta')">
+        <mat-datepicker-toggle matIconSuffix [for]="dataAta"></mat-datepicker-toggle>
+        <mat-datepicker #dataAta></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Vigência -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Vigência</mat-label>
+        <input matInput [matDatepicker]="vigencia" [formControl]="formService.obterControle('vigencia')">
+        <mat-datepicker-toggle matIconSuffix [for]="vigencia"></mat-datepicker-toggle>
+        <mat-datepicker #vigencia></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Lookup empresa -->
+    <app-lookup-base
+        class="lookup"
+        label="Empresa"
+        [control]="formService.obterControle('empresa')"
+        [apenasLeitura]="true"/>
+
+    <!-- Lookup Órgão -->
+    <app-lookup-base
+        class="lookup"
+        label="Órgão"
+        [control]="formService.obterControle('orgao')"
+        [apenasLeitura]="true"/>
+
+</form>

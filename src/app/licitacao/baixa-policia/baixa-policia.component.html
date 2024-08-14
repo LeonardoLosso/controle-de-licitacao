@@ -1,0 +1,40 @@
+<ng-template #loadingSpinnerContainer></ng-template>
+<section class="busca-docmentos">
+    <app-container>
+        <app-cabecalho-baixa-policia
+            (cancelar)="cancelar()"
+            (acao)="salvar()"
+            (editarEmpenho)="editarEmpenho()"
+            (inativar)="inativar()"
+            (novo)="novoEmpenho()"
+            (remover)="excluirEmpenho()"
+            (adicionarNota)="adicionarNota()"
+            (editarNota)="editarNota()"
+            (excluirNota)="excluirNota()"
+            [status]="status.value"
+            [label]="label">
+            
+            <app-formulario-baixa-policia/>
+        </app-cabecalho-baixa-policia>
+
+        <mat-tab-group 
+            [selectedIndex]="aba.value"
+            class="tab-group"
+            (selectedIndexChange)="onTabChange($event)">
+            <mat-tab label="Empenhos">
+
+                <!-- <app-baixa-policia-tabela [listaItens]="listaNotas.value"/> -->
+
+            </mat-tab>
+            <mat-tab label="Notas">
+
+                <!-- <app-empenho-tabela 
+                    [listaEmpenhos]="listaEmpenho.value" 
+                    [control]="selecionado" 
+                    (editar)="editarEmpenho()"/> -->
+
+            </mat-tab>
+        </mat-tab-group>
+            
+    </app-container>
+</section>

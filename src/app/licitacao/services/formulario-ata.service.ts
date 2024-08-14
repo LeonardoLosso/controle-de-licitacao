@@ -35,7 +35,7 @@ export class FormularioAtaService {
       vigencia: new FormControl(null),
       empresa: new FormControl(null),
       orgao: new FormControl(null),
-      unidade: new FormControl(null),
+      unidade: new FormControl(null, [Validators.required]),
       itens: new FormControl([])
     });
 
@@ -217,7 +217,6 @@ export class FormularioAtaService {
     this.obterControle('vigencia').enable();
     this.obterControle('empresa').enable();
     this.obterControle('orgao').enable();
-    this.obterControle('unidade').enable();
   }
 
   private retornaAta(): AtaLicitacao {

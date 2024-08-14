@@ -128,7 +128,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     const item: ItemDeEmpenho = this.selecionado.value as ItemDeEmpenho;
 
     const result = await this.abreModalItem(item);
-
+    
     if (result) {
       const index = this.listaItens.value.indexOf(item);
       const edit: ItemDeEmpenho = result
@@ -155,7 +155,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       id: 0,
       numNota: '',
       empenhoID: this.id,
-      numEmpenho: '',
+      numEmpenho: this.form.obterControle('numEmpenho').value,
       baixaID: this.form.idAta,
       edital: this.form.obterControle('edital').value,
       unidade: this.form.obterControle('unidade').value,
@@ -201,6 +201,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
 
       if (nota) {
         nota.unidade = this.form.obterControle('unidade').value;
+        nota.numEmpenho = this.form.obterControle('numEmpenho').value;
         const result = await this.abreModalNota(nota);
         if (result) {
           this.mensagemService.openSnackBar("Nota editada com sucesso!", 'success');
@@ -246,7 +247,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     this.listaDocumentos = this.form.obterControle<Nota[]>('documentos');
     this.selecionado = this.form.obterControle<Nota>('selecionadoGrid');
     this.documentoSelecionado = this.form.obterControle<ItemDeEmpenho>('documentoSelecionado');
-    this.aba = this.form.obterControle<ItemDeEmpenho>('abaSelecionada');
+    this.aba = this.form.obterControle('abaSelecionada');
 
   }
 

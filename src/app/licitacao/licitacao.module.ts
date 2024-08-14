@@ -29,6 +29,10 @@ import { LookupItemEmpenhoComponent } from './empenho/modal-item-empenho/lookup-
 import { ModalNotaComponent } from './notas/modal-nota/modal-nota.component';
 import { ItemNotaTabelaComponent } from './notas/item-nota-tabela/item-nota-tabela.component';
 import { LookupItemNotaComponent } from './notas/lookup-item-nota/lookup-item-nota.component';
+import { BaixaPoliciaComponent } from './baixa-policia/baixa-policia.component';
+import { CabecalhoBaixaPoliciaComponent } from './baixa-policia/cabecalho-baixa-policia/cabecalho-baixa-policia.component';
+import { FormularioBaixaPoliciaComponent } from './baixa-policia/formulario-baixa-policia/formulario-baixa-policia.component';
+import { BaixaPoliciaTabelaComponent } from './baixa-policia/tabelas/baixa-policia-tabela/baixa-policia-tabela.component';
 
 
 
@@ -58,6 +62,10 @@ import { LookupItemNotaComponent } from './notas/lookup-item-nota/lookup-item-no
     ModalNotaComponent,
     ItemNotaTabelaComponent,
     LookupItemNotaComponent,
+    BaixaPoliciaComponent,
+    CabecalhoBaixaPoliciaComponent,
+    FormularioBaixaPoliciaComponent,
+    BaixaPoliciaTabelaComponent
   ],
   imports: [
     CommonModule,
