@@ -46,6 +46,22 @@ export interface BaixaLicitacao {
     itens: ItemDeBaixa[]
 }
 
+export interface BaixaPolicia {
+    id: number,
+    edital: number,
+    status: number,
+    dataLicitacao: Date,
+    dataAta: Date,
+    vigencia: Date,
+    empresa: string,
+    orgao: string,
+    valorLicitado: number,
+    valorEmpenhado: number,
+    valorEntregue: number,
+    empenhos: EmpenhoPolicia[]
+    notas: EmpenhoPolicia[]
+}
+
 export interface Empenho {
     id: number,
     numEmpenho: string,
@@ -70,6 +86,16 @@ export interface EmpenhoSimplificado {
     status: number,
     dataEmpenho: Date,
     saldo: number,
+    valor: number
+}
+
+export interface EmpenhoPolicia {
+    id: number,
+    numEmpenho: string,
+    numNota: string,
+    baixaID: number,
+    edital: string,
+    dataEmpenho: Date,
     valor: number
 }
 

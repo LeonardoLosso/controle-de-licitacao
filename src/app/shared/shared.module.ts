@@ -18,6 +18,7 @@ import { PermissaoDirective } from "./directive/permissao.directive";
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { LookupBaseComponent } from './componentes/lookup-base/lookup-base.component';
 import { ModalImportacaoComponent } from './modal-importacao/modal-importacao.component';
+import { LabelValueComponent } from './componentes/label-value/label-value.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { ModalImportacaoComponent } from './modal-importacao/modal-importacao.co
         PermissaoDirective,
         LoadingSpinnerComponent,
         LookupBaseComponent,
-        ModalImportacaoComponent
+        ModalImportacaoComponent,
+        LabelValueComponent
     ],
     imports: [
         CommonModule,
@@ -56,7 +58,9 @@ import { ModalImportacaoComponent } from './modal-importacao/modal-importacao.co
         FormataEnumPipe,
         ModalConfirmacaoComponent,
         PermissaoDirective,
-        LookupBaseComponent
+        LookupBaseComponent,
+        LabelValueComponent
+
     ]
 })
 export class SharedModule { }

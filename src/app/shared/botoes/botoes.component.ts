@@ -16,7 +16,7 @@ export class BotoesComponent {
 
   @Output() acao = new EventEmitter();
 
-  doClick(){
+  doClick() {
     this.acao.emit();
   }
 

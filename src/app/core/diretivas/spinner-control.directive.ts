@@ -8,8 +8,10 @@ export abstract class SpinnerControlDirective {
   constructor() { }
 
 
-  protected mostrarSpinner() {
-    this.loadingSpinnerContainer.createComponent(LoadingSpinnerComponent);
+  protected mostrarSpinner(mensagem?: string) {
+    var compRef = this.loadingSpinnerContainer.createComponent(LoadingSpinnerComponent);
+    if (mensagem)
+      compRef.instance.mensagem = mensagem;
   }
 
   protected esconderSpinner() {

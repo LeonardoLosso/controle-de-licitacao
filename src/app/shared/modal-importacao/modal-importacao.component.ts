@@ -42,7 +42,7 @@ export class ModalImportacaoComponent extends SpinnerControlDirective {
     const formData = new FormData();
     formData.append('file', file);
 
-    this.mostrarSpinner();
+    this.mostrarSpinner("A Operação pode levar até 5 minutos");
     let result: any;
     try {
       if (this.data.titulo === 'Ata')

@@ -22,9 +22,20 @@
             class="tab-group"
             (selectedIndexChange)="onTabChange($event)">
             <mat-tab label="Empenhos">
-
-                <!-- <app-baixa-policia-tabela [listaItens]="listaNotas.value"/> -->
-
+                <div class="conteudo">
+                    <div class="tabela">
+                        <app-baixa-policia-tabela [listaEmpenhos]="listaEmpenho.value"/>
+                    </div>
+                    <div class="totais">
+                        <div class="labels">
+                            <app-label-value class="label" label="Valor da ATA" [valor]="512135 | currency: 'R$'"/>
+                            <app-label-value class="label" label="Valor EMPENHOS" [valor]="512135 | currency: 'R$'"/>
+                            <app-label-value class="label" label="Valor ENTREGUE" [valor]="512135 | currency: 'R$'"/>
+                            <app-label-value class="label" label="Saldo da ATA" color="lightcoral; font-weight: bold" [valor]="512135 | currency: 'R$'"/>
+                            <app-label-value class="label" label="Saldo EMPENHOS" color="lightcoral; font-weight: bold" [valor]="512135 | currency: 'R$'"/>
+                        </div>
+                    </div>
+                </div>
             </mat-tab>
             <mat-tab label="Notas">
 

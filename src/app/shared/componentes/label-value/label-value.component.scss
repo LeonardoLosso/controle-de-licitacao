@@ -1,0 +1,14 @@
+.componente{
+    padding: 10px;
+    font-size: medium;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+    box-shadow: 1px 1px 3px #5858589a;
+
+    .label{
+        margin-right: 5px;
+    }
+}
