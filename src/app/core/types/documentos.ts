@@ -5,14 +5,12 @@ export interface AtaLicitacao {
     id: number,
     edital: string,
     status: number,
-    tipo: number,
     orgao: Entidade,
     empresa: Entidade,
     unidade: number,
     dataLicitacao: Date,
     dataAta: Date
     vigencia: Date,
-    totalLicitado: number,
     itens: ItemDeAta[]
     totalReajustes: number
 }

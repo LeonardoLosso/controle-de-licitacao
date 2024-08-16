@@ -50,12 +50,10 @@ export class PesquisaComponent extends CrudPesquisaBaseDirective<AtaLicitacaoSim
     this.mostrarSpinner();
 
     try {
-      if (await lastValueFrom(this.service.inativarBaixa(cadastro.id, cadastro.status))) {
-        await lastValueFrom(this.service.inativar(cadastro.id, cadastro.status));
-        this.loadData();
-        this.messageService.openSnackBar('Status atualizado com sucesso!', 'success');
-        this.selecionado.setValue(null);
-      }
+      await lastValueFrom(this.service.inativar(cadastro.id, cadastro.status));
+      this.loadData();
+      this.messageService.openSnackBar('Status atualizado com sucesso!', 'success');
+      this.selecionado.setValue(null);
     } finally {
       this.esconderSpinner();
     }

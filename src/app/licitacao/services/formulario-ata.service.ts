@@ -19,7 +19,6 @@ export class FormularioAtaService {
 
   public formulario!: FormGroup;
   public idAta!: number;
-  public totalLicitado!: number;
   public totalReajustes!: number;
   public reajustes!: Reajuste[];
   private sttsControl!: FormControl<number>;
@@ -85,11 +84,11 @@ export class FormularioAtaService {
 
       lista.value[index].id = item.id;
       lista.value[index].nome = item.nome;
-      lista.value[index].quantidade = item.quantidade;
+      lista.value[index].qtdeLicitada = item.qtdeLicitada;
       lista.value[index].unidade = item.unidade;
       lista.value[index].valorUnitario = item.valorUnitario;
       lista.value[index].desconto = item.desconto;
-      lista.value[index].valorTotal = item.valorTotal;
+      lista.value[index].valorLicitado = item.valorLicitado;
     }
   }
 
@@ -98,13 +97,6 @@ export class FormularioAtaService {
     const ataLicitacao = this.retornaAta();
 
     return await lastValueFrom(this.service.criar(ataLicitacao));
-  }
-  public async criarBaixa() {
-    const id = this.idAta;
-    if (id)
-      return await lastValueFrom(this.service.criarBaixa(id));
-    else
-      return null;
   }
   public async editar() {
     const documento = this.retornaAta();
@@ -115,14 +107,6 @@ export class FormularioAtaService {
       return null;
     }
   }
-  public async editarBaixa() {
-    const id = this.idAta;
-    if (id)
-      return await lastValueFrom(this.service.editarBaixa(id));
-    else
-      return null;
-  }
-
   public async inativar() {
     if (!this.idAta)
       return null;
@@ -132,15 +116,7 @@ export class FormularioAtaService {
 
     return lastValueFrom(this.service.inativar(this.idAta, status));
   }
-  public async inativarBaixa() {
-    if (!this.idAta)
-      return null;
-    const status = this.obterControle('status').value;
-    if (!status)
-      return null
-
-    return lastValueFrom(this.service.inativarBaixa(this.idAta, status));
-  }
+  
 
   public excluirItem(item: ItemDeAta) {
     const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
@@ -182,7 +158,6 @@ export class FormularioAtaService {
 
   public limpar() {
     this.idAta = 0;
-    this.totalLicitado = 0;
     this.obterControle<number>('status').setValue(0);
     this.obterControle<string>('edital').setValue(null);
     this.obterControle<Date>('dataLicitacao').setValue(null);
@@ -225,7 +200,6 @@ export class FormularioAtaService {
       id: this.idAta,
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value ?? 1,
-      tipo: this.obterControle('unidade').value?.id ?? 0,
       unidade: this.obterControle('unidade').value?.id ?? 0,
       empresa: this.obterControle('empresa').value?.id ?? 0,
       orgao: this.obterControle('orgao').value?.id ?? 0,
@@ -233,7 +207,6 @@ export class FormularioAtaService {
       dataAta: this.obterControle('dataAta').value,
       vigencia: this.obterControle('vigencia').value,
       itens: this.obterControle('itens').value,
-      totalLicitado: this.totalLicitado,
       totalReajustes: this.totalReajustes
     }
   }

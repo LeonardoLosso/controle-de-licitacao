@@ -73,24 +73,6 @@ export class DocumentosService {
     return this.http.get<BaixaLicitacao>(url)
   }
 
-  public criarBaixa(id: number): Observable<BaixaLicitacao> {
-    return this.http.post<BaixaLicitacao>(`${this.URL}/baixa`, id);
-  }
-
-  public editarBaixa(id: number): Observable<BaixaLicitacao> {
-    return this.http.put<BaixaLicitacao>(`${this.URL}/baixa/atualizar`, id);
-  }
-
-  public inativarBaixa(id: number, statusAtual: number): Observable<BaixaLicitacao> {
-    const novoValor = statusAtual === 1 ? '2' : '1';
-    const status = {
-      op: "replace",
-      path: "/status",
-      value: novoValor
-    }
-    return this.http.patch<BaixaLicitacao>(`${this.URL}/baixa/status/${id}`, [status]);
-  }
-
   public listarEmpenhos(id: number): Observable<EmpenhoSimplificado[]> {
     const url = `${this.URL}/empenho/${id}`;
     return this.http.get<EmpenhoSimplificado[]>(url)

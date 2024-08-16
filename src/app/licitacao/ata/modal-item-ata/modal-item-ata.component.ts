@@ -30,9 +30,9 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
     this.formulario = new FormGroup({
       item: new FormControl(itemSimp.id === 0 ? null : `${itemSimp.id} - ${itemSimp.nome}`),
       unidade: new FormControl(this.cadastro.unidade),
-      quantidade: new FormControl(this.cadastro.quantidade),
+      quantidade: new FormControl(this.cadastro.qtdeLicitada),
       valorUnitario: new FormControl(this.cadastro.valorUnitario),
-      valorTotal: new FormControl({ value: this.cadastro.valorTotal, disabled: true })
+      valorTotal: new FormControl({ value: this.cadastro.valorLicitado, disabled: true })
     });
     this.obterControle('unidade').disable();
 
@@ -51,9 +51,9 @@ export class ModalItemAtaComponent extends ModalItemDocumentoBaseDirective<ItemD
       ataID: this.cadastro.ataID,
       nome: this.cadastro.nome,
       unidade: this.obterControle('unidade').value as string,
-      quantidade: this.obterControle('quantidade').value as number,
+      qtdeLicitada: this.obterControle('quantidade').value as number,
       valorUnitario: this.obterControle('valorUnitario').value as number,
-      valorTotal: this.obterControle('valorTotal').value as number,
+      valorLicitado: this.obterControle('valorTotal').value as number,
       desconto: 0
     }
   }

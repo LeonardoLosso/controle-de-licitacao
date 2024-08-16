@@ -73,8 +73,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     }
     this.mostrarSpinner();
 
-    this.form.totalLicitado = this.listaItens.value?.map(t => t.valorTotal).reduce((acc, value) => acc + value, 0);
-
     try {
       if (this.id && this.id != 0) {
         if (this.status.value === 2)
@@ -100,8 +98,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.id = result.id;
       this.form.idAta = result.id;
       this.listaItens.setValue(result.itens);
-
-      await this.criarBaixa();
     }
   }
   private async metodoEditar() {
@@ -109,25 +105,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     if (result) {
       this.form.idAta = this.id;
       this.messageService.openSnackBar('ATA editada com sucesso!', 'success');
-
-      await this.editarBaixa();
     }
   }
-
-  private async criarBaixa() {
-    const result = await this.form.criarBaixa();
-
-    if (result)
-      this.messageService.openSnackBar('BAIXA criada com sucesso!', 'success');
-  }
-
-  private async editarBaixa() {
-    const result = await this.form.editarBaixa();
-
-    if (result)
-      this.messageService.openSnackBar('BAIXA editada com sucesso!', 'success');
-  }
-
 
   async abrirBaixa() {
     if (this.id && this.id !== 0) {
@@ -161,10 +140,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.mostrarSpinner();
 
       try {
-        if (await this.form.inativarBaixa()) {
           await this.form.inativar();
           await this.inicializarFormulario(this.id);
-        }
       } finally {
         this.esconderSpinner();
       }
@@ -302,9 +279,9 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         ataID: reajuste.ataID,
         reajusteId: reajuste.id,
         nome: item.nome,
-        quantidade: item.quantidade,
+        qtdeLicitada: item.qtdeLicitada,
         unidade: item.unidade,
-        valorTotal: item.valorTotal,
+        valorLicitado: item.valorLicitado,
         valorUnitario: item.valorUnitario
       }
 
@@ -359,9 +336,9 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       ataID: this.form.idAta,
       nome: '',
       unidade: '',
-      quantidade: 0,
+      qtdeLicitada: 0,
       valorUnitario: 0,
-      valorTotal: 0,
+      valorLicitado: 0,
       desconto: 0,
       duplicado: true
     }
@@ -397,7 +374,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     if (result) {
       this.form.idAta = result.id;
-      this.form.totalLicitado = result.totalLicitado;
       this.form.totalReajustes = result.totalReajustes;
 
       edital.setValue(result.edital);

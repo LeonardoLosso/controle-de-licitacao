@@ -82,7 +82,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       this.esconderSpinner();
     }
   }
-  public importarEmpenho() { 
+  public importarEmpenho() {
     const dialogRef = this.dialog.open(ModalImportacaoComponent, {
       data: {
         titulo: "Empenho",
@@ -90,8 +90,8 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       }
     });
 
-    dialogRef.afterClosed().subscribe(result =>{
-      if(result)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
         this.goToEdit(result);
     })
   }
@@ -110,8 +110,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       if (await this.form.inativar()) {
         this.mensagemService.openSnackBar("Baixa inativada com sucesso!", 'success');
 
-        if (await this.form.inativarAta())
-          await this.inicializarFormulario(this.id)
+        await this.inicializarFormulario(this.id)
       }
     } finally {
       this.esconderSpinner();

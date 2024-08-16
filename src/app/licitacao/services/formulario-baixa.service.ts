@@ -65,16 +65,6 @@ export class FormularioBaixaService {
     const status = this.obterControle('status').value;
     if(!status)
       return null
-    
-    return await lastValueFrom(this.service.inativarBaixa(this.idAta, status));
-  }
-
-  public async inativarAta() {
-    if (!this.idAta)
-      return null;
-    const status = this.obterControle('status').value;
-    if(!status)
-      return null
 
     return await lastValueFrom(this.service.inativar(this.idAta, status));
   }

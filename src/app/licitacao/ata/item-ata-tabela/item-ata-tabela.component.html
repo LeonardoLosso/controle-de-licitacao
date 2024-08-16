@@ -35,7 +35,7 @@
                 <!-- Quantidade Column -->
                 <ng-container matColumnDef="quantidade">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Licitada</th>
-                    <td mat-cell *matCellDef="let row">{{row.quantidade}} ({{row.unidade}})</td>
+                    <td mat-cell *matCellDef="let row">{{row.qtdeLicitada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef>Número de Itens: <strong>{{getTotalItems()}}</strong></td>
                 </ng-container>
 
@@ -49,7 +49,7 @@
                 <!-- valor total Column -->
                 <ng-container matColumnDef="valorTotal">
                     <th mat-header-cell *matHeaderCellDef>Valor Total</th>
-                    <td mat-cell *matCellDef="let row"><strong>{{row.valorTotal | currency:'R$'}}</strong></td>
+                    <td mat-cell *matCellDef="let row"><strong>{{row.valorLicitado | currency:'R$'}}</strong></td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalCost() | currency:'R$'}}</td>
                 </ng-container>
 
