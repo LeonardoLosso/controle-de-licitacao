@@ -17,7 +17,9 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
   public aba!: FormControl;
   public status!: FormControl;
+
   public selecionado!: FormControl;
+  public notaSelecionada!: FormControl;
 
   public listaNotas!: FormControl;
   public listaEmpenho!: FormControl;
@@ -71,6 +73,8 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
   private inicializaFormControl() {
     this.status = this.form.obterControle('status');
     this.selecionado = this.form.obterControle('selecionadoGrid');
+    this.notaSelecionada = this.form.obterControle('notaSelecionada');
+
     this.listaEmpenho = this.form.obterControle('empenhos');
     this.listaNotas = this.form.obterControle('notas');
     this.aba = this.form.obterControle('abaSelecionada');
@@ -118,15 +122,15 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       dataLicitacao.setValue(result.dataLicitacao);
       dataAta.setValue(result.dataAta);
       vigencia.setValue(result.vigencia);
-      notas.setValue(result.itens);
-
+      
       if (result.empresa)
         empresa.setValue(await this.form.obterEntidade(result.empresa as any));
-
+      
       if (result.orgao)
         orgao.setValue(await this.form.obterEntidade(result.orgao as any));
-
+      
       // empenhos.setValue(await this.form.listarEmpenhos(result.id));
+      // notas.setValue(result.itens);
     }
   }
 }

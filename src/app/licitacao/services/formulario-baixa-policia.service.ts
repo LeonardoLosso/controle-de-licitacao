@@ -16,6 +16,7 @@ export class FormularioBaixaPoliciaService {
       edital: new FormControl(null),
       status: new FormControl(0),
       selecionadoGrid: new FormControl(null),
+      notaSelecionada: new FormControl(null),
       dataLicitacao: new FormControl(null),
       dataAta: new FormControl(null),
       vigencia: new FormControl(null),
