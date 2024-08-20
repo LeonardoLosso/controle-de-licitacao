@@ -13,6 +13,7 @@ export class ItemNotaTabelaComponent {
   @Output() abrirDialog = new EventEmitter();
   @Input() listaItens!: ItemDeNota[];
   @Input() control!: FormControl;
+  @Input() ehPolicia: boolean = false;
 
   private selecionado!: ItemDeNota;
 

@@ -26,7 +26,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
   public listaEmpenho!: FormControl;
 
   constructor(
-    private form: FormularioBaixaService,
+    public form: FormularioBaixaService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private mensagemService: MensagemService,
@@ -171,6 +171,9 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
 
       if (result.orgao)
         orgao.setValue(await this.form.obterEntidade(result.orgao as any));
+
+      if (result.unidade)
+        this.form.setUnidadePorID(result.unidade);
 
       empenhos.setValue(await this.form.listarEmpenhos(result.id));
     }

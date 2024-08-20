@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
 
-import { FormularioAtaService } from '../../services/formulario-ata.service';
 import { EnumNumberID } from 'src/app/core/types/auxiliares';
 import { EnumTipoCadastro } from 'src/app/core/types/enum';
 import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/lookup-entidades.component';
@@ -11,25 +9,22 @@ import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/loo
   templateUrl: './formulario-ata.component.html',
   styleUrls: ['./formulario-ata.component.scss']
 })
-export class FormularioAtaComponent implements OnInit{
+export class FormularioAtaComponent {
+  @Input() formService!: any
+  @Input() formEdit = true;
 
   public options = EnumTipoCadastro;
-  public statusControl!: FormControl<number>;
   public lookupDeEntidades = LookupEntidadesComponent;
   
   constructor(
-    public formService: FormularioAtaService
   ) { }
 
-  ngOnInit(): void {
-    this.statusControl = this.formService.obterControle<number>('status');
-  }
 
   displayUnidade(val: EnumNumberID): string {
     return val && val.nome ? `${val.nome}` : '';
   }
 
   desabilitado(): boolean{
-    return this.statusControl.value === 2;
+    return !this.formEdit;
   }
 }

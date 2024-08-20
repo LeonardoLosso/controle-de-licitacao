@@ -5,6 +5,8 @@ import { lastValueFrom } from 'rxjs';
 import { DocumentosService } from './documentos.service';
 import { BaixaLicitacao } from 'src/app/core/types/documentos';
 import { EntidadesService } from 'src/app/entidades/services/entidades.service';
+import { EnumNumberID } from 'src/app/core/types/auxiliares';
+import { EnumTipoCadastro } from 'src/app/core/types/enum';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,7 @@ export class FormularioBaixaService {
     this.formulario = new FormGroup({
       edital: new FormControl(null),
       status: new FormControl(0),
+      unidade: new FormControl(0),
       selecionadoGrid: new FormControl(null),
       dataLicitacao: new FormControl(null),
       dataAta: new FormControl(null),
@@ -45,6 +48,11 @@ export class FormularioBaixaService {
 
   public async obterEntidade(id: number) {
     return await lastValueFrom(this.entidadeService.obterPorID(id));
+  }
+  public setUnidadePorID(id: number) {
+    const unidade = this.obterControle<EnumNumberID>('unidade');
+    const val = EnumTipoCadastro.filter(f => f.id === id)[0];
+    unidade.setValue(val);
   }
   public async obterBaixaPorID(id: number) {
     return await lastValueFrom(this.service.obterBaixaPorID(id));
@@ -76,6 +84,7 @@ export class FormularioBaixaService {
     this.obterControle('vigencia').disable();
     this.obterControle('empresa').disable();
     this.obterControle('orgao').disable();
+    this.obterControle('unidade').disable();
   }
 
   private retornaBaixa(): BaixaLicitacao {
@@ -85,6 +94,7 @@ export class FormularioBaixaService {
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value ?? 1,
       empresa: this.obterControle('empresa').value?.id ?? 0,
+      unidade: this.obterControle('unidade').value?.id ?? 0,
       orgao: this.obterControle('orgao').value?.id ?? 0,
       dataLicitacao: this.obterControle('dataLicitacao').value,
       dataAta: this.obterControle('dataAta').value,

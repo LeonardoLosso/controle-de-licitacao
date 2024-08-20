@@ -58,6 +58,8 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
       quantidade: 0,
       unidade: '',
       valorTotal: 0,
+      valorCaixa: 0,
+      qtdeCaixa: 0,
       valorUnitario: 0
     };
     const novoItem = await this.abreModalItem(itemVazio);

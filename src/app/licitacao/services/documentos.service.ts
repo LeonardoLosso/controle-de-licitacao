@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, Empenho, EmpenhoSimplificado, Nota, NotaSimplificada, Reajuste } from 'src/app/core/types/documentos';
+import { AtaLicitacao, AtaLicitacaoSimplificada, BaixaLicitacao, BaixaPolicia, Empenho, EmpenhoSimplificado, Nota, NotaSimplificada, Reajuste } from 'src/app/core/types/documentos';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -134,8 +134,12 @@ export class DocumentosService {
     return this.http.get<Nota>(url);
   }
 
-  public obterBaixaPoliciaPorID(id: number): Observable<BaixaLicitacao> {
-    const url = `${this.URL}/baixa/${id}`;
-    return this.http.get<BaixaLicitacao>(url)
+  public obterBaixaPoliciaPorID(id: number): Observable<BaixaPolicia> {
+    const url = `${this.URL}/baixaPolicia/${id}`;
+    return this.http.get<BaixaPolicia>(url)
+  }
+
+  public salvarEmpenhosPolicia(documento: any, id: number): Observable<BaixaPolicia> {
+    return this.http.patch<BaixaPolicia>(`${this.URL}/baixaPolicia/${id}`, documento);
   }
 }

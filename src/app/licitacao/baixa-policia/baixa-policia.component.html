@@ -14,7 +14,7 @@
             [status]="status.value"
             [label]="label">
             
-            <app-formulario-baixa-policia/>
+            <app-formulario-ata [formService]="form" [formEdit]="false"/>
         </app-cabecalho-baixa-policia>
 
         <mat-tab-group 
@@ -31,17 +31,16 @@
                     </div>
                     <div class="totais">
                         <div class="labels">
-                            <app-label-value class="label" label="Valor da ATA" [valor]="512135 | currency: 'R$'"/>
-                            <app-label-value class="label" label="Valor EMPENHOS" [valor]="512135 | currency: 'R$'"/>
-                            <app-label-value class="label" label="Valor ENTREGUE" [valor]="512135 | currency: 'R$'"/>
-                            <app-label-value class="label" label="Saldo da ATA" color="lightcoral; font-weight: bold" [valor]="512135 | currency: 'R$'"/>
-                            <app-label-value class="label" label="Saldo EMPENHOS" color="lightcoral; font-weight: bold" [valor]="512135 | currency: 'R$'"/>
+                            <app-label-value class="label" label="Valor da ATA" [valor]="form.valorLicitado| currency: 'R$'"/>
+                            <app-label-value class="label" label="Valor EMPENHOS" [valor]="form.valorEmpenhado| currency: 'R$'"/>
+                            <app-label-value class="label" label="Valor ENTREGUE" [valor]="form.valorEntregue| currency: 'R$'"/>
+                            <app-label-value class="label" label="Saldo da ATA" color="lightcoral; font-weight: bold" [valor]="form.valorLicitado - form.valorEntregue | currency: 'R$'"/>
+                            <app-label-value class="label" label="Saldo EMPENHOS" color="lightcoral; font-weight: bold" [valor]="form.valorEmpenhado - form.valorEntregue | currency: 'R$'"/>
                         </div>
                     </div>
                 </div>
             </mat-tab>
             <mat-tab label="Notas">
-
                 <app-empenho-tabela-notas
                     [listaDocumentos]="listaNotas.value"
                     [control]="notaSelecionada"

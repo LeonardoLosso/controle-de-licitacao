@@ -1,0 +1,46 @@
+<form [formGroup]="formulario" class="dialog">
+    <h2>{{titulo}}</h2>
+    <div mat-dialog-content>
+        <h3>Dados do Item</h3>
+        <div class="campo dados">
+
+            <!-- numEmpenho -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nº Empenho</mat-label>
+                <input matInput formControlName="numEmpenho">
+            </mat-form-field>
+
+            <!-- Nº Nota -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Nº Nota</mat-label>
+                <input matInput formControlName="numNota">
+            </mat-form-field>
+
+            <!-- Data licitação -->
+            <mat-form-field class="field" appearance="outline">
+                <mat-label>Data Empenho</mat-label>
+                <input matInput [matDatepicker]="dataLicitacao" formControlName="dataEmpenho"> 
+                <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
+                <mat-datepicker #dataLicitacao></mat-datepicker>
+            </mat-form-field>
+
+            <!-- valor Unitário -->
+            <mat-form-field floatLabel="always" appearance="outline">
+                <mat-label>Valor</mat-label>
+                <input matInput type="number" class="right-align" placeholder="0" formControlName="valor">
+                <span matTextPrefix>R$</span>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(formulario)">
+            <mat-icon matPrefix>undo</mat-icon>
+            Cancelar
+        </button>
+        <button mat-flat-button color="primary" (click)="submeter()">
+            <mat-icon matPrefix>save</mat-icon>
+            Salvar
+        </button>
+    </div>
+    <ng-template #loadingSpinnerContainer></ng-template>
+</form>

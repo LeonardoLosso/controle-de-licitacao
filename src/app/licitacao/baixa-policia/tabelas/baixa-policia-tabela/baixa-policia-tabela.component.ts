@@ -14,9 +14,7 @@ export class BaixaPoliciaTabelaComponent {
 
   private selecionado!: EmpenhoPolicia;
 
-  public displayedColumns: string[] = [
-    'codigo', 'numNota', 'numEmpenho', 'data', 'valor'
-  ];
+  public displayedColumns: string[] = ['numEmpenho', 'numNota', 'data', 'valor'];
 
   clickGrid(valor: EmpenhoPolicia) {
     this.selecionado = valor;

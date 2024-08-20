@@ -10,7 +10,7 @@
             (remover)="excluirEmpenho()"
             [status]="status.value">
             
-            <app-formulario-baixa/>
+            <app-formulario-ata [formService]="form" [formEdit]="false"/>
         </app-cabecalho-baixa>
 
         <mat-tab-group class="tab-group">

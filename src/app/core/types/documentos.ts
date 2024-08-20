@@ -36,6 +36,7 @@ export interface BaixaLicitacao {
     id: number,
     edital: number,
     status: number,
+    unidade: number,
     dataLicitacao: Date,
     dataAta: Date,
     vigencia: Date,
@@ -48,6 +49,7 @@ export interface BaixaPolicia {
     id: number,
     edital: number,
     status: number,
+    unidade: number,
     dataLicitacao: Date,
     dataAta: Date,
     vigencia: Date,
@@ -57,7 +59,6 @@ export interface BaixaPolicia {
     valorEmpenhado: number,
     valorEntregue: number,
     empenhos: EmpenhoPolicia[]
-    notas: EmpenhoPolicia[]
 }
 
 export interface Empenho {
@@ -99,6 +100,7 @@ export interface EmpenhoPolicia {
 
 export interface Nota {
     id: number,
+    ehPolicia: boolean,
     numNota: string,
     empenhoID: number,
     numEmpenho: string,

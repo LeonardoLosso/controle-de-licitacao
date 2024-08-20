@@ -46,4 +46,8 @@ export class CabecalhoAtaComponent {
   verificaStatus(): boolean{
     return this.status === 0 || this.status === 1 || !this.status;
   }
+
+  public permite(){
+    return (this.possuiEmpenho || this.status === 2);
+  }
 }

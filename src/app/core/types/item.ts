@@ -83,6 +83,8 @@ export interface ItemDeNota {
     empenhoID: number,
     unidade: string,
     quantidade: number,
+    qtdeCaixa: number,
+    valorCaixa: number,
     valorUnitario: number,
     valorTotal: number
 }

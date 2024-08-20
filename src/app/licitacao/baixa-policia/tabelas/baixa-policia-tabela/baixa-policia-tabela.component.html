@@ -4,14 +4,6 @@
         <div class="table-container">
 
             <table mat-table [dataSource]="listaEmpenhos" class="table">
-                
-                <!-- ID Column -->
-                <ng-container matColumnDef="codigo">
-                    <th mat-header-cell *matHeaderCellDef disableClear>Código</th>
-                    <td mat-cell *matCellDef="let row">{{row.id}}</td>
-                    <td mat-footer-cell *matFooterCellDef></td>
-                </ng-container>
-
                 <!-- num empenho Column -->
                 <ng-container matColumnDef="numEmpenho">
                     <th mat-header-cell *matHeaderCellDef disableClear>

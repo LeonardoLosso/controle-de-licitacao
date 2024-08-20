@@ -12,7 +12,7 @@
             [permissao]="form.idAta && form.idAta !==0 ? 304 : 302"
             [possuiEmpenho]="possuiEmpenho">
             
-            <app-formulario-ata/>
+            <app-formulario-ata [formService]="form" [formEdit]="status.value !== 2"/>
         </app-cabecalho-ata>
         <mat-tab-group>
             <mat-tab label="Tabela Vigente">

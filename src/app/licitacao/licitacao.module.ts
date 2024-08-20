@@ -14,7 +14,6 @@ import { FormularioAtaComponent } from './ata/formulario-ata/formulario-ata.comp
 import { ModalItemAtaComponent } from './ata/modal-item-ata/modal-item-ata.component';
 import { BaixaComponent } from './baixa/baixa.component';
 import { CabecalhoBaixaComponent } from './baixa/cabecalho-baixa/cabecalho-baixa.component';
-import { FormularioBaixaComponent } from './baixa/formulario-baixa/formulario-baixa.component';
 import { BaixaTabelaComponent } from './baixa/tabelas/baixa-tabela/baixa-tabela.component';
 import { EmpenhoTabelaComponent } from './baixa/tabelas/empenho-tabela/empenho-tabela.component';
 import { LicitacaoRoutingModule } from './services/licitacao-routing.module';
@@ -31,8 +30,8 @@ import { ItemNotaTabelaComponent } from './notas/item-nota-tabela/item-nota-tabe
 import { LookupItemNotaComponent } from './notas/lookup-item-nota/lookup-item-nota.component';
 import { BaixaPoliciaComponent } from './baixa-policia/baixa-policia.component';
 import { CabecalhoBaixaPoliciaComponent } from './baixa-policia/cabecalho-baixa-policia/cabecalho-baixa-policia.component';
-import { FormularioBaixaPoliciaComponent } from './baixa-policia/formulario-baixa-policia/formulario-baixa-policia.component';
 import { BaixaPoliciaTabelaComponent } from './baixa-policia/tabelas/baixa-policia-tabela/baixa-policia-tabela.component';
+import { ModalEmpenhoComponent } from './baixa-policia/modal-empenho/modal-empenho.component';
 
 
 
@@ -48,7 +47,6 @@ import { BaixaPoliciaTabelaComponent } from './baixa-policia/tabelas/baixa-polic
     ModalItemAtaComponent,
     BaixaComponent,
     CabecalhoBaixaComponent,
-    FormularioBaixaComponent,
     BaixaTabelaComponent,
     EmpenhoTabelaComponent,
     HistoricoComponent,
@@ -64,8 +62,8 @@ import { BaixaPoliciaTabelaComponent } from './baixa-policia/tabelas/baixa-polic
     LookupItemNotaComponent,
     BaixaPoliciaComponent,
     CabecalhoBaixaPoliciaComponent,
-    FormularioBaixaPoliciaComponent,
-    BaixaPoliciaTabelaComponent
+    BaixaPoliciaTabelaComponent,
+    ModalEmpenhoComponent
   ],
   imports: [
     CommonModule,

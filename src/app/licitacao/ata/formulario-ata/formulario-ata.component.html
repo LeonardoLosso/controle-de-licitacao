@@ -11,7 +11,7 @@
 
     <!-- Data licitação -->
     <mat-form-field class="field" appearance="outline">
-        <mat-label>Data licitação</mat-label>
+        <mat-label>Data Licitação</mat-label>
         <input matInput [matDatepicker]="dataLicitacao" [formControl]="formService.obterControle('dataLicitacao')"> 
         <mat-datepicker-toggle matIconSuffix [for]="dataLicitacao"></mat-datepicker-toggle>
         <mat-datepicker #dataLicitacao></mat-datepicker>
@@ -19,7 +19,7 @@
 
     <!-- Data ata -->
     <mat-form-field class="field" appearance="outline">
-        <mat-label>Data ata</mat-label>
+        <mat-label>Data Ata</mat-label>
         <input matInput [matDatepicker]="dataAta" [formControl]="formService.obterControle('dataAta')">
         <mat-datepicker-toggle matIconSuffix [for]="dataAta"></mat-datepicker-toggle>
         <mat-datepicker #dataAta></mat-datepicker>
@@ -34,7 +34,7 @@
     </mat-form-field>
 
     <!-- Lookup empresa -->
-     <app-lookup-base
+    <app-lookup-base
         class="lookup"
         label="Empresa"
         [control]="formService.obterControle('empresa')"

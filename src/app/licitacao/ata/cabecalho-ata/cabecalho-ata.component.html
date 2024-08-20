@@ -11,9 +11,9 @@
 
         <div class="btn-group">
             <app-botoes icone="add" texto="Adicionar Item" variant="btn-cabecalho" (acao)="adicionar()"
-                [permissao]="possuiEmpenho || (status === 2)? 15 : permissao" />
+                [permissao]="permite()? 15 : permissao" />
             <app-botoes icone="delete" texto="Remover Item" variant="btn-cabecalho" (acao)="excluir()"
-                [permissao]="possuiEmpenho || (status === 2)? 15 : permissao" />
+                [permissao]="permite()? 15 : permissao" />
             <app-botoes icone="description" texto="Baixa" variant="btn-cabecalho" color="verde" (acao)="abrirBaixa()"
                 [permissao]="401" />
         </div>

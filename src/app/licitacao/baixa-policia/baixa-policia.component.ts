@@ -5,6 +5,10 @@ import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.
 import { FormularioBaixaPoliciaService } from '../services/formulario-baixa-policia.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
+import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
+import { lastValueFrom } from 'rxjs';
+import { EmpenhoPolicia, Nota } from 'src/app/core/types/documentos';
+import { ModalEmpenhoComponent } from './modal-empenho/modal-empenho.component';
 
 @Component({
   selector: 'app-baixa-policia',
@@ -27,7 +31,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
 
   constructor(
-    private form: FormularioBaixaPoliciaService,
+    public form: FormularioBaixaPoliciaService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private mensagemService: MensagemService,
@@ -53,22 +57,82 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
     const queryParams = { ata: this.id };
     this.router.navigate(['/licitacao'], { queryParams });
   }
+  public async inativar() {
+    if (!(await this.confirmarInativacao())) return;
 
-  public inativar(){}
+    this.mostrarSpinner();
 
-  public salvar(){}
+    try {
+      if (await this.form.inativar()) {
+        this.mensagemService.openSnackBar("Baixa inativada com sucesso!", 'success');
 
-  public editarEmpenho(){}
+        await this.inicializarFormulario(this.id)
+      }
+    } finally {
+      this.esconderSpinner();
+    }
+  }
+  public async salvar() {
+    this.mostrarSpinner();
+    try {
+      const result = await this.form.salvar();
+      if (result) {
+        this.form.idAta = this.id;
+        this.mensagemService.openSnackBar('BAIXA editada com sucesso!', 'success');
+      }
+    }
+    finally {
+      this.esconderSpinner();
+      await this.inicializarFormulario(this.id);
+    }
+  }
+  public async editarEmpenho() {
+    if (this.status.value === 2) return this.mensagemService.openSnackBar('Documento está inativo', 'alert');
 
-  public novoEmpenho(){}
+    if (!this.selecionado.value) {
+      return this.mensagemService.openSnackBar('Nenhum item selecionado', 'alert');
+    }
 
-  public excluirEmpenho(){}
+    const empenho: EmpenhoPolicia = this.selecionado.value as EmpenhoPolicia;
 
-  public adicionarNota(){}
+    const result = await this.abreModalEmpenho(empenho);
 
-  public editarNota(){}
+    if (result) {
+      const index = this.listaEmpenho.value.indexOf(empenho);
+      const edit: EmpenhoPolicia = result;
 
-  public excluirNota(){}
+      this.form.editarEmpenho(edit, index);
+    }
+  }
+  public async novoEmpenho() {
+    if (this.status.value === 2) return this.mensagemService.openSnackBar('Documento está inativo', 'alert');
+
+    const empenho = this.empenhoVazio();
+
+    const result = await this.abreModalEmpenho(empenho);
+
+    if (result) {
+      const novoItem: EmpenhoPolicia = result;
+
+      this.form.adicionarEmpenho(novoItem);
+    }
+  }
+  public excluirEmpenho() {
+    if (this.status.value === 2) return this.mensagemService.openSnackBar('Documento está inativo', 'alert');
+
+    const empenho = this.selecionado.value;
+
+    if (!empenho) {
+      return this.mensagemService.openSnackBar('Nenhum empenho selecionado', 'alert');
+    }
+
+    this.form.excluirEmpenho(empenho);
+  }
+  public adicionarNota() {
+
+  }
+  public editarNota() { }
+  public excluirNota() { }
   //-------------------------------------------------------------------
   private inicializaFormControl() {
     this.status = this.form.obterControle('status');
@@ -87,7 +151,6 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
     await this.inicializarFormulario(this.id);
   }
-
   private async inicializarFormulario(id?: number) {
 
     this.form.limpar();
@@ -101,7 +164,6 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       }
     }
   }
-
   private async preencher(id: number) {
     const status = this.form.obterControle<number>('status');
     const edital = this.form.obterControle<string>('edital');
@@ -122,15 +184,66 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       dataLicitacao.setValue(result.dataLicitacao);
       dataAta.setValue(result.dataAta);
       vigencia.setValue(result.vigencia);
-      
+
       if (result.empresa)
         empresa.setValue(await this.form.obterEntidade(result.empresa as any));
-      
+
       if (result.orgao)
         orgao.setValue(await this.form.obterEntidade(result.orgao as any));
-      
-      // empenhos.setValue(await this.form.listarEmpenhos(result.id));
-      // notas.setValue(result.itens);
+
+      if (result.unidade)
+        this.form.setUnidadePorID(result.unidade);
+
+      empenhos.setValue(result.empenhos);
+      notas.setValue(await this.form.listarNotas(result.id));
+
+      this.form.setEmpenhosOriginais();
+      this.form.valorLicitado = result.valorLicitado ?? 0;
+      this.form.valorEmpenhado = result.valorEmpenhado ?? 0;
+      this.form.valorEntregue = result.valorEntregue ?? 0;
     }
+  }
+  private async confirmarInativacao() {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Inativar',
+        mensagem: 'Deseja inativar baixa?',
+        item: `\nAs alterações NÃO salvas serão descartadas`
+      }
+    });
+
+    return await lastValueFrom(confirmacao.afterClosed());
+  }
+  private async confirmarExclusao(nota: Nota) {
+    const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
+      disableClose: true,
+      data: {
+        titulo: 'Excluir',
+        mensagem: 'Deseja excluir nota?',
+        item: `${nota.baixaID} - ${nota.numNota}`
+      }
+    });
+
+    return await lastValueFrom(confirmacao.afterClosed());
+  }
+  private empenhoVazio(): EmpenhoPolicia {
+    return {
+      baixaID: this.id,
+      dataEmpenho: new Date(),
+      edital: this.form.obterControle('edital').value,
+      id: 0,
+      numEmpenho: "",
+      numNota: "",
+      valor: 0
+    }
+  }
+  private async abreModalEmpenho(empenho: EmpenhoPolicia): Promise<EmpenhoPolicia> {
+    const dialogRef = this.dialog.open(ModalEmpenhoComponent, {
+      disableClose: true,
+      data: empenho
+    });
+
+    return await lastValueFrom(dialogRef.afterClosed());
   }
 }
