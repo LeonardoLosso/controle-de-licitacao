@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { ItemDeEmpenho } from 'src/app/core/types/item';
@@ -8,20 +8,26 @@ import { ItemDeEmpenho } from 'src/app/core/types/item';
   templateUrl: './empenho-tabela-itens.component.html',
   styleUrls: ['./empenho-tabela-itens.component.scss']
 })
-export class EmpenhoTabelaItensComponent {
+export class EmpenhoTabelaItensComponent implements OnInit {
 
   @Output() abrirDialog = new EventEmitter();
   @Input() listaItens!: ItemDeEmpenho[];
   @Input() control!: FormControl;
   @Input() isLoadingResults = false;
   @Input() isRateLimitReached = false;
-  private selecionado!: ItemDeEmpenho;
+  @Input() policia = false;
 
+  private selecionado!: ItemDeEmpenho;
   public displayedColumns: string[] = [
     'codigo', 'nome', 'unidade',
     'qtdeEmpenhada', 'valorUnitario', 'qtdeEntregue',
     'qtdeAEntregar', 'valorEntregue', 'total'
   ];
+  
+  ngOnInit(): void {
+    if(this.policia)
+      this.displayedColumns = ['codigo', 'nome', 'unidade'];
+  }
 
   clickGrid(valor: ItemDeEmpenho) {
     this.selecionado = valor;

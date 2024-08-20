@@ -25,7 +25,7 @@ export class LookupItemNotaComponent {
     private service: ItensService,
     public dialogRef: MatDialogRef<LookupItemNotaComponent>,
     private messageService: MensagemService,
-    @Inject(MAT_DIALOG_DATA) public data: ItemDeNota,
+    @Inject(MAT_DIALOG_DATA) public data: { policia: boolean, item: ItemDeNota },
   ) { }
 
   ngOnInit(): void {
@@ -33,13 +33,25 @@ export class LookupItemNotaComponent {
   }
 
   private async listar() {
-
     this.isLoadingResults = true;
-
     try {
-      const result = await this.listarEmpenho();
-      if (result) {
-        this.listaItens = result;
+      if (!this.data.policia) {
+        const result = await this.listarEmpenho();
+        if (result) {
+          this.listaItens = result;
+        }
+      } else {
+        const result = await this.listarItens();
+        if (result) {
+          this.listaItens = result.lista.map(item => {
+            return {
+              id: item.id,
+              nome: item.nome,
+              unidade: item.unidadePrimaria,
+              valorUnitario: 0
+            }
+          }) as ItemDeEmpenho[]
+        }
       }
     } catch (ex) {
       this.isRateLimitReached = true;
@@ -51,18 +63,21 @@ export class LookupItemNotaComponent {
   public confirmar() {
     if (this.selecionado.value) {
       const item = this.selecionado.value as ItemDeEmpenho;
-      this.data.id = item.id;
-      this.data.nome = item.nome;
-      this.data.unidade = item.unidade
-      this.data.valorUnitario = item.valorUnitario;
+      this.data.item.id = item.id;
+      this.data.item.nome = item.nome;
+      this.data.item.unidade = item.unidade;
+      this.data.item.valorUnitario = item.valorUnitario ?? 0;
 
-      return this.dialogRef.close(this.data);
+      return this.dialogRef.close(this.data.item);
     }
 
     this.messageService.openSnackBar('Nenhum item selecionado', 'alert');
   }
 
   private async listarEmpenho() {
-    return await lastValueFrom(this.service.listarItensEmpenho(this.data.empenhoID));
+    return await lastValueFrom(this.service.listarItensEmpenho(this.data.item.empenhoID));
+  }
+  private async listarItens() {
+    return await lastValueFrom(this.service.listar());
   }
 }

@@ -22,7 +22,7 @@
             </mat-form-field>
             
             <!-- Empenho -->
-            <mat-form-field class="input" appearance="outline">
+            <mat-form-field *ngIf="!policia" class="input" appearance="outline">
                 <mat-label>Nº Empenho</mat-label>
                 <input 
                     maxlength="50"
@@ -30,7 +30,7 @@
                     name="empenhoID" 
                     disabled 
                     #empenhoID="ngModel" 
-                    [(ngModel)]="cadastro.empenhoID">
+                    [(ngModel)]="cadastro.numEmpenho">
             </mat-form-field>
 
             <!-- Edital -->
@@ -51,7 +51,9 @@
                 class="field"
                 label="Órgão"
                 [control]="unidadeControl"
-                [apenasLeitura]="true"/>
+                [data]="'orgao'"
+                [tipoDaLookup]="lookupDeEntidades"
+                [apenasLeitura]="!policia"/>
 
             <!-- Data de Emissão-->
             <mat-form-field class="field" appearance="outline">

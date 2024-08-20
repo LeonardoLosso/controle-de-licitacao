@@ -32,6 +32,24 @@
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
+                <!-- Quantidade caixa -->
+                <ng-container matColumnDef="qtdeCaixa">
+                    <th mat-header-cell *matHeaderCellDef>Quantidade Caixa</th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-form-field class="input" appearance="outline">
+                            <input matInput 
+                                class="right-align" 
+                                placeholder="0"
+                                type="number"
+                                [(ngModel)]="row.qtdeCaixa" 
+                                #numNota="ngModel"
+                                (input)="calculaUnitario(row)">
+                            <span matTextPrefix>R$</span>
+                        </mat-form-field>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
                 <!-- Quantidade licitada -->
                 <ng-container matColumnDef="quantidade">
                     <th mat-header-cell *matHeaderCellDef>Quantidade</th>
@@ -45,6 +63,25 @@
                                 [(ngModel)]="row.quantidade" 
                                 #numNota="ngModel"
                                 (input)="calculaTotal(row)">
+                            <span matTextPrefix>R$</span>
+                        </mat-form-field>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef></td>
+                </ng-container>
+
+                <!-- Valor caixa -->
+                <ng-container matColumnDef="valorCaixa">
+                    <th mat-header-cell *matHeaderCellDef>Valor Caixa</th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-form-field class="input" appearance="outline">
+                            <input matInput 
+                                class="right-align" 
+                                placeholder="0"
+                                name="numNota" 
+                                type="number"
+                                [(ngModel)]="row.valorCaixa" 
+                                #numNota="ngModel"
+                                (input)="calculaUnitario(row)">
                             <span matTextPrefix>R$</span>
                         </mat-form-field>
                     </td>

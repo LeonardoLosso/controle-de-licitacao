@@ -7,8 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { lastValueFrom } from 'rxjs';
-import { EmpenhoPolicia, Nota } from 'src/app/core/types/documentos';
+import { EmpenhoPolicia, Nota, NotaSimplificada } from 'src/app/core/types/documentos';
 import { ModalEmpenhoComponent } from './modal-empenho/modal-empenho.component';
+import { ModalNotaComponent } from '../notas/modal-nota/modal-nota.component';
 
 @Component({
   selector: 'app-baixa-policia',
@@ -128,8 +129,25 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
     this.form.excluirEmpenho(empenho);
   }
-  public adicionarNota() {
-
+  public async adicionarNota() {
+    const novaNota: Nota = {
+      id: 0,
+      ehPolicia: true,
+      numNota: '',
+      empenhoID: this.id,
+      numEmpenho: '',
+      baixaID: this.form.idAta,
+      edital: this.form.obterControle('edital').value,
+      unidade: this.form.obterControle('orgao').value,
+      dataEmissao: new Date(),
+      dataEntrega: new Date(),
+      itens: []
+    }
+    const result = await this.abreModalNota(novaNota);
+    if (result) {
+      this.mensagemService.openSnackBar("Nota adicionada com sucesso!", 'success');
+      this.inicializarFormulario(this.id);
+    }
   }
   public editarNota() { }
   public excluirNota() { }
@@ -246,4 +264,13 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
     return await lastValueFrom(dialogRef.afterClosed());
   }
+  private async abreModalNota(documento: Nota): Promise<NotaSimplificada> {
+    const dialogRef = this.dialog.open(ModalNotaComponent, {
+      disableClose: true,
+      data: documento
+    });
+
+    return await lastValueFrom(dialogRef.afterClosed());
+  }
+
 }

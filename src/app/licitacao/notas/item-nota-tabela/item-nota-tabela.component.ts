@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { ItemDeNota } from 'src/app/core/types/item';
@@ -8,7 +8,7 @@ import { ItemDeNota } from 'src/app/core/types/item';
   templateUrl: './item-nota-tabela.component.html',
   styleUrls: ['./item-nota-tabela.component.scss']
 })
-export class ItemNotaTabelaComponent {
+export class ItemNotaTabelaComponent implements OnInit {
 
   @Output() abrirDialog = new EventEmitter();
   @Input() listaItens!: ItemDeNota[];
@@ -21,7 +21,13 @@ export class ItemNotaTabelaComponent {
     'codigo', 'nome', 'unidade',
     'quantidade', 'valorUnitario', 'valorTotal'
   ];
-
+  ngOnInit(): void {
+    if(this.ehPolicia)
+      this.displayedColumns = [
+    'codigo', 'nome', 'unidade',
+    'qtdeCaixa', 'quantidade', 'valorCaixa',
+    'valorUnitario', 'valorTotal']
+  }
   clickGrid(valor: ItemDeNota) {
     this.selecionado = valor;
     this.control.setValue(valor);
@@ -48,6 +54,9 @@ export class ItemNotaTabelaComponent {
 
   public calculaTotal(row: ItemDeNota) {
     row.valorTotal = row.valorUnitario * row.quantidade;
-    console.log(row)
+  }
+
+  public calculaUnitario(row: ItemDeNota) {
+    row.valorUnitario = row.valorCaixa / row.qtdeCaixa;
   }
 }

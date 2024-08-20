@@ -11,6 +11,7 @@ import { LookupItemNotaComponent } from '../lookup-item-nota/lookup-item-nota.co
 import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive';
 import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
+import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/lookup-entidades.component';
 
 @Component({
   selector: 'app-modal-nota',
@@ -25,6 +26,8 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
   public listaItens!: ItemDeNota[];
   public listaControl = new FormControl<ItemDeNota[]>([]);
   public selecionado = new FormControl<ItemDeNota | null>(null);
+  public policia: boolean = false;
+  public lookupDeEntidades = LookupEntidadesComponent;
 
   constructor(
     dialogRef: MatDialogRef<ModalNotaComponent>,
@@ -34,6 +37,8 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     private messageService: MensagemService
   ) {
     super(dialogRef, data, dialog, service);
+
+    this.policia = this.cadastro.ehPolicia?? false;
 
     if (this.cadastro.unidade) {
       this.unidadeControl.setValue(`${this.cadastro.unidade.id} - ${this.cadastro.unidade.fantasia}`);
@@ -102,7 +107,10 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
   private async abreModalItem(item: ItemDeNota): Promise<ItemDeNota> {
     const dialogRef = this.dialog.open(LookupItemNotaComponent, {
       disableClose: true,
-      data: item
+      data: {
+        item: item,
+        policia: this.policia
+      }
     });
 
     return await lastValueFrom(dialogRef.afterClosed());
