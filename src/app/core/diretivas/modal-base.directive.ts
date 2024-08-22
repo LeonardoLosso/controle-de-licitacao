@@ -32,9 +32,9 @@ export abstract class ModalBaseDirective<T extends ICadastro> extends SpinnerCon
   }
 
   protected submeter() {
-    
+
     this.mostrarSpinner();
-    
+
     if (this.edicao) {
       this.acaoEditar();
     } else {
@@ -71,5 +71,10 @@ export abstract class ModalBaseDirective<T extends ICadastro> extends SpinnerCon
     if (erro === 'token expirado') {
       this.dialogRef.close(false);
     }
+  }
+  public onEnterPress(event: any): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.submeter();
   }
 }

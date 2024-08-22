@@ -58,4 +58,7 @@ export class UsuariosService extends CrudBaseService<Usuario, UsuarioSimplificad
   public ObterUsuario(userName: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.URL}/usuarios/username/${userName}`).pipe(delay(2000));
   }
+  getConsultaCep(cep: string) {
+    return this.http.get(`https://viacep.com.br/ws/${cep}/json`);
+}
 }

@@ -15,7 +15,7 @@
             <app-form-busca-usuarios/>
         </app-cabecalho-busca-novo>
 
-        <app-busca-container [control]="pesquisa">
+        <app-busca-container [control]="pesquisa" (enterClick)="onEnterClick()">
             <app-usuario-tabela 
                 (abrirDialog)="editar()" 
                 (pagina)="mudarPagina($event)"

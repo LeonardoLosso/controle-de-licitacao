@@ -58,4 +58,9 @@ export class LookupEntidadesComponent {
       }
     });
   }
+  onEnterPress(event: any): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.confirmar();
+  }
 }

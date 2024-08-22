@@ -43,4 +43,9 @@ export class CabecalhoBuscaNovoComponent {
     editar() {
         this.editarCadastro.emit();
     }
+    onEnterPress(event: any): void {
+        event.preventDefault(); 
+        event.stopPropagation(); 
+        this.buscar(); 
+    }
 }

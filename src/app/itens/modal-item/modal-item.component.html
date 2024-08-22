@@ -1,4 +1,4 @@
-<form #form="ngForm" class="dialog">
+<form #form="ngForm" class="dialog" (keydown.enter)="onEnterPress($event)">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Cadastro</h3>
@@ -66,8 +66,8 @@
                 </mat-chip-grid>
             </mat-form-field>
         </div>
-
-        <mat-checkbox class="checkbox" [checked]="cadastro.ehCesta" color="primary"
+        <!-- DISPLAY NONE -->
+        <mat-checkbox style="display: none;" class="checkbox" [checked]="cadastro.ehCesta" color="primary"
             (change)="toggleCesta(cadastro)">Cesta</mat-checkbox>
 
         <section *ngIf="cadastro.ehCesta">

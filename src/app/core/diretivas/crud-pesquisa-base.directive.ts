@@ -129,4 +129,10 @@ export abstract class CrudPesquisaBaseDirective<ObjetoSimplificado> extends Spin
         }, error: () => this.esconderSpinner()
       });;
   }
+  public onEnterClick() {
+    if (this.selecionado.value)
+      return this.editar()
+
+    return this.criar();
+  }
 }

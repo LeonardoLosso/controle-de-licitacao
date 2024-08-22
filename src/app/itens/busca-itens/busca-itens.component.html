@@ -15,7 +15,7 @@
             <app-form-busca-itens/>
         </app-cabecalho-busca-novo>
 
-        <app-busca-container [control]="pesquisa">
+        <app-busca-container [control]="pesquisa" (enterClick)="onEnterClick()">
             <app-item-tabela 
                 (abrirDialog)="editar()" 
                 (pagina)="mudarPagina($event)"

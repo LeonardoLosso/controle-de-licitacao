@@ -1,4 +1,4 @@
-<div class="dialog">
+<div class="dialog" (keydown.enter)="onEnterPress($event)">
     <h1 mat-dialog-title>Lookup de itens</h1>
     <div mat-dialog-content class="mensagem">
         <app-busca-container [control]="pesquisa" [page]="false">

@@ -75,4 +75,9 @@ export class LookupItensComponent implements OnInit {
       }
     });
   }
+  onEnterPress(event: any): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.confirmar();
+  }
 }

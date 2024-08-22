@@ -1,4 +1,4 @@
-<form #form="ngForm" class="dialog">
+<form #form="ngForm" class="dialog" (keydown.enter)="onEnterPress($event)">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Cadastro</h3>
@@ -56,7 +56,7 @@
             <mat-form-field class="input" appearance="outline">
                 <mat-label>Inscrição Estadual</mat-label>
                 <input
-                    maxlength="9" 
+                    maxlength="14" 
                     matInput 
                     name="ie" 
                     #ie="ngModel" 
@@ -103,13 +103,58 @@
             <!-- cep -->
             <mat-form-field class="input" appearance="outline">
                 <mat-label>CEP</mat-label>
-                <input 
+                <input
+                    (blur)="consultaCEP($event)"
                     matInput
                     name="cep" 
                     #cep="ngModel" 
                     maxlength="9" 
                     [(ngModel)]="cadastro.endereco.cep" 
                     [ngModel]="cadastro.endereco.cep | mascarasInput: 'cep'">
+            </mat-form-field>
+
+            <!-- logradouro -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Logradouro</mat-label>
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="logradouro" 
+                    #logradouro="ngModel" 
+                    [(ngModel)]="cadastro.endereco.logradouro">
+            </mat-form-field>
+
+            <!-- numero -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Número</mat-label>
+                <input 
+                    maxlength="10"
+                    matInput 
+                    name="numero" 
+                    #numero="ngModel" 
+                    [(ngModel)]="cadastro.endereco.numero">
+            </mat-form-field>
+
+            <!-- bairro -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Bairro</mat-label>
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="bairro" 
+                    #bairro="ngModel" 
+                    [(ngModel)]="cadastro.endereco.bairro">
+            </mat-form-field>
+
+            <!-- cidade -->
+            <mat-form-field class="input" appearance="outline">
+                <mat-label>Cidade</mat-label>
+                <input 
+                    maxlength="30"
+                    matInput 
+                    name="cidade" 
+                    #cidade="ngModel" 
+                    [(ngModel)]="cadastro.endereco.cidade">
             </mat-form-field>
 
             <!-- uf -->
@@ -129,50 +174,6 @@
                         {{estado.id}} - {{estado.nome}}
                     </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
-
-            <!-- cidade -->
-            <mat-form-field class="input" appearance="outline">
-                <mat-label>Cidade</mat-label>
-                <input 
-                    maxlength="30"
-                    matInput 
-                    name="cidade" 
-                    #cidade="ngModel" 
-                    [(ngModel)]="cadastro.endereco.cidade">
-            </mat-form-field>
-
-            <!-- bairro -->
-            <mat-form-field class="input" appearance="outline">
-                <mat-label>Bairro</mat-label>
-                <input 
-                    maxlength="30"
-                    matInput 
-                    name="bairro" 
-                    #bairro="ngModel" 
-                    [(ngModel)]="cadastro.endereco.bairro">
-            </mat-form-field>
-
-            <!-- numero -->
-            <mat-form-field class="input" appearance="outline">
-                <mat-label>Número</mat-label>
-                <input 
-                    maxlength="10"
-                    matInput 
-                    name="numero" 
-                    #numero="ngModel" 
-                    [(ngModel)]="cadastro.endereco.numero">
-            </mat-form-field>
-
-            <!-- logradouro -->
-            <mat-form-field class="input" appearance="outline">
-                <mat-label>Logradouro</mat-label>
-                <input 
-                    maxlength="30"
-                    matInput 
-                    name="logradouro" 
-                    #logradouro="ngModel" 
-                    [(ngModel)]="cadastro.endereco.logradouro">
             </mat-form-field>
 
             <!-- complemento -->

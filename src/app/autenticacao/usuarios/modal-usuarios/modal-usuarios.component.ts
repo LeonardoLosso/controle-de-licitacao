@@ -2,12 +2,13 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { EnumUF } from 'src/app/core/types/enum';
 import { Permissoes, Usuario, UsuarioSimplificado } from 'src/app/core/types/usuarios';
 import { FormValidations } from 'src/app/shared/form-validations';
 import { UsuariosService } from '../../services/usuarios.service';
 import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive';
+import { compare } from 'fast-json-patch';
+import { MensagemService } from 'src/app/core/services/mensagem.service';
 
 @Component({
   selector: 'app-modal-usuarios',
@@ -33,14 +34,15 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
     dialogRef: MatDialogRef<ModalUsuariosComponent>,
     @Inject(MAT_DIALOG_DATA) data: Usuario,
     dialog: MatDialog,
-    service: UsuariosService
+    protected override service: UsuariosService,
+    private mensagemService: MensagemService
   ) {
     super(dialogRef, data, dialog, service);
 
     this.configurarForm();
   }
 
-  
+
 
   displayFnEstados(val: string): string {
     const value = EnumUF.filter(f => f.id === val)[0];
@@ -103,40 +105,34 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
     });
   }
 
-  protected override editar(): MudancasParaPatch[] {
-    const mudancas = super.editar();
-
-    if (this.senha.value) {
-      mudancas.push({ op: 'replace', path: `/password`, value: this.senha.value });
-    }
-
-    if (this.resenha.value) {
-      mudancas.push({ op: 'replace', path: `/rePassword`, value: this.resenha.value });
-    }
-
-    if (this.permissoes.dirty) {
-      for (let i = 0; i < this.cadastro.permissoes.length; i++) {
-        const permissaoOriginal = this.data.permissoes[i];
-        const permissaoNova = this.cadastro.permissoes[i];
-
-        for (let j = 0; j < permissaoNova.recursos.length; j++) {
-          const recursoOriginal = permissaoOriginal.recursos[j];
-          const recursoNovo = permissaoNova.recursos[j];
-
-          if (recursoNovo.permissaoRecurso !== recursoOriginal.permissaoRecurso) {
-            mudancas.push({
-              op: 'replace',
-              path: `/permissoes/${i}/recursos/${j}/permissaoRecurso`,
-              value: recursoNovo.permissaoRecurso
-            });
+  consultaCEP(ev: any) {
+    const cep = ev.target.value.replace(/-/g, "");
+    if (cep !== "" && this.data.endereco.cep !== cep) {
+      this.service.getConsultaCep(cep)
+        .subscribe({
+          next: dados => {
+            this.preencheEndereco(dados);
+          },
+          error: () => {
+            this.mensagemService.openSnackBar('CEP não encontrado!', 'error')
           }
-        }
-      }
+        });
     }
-    return mudancas;
   }
-
+  preencheEndereco(dados: any) {
+    this.cadastro.endereco.logradouro = dados.logradouro ?? this.cadastro.endereco.logradouro;
+    this.cadastro.endereco.bairro = dados.bairro ?? this.cadastro.endereco.bairro;
+    this.cadastro.endereco.uf = dados.uf;
+    this.cadastro.endereco.cidade = dados.localidade;
+  }
   protected override cancelar(form: NgForm) {
     super.cancelar(form, !this.permissoes.dirty);
+  }
+
+  protected override editar(): any {
+    const patch = compare(this.data, this.cadastro);
+    if (patch)
+      return patch;
+    return null;
   }
 }

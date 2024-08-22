@@ -49,4 +49,7 @@ export class EntidadesService extends CrudBaseService<Entidade, EntidadeSimplifi
     public editar(patch: MudancasParaPatch[], id: number): Observable<Entidade> {
         return this.http.patch<Entidade>(`${this.URL}/entidades/${id}`, patch);
     }
+    getConsultaCep(cep: string) {
+        return this.http.get(`https://viacep.com.br/ws/${cep}/json`);
+    }
 }
