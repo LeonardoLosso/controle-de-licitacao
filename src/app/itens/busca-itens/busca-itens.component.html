@@ -19,7 +19,8 @@
             <app-item-tabela 
                 (abrirDialog)="editar()" 
                 (pagina)="mudarPagina($event)"
-                [listaItens]="lista"
+                [lista]="lista"
+                [isModalOpen]="isModalOpen"
                 [control]="selecionado"
                 [totalItems]="totalItems"
                 [isLoadingResults]="isLoadingResults"

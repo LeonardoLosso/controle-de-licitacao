@@ -21,12 +21,11 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
   public timeout: any;
 
   public estados = EnumUF;
-  public usuarioCadastrado: boolean = false;
 
   public permissoes = new FormControl<Permissoes[]>([]);
   public username = new FormControl<string>('');
-  public senha = new FormControl<string>('');
-  public resenha = new FormControl<string>('');
+  public password = new FormControl<string>('');
+  public rePassword = new FormControl<string>('');
 
 
 
@@ -40,23 +39,34 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
     super(dialogRef, data, dialog, service);
 
     this.configurarForm();
+
+    this.password.valueChanges.subscribe(value => this.cadastro.password = value ?? '');
+    this.rePassword.valueChanges.subscribe(value => this.cadastro.rePassword = value ?? '');
   }
 
+  protected override acaoNovo(): void {
+    if (this.validaSubmit()) {
+      this.esconderSpinner();
+      return this.mensagemService.openSnackBar('Formulario preenchido incorretamente', 'alert');
+    }
 
+    this.cadastro.userName = this.username.value ?? '';
+    super.acaoNovo();
+  }
 
   displayFnEstados(val: string): string {
     const value = EnumUF.filter(f => f.id === val)[0];
     return value && value.nome ? `${value.id} - ${value.nome}` : '';
   };
 
-  habilitaBotao(): boolean {
+  validaSubmit(): boolean {
     if (this.username.invalid)
       return true;
 
-    if (this.usuarioCadastrado)
+    if (!this.validaUserName())
       return true;
 
-    if (this.resenha.invalid)
+    if (this.rePassword.invalid)
       return true;
 
     if (this.botaoDesabilitado)
@@ -75,10 +85,11 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
     this.username.setValidators(Validators.required);
 
     if (!this.edicao) {
-      this.senha.setValidators(Validators.required);
-      this.resenha.setValidators(Validators.required);
-      this.resenha.addValidators(FormValidations.equalTo(this.senha));
+      this.password.setValidators(Validators.required);
+      this.rePassword.setValidators(Validators.required);
+      this.rePassword.addValidators(FormValidations.equalTo(this.password));
 
+      this.username.addValidators(FormValidations.noWhitespaceValidator());
       this.username.addAsyncValidators(FormValidations.uniqueUsernameValidator(this.service as UsuariosService));
 
     } else {
@@ -91,15 +102,15 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
         this.cadastro.permissoes = value
       }
     })
-    this.senha.valueChanges.subscribe(value => {
+    this.password.valueChanges.subscribe(value => {
       if (this.edicao) {
         if (value) {
-          this.resenha.setValidators(Validators.required)
-          this.resenha.addValidators(FormValidations.equalTo(this.senha));
-          this.resenha.reset()
+          this.rePassword.setValidators(Validators.required)
+          this.rePassword.addValidators(FormValidations.equalTo(this.password));
+          this.rePassword.reset()
         } else {
-          this.resenha.clearValidators();
-          this.resenha.reset
+          this.rePassword.clearValidators();
+          this.rePassword.reset
         }
       }
     });
@@ -134,5 +145,12 @@ export class ModalUsuariosComponent extends ModalCrudDirective<Usuario, UsuarioS
     if (patch)
       return patch;
     return null;
+  }
+
+  private validaUserName(): boolean {
+    if (this.edicao)
+      return true;
+
+    return this.username.valid
   }
 }

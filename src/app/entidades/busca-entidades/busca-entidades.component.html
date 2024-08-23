@@ -19,7 +19,8 @@
             <app-entidade-tabela 
                 (abrirDialog)="editar()" 
                 (pagina)="mudarPagina($event)"
-                [listaEntidades]="lista"
+                [isModalOpen]="isModalOpen"
+                [lista]="lista"
                 [control]="selecionado"
                 [totalItems]="totalItems"
                 [isLoadingResults]="isLoadingResults"

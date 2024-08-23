@@ -1,7 +1,7 @@
-import { Directive } from '@angular/core';
+import { Directive, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 import { MensagemService } from '../services/mensagem.service';
 import { MensagemModal } from '../types/auxiliares';
@@ -12,30 +12,53 @@ import { CrudPesquisaBaseDirective } from './crud-pesquisa-base.directive';
 @Directive({})
 export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> extends CrudPesquisaBaseDirective<ObjetoSimplificado> {
 
+  public isModalOpen = false;
+  protected modal!: Type<any>
   constructor(
     form: FormularioBuscaBaseService,
     protected service: CrudBaseService<Objeto, ObjetoSimplificado>,
     dialog: MatDialog,
     router: Router,
     messageService: MensagemService
-  ) { super(form, dialog, router, messageService) }
+  ) {
+    super(form, dialog, router, messageService)
+    this.setModal();
+  }
 
   protected abstract cadastroVazio(): Objeto;
-  protected abstract dialogCadastro(cadastro: Objeto, novo: boolean): void;
+  protected abstract setModal(): void;
 
-  public override criar(): void {
+  public override async criar() {
     const cadastro = this.cadastroVazio();
-    this.dialogCadastro(cadastro, true);
+    try {
+      this.isModalOpen = true;
+      const dialog = await this.dialogCadastro(cadastro);
+      if (dialog) {
+        this.loadData();
+        this.messageService.openSnackBar('Criado com sucesso!', 'success');
+      }
+    } finally {
+      this.esconderSpinner();
+      this.isModalOpen = false;
+    }
   };
 
-  protected override acaoEditar(id: number): void {
+  protected override async acaoEditar(id: number) {
     this.mostrarSpinner();
-    this.service.obterPorID(id).subscribe({
-      next: result => {
-        this.esconderSpinner();
-        this.dialogCadastro(result, false);
-      }, error: () => this.esconderSpinner(),
-    });
+    this.isModalOpen = true;
+    try {
+      const result = await lastValueFrom(this.service.obterPorID(id));
+      if (result) {
+        const dialog = await this.dialogCadastro(result);
+        if (dialog) {
+          this.loadData();
+          this.messageService.openSnackBar('Editado com sucesso!', 'success');
+        }
+      }
+    } finally {
+      this.esconderSpinner();
+      this.isModalOpen = false;
+    }
   }
 
   protected override mensagemInativacao(): MensagemModal {
@@ -55,5 +78,13 @@ export abstract class BuscaBaseDirective<Objeto, ObjetoSimplificado> extends Cru
 
   protected override serviceListar(params: { key: string, value: any }[]): Observable<any> {
     return this.service.listar(this.pagina, params);
+  }
+  private async dialogCadastro(cadastro: Objeto) {
+    const dialogRef = this.dialog.open(this.modal, {
+      width: '54%',
+      data: cadastro,
+      disableClose: true
+    });
+    return await lastValueFrom(dialogRef.afterClosed());
   }
 }

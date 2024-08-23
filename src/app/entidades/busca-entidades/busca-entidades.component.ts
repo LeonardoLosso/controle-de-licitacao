@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -27,24 +27,8 @@ export class BuscaEntidadesComponent extends BuscaBaseDirective<Entidade, Entida
     }
 
 
-    protected dialogCadastro(cadastro: Entidade, novo: boolean): void {
-        const dialogRef = this.dialog.open(ModalEntidadeComponent, {
-            width: '54%',
-            data: cadastro,
-            disableClose: true
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                if (novo) {
-                    this.loadData()
-                    this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
-                } else {
-                    this.loadData()
-                    this.messageService.openSnackBar('Cadastro editado com sucesso!', 'success');
-                }
-            }
-        });
+    protected override setModal(): void {
+        this.modal = ModalEntidadeComponent;
     }
 
     protected cadastroVazio(): Entidade {

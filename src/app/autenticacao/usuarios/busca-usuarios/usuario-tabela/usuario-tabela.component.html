@@ -10,7 +10,7 @@
 
         <div class="table-container" [class.bigger]="isLoadingResults || isRateLimitReached">
 
-            <table mat-table [dataSource]="listaUsuarios" class="table">
+            <table mat-table [dataSource]="lista" class="table">
 
                 <!-- Código Column -->
                 <ng-container matColumnDef="codigo">
@@ -36,8 +36,20 @@
 
                 <!-- Nome Usuario Column -->
                 <ng-container matColumnDef="usuario">
-                    <th mat-header-cell *matHeaderCellDef>Nome de Usuário</th>
+                    <th mat-header-cell *matHeaderCellDef>Usuário</th>
                     <td mat-cell *matCellDef="let row">{{row.userName}}</td>
+                </ng-container>
+
+                <!-- EMAIL -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>E-mail</th>
+                    <td mat-cell *matCellDef="let row">{{row.email}}</td>
+                </ng-container>
+
+                <!-- TELEFONE -->
+                <ng-container matColumnDef="telefone">
+                    <th mat-header-cell *matHeaderCellDef>Telefone</th>
+                    <td mat-cell *matCellDef="let row">{{row.telefone | mascarasInput: 'phone'}}</td>
                 </ng-container>
 
                 <!-- cpf Column -->

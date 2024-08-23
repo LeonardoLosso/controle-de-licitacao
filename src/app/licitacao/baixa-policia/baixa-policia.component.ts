@@ -149,6 +149,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       this.inicializarFormulario(this.id);
     }
   }
+  //FALTA IMPLEMENTAR
   public editarNota() { }
   public excluirNota() { }
   //-------------------------------------------------------------------

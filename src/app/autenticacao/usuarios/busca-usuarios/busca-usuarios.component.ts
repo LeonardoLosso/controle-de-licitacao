@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -24,29 +24,11 @@ export class BuscaUsuariosComponent extends BuscaBaseDirective<Usuario, UsuarioS
     errorMessage: MensagemService
   ) {
     super(form, service, dialog, router, errorMessage);
+
   }
-
-  protected override dialogCadastro(cadastro: Usuario, novo: boolean): void {
-    const dialogRef = this.dialog.open(ModalUsuariosComponent, {
-      width: '45%',
-      data: cadastro,
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-      if (result) {
-        if (novo) {
-          this.loadData();
-          this.messageService.openSnackBar('Usuário criado com sucesso!', 'success');
-        } else {
-          this.loadData();
-          this.messageService.openSnackBar('Usuário editado com sucesso!', 'success');
-        }
-      }
-    });
+  protected override setModal(): void {
+    this.modal = ModalUsuariosComponent
   }
-
   protected override cadastroVazio(): Usuario {
     return {
       id: 0,

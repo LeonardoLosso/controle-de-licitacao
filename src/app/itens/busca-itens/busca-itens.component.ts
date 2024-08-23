@@ -26,24 +26,8 @@ export class BuscaItensComponent extends BuscaBaseDirective<Item, ItemSimplifica
     super(form, service, dialog, router, errorMessage);
   }
 
-  protected override dialogCadastro(cadastro: Item, novo: boolean): void {
-    const dialogRef = this.dialog.open(ModalItemComponent, {
-      width: '54%',
-      data: cadastro,
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (novo) {
-          this.loadData();
-          this.messageService.openSnackBar('Item criado com sucesso!', 'success');
-        } else {
-          this.loadData();
-          this.messageService.openSnackBar('Item editado com sucesso!', 'success');
-        }
-      }
-    });
+  protected override setModal(): void {
+    this.modal = ModalItemComponent;
   }
   protected cadastroVazio(): Item {
     return {

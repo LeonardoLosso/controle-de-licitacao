@@ -5,7 +5,8 @@ export interface UsuarioSimplificado {
     status: number,
     nome: string,
     userName: string,
-    cpf: string
+    telefone: string,
+    email: string
 }
 
 export interface Usuario extends ICadastro{

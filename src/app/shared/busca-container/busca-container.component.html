@@ -1,4 +1,4 @@
-<app-container [ngClass]="classeContainer()" (keydown.enter)="onEnterPress($event)">
+<app-container [ngClass]="classeContainer()">
     <div class="search">
         <span *ngIf="page" class="spacer"></span>
         <mat-form-field class="search-box" [class.full-size]="!page" appearance="outline">

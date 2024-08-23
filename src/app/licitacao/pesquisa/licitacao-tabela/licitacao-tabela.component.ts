@@ -1,48 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
+import { Component } from '@angular/core';
 
-import { AtaLicitacaoSimplificada } from 'src/app/core/types/documentos';
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 
 @Component({
   selector: 'app-licitacao-tabela',
   templateUrl: './licitacao-tabela.component.html',
   styleUrls: ['./licitacao-tabela.component.scss']
 })
-export class LicitacaoTabelaComponent {
-  @Output() abrirDialog = new EventEmitter();
-  @Output() pagina = new EventEmitter();
-
-  @Input() listaDocumentos!: AtaLicitacaoSimplificada[];
-  @Input() control!: FormControl;
-  @Input() totalItems: number = 0;
-
-  @Input() isLoadingResults = false;
-  @Input() isRateLimitReached = false;
-
-  private selecionado!: AtaLicitacaoSimplificada;
+export class LicitacaoTabelaComponent extends TabelaBaseDirective{
 
   public displayedColumns: string[] = [ 'status', 'codigo', 'empresa', 'orgao', 'unidade', 'dataLicitacao', 'dataAta', 'valor'];
 
-  constructor() { }
-
-  clickGrid(valor: AtaLicitacaoSimplificada) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
-  }
-
-  selecionar(valor: AtaLicitacaoSimplificada): string {
-    if (valor === this.selecionado) {
-      return 'selecionado';
-    }
-    return '';
-  }
-
-  doubleClick() {
-    this.abrirDialog.emit();
-  }
-
-  mudaPagina(paginador: PageEvent) {
-    this.pagina.emit(paginador.pageIndex);
-  }
+  constructor() { super() }
 }

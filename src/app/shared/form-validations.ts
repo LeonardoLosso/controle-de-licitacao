@@ -24,7 +24,14 @@ export class FormValidations {
                 switchMap(() => usernameService.ObterUsuario(control.value)),
                 map(existe => (existe ? { usernameTaken: true } : null)),
                 catchError(() => of(null))
-              );
+            );
+        };
+    }
+
+    static noWhitespaceValidator(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const hasWhitespace = /\s/.test(control.value || '');
+            return hasWhitespace ? { 'whitespace': true } : null;
         };
     }
 }

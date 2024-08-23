@@ -1,4 +1,4 @@
-<section>
+<section (keydown.enter)="onEnterPress($event)">
     <div class="container mat-elevation-z8">
 
         <div class="loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
@@ -10,7 +10,7 @@
 
         <div class="table-container" [class.bigger]="isLoadingResults || isRateLimitReached">
 
-            <table mat-table [dataSource]="listaItens" class="table">
+            <table mat-table [dataSource]="lista" class="table">
 
                 <!-- Código Column -->
                 <ng-container matColumnDef="codigo">

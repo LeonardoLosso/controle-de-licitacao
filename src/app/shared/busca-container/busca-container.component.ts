@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,6 @@ import { FormControl } from '@angular/forms';
 export class BuscaContainerComponent {
   @Input() control!: FormControl
   @Input() page = true
-  @Output() enterClick = new EventEmitter();
 
   limpaPesquisa() {
     this.control.setValue('');
@@ -17,11 +16,5 @@ export class BuscaContainerComponent {
 
   classeContainer(): string {
     return this.page ? 'container-page' : 'sem-container';
-  }
-
-  onEnterPress(event: any): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.enterClick.emit();
   }
 }

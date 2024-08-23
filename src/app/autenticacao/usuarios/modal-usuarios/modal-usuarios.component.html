@@ -23,7 +23,8 @@
                 <mat-spinner matSuffix class="spin" *ngIf="username.pending" [diameter]="20"></mat-spinner>
                 <mat-error *ngIf="username.invalid && (username.dirty || username.touched)">
                     <ng-container *ngIf="username.errors?.['usernameTaken']">Nome de usuário já existe.</ng-container>
-                    <ng-container *ngIf="username.errors?.['required']">O nome de usuário é obrigatório.</ng-container>
+                    <ng-container *ngIf="username.errors?.['whitespace']">Espaço não permitido.</ng-container>
+                    <ng-container *ngIf="username.errors?.['required']">Campo obrigatório.</ng-container>
                 </mat-error>
             </mat-form-field>
 
@@ -50,15 +51,15 @@
             <!-- SENHA E CONFIRMA SENHA -->
             <mat-form-field appearance="outline">
                 <mat-label>Senha</mat-label>
-                <input matInput [formControl]="senha" type="password" placeholder="Digite sua senha">
-                <mat-error *ngIf="senha?.errors?.['required']">Senha é obrigatória</mat-error>
+                <input matInput [formControl]="password" type="password" placeholder="Digite sua senha">
+                <mat-error *ngIf="password?.errors?.['required']">Campo obrigatório.</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Confirmar Senha</mat-label>
-                <input matInput [formControl]="resenha" type="password" placeholder="Repita sua senha">
-                <mat-error *ngIf="resenha?.errors?.['required']">Confirmação de Senha é obrigatória</mat-error>
-                <mat-error *ngIf="resenha?.errors?.['equalTo']">Senhas não coincidem</mat-error>
+                <input matInput [formControl]="rePassword" type="password" placeholder="Repita sua senha">
+                <mat-error *ngIf="rePassword?.errors?.['required']">Campo obrigatório.</mat-error>
+                <mat-error *ngIf="rePassword?.errors?.['equalTo']">Senhas não coincidem.</mat-error>
             </mat-form-field>
         </div>
 
@@ -127,7 +128,7 @@
             mat-flat-button 
             color="primary" 
             (click)="submeter()" 
-            [disabled]="habilitaBotao()"
+            [disabled]="validaSubmit()"
             [appHasPermission]="permissao"
             (hasPermission)="onHasPermission($event)">
             <mat-icon matPrefix>save</mat-icon>

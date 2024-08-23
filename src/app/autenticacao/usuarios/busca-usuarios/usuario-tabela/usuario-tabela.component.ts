@@ -1,48 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
+import { Component } from '@angular/core';
 
-import { UsuarioSimplificado } from 'src/app/core/types/usuarios';
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 
 @Component({
   selector: 'app-usuario-tabela',
   templateUrl: './usuario-tabela.component.html',
   styleUrls: ['./usuario-tabela.component.scss']
 })
-export class UsuarioTabelaComponent {
-  @Output() abrirDialog = new EventEmitter();
-  @Output() pagina = new EventEmitter();
+export class UsuarioTabelaComponent extends TabelaBaseDirective {
 
-  @Input() listaUsuarios!: UsuarioSimplificado[];
-  @Input() control!: FormControl;
-  @Input() totalItems: number = 0;
-  @Input() isLoadingResults = false;
-  @Input() isRateLimitReached = false;
+  public displayedColumns: string[] = ['status', 'usuario', 'nome', 'email', 'telefone'];
 
-  private selecionado!: UsuarioSimplificado;
+  constructor() { super() }
 
-  public displayedColumns: string[] = ['status', 'codigo', 'nome', 'usuario', 'cpf'];
-
-  constructor() { }
-
-  clickGrid(valor: UsuarioSimplificado) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
-  }
-
-  selecionar(valor: UsuarioSimplificado): string {
-
-    if (valor === this.selecionado) {
-      return 'selecionado';
-    }
-    return '';
-  }
-
-  doubleClick() {
-    this.abrirDialog.emit();
-  }
-
-  mudaPagina(paginador: PageEvent) {
-    this.pagina.emit(paginador.pageIndex);
-  }
+  
 }
