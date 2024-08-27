@@ -9,7 +9,7 @@ import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directiv
 })
 export class ItemTabelaComponent extends TabelaBaseDirective {
 
-  @Input() displayedColumns: string[] = ['status', 'codigo', 'nome', 'cesta', 'unidadePri', 'unidadeSec'];
+  @Input() displayedColumns: string[] = ['status', 'codigo', 'nome', 'unidadePri', 'unidadeSec'];
 
   constructor() { super() }
 }

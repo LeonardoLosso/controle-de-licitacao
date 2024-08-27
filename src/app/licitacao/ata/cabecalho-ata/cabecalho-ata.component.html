@@ -6,7 +6,7 @@
             <app-botoes variant="btn-cabecalho" [icone]="verificaStatus()? 'block' : 'check'"
                 [texto]="verificaStatus()? 'Inativar Ata' : 'Reativar Ata'" [color]="verificaStatus()? 'warn' : 'verde'"
                 (acao)="inativarDocumento()" [permissao]="305" />
-            <app-botoes icone="undo" texto="Cancelar" variant="btn-cabecalho" (acao)="cancelarOperacao()" />
+            <app-botoes icone="undo" texto="Voltar" variant="btn-cabecalho" (acao)="cancelarOperacao()" />
         </div>
 
         <div class="btn-group">

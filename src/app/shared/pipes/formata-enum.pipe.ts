@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { EnumTipoCadastro, EnumTipoStatus } from 'src/app/core/types/enum';
+import { EnumTipoCadastro } from 'src/app/core/types/enum';
 
 @Pipe({
     name: 'formataEnum'
