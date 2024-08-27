@@ -40,14 +40,14 @@
                 <!-- Quantidade empenhada Column -->
                 <ng-container matColumnDef="qtdeEmpenhada">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Empenhada</th>
-                    <td class="azul" mat-cell *matCellDef="let row">{{row.qtdeEmpenhada}} ({{row.unidade}})</td>
+                    <td class="azul" mat-cell *matCellDef="let row" [class.verde-cell]="row.qtdeAEmpenhar <= 0">{{row.qtdeEmpenhada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
                 <!-- Quantidade licitada -->
                 <ng-container matColumnDef="qtdeLicitada">
                     <th mat-header-cell *matHeaderCellDef>Quantidade Licitada (Ata)</th>
-                    <td mat-cell *matCellDef="let row">{{row.qtdeLicitada}} ({{row.unidade}})</td>
+                    <td mat-cell *matCellDef="let row" [class.verde-cell]="row.qtdeAEmpenhar <= 0">{{row.qtdeLicitada}} ({{row.unidade}})</td>
                     <td mat-footer-cell *matFooterCellDef></td>
                 </ng-container>
 
@@ -75,7 +75,7 @@
                 <!-- saldo Column -->
                 <ng-container matColumnDef="saldo">
                     <th mat-header-cell *matHeaderCellDef>Falta Empenhar (R$)</th>
-                    <td mat-cell *matCellDef="let row" [class.verde-cell]="row.qtdeAEmpenhar <= 0"><strong>{{row.saldo | currency:'R$'}}</strong></td>
+                    <td mat-cell *matCellDef="let row" [class.verde-cell]="row.saldo <=0"><strong>{{row.saldo | currency:'R$'}}</strong></td>
                     <td mat-footer-cell *matFooterCellDef>{{getTotalSaldo() | currency:'R$'}}</td>
                 </ng-container>
 

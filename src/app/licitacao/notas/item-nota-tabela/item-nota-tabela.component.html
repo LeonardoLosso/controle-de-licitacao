@@ -44,7 +44,6 @@
                                 [(ngModel)]="row.qtdeCaixa" 
                                 #numNota="ngModel"
                                 (input)="calculaUnitario(row)">
-                            <span matTextPrefix>R$</span>
                         </mat-form-field>
                     </td>
                     <td mat-footer-cell *matFooterCellDef></td>
@@ -63,7 +62,6 @@
                                 [(ngModel)]="row.quantidade" 
                                 #numNota="ngModel"
                                 (input)="calculaTotal(row)">
-                            <span matTextPrefix>R$</span>
                         </mat-form-field>
                     </td>
                     <td mat-footer-cell *matFooterCellDef></td>

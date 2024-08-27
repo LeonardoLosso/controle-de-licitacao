@@ -47,7 +47,13 @@ export class FormularioBaixaPoliciaService {
     return await lastValueFrom(this.service.obterBaixaPoliciaPorID(id));
   }
   public async listarNotas(id: number) {
-    return await lastValueFrom(this.service.obterNotas(id));
+    return await lastValueFrom(this.service.obterNotas(id, 1));
+  }
+  public async obterNotaPorID(id: number){
+    return await lastValueFrom(this.service.obterNotaPorID(id));
+  }
+  public async excluirNota(id: number) {
+    return await lastValueFrom(this.service.excluirNota(id));
   }
   public setUnidadePorID(id: number) {
     const unidade = this.obterControle<EnumNumberID>('unidade');

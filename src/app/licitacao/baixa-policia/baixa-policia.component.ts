@@ -134,7 +134,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       id: 0,
       ehPolicia: true,
       numNota: '',
-      empenhoID: this.id,
+      empenhoID: -this.id,
       numEmpenho: '',
       baixaID: this.form.idAta,
       edital: this.form.obterControle('edital').value,
@@ -149,9 +149,49 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       this.inicializarFormulario(this.id);
     }
   }
-  //FALTA IMPLEMENTAR
-  public editarNota() { }
-  public excluirNota() { }
+  public async editarNota() {
+    const select = this.notaSelecionada.value;
+    this.mostrarSpinner()
+    try {
+      const nota = await this.form.obterNotaPorID(select.id);
+
+      if (nota) {
+        if(nota.unidade)
+          nota.unidade = await this.form.obterEntidade(nota.unidade as any);
+        
+        nota.edital = this.form.obterControle('edital').value;
+        nota.ehPolicia = true;
+
+        const result = await this.abreModalNota(nota);
+        if (result) {
+          this.mensagemService.openSnackBar("Nota editada com sucesso!", 'success');
+          this.inicializarFormulario(this.id);
+        }
+      }
+
+    } finally {
+      this.esconderSpinner();
+    }
+  }
+  public async excluirNota() {
+    const nota = this.notaSelecionada.value;
+
+    if (!nota) return this.mensagemService.openSnackBar("Nenhuma nota selecionada", 'alert');
+
+    if (!(await this.confirmarExclusao(nota))) return;
+
+    this.mostrarSpinner();
+    try {
+      const result = await this.form.excluirNota(nota.id);
+      if (result) {
+        this.mensagemService.openSnackBar("Nota excluida com sucesso!", 'success');
+        this.inicializaDados();
+      }
+
+    } finally {
+      this.esconderSpinner();
+    }
+  }
   //-------------------------------------------------------------------
   private inicializaFormControl() {
     this.status = this.form.obterControle('status');
@@ -240,7 +280,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       data: {
         titulo: 'Excluir',
         mensagem: 'Deseja excluir nota?',
-        item: `${nota.baixaID} - ${nota.numNota}`
+        item: `${nota.numNota}`
       }
     });
 

@@ -55,7 +55,13 @@
         background-color: lightgray;
     }
 }
-
+.azul{
+    background-color: #0077ff33;
+}
+.verde > .verde-cell{
+    background-color: #00ff004f;
+    font-weight: bold;
+}
 
 /*CLIQUE*/
 .mat-mdc-row .mat-mdc-cell {

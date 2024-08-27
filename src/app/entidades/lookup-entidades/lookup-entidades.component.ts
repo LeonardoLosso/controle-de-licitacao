@@ -44,6 +44,8 @@ export class LookupEntidadesComponent {
 
     if (this.data === 'empresa')
       filtros.push({ key: 'tipo', value: 1 });
+    else
+    filtros.push({ key: 'tipo', value: 0 });
 
     this.isLoadingResults = true;
 

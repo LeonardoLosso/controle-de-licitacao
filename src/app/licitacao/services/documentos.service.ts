@@ -117,9 +117,12 @@ export class DocumentosService {
     return this.http.get<boolean>(url);
   }
 
-  public obterNotas(id: number): Observable<NotaSimplificada[]> {
+  public obterNotas(id: number, tipo?: number): Observable<NotaSimplificada[]> {
+    let params = new HttpParams();
+    if (tipo) params = params.append('tipo', tipo);
+
     const url = `${this.URL}/nota/${id}`;
-    return this.http.get<NotaSimplificada[]>(url);
+    return this.http.get<NotaSimplificada[]>(url, {params});
   }
   public excluirNota(id: number): Observable<Nota> {
     const httpParams = new HttpParams()

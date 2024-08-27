@@ -38,17 +38,19 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
   ) {
     super(dialogRef, data, dialog, service);
 
-    this.policia = this.cadastro.ehPolicia?? false;
-
+    this.policia = this.cadastro.ehPolicia ?? false;
     if (this.cadastro.unidade) {
       this.unidadeControl.setValue(`${this.cadastro.unidade.id} - ${this.cadastro.unidade.fantasia}`);
+
       this.cadastro.unidade = this.cadastro.unidade.id as any;
     }
 
     this.listaItens = this.cadastro.itens;
     this.listaControl.setValue(this.listaItens);
 
-
+    this.listaControl.valueChanges.subscribe(value => {
+      this.cadastro.itens = value as ItemDeNota[];
+    })
     if (this.edicao) {
       this.titulo += ' ' + this.data.numNota;
     }
@@ -79,6 +81,7 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
       this.listaItens = [...this.listaItens];
       this.listaControl.setValue(this.listaItens);
       this.listaControl.markAsDirty();
+
       this.messageService.openSnackBar('Item adicionado', 'success');
     }
   }
@@ -97,7 +100,8 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     }
   }
   protected override editar(): MudancasParaPatch[] {
-    this.cadastro.itens = this.listaControl.value as ItemDeNota[];
+    if (this.cadastro.empenhoID < 0)
+      this.cadastro.unidade = this.unidadeControl.value.id ?? this.data.unidade;
 
     const patch = compare(this.data, this.cadastro)
 
