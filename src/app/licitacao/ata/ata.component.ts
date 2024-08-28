@@ -44,7 +44,9 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       const edital = this.form.obterControle<string>('edital');
       const unidade = this.form.obterControle('unidade');
       if (this.id) {
-        edital.disable();
+        if (edital.value)
+          edital.disable();
+        
         unidade.disable();
       }
       else {
@@ -140,8 +142,8 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.mostrarSpinner();
 
       try {
-          await this.form.inativar();
-          await this.inicializarFormulario(this.id);
+        await this.form.inativar();
+        await this.inicializarFormulario(this.id);
       } finally {
         this.esconderSpinner();
       }
