@@ -24,7 +24,7 @@
             label="{{reajuste.data | date: 'dd/MM/yyyy'}}">
             <app-item-ata-tabela
                 *ngIf="reajuste.itens.length > 0"
-                [listaItens]="reajuste.itens"
+                [lista]="reajuste.itens"
                 [reajuste]="true"/>
         </mat-tab>
     </mat-tab-group>

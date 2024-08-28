@@ -19,7 +19,7 @@
             <mat-tab label="Itens">
                 
                 <app-empenho-tabela-itens 
-                    [listaItens]="listaItens.value" 
+                    [lista]="listaItens.value" 
                     [control]="selecionado"
                     (abrirDialog)="editar()"/>
 
@@ -27,7 +27,7 @@
             
             <mat-tab label="Notas" *ngIf="possuiPermissao">
                 <app-empenho-tabela-notas
-                    [listaDocumentos]="listaDocumentos.value"
+                    [lista]="listaDocumentos.value"
                     [control]="documentoSelecionado"
                     (abrirDialog)="editarNota()"/>
             </mat-tab>

@@ -17,9 +17,9 @@
         <mat-tab-group>
             <mat-tab label="Tabela Vigente">
                 <app-item-ata-tabela 
-                    [listaItens]="listaItens.value" 
+                    [lista]="listaItens.value" 
                     [control]="selecionado" 
-                    (editarItem)="editarItem()"/>
+                    (abrirDialog)="editarItem()"/>
             </mat-tab>
 
             <mat-tab *ngIf="form.idAta && form.idAta !== 0">

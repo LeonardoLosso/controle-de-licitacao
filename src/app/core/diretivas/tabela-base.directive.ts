@@ -1,9 +1,9 @@
-import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { AfterViewInit, Directive, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 
 @Directive({})
-export abstract class TabelaBaseDirective {
+export abstract class TabelaBaseDirective implements OnInit, AfterViewInit {
 
   @Output() abrirDialog = new EventEmitter();
   @Output() pagina = new EventEmitter();
@@ -19,22 +19,37 @@ export abstract class TabelaBaseDirective {
   protected selecionado!: any;
 
   constructor() { }
-
+  ngOnInit(): void {
+    this.onInit();
+  }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.control)
+        this.control.valueChanges.subscribe(value => {
+          this.selecionado = value;
+        })
+    })
+  }
   clickGrid(valor: any) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
+    if (this.control) {
+      this.selecionado = valor;
+      this.control.setValue(valor);
+    }
   }
 
   selecionar(valor: any): string {
 
-    if (valor === this.selecionado) {
+    if (valor === this.selecionado && this.control) {
       return 'selecionado';
     }
     return '';
   }
 
   doubleClick() {
-    this.abrirDialog.emit();
+    if (this.control) {
+      this.abrirDialog.emit();
+      this.clickGrid(null);
+    }
   }
 
   mudaPagina(paginador: PageEvent) {
@@ -44,7 +59,7 @@ export abstract class TabelaBaseDirective {
   onEnterPress(event: any): void {
     event.preventDefault();
     event.stopPropagation();
-    this.abrirDialog.emit();
+    this.doubleClick();
   }
 
   @HostListener('document:keydown.enter', ['$event'])
@@ -53,7 +68,7 @@ export abstract class TabelaBaseDirective {
   }
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (!this.isModalOpen) {
+    if (!this.isModalOpen && this.control?.value) {
       if (event.key === 'ArrowUp') {
         this.pressionaSeta(-1)
       } else if (event.key === 'ArrowDown') {
@@ -64,6 +79,8 @@ export abstract class TabelaBaseDirective {
       }
     }
   }
+
+  protected onInit() { }
 
   private pressionaSeta(valor: number) {
     const lista = this.lista as object[];

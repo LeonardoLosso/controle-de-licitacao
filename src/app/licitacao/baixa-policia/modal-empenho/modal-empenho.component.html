@@ -1,4 +1,4 @@
-<form [formGroup]="formulario" class="dialog">
+<form [formGroup]="formulario" class="dialog" (keydown.enter)="onEnterPress($event)">
     <h2>{{titulo}}</h2>
     <div mat-dialog-content>
         <h3>Dados do Item</h3>
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div mat-dialog-actions class="btn-group">
-        <button class="Cancelar" mat-stroked-button color="warn" (click)="cancelar(formulario)">
+        <button class="Cancelar" mat-stroked-button color="warn" type="button" (click)="cancelar(formulario)">
             <mat-icon matPrefix>undo</mat-icon>
             Voltar
         </button>

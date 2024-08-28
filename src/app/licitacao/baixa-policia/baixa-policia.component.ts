@@ -51,6 +51,10 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
   }
   onTabChange(index: number) {
     this.aba.setValue(index);
+    if(this.aba.value ===0)
+      this.notaSelecionada.setValue(null);
+    else
+      this.selecionado.setValue(null);
     this.label = this.aba.value === 0 ? 'Empenho' : 'Nota'
   }
   //------------------------------------------------------------------

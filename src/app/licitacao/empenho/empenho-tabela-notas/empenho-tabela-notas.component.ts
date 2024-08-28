@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 import { NotaSimplificada } from 'src/app/core/types/documentos';
 
 @Component({
@@ -7,39 +8,19 @@ import { NotaSimplificada } from 'src/app/core/types/documentos';
   templateUrl: './empenho-tabela-notas.component.html',
   styleUrls: ['./empenho-tabela-notas.component.scss']
 })
-export class EmpenhoTabelaNotasComponent {
+export class EmpenhoTabelaNotasComponent extends TabelaBaseDirective{
 
-  @Output() abrirDialog = new EventEmitter();
-  @Input() listaDocumentos!: NotaSimplificada[];
-  @Input() control!: FormControl;
+  @Input() override lista!: NotaSimplificada[];
 
-  private selecionado!: NotaSimplificada;
-
+constructor (){super()}
   public displayedColumns: string[] = [
     'codigo', 'numNota', 'unidade',
     'dataEmissao', 'dataEntrega', 'valorEntregue'
   ];
 
-  clickGrid(valor: NotaSimplificada) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
-  }
-
-  selecionar(valor: NotaSimplificada): string {
-
-    if (valor === this.selecionado) {
-      return 'selecionado';
-    }
-    return '';
-  }
-
-  doubleClick() {
-    this.abrirDialog.emit();
-  }
-
   public getTotal() {
-    if (this.listaDocumentos && this.listaDocumentos.length > 0) {
-      return this.listaDocumentos.map(t => t.valorEntregue).reduce((acc, value) => acc + value, 0);
+    if (this.lista && this.lista.length > 0) {
+      return this.lista.map(t => t.valorEntregue).reduce((acc, value) => acc + value, 0);
     }
     else return 0;
   }

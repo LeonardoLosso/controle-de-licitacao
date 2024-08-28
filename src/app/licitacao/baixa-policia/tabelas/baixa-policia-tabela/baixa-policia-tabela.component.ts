@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 import { EmpenhoPolicia } from 'src/app/core/types/documentos';
 
 @Component({
@@ -7,35 +7,15 @@ import { EmpenhoPolicia } from 'src/app/core/types/documentos';
   templateUrl: './baixa-policia-tabela.component.html',
   styleUrls: ['./baixa-policia-tabela.component.scss']
 })
-export class BaixaPoliciaTabelaComponent {
-  @Input() listaEmpenhos!: EmpenhoPolicia[];
-  @Input() control!: FormControl;
-  @Output() editar = new EventEmitter();
+export class BaixaPoliciaTabelaComponent extends TabelaBaseDirective{
+  @Input() override lista!: EmpenhoPolicia[];
 
-  private selecionado!: EmpenhoPolicia;
 
   public displayedColumns: string[] = ['numEmpenho', 'numNota', 'data', 'valor'];
 
-  clickGrid(valor: EmpenhoPolicia) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
-  }
-
-  selecionar(valor: EmpenhoPolicia): string {
-
-    if (valor === this.selecionado) {
-      return 'selecionado';
-    }
-    return '';
-  }
-
-  doubleClick() {
-    this.editar.emit();
-  }
-
   public getTotal() {
-    if (this.listaEmpenhos)
-      return this.listaEmpenhos.map(t => t.valor).reduce((acc, value) => acc + value, 0);
+    if (this.lista)
+      return this.lista.map(t => t.valor).reduce((acc, value) => acc + value, 0);
     else return '';
   }
 }

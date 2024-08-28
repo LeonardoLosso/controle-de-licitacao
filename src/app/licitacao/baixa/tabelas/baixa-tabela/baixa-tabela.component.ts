@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
 
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 import { ItemDeBaixa } from 'src/app/core/types/item';
 
 @Component({
@@ -8,13 +8,9 @@ import { ItemDeBaixa } from 'src/app/core/types/item';
   templateUrl: './baixa-tabela.component.html',
   styleUrls: ['./baixa-tabela.component.scss']
 })
-export class BaixaTabelaComponent {
-  @Output() abrirDialog = new EventEmitter();
+export class BaixaTabelaComponent extends TabelaBaseDirective {
 
-  @Input() listaItens!: ItemDeBaixa[];
-  @Input() control!: FormControl;
-  @Input() isLoadingResults = false;
-  @Input() isRateLimitReached = false;
+  @Input() override lista!: ItemDeBaixa[];
   @Input() totalizadores = true;
   @Input() displayedColumns: string[] = [
     'codigo', 'nome', 'unidade',
@@ -22,50 +18,25 @@ export class BaixaTabelaComponent {
     'valorEmpenhado', 'valorLicitado', 'saldo', 'valorUnitario'
   ];
 
-  private selecionado!: ItemDeBaixa;
 
-  constructor() { }
-
-  ngOnInit(): void {
-
-  }
+  constructor() { super() }
 
   public getTotalEmpenhado() {
-    if (this.listaItens)
-      return this.listaItens.map(t => t.valorEmpenhado).reduce((acc, value) => acc + value, 0);
+    if (this.lista)
+      return this.lista.map(t => t.valorEmpenhado).reduce((acc, value) => acc + value, 0);
     else return '';
   }
 
   public getTotalLicitado() {
-    if (this.listaItens)
-      return this.listaItens.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
+    if (this.lista)
+      return this.lista.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
     else return '';
   }
 
   public getTotalSaldo() {
-    if (this.listaItens)
-      return this.listaItens.map(t => t.saldo).reduce((acc, value) => acc + value, 0);
+    if (this.lista)
+      return this.lista.map(t => t.saldo).reduce((acc, value) => acc + value, 0);
     else return '';
   }
 
-  public clickGrid(valor: ItemDeBaixa) {
-    if (this.control) {
-      this.selecionado = valor;
-      this.control.setValue(valor);
-    }
-  }
-
-  public selecionar(valor: ItemDeBaixa): string {
-
-    if (valor === this.selecionado && this.control) {
-      return 'selecionado';
-    }
-    return '';
-  }
-
-  public doubleClick() {
-    if (this.control) {
-      this.abrirDialog.emit();
-    }
-  }
 }

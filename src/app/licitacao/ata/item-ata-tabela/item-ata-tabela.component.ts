@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 
 import { ItemDeAta } from 'src/app/core/types/item';
 
@@ -8,47 +8,39 @@ import { ItemDeAta } from 'src/app/core/types/item';
   templateUrl: './item-ata-tabela.component.html',
   styleUrls: ['./item-ata-tabela.component.scss']
 })
-export class ItemAtaTabelaComponent implements OnInit {
-  @Input() listaItens!: ItemDeAta[];
-  @Input() control!: FormControl;
+export class ItemAtaTabelaComponent extends TabelaBaseDirective {
+  @Input() override lista!: ItemDeAta[];
   @Input() reajuste!: boolean;
-  @Output() editarItem = new EventEmitter();
-
-  private selecionado!: ItemDeAta;
 
   public displayedColumns: string[] = ['codigo', 'nome', 'unidade', 'quantidade', 'valorUnitario', 'valorTotal'];
 
-  constructor() { }
+  constructor() { super() }
 
-  ngOnInit(): void {
 
-  }
-
-  public clickGrid(valor: ItemDeAta) {
+  public override clickGrid(valor: ItemDeAta) {
     if (!this.reajuste) {
-      this.selecionado = valor;
-      this.control.setValue(valor);
+      super.clickGrid(valor);
     }
   }
 
-  public selecionar(valor: ItemDeAta): string {
+  public override selecionar(valor: ItemDeAta): string {
 
-    if (valor === this.selecionado && !this.reajuste) {
-      return 'selecionado';
+    if (!this.reajuste) {
+      return super.selecionar(valor);
     }
     return '';
   }
 
   public getTotalItems() {
-    return this.listaItens.length;
+    return this.lista.length;
   }
 
   public getTotalCost() {
-    return this.listaItens.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
+    return this.lista.map(t => t.valorLicitado).reduce((acc, value) => acc + value, 0);
   }
 
-  public doubleClick() {
+  public override doubleClick() {
     if (!this.reajuste)
-      this.editarItem.emit();
+      super.doubleClick();
   }
 }

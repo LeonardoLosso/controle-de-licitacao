@@ -49,6 +49,11 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   }
   onTabChange(index: number) {
     this.aba.setValue(index);
+    if(this.aba.value ===0)
+      this.documentoSelecionado.setValue(null);
+    else
+      this.selecionado.setValue(null);
+
     this.label = this.aba.value === 0 ? 'Item' : 'Nota'
   }
   //-------------------[Botões]-------------------

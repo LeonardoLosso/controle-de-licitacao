@@ -16,15 +16,15 @@
         <mat-tab-group class="tab-group">
             <mat-tab label="Resumo">
 
-                <app-baixa-tabela [listaItens]="listaItens.value"/>
+                <app-baixa-tabela [lista]="listaItens.value"/>
 
             </mat-tab>
             <mat-tab label="Empenhos">
 
                 <app-empenho-tabela 
-                    [listaEmpenhos]="listaEmpenho.value" 
+                    [lista]="listaEmpenho.value" 
                     [control]="selecionado" 
-                    (editar)="editarEmpenho()"/>
+                    (abrirDialog)="editarEmpenho()"/>
 
             </mat-tab>
         </mat-tab-group>

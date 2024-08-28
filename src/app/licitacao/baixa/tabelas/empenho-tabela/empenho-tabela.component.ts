@@ -1,39 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
 
-import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
+import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directive';
 
 @Component({
   selector: 'app-empenho-tabela',
   templateUrl: './empenho-tabela.component.html',
   styleUrls: ['./empenho-tabela.component.scss']
 })
-export class EmpenhoTabelaComponent {
-  @Input() listaEmpenhos!: EmpenhoSimplificado[];
-  @Input() control!: FormControl;
-  @Output() editar = new EventEmitter();
-
-  private selecionado!: EmpenhoSimplificado;
+export class EmpenhoTabelaComponent extends TabelaBaseDirective{
 
 
   public displayedColumns: string[] = [
     'status', 'codigo', 'numEmpenho', 'edital', 'data', 'orgao', 'unidade', 'saldo', 'valor'
   ];
-
-  clickGrid(valor: EmpenhoSimplificado) {
-    this.selecionado = valor;
-    this.control.setValue(valor);
-  }
-
-  selecionar(valor: EmpenhoSimplificado): string {
-
-    if (valor === this.selecionado) {
-      return 'selecionado';
-    }
-    return '';
-  }
-
-  doubleClick() {
-    this.editar.emit();
-  }
 }

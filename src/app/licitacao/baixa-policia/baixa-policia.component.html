@@ -25,9 +25,9 @@
                 <div class="conteudo">
                     <div class="tabela">
                         <app-baixa-policia-tabela
-                            [listaEmpenhos]="listaEmpenho.value"
+                            [lista]="listaEmpenho.value"
                             [control]="selecionado"
-                            (editar)="editarEmpenho()"/>
+                            (abrirDialog)="editarEmpenho()"/>
                     </div>
                     <div class="totais">
                         <div class="labels">
@@ -42,7 +42,7 @@
             </mat-tab>
             <mat-tab label="Notas">
                 <app-empenho-tabela-notas
-                    [listaDocumentos]="listaNotas.value"
+                    [lista]="listaNotas.value"
                     [control]="notaSelecionada"
                     (abrirDialog)="editarNota()"/>
 
