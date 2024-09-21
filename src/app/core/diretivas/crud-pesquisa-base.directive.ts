@@ -38,7 +38,6 @@ export abstract class CrudPesquisaBaseDirective<ObjetoSimplificado> extends Spin
     this.pesquisa.valueChanges.pipe(
       debounceTime(1000),
       distinctUntilChanged()).subscribe((value) => {
-        this.limpar();
         this.loadData(value);
       })
   }
@@ -90,7 +89,6 @@ export abstract class CrudPesquisaBaseDirective<ObjetoSimplificado> extends Spin
     const params = search ? [{ key: 'search', value: search }] : this.form.obterDadosBusca();
 
     this.isLoadingResults = true;
-
     this.serviceListar(params)
       .subscribe({
         next: result => {
