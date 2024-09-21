@@ -387,10 +387,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       await this.form.buscaHistorico();
 
       const unidade = this.form.obterControle('unidade');
-      if (edital.value)
-        edital.disable();
-      else
-        edital.enable()
 
       if (unidade.value)
         unidade.disable();
