@@ -40,19 +40,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     this.route.queryParams.subscribe(params => {
       this.id = params['ata'];
-
-      const edital = this.form.obterControle<string>('edital');
-      const unidade = this.form.obterControle('unidade');
-      if (this.id) {
-        if (edital.value)
-          edital.disable();
-        
-        unidade.disable();
-      }
-      else {
-        edital.enable()
-        unidade.enable()
-      }
     });
 
     if (this.id) this.setBoolEmpenho();
@@ -113,6 +100,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   async abrirBaixa() {
     if (this.id && this.id !== 0) {
       const tipo = this.form.obterControle('unidade').value.id;
+      if (!tipo) return this.messageService.openSnackBar('É preciso salvar a unidade para abrir a baixa', 'alert')
       await this.salvar(false);
       if (tipo === 3) {
         const queryParams = { ata: this.id };
@@ -397,6 +385,17 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.form.setAtaOriginal();
 
       await this.form.buscaHistorico();
+
+      const unidade = this.form.obterControle('unidade');
+      if (edital.value)
+        edital.disable();
+      else
+        edital.enable()
+
+      if (unidade.value)
+        unidade.disable();
+      else
+        unidade.enable()
     }
 
   }

@@ -16,8 +16,4 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
       { key: 'status', value: this.obterControle('status').value?.id }
     ]
   }
-
-  public override limparFiltros() {
-    super.limparFiltros();
-  }
 }

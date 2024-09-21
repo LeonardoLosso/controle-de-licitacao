@@ -27,6 +27,6 @@ export class FormularioBuscaBaseService {
   public obterDadosBusca(): { key: string, value: any }[] { return [] }
 
   public limparFiltros() {
-    this.obterControle('status').setValue(null);
+    this.formBusca.reset();
   }
 }

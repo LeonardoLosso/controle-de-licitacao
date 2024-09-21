@@ -21,10 +21,4 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
             { key: 'cidade', value: this.obterControle('cidade').value }
         ]
     }
-
-    public override limparFiltros() {
-        super.limparFiltros();
-        this.obterControle('tipo').setValue(null);
-        this.obterControle('cidade').setValue(null);
-    }
 }

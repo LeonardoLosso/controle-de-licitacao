@@ -29,6 +29,7 @@ export abstract class CrudPesquisaBaseDirective<ObjetoSimplificado> extends Spin
   ) { super() }
 
   ngOnInit(): void {
+    this.form.limparFiltros();
     this.loadData();
 
     this.selecionado = this.form.obterControle('selecionadoGrid');
@@ -85,7 +86,7 @@ export abstract class CrudPesquisaBaseDirective<ObjetoSimplificado> extends Spin
     this.inativarConfirmar(cadastro);
   }
 
-  public loadData(search?: string) {
+  public loadData(search?: any) {
     const params = search ? [{ key: 'search', value: search }] : this.form.obterDadosBusca();
 
     this.isLoadingResults = true;

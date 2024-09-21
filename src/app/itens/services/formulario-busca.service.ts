@@ -23,12 +23,4 @@ export class FormularioBuscaService extends FormularioBuscaBaseService {
       { key: 'unidadeSecundaria', value: this.obterControle('unidadeSec').value },
     ]
   }
-
-  public override limparFiltros() {
-    super.limparFiltros();
-    this.obterControle('unidadePri').setValue(null);
-    this.obterControle('unidadeSec').setValue(null);
-    this.obterControle('ehCesta').setValue(null);
-  }
-
 }

@@ -175,13 +175,7 @@ export class FormularioAtaService {
   }
 
   private desabilitarFormulario() {
-    this.obterControle('edital').disable();
-    this.obterControle('dataLicitacao').disable();
-    this.obterControle('dataAta').disable();
-    this.obterControle('vigencia').disable();
-    this.obterControle('empresa').disable();
-    this.obterControle('orgao').disable();
-    this.obterControle('unidade').disable();
+    this.formulario.disable()
   }
 
   private habilitarFormulario() {
