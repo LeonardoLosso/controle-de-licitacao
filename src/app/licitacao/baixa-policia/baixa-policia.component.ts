@@ -230,6 +230,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
   private async preencher(id: number) {
     const status = this.form.obterControle<number>('status');
     const edital = this.form.obterControle<string>('edital');
+    const responsavel = this.form.obterControle<string>('responsavel');
     const dataLicitacao = this.form.obterControle<Date>('dataLicitacao');
     const dataAta = this.form.obterControle<Date>('dataAta');
     const vigencia = this.form.obterControle<Date>('vigencia');
@@ -243,6 +244,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
     if (result) {
       this.form.idAta = result.id;
       edital.setValue(result.edital);
+      responsavel.setValue(result.responsavel);
       status.setValue(result.status);
       dataLicitacao.setValue(result.dataLicitacao);
       dataAta.setValue(result.dataAta);

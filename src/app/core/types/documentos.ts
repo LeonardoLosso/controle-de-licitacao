@@ -3,6 +3,7 @@ import { ItemDeAta, ItemDeBaixa, ItemDeEmpenho, ItemDeNota, ItemDeReajuste } fro
 
 export interface AtaLicitacao {
     id: number,
+    responsavel: string,
     edital: string,
     status: number,
     orgao: Entidade,
@@ -16,6 +17,7 @@ export interface AtaLicitacao {
 }
 export interface AtaLicitacaoSimplificada {
     id: number,
+    responsavel: string,
     edital: string,
     status: number,
     orgao: string,
@@ -34,6 +36,7 @@ export interface Reajuste {
 //------------------------------------------------
 export interface BaixaLicitacao {
     id: number,
+    responsavel: string,
     edital: number,
     status: number,
     unidade: number,
@@ -47,6 +50,7 @@ export interface BaixaLicitacao {
 
 export interface BaixaPolicia {
     id: number,
+    responsavel: string,
     edital: number,
     status: number,
     unidade: number,

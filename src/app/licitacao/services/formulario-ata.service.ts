@@ -26,6 +26,7 @@ export class FormularioAtaService {
 
   constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
+      responsavel: new FormControl(''),
       edital: new FormControl(null, [Validators.required]),
       status: new FormControl(0),
       selecionadoGrid: new FormControl(null),
@@ -159,6 +160,7 @@ export class FormularioAtaService {
   public limpar() {
     this.idAta = 0;
     this.obterControle<number>('status').setValue(0);
+    this.obterControle<string>('responsavel').setValue('');
     this.obterControle<string>('edital').setValue(null);
     this.obterControle<Date>('dataLicitacao').setValue(null);
     this.obterControle<Date>('dataAta').setValue(null);
@@ -183,6 +185,7 @@ export class FormularioAtaService {
       this.obterControle('dataLicitacao').enable();
 
     this.obterControle('dataAta').enable();
+    this.obterControle('responsavel').enable();
     this.obterControle('vigencia').enable();
     this.obterControle('empresa').enable();
     this.obterControle('orgao').enable();
@@ -192,6 +195,7 @@ export class FormularioAtaService {
 
     return {
       id: this.idAta,
+      responsavel: this.obterControle('responsavel').value,
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value ?? 1,
       unidade: this.obterControle('unidade').value?.id ?? 0,

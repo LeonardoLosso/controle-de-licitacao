@@ -352,6 +352,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
   private async preencher(id: number) {
     const edital = this.form.obterControle<string>('edital');
+    const responsavel = this.form.obterControle('responsavel');
     const empresa = this.form.obterControle('empresa');
     const orgao = this.form.obterControle('orgao');
     const dataLicitacao = this.form.obterControle<Date>('dataLicitacao');
@@ -367,6 +368,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.form.totalReajustes = result.totalReajustes;
 
       edital.setValue(result.edital);
+      responsavel.setValue(result.responsavel);
       status.setValue(result.status);
       dataLicitacao.setValue(result.dataLicitacao);
       dataAta.setValue(result.dataAta);

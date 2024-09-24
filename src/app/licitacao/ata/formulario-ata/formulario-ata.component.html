@@ -33,6 +33,12 @@
         <mat-datepicker #vigencia></mat-datepicker>
     </mat-form-field>
 
+    <!-- Responsável -->
+    <mat-form-field class="field" appearance="outline">
+        <mat-label>Responsável</mat-label>
+        <input matInput [formControl]="formService.obterControle('responsavel')">
+    </mat-form-field>
+
     <!-- Lookup empresa -->
     <app-lookup-base
         class="lookup"

@@ -18,6 +18,7 @@ export class FormularioBaixaService {
 
   constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
+      responsavel: new FormControl(''),
       edital: new FormControl(null),
       status: new FormControl(0),
       unidade: new FormControl(0),
@@ -79,6 +80,7 @@ export class FormularioBaixaService {
 
   private desabilitarFormulario() {
     this.obterControle('edital').disable();
+    this.obterControle('responsavel').disable();
     this.obterControle('dataLicitacao').disable();
     this.obterControle('dataAta').disable();
     this.obterControle('vigencia').disable();
@@ -91,6 +93,7 @@ export class FormularioBaixaService {
 
     return {
       id: this.idAta,
+      responsavel: this.obterControle('responsavel').value,
       edital: this.obterControle('edital').value,
       status: this.obterControle('status').value ?? 1,
       empresa: this.obterControle('empresa').value?.id ?? 0,

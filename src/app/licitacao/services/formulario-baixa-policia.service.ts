@@ -23,6 +23,7 @@ export class FormularioBaixaPoliciaService {
 
   constructor(private service: DocumentosService, private entidadeService: EntidadesService) {
     this.formulario = new FormGroup({
+      responsavel: new FormControl(''),
       edital: new FormControl(null),
       status: new FormControl(0),
       selecionadoGrid: new FormControl(null),
@@ -124,6 +125,7 @@ export class FormularioBaixaPoliciaService {
 
   private desabilitarFormulario() {
     this.obterControle('edital').disable();
+    this.obterControle('responsavel').disable();
     this.obterControle('dataLicitacao').disable();
     this.obterControle('dataAta').disable();
     this.obterControle('vigencia').disable();
