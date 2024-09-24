@@ -9,7 +9,7 @@ import { TabelaBaseDirective } from 'src/app/core/diretivas/tabela-base.directiv
 })
 export class LicitacaoTabelaComponent extends TabelaBaseDirective{
 
-  public displayedColumns: string[] = [ 'status', 'codigo', 'empresa', 'orgao', 'unidade', 'dataLicitacao', 'dataAta', 'valor'];
+  public displayedColumns: string[] = [ 'status', 'codigo', 'responsavel', 'empresa', 'orgao', 'unidade', 'dataLicitacao', 'dataAta', 'valor'];
 
   constructor() { super() }
 }
