@@ -32,6 +32,7 @@ import { BaixaPoliciaComponent } from './baixa-policia/baixa-policia.component';
 import { CabecalhoBaixaPoliciaComponent } from './baixa-policia/cabecalho-baixa-policia/cabecalho-baixa-policia.component';
 import { BaixaPoliciaTabelaComponent } from './baixa-policia/tabelas/baixa-policia-tabela/baixa-policia-tabela.component';
 import { ModalEmpenhoComponent } from './baixa-policia/modal-empenho/modal-empenho.component';
+import { ModalObservacaoComponent } from './notas/modal-nota/modal-observacao/modal-observacao.component';
 
 
 
@@ -63,7 +64,8 @@ import { ModalEmpenhoComponent } from './baixa-policia/modal-empenho/modal-empen
     BaixaPoliciaComponent,
     CabecalhoBaixaPoliciaComponent,
     BaixaPoliciaTabelaComponent,
-    ModalEmpenhoComponent
+    ModalEmpenhoComponent,
+    ModalObservacaoComponent
   ],
   imports: [
     CommonModule,

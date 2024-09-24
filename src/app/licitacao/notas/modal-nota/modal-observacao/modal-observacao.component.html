@@ -1,0 +1,23 @@
+<div class="dialog">
+    <h2 mat-dialog-title>Observação</h2>
+    <div mat-dialog-content>
+        <mat-form-field class="field" appearance="outline">
+            <textarea matInput
+                cdkTextareaAutosize 
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="10"
+                cdkAutosizeMaxRows="20"
+                [(ngModel)]="data.observacoes">
+            </textarea> 
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="btn-group">
+        <button 
+            mat-flat-button 
+            color="primary" 
+            (click)="submeter()">
+            <mat-icon matPrefix>check</mat-icon>
+            Ok
+        </button>
+    </div>
+</div>

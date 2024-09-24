@@ -104,6 +104,7 @@ export interface EmpenhoPolicia {
 
 export interface Nota {
     id: number,
+    observacao: string,
     ehPolicia: boolean,
     numNota: string,
     empenhoID: number,

@@ -159,6 +159,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     const novaNota: Nota = {
       id: 0,
       ehPolicia: false,
+      observacao: '',
       numNota: '',
       empenhoID: this.id,
       numEmpenho: this.form.obterControle('numEmpenho').value,

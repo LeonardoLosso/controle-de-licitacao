@@ -23,6 +23,10 @@
 
     }
 
+    .field {
+        max-width: 200px;
+    }
+
     .mat-mdc-outlined-button:not(:disabled) {
         border-color: #f44336;
     }
@@ -34,12 +38,13 @@
         justify-content: center;
     }
 
-    .botoes{
+    .botoes {
         width: 100%;
         display: flex;
         justify-content: center;
         margin: 5px 0;
-        .btn:not(:last-child){
+
+        .btn:not(:last-child) {
             margin-right: 30px;
         }
     }

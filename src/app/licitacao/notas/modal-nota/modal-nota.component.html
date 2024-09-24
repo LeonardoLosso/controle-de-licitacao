@@ -3,7 +3,7 @@
     <div mat-dialog-content>
         <div class="campo dados">
             <!-- ID -->
-            <mat-form-field class="input" appearance="outline">
+            <mat-form-field class="field" appearance="outline">
                 <mat-label>Código</mat-label>
                 <input matInput 
                     name="id" 
@@ -13,7 +13,7 @@
             </mat-form-field>
             
             <!-- Numero da nota -->
-            <mat-form-field class="input" appearance="outline">
+            <mat-form-field class="field" appearance="outline">
                 <mat-label>Nº Nota</mat-label>
                 <input matInput 
                     name="numNota" 
@@ -22,7 +22,7 @@
             </mat-form-field>
             
             <!-- Empenho -->
-            <mat-form-field *ngIf="!policia" class="input" appearance="outline">
+            <mat-form-field *ngIf="!policia" class="field" appearance="outline">
                 <mat-label>Nº Empenho</mat-label>
                 <input 
                     maxlength="50"
@@ -34,7 +34,7 @@
             </mat-form-field>
 
             <!-- Edital -->
-            <mat-form-field class="input" appearance="outline">
+            <mat-form-field class="field" appearance="outline">
                 <mat-label>Edital</mat-label>
                 <input
                     placeholder="Selecione"
@@ -48,8 +48,8 @@
 
             <!-- Lookup Órgão -->
             <app-lookup-base
-                class="field"
                 label="Órgão"
+                class="field"
                 [control]="unidadeControl"
                 [data]="'orgao'"
                 [tipoDaLookup]="lookupDeEntidades"
@@ -80,6 +80,9 @@
                 <mat-datepicker-toggle matIconSuffix [for]="data"></mat-datepicker-toggle>
                 <mat-datepicker #data></mat-datepicker>
             </mat-form-field>
+
+            <app-botoes icone="edit_square" texto="Obs" variant="btn-cabecalho" (acao)="modalObs()" />
+
         </div>
         <div class="tabela">
             <span class="botoes">
@@ -110,18 +113,3 @@
     </div>
     <ng-template #loadingSpinnerContainer></ng-template>
 </form>
-
-<!-- 
-<mat-form-field class="input" appearance="outline">
-    <mat-label>Observações</mat-label>
-    <textarea matInput 
-        name="observacoes" 
-        [(ngModel)]="cadastro.numNota" 
-        #observacoes="ngModel"
-        cdkTextareaAutosize 
-        #autosize="cdkTextareaAutosize"
-        cdkAutosizeMinRows="3" 
-        cdkAutosizeMaxRows="10">
-    </textarea> 
-</mat-form-field>
--->

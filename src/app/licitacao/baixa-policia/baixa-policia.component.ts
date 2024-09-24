@@ -137,6 +137,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
     const novaNota: Nota = {
       id: 0,
       ehPolicia: true,
+      observacao: '',
       numNota: '',
       empenhoID: -this.id,
       numEmpenho: '',

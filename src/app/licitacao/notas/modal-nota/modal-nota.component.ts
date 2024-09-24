@@ -12,6 +12,7 @@ import { ModalCrudDirective } from 'src/app/core/diretivas/modal-crud.directive'
 import { MudancasParaPatch } from 'src/app/core/types/auxiliares';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { LookupEntidadesComponent } from 'src/app/entidades/lookup-entidades/lookup-entidades.component';
+import { ModalObservacaoComponent } from './modal-observacao/modal-observacao.component';
 
 @Component({
   selector: 'app-modal-nota',
@@ -54,6 +55,12 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     if (this.edicao) {
       this.titulo += ' ' + this.data.numNota;
     }
+  }
+
+  public async modalObs() {
+    const observacao = await this.abreModalObs(this.cadastro.observacao);
+    
+    this.cadastro.observacao = observacao;
   }
 
   public async addItem() {
@@ -115,6 +122,14 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
         item: item,
         policia: this.policia
       }
+    });
+
+    return await lastValueFrom(dialogRef.afterClosed());
+  }
+
+  private async abreModalObs(obs: string): Promise<string> {
+    const dialogRef = this.dialog.open(ModalObservacaoComponent, {
+      data: { observacoes: obs }
     });
 
     return await lastValueFrom(dialogRef.afterClosed());
