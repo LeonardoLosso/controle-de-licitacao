@@ -76,6 +76,8 @@ export class FormularioAtaService {
     const lista = this.obterControle('itens') as FormControl<ItemDeAta[]>;
     const novaLista = [...lista.value];
     novaLista.push(item);
+
+    novaLista.sort((a, b) => a.nome.localeCompare(b.nome));
     lista.setValue(novaLista);
   }
 
@@ -184,6 +186,7 @@ export class FormularioAtaService {
     if (!this.idAta)
       this.obterControle('dataLicitacao').enable();
 
+    this.obterControle('edital').enable();
     this.obterControle('dataAta').enable();
     this.obterControle('responsavel').enable();
     this.obterControle('vigencia').enable();

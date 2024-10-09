@@ -85,7 +85,7 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
       this.listaItens = this.listaItens ?? [];
 
       this.listaItens.push(novoItem);
-      this.listaItens = [...this.listaItens];
+      this.listaItens = [...this.listaItens.sort((a, b) => a.nome.localeCompare(b.nome))];
       this.listaControl.setValue(this.listaItens);
       this.listaControl.markAsDirty();
 

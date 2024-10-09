@@ -60,6 +60,8 @@ export class FormularioEmpenhoService {
     const lista = this.obterControle('itens') as FormControl<ItemDeEmpenho[]>;
     const novaLista = [...lista.value];
     novaLista.push(item);
+
+    novaLista.sort((a, b) => a.nome.localeCompare(b.nome));
     lista.setValue(novaLista);
   }
   public editarItem(item: ItemDeEmpenho, index: number) {

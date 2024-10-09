@@ -387,13 +387,6 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       this.form.setAtaOriginal();
 
       await this.form.buscaHistorico();
-
-      const unidade = this.form.obterControle('unidade');
-
-      if (unidade.value)
-        unidade.disable();
-      else
-        unidade.enable()
     }
 
   }
