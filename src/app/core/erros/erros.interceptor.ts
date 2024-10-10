@@ -27,7 +27,7 @@ export class ErrosInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<HttpErrorResponse>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = 'Erro de referência nula';
+        let errorMessage = 'Erro desconhecido';
         if (error.error instanceof ErrorEvent) {
           errorMessage = `Erro do client: ${error.error.message}`;
         } else if (error.status === 404) {

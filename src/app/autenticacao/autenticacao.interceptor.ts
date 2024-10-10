@@ -12,19 +12,13 @@ export class AutenticacaoInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         if (this.tokenService.possuiToken()) {
             const token = this.tokenService.retornarToken();
+            request = request.clone({
+                headers: request.headers.append('Authorization', `Bearer ${token}`)
+            });
 
             if (!(request.body instanceof FormData)) {
                 request = request.clone({
-                    setHeaders: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-            } else {
-                request = request.clone({
-                    setHeaders: {
-                        'Authorization': `Bearer ${token}`
-                    }
+                    headers: request.headers.append('Content-Type', 'application/json')
                 });
             }
         }

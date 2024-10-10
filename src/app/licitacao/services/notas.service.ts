@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CrudBaseService } from 'src/app/core/services/crud-base.service';
@@ -27,5 +27,12 @@ export class NotasService extends CrudBaseService<Nota, NotaSimplificada> {
   //Implementado em documento service
   public override listar(pagina?: number, params?: { key: string; value: any; }[]): Observable<Listagem<NotaSimplificada>> {
     throw null;
+  }
+
+  public override print(id: number): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/pdf'
+    });
+    return this.http.get<Blob>(`${this.URL}/nota/report/${id}`, { headers: headers, responseType: 'blob' as 'json'});
   }
 }

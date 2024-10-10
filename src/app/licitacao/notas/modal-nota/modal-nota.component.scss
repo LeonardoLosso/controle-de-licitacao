@@ -1,4 +1,13 @@
 .dialog {
+    .cabeca {
+        display: flex;
+
+        button {
+            margin: 16px 0 0 24px;
+
+        }
+    }
+
     h2 {
         margin: 16px 0 0 24px;
     }
@@ -48,6 +57,10 @@
             margin-right: 30px;
         }
     }
+}
+
+.ocultar {
+    display: none;
 }
 
 :host::ng-deep .btn-cabecalho {

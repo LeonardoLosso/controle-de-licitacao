@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
 import { compare } from 'fast-json-patch';
@@ -19,8 +19,8 @@ import { ModalObservacaoComponent } from './modal-observacao/modal-observacao.co
   templateUrl: './modal-nota.component.html',
   styleUrls: ['./modal-nota.component.scss']
 })
-export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificada> {
-
+export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificada> implements AfterViewInit {
+  @ViewChild('elementFocus') elementFocus!: ElementRef;
   public override permissao: number = 502;
 
   public unidadeControl = new FormControl();
@@ -57,9 +57,28 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     }
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.elementFocus.nativeElement.focus();
+    });
+  }
+
+  public async print(){
+    if(!this.edicao)
+      return
+
+    const result = await lastValueFrom(this.service.print(this.cadastro.id));
+
+    if(result){
+      const fileURL = URL.createObjectURL(result);
+
+      window.open(fileURL, '_blank');
+    }
+  }
+
   public async modalObs() {
     const observacao = await this.abreModalObs(this.cadastro.observacao);
-    
+
     this.cadastro.observacao = observacao;
   }
 

@@ -21,4 +21,8 @@ export abstract class CrudBaseService<Objeto, ObjetoSimplificado> {
   public abstract editar(cadastro: MudancasParaPatch[], id?: number): Observable<Objeto>;
 
   public abstract criar(cadastro: Objeto): Observable<Objeto>;
+
+  public print(id: number): Observable<Blob>{
+    throw  console.error("não implementado");
+  }
 }

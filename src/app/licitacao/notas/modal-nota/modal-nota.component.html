@@ -1,5 +1,16 @@
 <form #form="ngForm" class="dialog" (keydown.enter)="onEnterPress($event)">
-    <h2>{{titulo}}</h2>
+    <div class="cabeca">
+        <h2>{{titulo}}</h2>
+        <button 
+            mat-flat-button
+            color="primary" 
+            (click)="print()"
+            [class.ocultar]="!edicao"
+            [tabindex]="-1">
+            <mat-icon matPrefix>print</mat-icon>
+            Imprimir
+        </button>
+    </div>
     <div mat-dialog-content>
         <div class="campo dados">
             <!-- ID -->
@@ -15,10 +26,12 @@
             <!-- Numero da nota -->
             <mat-form-field class="field" appearance="outline">
                 <mat-label>Nº Nota</mat-label>
-                <input matInput 
+                <input matInput
                     name="numNota" 
                     [(ngModel)]="cadastro.numNota" 
-                    #numNota="ngModel">
+                    #numNota="ngModel"
+                    #elementFocus
+                    [tabindex]="1">
             </mat-form-field>
             
             <!-- Empenho -->
@@ -46,9 +59,9 @@
                 >
             </mat-form-field>
 
-            <!-- Lookup Órgão -->
+            <!-- Lookup UNIDADE -->
             <app-lookup-base
-                label="Órgão"
+                label="Unidade"
                 class="field"
                 [control]="unidadeControl"
                 [data]="'orgao'"
