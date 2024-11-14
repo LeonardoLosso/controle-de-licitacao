@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class ErrosInterceptor implements HttpInterceptor {
 
   constructor(
-    private service: MensagemService, 
+    private service: MensagemService,
     private userService: UserService,
     private router: Router
   ) { }
@@ -36,11 +36,11 @@ export class ErrosInterceptor implements HttpInterceptor {
           errorMessage = `Erro interno do servidor`;
         } else if (error.status === 401) {
           errorMessage = `Não autorizado`;
-        } else if (error.status === 501){
+        } else if (error.status === 501) {
           errorMessage = error.error?.Message;
-        } else if (error.status === 400){
+        } else if (error.status === 400) {
           errorMessage = 'Requisição fora do padrão';
-        } else if (error.status === 512){
+        } else if (error.status === 512) {
           errorMessage = "token expirado";
           this.userService.logout();
           this.router.navigate(['auth/login']);
@@ -48,10 +48,16 @@ export class ErrosInterceptor implements HttpInterceptor {
         }
         let url = '';
 
-        if(error.url) url = error.url;
+        if (error.url) url = error.url;
 
+        if (errorMessage === 'Erro desconhecido') {
+          console.log(error);
+          errorMessage += ' | F12 para mais detalhes';
+        }
         this.service.openSnackBar(errorMessage, 'error');
-        return throwError(() => new Error(`${errorMessage} na rota: ${url}`, {cause: error.status?? 0}));
+
+
+        return throwError(() => new Error(`${errorMessage} na rota: ${url}`, { cause: error.status ?? 0 }));
       })
     );
   }

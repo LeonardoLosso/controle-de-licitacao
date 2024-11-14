@@ -102,7 +102,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       const tipo = this.form.obterControle('unidade').value.id;
       if (!tipo) return this.messageService.openSnackBar('É preciso salvar a unidade para abrir a baixa', 'alert')
       await this.salvar(false);
-      if (tipo === 3) {
+      if (tipo === 3 || tipo === 9) {
         const queryParams = { ata: this.id };
         return this.router.navigate(['/licitacao/baixa/policia'], { queryParams });
       }

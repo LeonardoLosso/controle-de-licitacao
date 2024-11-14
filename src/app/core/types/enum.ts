@@ -38,7 +38,8 @@ export const EnumTipoCadastro: EnumNumberID[] = [
     { id: 5, nome: 'Assistência social' },
     { id: 6, nome: 'Batalhão' },
     { id: 7, nome: 'Hospital' },
-    { id: 8, nome: 'Escola' }
+    { id: 8, nome: 'Escola' },
+    { id: 9, nome: 'FUNDEPAR' }
 ]
 
 export const EnumTipoStatus: EnumNumberID[] = [
@@ -48,5 +49,6 @@ export const EnumTipoStatus: EnumNumberID[] = [
 
 export const EnumTipoDocumento: EnumNumberID[] = [
     { id: 2, nome: 'Prefeitura' },
-    { id: 3, nome: 'Policia' }
+    { id: 3, nome: 'Policia' },
+    { id: 9, nome: 'FUNDEPAR' }
 ]
