@@ -64,7 +64,8 @@ export class ItensService extends CrudBaseService<Item, ItemSimplificado> {
     return this.http.get<ItemDeBaixa[]>(`${this.URL}/baixa/itens/${id}`, { params });
   }
 
-  public listarItensEmpenho(id: number): Observable<ItemDeEmpenho[]> {
-    return this.http.get<ItemDeEmpenho[]>(`${this.URL}/empenho/itens/${id}`);
+  public listarItensEmpenho(id: number, search: string = ''): Observable<ItemDeEmpenho[]> {
+    const params = new HttpParams().set('search', search.toString());
+    return this.http.get<ItemDeEmpenho[]>(`${this.URL}/empenho/itens/${id}`, { params });
   }
 }

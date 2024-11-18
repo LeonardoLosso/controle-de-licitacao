@@ -21,6 +21,8 @@
                 <app-empenho-tabela-itens 
                     [lista]="listaItens.value" 
                     [control]="selecionado"
+                    [activeTab]="this.aba.value === 0 || this.aba.value === null"
+                    [isModalOpen]="isModalOpen"
                     (abrirDialog)="editar()"/>
 
             </mat-tab>
@@ -29,6 +31,8 @@
                 <app-empenho-tabela-notas
                     [lista]="listaDocumentos.value"
                     [control]="documentoSelecionado"
+                    [activeTab]="this.aba.value === 1"
+                    [isModalOpen]="isModalOpen"
                     (abrirDialog)="editarNota()"/>
             </mat-tab>
         </mat-tab-group>

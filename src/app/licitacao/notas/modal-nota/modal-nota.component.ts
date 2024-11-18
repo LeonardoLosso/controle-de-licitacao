@@ -63,13 +63,13 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     });
   }
 
-  public async print(){
-    if(!this.edicao)
+  public async print() {
+    if (!this.edicao)
       return
 
     const result = await lastValueFrom(this.service.print(this.cadastro.id));
 
-    if(result){
+    if (result) {
       const fileURL = URL.createObjectURL(result);
 
       window.open(fileURL, '_blank');
@@ -82,17 +82,29 @@ export class ModalNotaComponent extends ModalCrudDirective<Nota, NotaSimplificad
     this.cadastro.observacao = observacao;
   }
 
+  protected override acaoNovo(): void {
+    this.cadastro.itens = this.cadastro.itens.map(item => {
+      return {
+        ...item,
+        quantidade: item.quantidade ?? 0,
+        valorCaixa: item.valorCaixa ?? 0,
+        qtdeCaixa: item.qtdeCaixa ?? 0
+      }
+    });
+    super.acaoNovo();
+  }
+
   public async addItem() {
     const itemVazio: ItemDeNota = {
       id: 0,
       nome: '',
       empenhoID: this.cadastro.empenhoID,
       notaID: this.cadastro.id,
-      quantidade: 0,
+      quantidade: null,
       unidade: '',
       valorTotal: 0,
-      valorCaixa: 0,
-      qtdeCaixa: 0,
+      valorCaixa: null,
+      qtdeCaixa: null,
       valorUnitario: 0
     };
     const novoItem = await this.abreModalItem(itemVazio);

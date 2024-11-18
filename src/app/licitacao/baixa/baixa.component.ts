@@ -8,16 +8,17 @@ import { FormularioBaixaService } from '../services/formulario-baixa.service';
 import { ItemDeBaixa } from 'src/app/core/types/item';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { EmpenhoSimplificado } from 'src/app/core/types/documentos';
-import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalImportacaoComponent } from 'src/app/shared/modal-importacao/modal-importacao.component';
+import { ModalControllService } from 'src/app/core/services/modal-controll.service';
+import { DocumentosDirective } from 'src/app/core/diretivas/documentos.directive';
 
 @Component({
   selector: 'app-baixa',
   templateUrl: './baixa.component.html',
   styleUrls: ['./baixa.component.scss']
 })
-export class BaixaComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
+export class BaixaComponent extends DocumentosDirective implements OnInit, AfterViewInit {
   private id!: number;
 
   public status!: FormControl;
@@ -30,8 +31,9 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private mensagemService: MensagemService,
-    private router: Router
-  ) { super() }
+    private router: Router,
+    modalContrrol: ModalControllService
+  ) { super(modalContrrol) }
 
   ngOnInit(): void {
     this.form.limpar();
@@ -96,7 +98,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
     })
   }
 
-  public cancelar() {
+  protected override async cancelar() {
     const queryParams = { ata: this.id };
     this.router.navigate(['/licitacao'], { queryParams });
   }
@@ -182,6 +184,7 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
   }
 
   private async confirmarInativacao() {
+    this.modalControlService.openModal()
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -191,10 +194,11 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       }
     });
 
-    return await lastValueFrom(confirmacao.afterClosed());
+    return await lastValueFrom(confirmacao.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
 
   private async confirmarExclusao(empenho: EmpenhoSimplificado) {
+    this.modalControlService.openModal()
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -204,11 +208,18 @@ export class BaixaComponent extends SpinnerControlDirective implements OnInit, A
       }
     });
 
-    return await lastValueFrom(confirmacao.afterClosed());
+    return await lastValueFrom(confirmacao.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
 
   private goToEdit(id: number) {
     const queryParams = { empenho: id };
     return this.router.navigate(['/licitacao/empenho'], { queryParams });
+  }
+
+  protected override acaoAdd(): void {
+    this.novoEmpenho();
+  }
+  protected override acaoDelete(): void {
+    this.excluirEmpenho();
   }
 }

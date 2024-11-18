@@ -27,6 +27,8 @@
                         <app-baixa-policia-tabela
                             [lista]="listaEmpenho.value"
                             [control]="selecionado"
+                            [activeTab]="this.aba.value === 0 || this.aba.value === null"
+                            [isModalOpen]="isModalOpen"
                             (abrirDialog)="editarEmpenho()"/>
                     </div>
                     <div class="totais">
@@ -44,6 +46,9 @@
                 <app-empenho-tabela-notas
                     [lista]="listaNotas.value"
                     [control]="notaSelecionada"
+                    [isModalOpen]="isModalOpen"
+                    [activeTab]="this.aba.value === 1"
+                    [isModalOpen]="isModalOpen"
                     (abrirDialog)="editarNota()"/>
 
             </mat-tab>

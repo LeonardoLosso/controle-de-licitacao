@@ -2,7 +2,7 @@
 <section class="busca-docmentos">
     <app-container>
         <app-cabecalho-baixa
-            (cancelar)="cancelar()"
+            (cancelarOp)="cancelar()"
             (acao)="importarEmpenho()"
             (editarEmpenho)="editarEmpenho()"
             (inativar)="inativar()"
@@ -13,7 +13,7 @@
             <app-formulario-ata [formService]="form" [formEdit]="false"/>
         </app-cabecalho-baixa>
 
-        <mat-tab-group class="tab-group">
+        <mat-tab-group class="tab-group" [selectedIndex]="aba.value">
             <mat-tab label="Resumo">
 
                 <app-baixa-tabela [lista]="listaItens.value"/>
@@ -24,6 +24,7 @@
                 <app-empenho-tabela 
                     [lista]="listaEmpenho.value" 
                     [control]="selecionado" 
+                    [isModalOpen]="isModalOpen"
                     (abrirDialog)="editarEmpenho()"/>
 
             </mat-tab>

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
+
 import { FormularioBaixaPoliciaService } from '../services/formulario-baixa-policia.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
@@ -10,17 +10,18 @@ import { lastValueFrom } from 'rxjs';
 import { EmpenhoPolicia, Nota, NotaSimplificada } from 'src/app/core/types/documentos';
 import { ModalEmpenhoComponent } from './modal-empenho/modal-empenho.component';
 import { ModalNotaComponent } from '../notas/modal-nota/modal-nota.component';
+import { DocumentosDirective } from 'src/app/core/diretivas/documentos.directive';
+import { ModalControllService } from 'src/app/core/services/modal-controll.service';
 
 @Component({
   selector: 'app-baixa-policia',
   templateUrl: './baixa-policia.component.html',
   styleUrls: ['./baixa-policia.component.scss']
 })
-export class BaixaPoliciaComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
+export class BaixaPoliciaComponent extends DocumentosDirective implements OnInit, AfterViewInit {
 
   private id!: number;
 
-  public aba!: FormControl;
   public status!: FormControl;
 
   public selecionado!: FormControl;
@@ -36,8 +37,9 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private mensagemService: MensagemService,
-    private router: Router
-  ) { super() }
+    private router: Router,
+    modalControlService: ModalControllService
+  ) { super(modalControlService) }
 
   ngOnInit(): void {
     this.form.limpar();
@@ -51,14 +53,14 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
   }
   onTabChange(index: number) {
     this.aba.setValue(index);
-    if(this.aba.value ===0)
+    if (this.aba.value === 0)
       this.notaSelecionada.setValue(null);
     else
       this.selecionado.setValue(null);
     this.label = this.aba.value === 0 ? 'Empenho' : 'Nota'
   }
   //------------------------------------------------------------------
-  public cancelar() {
+  protected override async cancelar() {
     const queryParams = { ata: this.id };
     this.router.navigate(['/licitacao'], { queryParams });
   }
@@ -100,11 +102,11 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
     const empenho: EmpenhoPolicia = this.selecionado.value as EmpenhoPolicia;
 
-    const result = await this.abreModalEmpenho(empenho);
+    const result = await this.abreModal(empenho, 'empenho');
 
     if (result) {
       const index = this.listaEmpenho.value.indexOf(empenho);
-      const edit: EmpenhoPolicia = result;
+      const edit: EmpenhoPolicia = result as EmpenhoPolicia;
 
       this.form.editarEmpenho(edit, index);
     }
@@ -114,10 +116,10 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
 
     const empenho = this.empenhoVazio();
 
-    const result = await this.abreModalEmpenho(empenho);
+    const result = await this.abreModal(empenho, 'empenho');
 
     if (result) {
-      const novoItem: EmpenhoPolicia = result;
+      const novoItem: EmpenhoPolicia = result as EmpenhoPolicia;
 
       this.form.adicionarEmpenho(novoItem);
     }
@@ -148,7 +150,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       dataEntrega: new Date(),
       itens: []
     }
-    const result = await this.abreModalNota(novaNota);
+    const result = await this.abreModal(novaNota, 'nota');
     if (result) {
       this.mensagemService.openSnackBar("Nota adicionada com sucesso!", 'success');
       this.inicializarFormulario(this.id);
@@ -161,13 +163,13 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       const nota = await this.form.obterNotaPorID(select.id);
 
       if (nota) {
-        if(nota.unidade)
+        if (nota.unidade)
           nota.unidade = await this.form.obterEntidade(nota.unidade as any);
-        
+
         nota.edital = this.form.obterControle('edital').value;
         nota.ehPolicia = true;
 
-        const result = await this.abreModalNota(nota);
+        const result = await this.abreModal(nota, 'nota');
         if (result) {
           this.mensagemService.openSnackBar("Nota editada com sucesso!", 'success');
           this.inicializarFormulario(this.id);
@@ -270,6 +272,8 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
     }
   }
   private async confirmarInativacao() {
+    this.modalControlService.openModal()
+
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -279,9 +283,11 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       }
     });
 
-    return await lastValueFrom(confirmacao.afterClosed());
+    return await lastValueFrom(confirmacao.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
   private async confirmarExclusao(nota: Nota) {
+    this.modalControlService.openModal()
+
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -291,7 +297,7 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       }
     });
 
-    return await lastValueFrom(confirmacao.afterClosed());
+    return await lastValueFrom(confirmacao.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
   private empenhoVazio(): EmpenhoPolicia {
     return {
@@ -304,6 +310,19 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
       valor: 0
     }
   }
+  private async abreModal(documento: EmpenhoPolicia | Nota, tipo: 'empenho' | 'nota') {
+    this.modalControlService.openModal();
+    let retorno!: EmpenhoPolicia | NotaSimplificada;
+    if (tipo === 'empenho')
+      retorno = await this.abreModalEmpenho(documento as EmpenhoPolicia);
+    else
+      retorno = await this.abreModalNota(documento as Nota);
+
+    this.modalControlService.closeModal();
+
+    return retorno;
+  }
+
   private async abreModalEmpenho(empenho: EmpenhoPolicia): Promise<EmpenhoPolicia> {
     const dialogRef = this.dialog.open(ModalEmpenhoComponent, {
       disableClose: true,
@@ -321,4 +340,14 @@ export class BaixaPoliciaComponent extends SpinnerControlDirective implements On
     return await lastValueFrom(dialogRef.afterClosed());
   }
 
+  protected override acaoAdd(): void {
+    if (this.aba.value !== 1)
+      this.novoEmpenho();
+    else this.adicionarNota();
+  }
+  protected override acaoDelete(): void {
+    if (this.aba.value !== 1)
+      this.excluirEmpenho();
+    else this.excluirNota();
+  }
 }

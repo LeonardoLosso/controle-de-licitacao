@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
-import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
 import { FormularioEmpenhoService } from '../services/formulario-empenho.service';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ItemDeEmpenho } from 'src/app/core/types/item';
@@ -12,17 +11,18 @@ import { Nota, NotaSimplificada } from 'src/app/core/types/documentos';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { ModalItemEmpenhoComponent } from './modal-item-empenho/modal-item-empenho.component';
 import { ModalNotaComponent } from '../notas/modal-nota/modal-nota.component';
+import { DocumentosDirective } from 'src/app/core/diretivas/documentos.directive';
+import { ModalControllService } from 'src/app/core/services/modal-controll.service';
 
 @Component({
   selector: 'app-empenho',
   templateUrl: './empenho.component.html',
   styleUrls: ['./empenho.component.scss']
 })
-export class EmpenhoComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
+export class EmpenhoComponent extends DocumentosDirective implements OnInit, AfterViewInit {
 
   private id!: number;
 
-  public aba!: FormControl;
   public status!: FormControl;
   public selecionado!: FormControl;
   public documentoSelecionado!: FormControl;
@@ -36,8 +36,9 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private mensagemService: MensagemService,
-    private router: Router
-  ) { super() }
+    private router: Router,
+    modalControlService: ModalControllService
+  ) { super(modalControlService) }
 
   ngOnInit(): void {
     this.inicializaFormControl();
@@ -49,7 +50,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   }
   onTabChange(index: number) {
     this.aba.setValue(index);
-    if(this.aba.value ===0)
+    if (this.aba.value === 0)
       this.documentoSelecionado.setValue(null);
     else
       this.selecionado.setValue(null);
@@ -57,7 +58,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     this.label = this.aba.value === 0 ? 'Item' : 'Nota'
   }
   //-------------------[Botões]-------------------
-  public cancelar() {
+  protected override async cancelar() {
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -67,12 +68,12 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       }
     });
 
-    confirmacao.afterClosed().subscribe(result => {
-      if (result === true) {
-        const queryParams = { ata: this.form.idAta };
-        this.router.navigate(['/licitacao/baixa'], { queryParams });
-      }
-    });
+    const result = await lastValueFrom(confirmacao.afterClosed());
+
+    if (result === true) {
+      const queryParams = { ata: this.form.idAta };
+      this.router.navigate(['/licitacao/baixa'], { queryParams });
+    }
   }
 
   public async salvar(preencher: boolean = true) {
@@ -115,7 +116,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
   public async adicionar() {
     const item = this.itemVazio();
 
-    const result = await this.abreModalItem(item);
+    const result = await this.abreModal(item, 'item');
 
     if (result) {
       const novoItem: ItemDeEmpenho = result;
@@ -132,8 +133,8 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     }
     const item: ItemDeEmpenho = this.selecionado.value as ItemDeEmpenho;
 
-    const result = await this.abreModalItem(item);
-    
+    const result = await this.abreModal(item, 'item');
+
     if (result) {
       const index = this.listaItens.value.indexOf(item);
       const edit: ItemDeEmpenho = result
@@ -170,7 +171,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       dataEntrega: new Date(),
       itens: []
     }
-    const result = await this.abreModalNota(novaNota);
+    const result = await this.abreModal(novaNota, 'nota');
     if (result) {
       this.mensagemService.openSnackBar("Nota adicionada com sucesso!", 'success');
       this.inicializarFormulario(this.id);
@@ -209,7 +210,7 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       if (nota) {
         nota.unidade = this.form.obterControle('unidade').value;
         nota.numEmpenho = this.form.obterControle('numEmpenho').value;
-        const result = await this.abreModalNota(nota);
+        const result = await this.abreModal(nota, 'nota');
         if (result) {
           this.mensagemService.openSnackBar("Nota editada com sucesso!", 'success');
           this.inicializarFormulario(this.id);
@@ -221,7 +222,10 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     }
   }
   //----------------------------------------------
+
   private async confirmarInativacao() {
+    this.modalControlService.openModal()
+
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -231,9 +235,11 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       }
     });
 
-    return await lastValueFrom(confirmacao.afterClosed());
+    return await lastValueFrom(confirmacao.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
   private async confirmarExclusao(nota: NotaSimplificada) {
+    this.modalControlService.openModal()
+
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -243,12 +249,12 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       }
     });
 
-    return await lastValueFrom(confirmacao.afterClosed());
+    return await lastValueFrom(confirmacao.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
 
   private inicializaFormControl() {
     this.form.limpar();
-    
+
     this.status = this.form.obterControle('status');
     this.listaItens = this.form.obterControle<ItemDeEmpenho[]>('itens');
     this.listaDocumentos = this.form.obterControle<Nota[]>('documentos');
@@ -265,7 +271,21 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     await this.inicializarFormulario(this.id);
   }
 
+  private async abreModal(item: ItemDeEmpenho | Nota, tipo: 'item' | 'nota') {
+    this.modalControlService.openModal()
+    let result!: any;
+    if (tipo === 'item')
+      result = await this.abreModalItem(item as ItemDeEmpenho);
+    else
+      result = await this.abreModalNota(item as Nota);
+
+    this.modalControlService.closeModal();
+
+    return result;
+  }
+
   private async abreModalItem(item: ItemDeEmpenho): Promise<ItemDeEmpenho> {
+
     const dialogRef = this.dialog.open(ModalItemEmpenhoComponent, {
       disableClose: true,
       data: item
@@ -292,12 +312,12 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
       nome: '',
       unidade: '',
       qtdeAEntregar: 0,
-      qtdeEmpenhada: 0,
+      qtdeEmpenhada: null,
       qtdeEntregue: 0,
       total: 0,
       valorEntregue: 0,
       itemDeBaixa: false,
-      valorUnitario: 0
+      valorUnitario: null
     }
   }
 
@@ -374,5 +394,17 @@ export class EmpenhoComponent extends SpinnerControlDirective implements OnInit,
     }
 
     return null;
+  }
+
+  protected override acaoAdd(): void {
+    if (this.aba.value !== 1) {
+      this.adicionar();
+    } else this.adicionarNota();
+  }
+
+  protected override acaoDelete(): void {
+    if (this.aba.value !== 1) {
+      this.excluir();
+    } else this.excluirNota();
   }
 }

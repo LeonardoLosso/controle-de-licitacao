@@ -15,6 +15,7 @@ export abstract class TabelaBaseDirective implements OnInit, AfterViewInit {
   @Input() isLoadingResults = false;
   @Input() isRateLimitReached = false;
   @Input() isModalOpen = false;
+  @Input() activeTab = true
 
   protected selecionado!: any;
 
@@ -68,12 +69,12 @@ export abstract class TabelaBaseDirective implements OnInit, AfterViewInit {
   }
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (!this.isModalOpen && this.control?.value) {
+    if (!this.isModalOpen && this.activeTab) {
       if (event.key === 'ArrowUp') {
         this.pressionaSeta(-1)
       } else if (event.key === 'ArrowDown') {
         this.pressionaSeta(1)
-      } else if (event.key === 'Enter') {
+      } else if (event.key === 'Enter' && this.control?.value) {
         if (this.selecionado)
           this.doubleClick();
       }

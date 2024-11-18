@@ -25,11 +25,10 @@ export interface ItemDeAta {
     ataID: number
     nome: string,
     unidade: string,
-    qtdeLicitada: number,
-    valorUnitario: number,
+    qtdeLicitada: number | null,
+    valorUnitario: number | null,
     valorLicitado: number,
     desconto: number,
-    duplicado?: boolean // pra q caralhos isso serve???
 }
 
 export interface ItemDeReajuste {
@@ -49,29 +48,28 @@ export interface ItemDeBaixa {
     nome: string,
     unidade: string,
 
-    qtdeEmpenhada: number, //totalização das notas?
+    qtdeEmpenhada: number,
 
-    qtdeLicitada: number, //ata.qtdeLicitada
-    qtdeAEmpenhar: number, //Quanto ainda falta para empenhar (empenhado - licitado)
+    qtdeLicitada: number,
+    qtdeAEmpenhar: number,
+    valorEmpenhado: number,
 
-    valorEmpenhado: number, //qtdeEmpenhada * valor unitário
-
-    valorLicitado: number, //ata.valorLicitado
-    saldo: number, 
-    valorUnitario: number, // ata.valorUnitario
+    valorLicitado: number,
+    saldo: number,
+    valorUnitario: number,
 }
 
 export interface ItemDeEmpenho {
     id: number,
-    empenhoId: number, 
+    empenhoId: number,
     baixaID: number,
     nome: string,
     unidade: string,
-    qtdeEmpenhada: number,
+    qtdeEmpenhada: number | null,
     qtdeEntregue: number,
     qtdeAEntregar: number,
     valorEntregue: number,
-    valorUnitario: number,
+    valorUnitario: number | null,
     itemDeBaixa: boolean,
     total: number
 }
@@ -82,9 +80,9 @@ export interface ItemDeNota {
     notaID: number,
     empenhoID: number,
     unidade: string,
-    quantidade: number,
-    qtdeCaixa: number,
-    valorCaixa: number,
+    quantidade: number | null,
+    qtdeCaixa: number | null,
+    valorCaixa: number | null,
     valorUnitario: number,
     valorTotal: number
 }

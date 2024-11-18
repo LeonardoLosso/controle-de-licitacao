@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { ItemSimplificado } from 'src/app/core/types/item';
 import { ItensService } from '../services/itens.service';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-lookup-itens',

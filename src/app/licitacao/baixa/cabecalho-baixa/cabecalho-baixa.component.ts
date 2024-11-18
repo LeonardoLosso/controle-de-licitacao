@@ -14,7 +14,7 @@ export class CabecalhoBaixaComponent {
   @Output() novo = new EventEmitter();
   @Output() remover = new EventEmitter();
 
-  @Output() cancelar = new EventEmitter();
+  @Output() cancelarOp = new EventEmitter();
   @Output() editarEmpenho = new EventEmitter();
 
   editar() {
@@ -33,8 +33,8 @@ export class CabecalhoBaixaComponent {
     this.novo.emit();
   }
 
-  cancelarOperacao() {
-    this.cancelar.emit();
+  cancelar() {
+    this.cancelarOp.emit();
   }
 
   excluir() {

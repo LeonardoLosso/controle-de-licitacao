@@ -1,6 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { EntidadeSimplificada } from 'src/app/core/types/entidade';
 import { FormularioBuscaService } from '../services/formulario-busca.service';
@@ -11,7 +12,7 @@ import { EntidadesService } from '../services/entidades.service';
   templateUrl: './lookup-entidades.component.html',
   styleUrls: ['./lookup-entidades.component.scss']
 })
-export class LookupEntidadesComponent {
+export class LookupEntidadesComponent implements OnInit {
 
   public selecionado!: FormControl;
   public pesquisa!: FormControl;
@@ -26,11 +27,20 @@ export class LookupEntidadesComponent {
     private service: EntidadesService,
     public dialogRef: MatDialogRef<LookupEntidadesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string
-  ) { }
+  ) {
 
-  ngOnInit(): void {
     this.selecionado = this.form.obterControle('selecionadoGrid');
     this.pesquisa = this.form.obterControle('pesquisa');
+
+    this.pesquisa.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()).subscribe((value) => {
+        this.listar();
+      })
+  }
+
+  ngOnInit(): void {
+
     this.listar();
   }
 
@@ -45,7 +55,9 @@ export class LookupEntidadesComponent {
     if (this.data === 'empresa')
       filtros.push({ key: 'tipo', value: 1 });
     else
-    filtros.push({ key: 'tipo', value: 0 });
+      filtros.push({ key: 'tipo', value: 0 });
+
+    filtros.push({ key: 'search', value: this.pesquisa.value ?? '' })
 
     this.isLoadingResults = true;
 

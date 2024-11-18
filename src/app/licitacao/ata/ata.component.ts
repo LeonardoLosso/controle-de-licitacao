@@ -8,16 +8,17 @@ import { ItemDeAta, ItemDeReajuste } from 'src/app/core/types/item';
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ModalConfirmacaoComponent } from 'src/app/shared/modal-confirmacao/modal-confirmacao.component';
 import { ModalItemAtaComponent } from './modal-item-ata/modal-item-ata.component';
-import { SpinnerControlDirective } from 'src/app/core/diretivas/spinner-control.directive';
 import { Reajuste } from 'src/app/core/types/documentos';
 import { lastValueFrom } from 'rxjs';
+import { DocumentosDirective } from 'src/app/core/diretivas/documentos.directive';
+import { ModalControllService } from 'src/app/core/services/modal-controll.service';
 
 @Component({
   selector: 'app-ata',
   templateUrl: './ata.component.html',
   styleUrls: ['./ata.component.scss']
 })
-export class AtaComponent extends SpinnerControlDirective implements OnInit, AfterViewInit {
+export class AtaComponent extends DocumentosDirective implements OnInit, AfterViewInit {
   private id: number = 0;
   public possuiEmpenho = false;
   public status!: FormControl<number>;
@@ -29,8 +30,9 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     private route: ActivatedRoute,
     private messageService: MensagemService,
     private dialog: MatDialog,
-    private router: Router
-  ) { super() }
+    private router: Router,
+    modalControlService: ModalControllService
+  ) { super(modalControlService) }
 
   ngOnInit(): void {
     this.form.limpar();
@@ -44,6 +46,11 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
     if (this.id) this.setBoolEmpenho();
   }
+
+  onTabChange(index: number) {
+    
+  }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.inicializarFormulario(this.id);
@@ -177,12 +184,13 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
   }
 
   private async abreModalItem(item: ItemDeAta): Promise<ItemDeAta> {
+    this.modalControlService.openModal();
     const dialogRef = this.dialog.open(ModalItemAtaComponent, {
       disableClose: true,
       data: item
     });
 
-    return await lastValueFrom(dialogRef.afterClosed());
+    return await lastValueFrom(dialogRef.afterClosed()).finally(() => this.modalControlService.closeModal());
   }
 
   private itemDuplicado(item: ItemDeAta, index?: number): ItemDeAta | null {
@@ -219,7 +227,7 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
     this.form.excluirItem(item);
   }
 
-  cancelar() {
+  protected override async cancelar() {
     const confirmacao = this.dialog.open(ModalConfirmacaoComponent, {
       disableClose: true,
       data: {
@@ -229,11 +237,10 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       }
     });
 
-    confirmacao.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.router.navigate(['/licitacao/pesquisar']);
-      }
-    });
+    const result = await lastValueFrom(confirmacao.afterClosed());
+    if (result === true) {
+      this.router.navigate(['/licitacao/pesquisar']);
+    }
   }
 
   criarReajuste() {
@@ -269,10 +276,10 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
         ataID: reajuste.ataID,
         reajusteId: reajuste.id,
         nome: item.nome,
-        qtdeLicitada: item.qtdeLicitada,
+        qtdeLicitada: item.qtdeLicitada ??  0,
         unidade: item.unidade,
         valorLicitado: item.valorLicitado,
-        valorUnitario: item.valorUnitario
+        valorUnitario: item.valorUnitario ?? 0
       }
 
       reajuste.itens.push(itemReajuste);
@@ -326,11 +333,10 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
       ataID: this.form.idAta,
       nome: '',
       unidade: '',
-      qtdeLicitada: 0,
-      valorUnitario: 0,
+      qtdeLicitada: null,
+      valorUnitario: null,
       valorLicitado: 0,
-      desconto: 0,
-      duplicado: true
+      desconto: 0
     }
   }
 
@@ -388,6 +394,17 @@ export class AtaComponent extends SpinnerControlDirective implements OnInit, Aft
 
       await this.form.buscaHistorico();
     }
+  }
 
+  protected override acaoAdd(): void {
+    if(this.aba.value === 0){
+      this.novoItem();
+    }
+  }
+
+  protected override acaoDelete(): void {
+    if(this.aba.value === 0){
+      this.excluirItem();
+    }
   }
 }

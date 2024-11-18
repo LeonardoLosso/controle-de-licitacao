@@ -14,11 +14,16 @@
             
             <app-formulario-ata [formService]="form" [formEdit]="status.value !== 2"/>
         </app-cabecalho-ata>
-        <mat-tab-group>
+        <mat-tab-group
+            [selectedIndex]="aba.value"
+            class="tab-group"
+            (selectedIndexChange)="onTabChange($event)"
+        >
             <mat-tab label="Tabela Vigente">
                 <app-item-ata-tabela 
                     [lista]="listaItens.value" 
                     [control]="selecionado" 
+                    [isModalOpen]="isModalOpen"
                     (abrirDialog)="editarItem()"/>
             </mat-tab>
 

@@ -11,12 +11,12 @@ import { UserService } from 'src/app/autenticacao/services/user.service';
 export class HeaderComponent {
 
   menuName!: string;
-  
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService
-  ) { 
+  ) {
   }
   user$ = this.userService.retornarUser();
 
@@ -31,11 +31,12 @@ export class HeaderComponent {
       });
   }
 
-  retornaNome(): string{
+  retornaNome(): string {
     let userName = "";
     this.user$.subscribe(user => userName = user?.userName ?? "");
     return userName
   }
+
   logout() {
     this.userService.logout();
     this.router.navigate(['auth/login']);

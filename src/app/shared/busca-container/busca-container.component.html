@@ -4,7 +4,7 @@
         <mat-form-field class="search-box" [class.full-size]="!page" appearance="outline">
             <mat-label>Pesquisar...</mat-label>
 
-            <input matInput type="text" [formControl]="control">
+            <input matInput type="text" [formControl]="control" cdkFocusInitial>
             <mat-icon matPrefix>search</mat-icon>
 
             <button *ngIf="control.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpaPesquisa()">

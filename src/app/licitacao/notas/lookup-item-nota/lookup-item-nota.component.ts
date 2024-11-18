@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { lastValueFrom } from 'rxjs';
+import { debounceTime, distinct, distinctUntilChanged, lastValueFrom } from 'rxjs';
 
 import { MensagemService } from 'src/app/core/services/mensagem.service';
 import { ItemDeEmpenho, ItemDeNota } from 'src/app/core/types/item';
@@ -13,6 +13,8 @@ import { ItensService } from 'src/app/itens/services/itens.service';
   styleUrls: ['./lookup-item-nota.component.scss']
 })
 export class LookupItemNotaComponent {
+
+  public pesquisa = new FormControl('');
   public selecionado = new FormControl(null);
   public listaItens!: ItemDeEmpenho[];
   public colunas!: string[];
@@ -26,7 +28,14 @@ export class LookupItemNotaComponent {
     public dialogRef: MatDialogRef<LookupItemNotaComponent>,
     private messageService: MensagemService,
     @Inject(MAT_DIALOG_DATA) public data: { policia: boolean, item: ItemDeNota },
-  ) { }
+  ) {
+    this.pesquisa.setValue('');
+    this.pesquisa.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged()).subscribe((value) => {
+        this.listar();
+      })
+  }
 
   ngOnInit(): void {
     this.listar();
@@ -75,9 +84,15 @@ export class LookupItemNotaComponent {
   }
 
   private async listarEmpenho() {
-    return await lastValueFrom(this.service.listarItensEmpenho(this.data.item.empenhoID));
+    const search = this.pesquisa.value ?? '';
+    return await lastValueFrom(this.service.listarItensEmpenho(this.data.item.empenhoID, search));
   }
   private async listarItens() {
-    return await lastValueFrom(this.service.listar());
+    const params = [
+      { key: 'status', value: 1 as any }
+    ]
+    params.push({ key: 'search', value: this.pesquisa.value ?? '' });
+
+    return await lastValueFrom(this.service.listar(undefined, params));
   }
 }

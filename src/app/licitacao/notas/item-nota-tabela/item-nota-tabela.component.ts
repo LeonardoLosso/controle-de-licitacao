@@ -22,11 +22,11 @@ export class ItemNotaTabelaComponent implements OnInit {
     'quantidade', 'valorUnitario', 'valorTotal'
   ];
   ngOnInit(): void {
-    if(this.ehPolicia)
+    if (this.ehPolicia)
       this.displayedColumns = [
-    'codigo', 'nome', 'unidade',
-    'qtdeCaixa', 'quantidade', 'valorCaixa',
-    'valorUnitario', 'valorTotal']
+        'codigo', 'nome', 'unidade',
+        'qtdeCaixa', 'quantidade', 'valorCaixa',
+        'valorUnitario', 'valorTotal']
   }
   clickGrid(valor: ItemDeNota) {
     this.selecionado = valor;
@@ -53,10 +53,10 @@ export class ItemNotaTabelaComponent implements OnInit {
   }
 
   public calculaTotal(row: ItemDeNota) {
-    row.valorTotal = row.valorUnitario * row.quantidade;
+    row.valorTotal = row.valorUnitario * (row.quantidade ?? 0);
   }
 
   public calculaUnitario(row: ItemDeNota) {
-    row.valorUnitario = row.valorCaixa / row.qtdeCaixa;
+    row.valorUnitario = (row.valorCaixa ?? 0) / (row.qtdeCaixa ?? 0);
   }
 }
